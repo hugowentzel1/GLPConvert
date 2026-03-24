@@ -1,0 +1,235 @@
+
+Running 30 tests using 1 worker
+
+[1A[2K(node:30927) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:30927) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo California: Real data verification
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo California: Real data verification
+✅ California Demo: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[2/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo New York: Real data verification
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo New York: Real data verification
+✅ New York Demo: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[3/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Arizona: Real data verification
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Arizona: Real data verification
+✅ Arizona Demo: System=7.2kW, Production=12956kWh, CF=20.5%
+
+[1A[2K[4/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Florida: Real data verification
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Florida: Real data verification
+✅ Florida Demo: System=7.2kW, Production=10722kWh, CF=17.0%
+
+[1A[2K[5/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Georgia: Real data verification
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Georgia: Real data verification
+✅ Georgia Demo: System=7.2kW, Production=10052kWh, CF=15.9%
+
+[1A[2K[6/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid California: Real data + paid features
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid California: Real data + paid features
+✅ California PAID: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[7/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid New York: Real data + paid features
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid New York: Real data + paid features
+✅ New York PAID: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[8/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Arizona: Real data + paid features
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Arizona: Real data + paid features
+✅ Arizona PAID: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[9/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Florida: Real data + paid features
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Florida: Real data + paid features
+✅ Florida PAID: System=7.2kW, Production=10722kWh, CF=17.0%
+
+[1A[2K[10/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Georgia: Real data + paid features
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Georgia: Real data + paid features
+✅ Georgia PAID: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[11/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values
+[1A[2K  1) [chromium] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values 
+
+    TimeoutError: page.waitForURL: Timeout 30000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      190 |       await generateButton.click({ force: true });
+      191 |       
+    > 192 |       await page.waitForURL(/\/report\?/, { timeout: 30000 });
+          |                  ^
+      193 |       await page.waitForLoadState('networkidle');
+      194 |       await page.waitForTimeout(6000);
+      195 |       
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:192:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-662c2-Different-production-values-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-662c2-Different-production-values-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:32375) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:32375) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[12/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:221:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Demo: Verify API calls and NOT fallback data
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:221:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Demo: Verify API calls and NOT fallback data
+📡 API calls: 12
+
+[1A[2K🔢 Unique values: 3
+
+[1A[2K📊 Has decimals: true
+
+[1A[2K[13/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:271:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Paid: Verify API calls and NOT fallback data
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:271:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Paid: Verify API calls and NOT fallback data
+📡 PAID API calls: 9
+
+[1A[2K🔢 PAID Unique values: 4
+
+[1A[2K[14/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:318:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: NO demo badge, YES paid features
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:318:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: NO demo badge, YES paid features
+✅ Tesla PAID: NO demo badge, ALL paid features present
+
+[1A[2K[15/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:357:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: Google branding works correctly
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:357:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: Google branding works correctly
+✅ Google PAID: Branding correct, NO demo badge
+
+[1A[2K(node:32770) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:32770) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[16/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo California: Real data verification
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo California: Real data verification
+✅ California Demo: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[17/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo New York: Real data verification
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo New York: Real data verification
+✅ New York Demo: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[18/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Arizona: Real data verification
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Arizona: Real data verification
+✅ Arizona Demo: System=7.2kW, Production=12956kWh, CF=20.5%
+
+[1A[2K[19/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Florida: Real data verification
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Florida: Real data verification
+✅ Florida Demo: System=7.2kW, Production=10722kWh, CF=17.0%
+
+[1A[2K[20/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Georgia: Real data verification
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Georgia: Real data verification
+✅ Georgia Demo: System=7.2kW, Production=10052kWh, CF=15.9%
+
+[1A[2K[21/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid California: Real data + paid features
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid California: Real data + paid features
+✅ California PAID: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[22/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid New York: Real data + paid features
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid New York: Real data + paid features
+✅ New York PAID: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[23/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Arizona: Real data + paid features
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Arizona: Real data + paid features
+✅ Arizona PAID: System=7.2kW, Production=12956kWh, CF=20.5%
+
+[1A[2K[24/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Florida: Real data + paid features
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Florida: Real data + paid features
+✅ Florida PAID: System=7.2kW, Production=10722kWh, CF=17.0%
+
+[1A[2K[25/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Georgia: Real data + paid features
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Georgia: Real data + paid features
+✅ Georgia PAID: System=7.2kW, Production=10052kWh, CF=15.9%
+
+[1A[2K[26/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values
+[1A[2K  2) [mobile] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values 
+
+    TimeoutError: page.waitForURL: Timeout 30000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      190 |       await generateButton.click({ force: true });
+      191 |       
+    > 192 |       await page.waitForURL(/\/report\?/, { timeout: 30000 });
+          |                  ^
+      193 |       await page.waitForLoadState('networkidle');
+      194 |       await page.waitForTimeout(6000);
+      195 |       
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:192:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-662c2-Different-production-values-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-662c2-Different-production-values-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:34201) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:34201) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[27/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:221:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Demo: Verify API calls and NOT fallback data
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:221:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Demo: Verify API calls and NOT fallback data
+📡 API calls: 12
+
+[1A[2K🔢 Unique values: 3
+
+[1A[2K📊 Has decimals: true
+
+[1A[2K[28/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:271:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Paid: Verify API calls and NOT fallback data
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:271:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Paid: Verify API calls and NOT fallback data
+📡 PAID API calls: 9
+
+[1A[2K🔢 PAID Unique values: 4
+
+[1A[2K[29/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:318:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: NO demo badge, YES paid features
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:318:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: NO demo badge, YES paid features
+✅ Tesla PAID: NO demo badge, ALL paid features present
+
+[1A[2K[30/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:357:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: Google branding works correctly
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:357:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: Google branding works correctly
+✅ Google PAID: Branding correct, NO demo badge
+
+[1A[2K  2 failed
+    [chromium] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values 
+    [mobile] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values 
+  28 passed (6.8m)

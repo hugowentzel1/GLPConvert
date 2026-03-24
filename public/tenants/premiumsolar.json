@@ -1,0 +1,68 @@
+{
+  "slug": "premiumsolar",
+  "name": "Premium Solar Group",
+  "tagline": "Luxury Solar Installations",
+  "logo": "/logo-premiumsolar.svg",
+  "colors": {
+    "primary": "#7C3AED",
+    "secondary": "#8B5CF6",
+    "accent": "#F59E0B",
+    "success": "#059669",
+    "warning": "#F59E0B",
+    "error": "#EF4444",
+    "background": "#FAF5FF",
+    "surface": "#FFFFFF",
+    "text": "#1E1B4B",
+    "textSecondary": "#3730A3",
+    "border": "#DDD6FE"
+  },
+  "contact": {
+    "email": "info@premiumsolar.com",
+    "phone": "+1 (404) 770-2672",
+    "address": "123 Luxury Lane, Premium City, PC 98765"
+  },
+  "social": {
+    "website": "https://premiumsolar.com",
+    "facebook": "https://facebook.com/premiumsolar",
+    "twitter": "https://twitter.com/premiumsolar",
+    "linkedin": "https://linkedin.com/company/premiumsolar"
+  },
+  "features": {
+    "showTestimonials": true,
+    "showTrustBadges": true,
+    "showMethodology": true,
+    "showPricing": true
+  },
+  "testimonials": [
+    {
+      "id": "1",
+      "name": "Amanda Foster",
+      "role": "Luxury Homeowner",
+      "location": "Beverly Hills, CA",
+      "content": "Premium Solar Group delivered a masterpiece. Our solar installation is both beautiful and highly efficient.",
+      "rating": 5
+    },
+    {
+      "id": "2",
+      "name": "James Wilson",
+      "role": "Hotel Owner",
+      "location": "Miami Beach, FL",
+      "content": "Exceptional service and stunning design. Our guests are impressed by the elegant solar integration.",
+      "rating": 5
+    },
+    {
+      "id": "3",
+      "name": "Victoria Chen",
+      "role": "Real Estate Developer",
+      "location": "New York, NY",
+      "content": "Premium quality work that enhances property value. Their attention to detail is unmatched.",
+      "rating": 5
+    }
+  ],
+  "trustBadges": [
+    "Luxury Home Specialist",
+    "5-Star Service Rating",
+    "Design Excellence Award",
+    "Premium Installation Certified"
+  ]
+}

@@ -1,0 +1,22 @@
+# Verifyfile - Cursor will update this for each change
+# Examples (Cursor will overwrite with the checks for your change):
+
+[check "Spacing consistency on pricing page"]
+route = /pricing?company=Netflix&demo=1
+exists = [data-testid="pricing-grid"],[data-testid="trust-badges"]
+text = [data-testid="pricing-cta"]:"Start setup — $399 today (then $99/mo)"
+
+[check "Partner page layout and email submission"]
+route = /partners?company=Netflix&demo=1
+exists = [data-testid="partner-form"],[data-testid="success-story"]
+text = [data-testid="partner-submit"]:"Submit Partner Application"
+
+[check "Support page contact grid"]
+route = /support?company=Netflix&demo=1
+exists = [data-testid="contact-grid"],[data-testid="resource-tiles"]
+text = [data-testid="email-support"]:"Email Support"
+
+[check "Report page width"]
+route = /report?company=Netflix&demo=1
+exists = [data-testid="report-page"]
+width = [data-testid="report-page"]:min=1000

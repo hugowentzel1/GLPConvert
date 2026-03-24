@@ -1,0 +1,159 @@
+/* Optimized sticky sidebar CTA */
+.sidebar-cta {
+  width: clamp(280px, 28vw, 320px);
+  border-radius: 16px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  transition: box-shadow 150ms ease;
+}
+
+/* Desktop sticky behavior - fixed positioning, doesn't affect layout */
+@media (min-width: 1024px) {
+  .sidebar-cta {
+    position: fixed;
+    top: 50vh;
+    right: 1rem;
+    transform: translateY(-50%);
+    width: 320px;
+    z-index: 40;
+    /* Ensure it doesn't affect document flow */
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Mobile inline behavior - below content, not sticky */
+@media (max-width: 1023px) {
+  .sidebar-cta {
+    width: 100%;
+    position: relative;
+    margin-top: 24px;
+  }
+}
+
+.sidebar-cta-content {
+  padding: 20px;
+}
+
+.sidebar-cta-title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #111827;
+  margin: 0 0 16px 0;
+}
+
+.sidebar-cta-button {
+  width: 100%;
+  min-height: 44px;
+  padding: 12px 20px;
+  background: var(--brand-primary, #2563eb);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.2, 0, 0, 1);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar-cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 400ms ease;
+}
+
+.sidebar-cta-button:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+}
+
+.sidebar-cta-button:hover::before {
+  left: 100%;
+}
+
+.sidebar-cta-button:active {
+  transform: scale(0.98);
+}
+
+.sidebar-cta-button-text {
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+.sidebar-cta-metric {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #f3f4f6;
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.sidebar-cta-metric-value {
+  font-weight: 700;
+  color: #111827;
+  font-size: 16px;
+}
+
+.sidebar-cta-metric-label {
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.sidebar-cta-trust {
+  margin-top: 12px;
+  font-size: 11px;
+  color: #9ca3af;
+  text-align: center;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  animation: fadeIn 400ms ease 200ms forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-cta-button,
+  .sidebar-cta-button::before,
+  .sidebar-cta-trust {
+    animation: none;
+    transition: none;
+  }
+  
+  .sidebar-cta-button:hover {
+    transform: none;
+  }
+  
+  .sidebar-cta-trust {
+    opacity: 1;
+    transform: none;
+  }
+}
+

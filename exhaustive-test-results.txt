@@ -1,0 +1,1607 @@
+
+Running 42 tests using 2 workers
+
+[1A[2K(node:97412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:97411) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:97412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:97411) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/42] [mobile] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo atlanta: All estimations calculate with real data
+[1A[2K[2/42] [chromium] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo atlanta: All estimations calculate with real data
+[1A[2K  1) [chromium] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo atlanta: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected substring: [32m"Peachtree"[39m
+    Received string:    [31m"123 N Central Ave,​ Phoenix,​ AZ"[39m
+
+      58 |         const addressElement = page.getByTestId('hdr-address');
+      59 |         const displayedAddress = await addressElement.innerText();
+    > 60 |         expect(displayedAddress).toContain(city === 'sanFrancisco' ? 'Market' : 
+         |                                  ^
+      61 |                                           city === 'miami' ? 'Brickell' :
+      62 |                                           city === 'phoenix' ? 'Central' :
+      63 |                                           city === 'seattle' ? 'Broad' : 'Peachtree');
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:60:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-504ea-ns-calculate-with-real-data-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-504ea-ns-calculate-with-real-data-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-504ea-ns-calculate-with-real-data-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-504ea-ns-calculate-with-real-data-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-504ea-ns-calculate-with-real-data-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  2) [mobile] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo atlanta: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected substring: [32m"Peachtree"[39m
+    Received string:    [31m"123 N Central Ave,​ Phoenix,​ AZ"[39m
+
+      58 |         const addressElement = page.getByTestId('hdr-address');
+      59 |         const displayedAddress = await addressElement.innerText();
+    > 60 |         expect(displayedAddress).toContain(city === 'sanFrancisco' ? 'Market' : 
+         |                                  ^
+      61 |                                           city === 'miami' ? 'Brickell' :
+      62 |                                           city === 'phoenix' ? 'Central' :
+      63 |                                           city === 'seattle' ? 'Broad' : 'Peachtree');
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:60:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-504ea-ns-calculate-with-real-data-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-504ea-ns-calculate-with-real-data-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-504ea-ns-calculate-with-real-data-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-504ea-ns-calculate-with-real-data-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-504ea-ns-calculate-with-real-data-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:97508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:97509) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:97508) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:97509) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[3/42] [chromium] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo sanFrancisco: All estimations calculate with real data
+[1A[2K[4/42] [mobile] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo sanFrancisco: All estimations calculate with real data
+[1A[2K  3) [chromium] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo sanFrancisco: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected substring: [32m"Market"[39m
+    Received string:    [31m"123 N Central Ave,​ Phoenix,​ AZ"[39m
+
+      58 |         const addressElement = page.getByTestId('hdr-address');
+      59 |         const displayedAddress = await addressElement.innerText();
+    > 60 |         expect(displayedAddress).toContain(city === 'sanFrancisco' ? 'Market' : 
+         |                                  ^
+      61 |                                           city === 'miami' ? 'Brickell' :
+      62 |                                           city === 'phoenix' ? 'Central' :
+      63 |                                           city === 'seattle' ? 'Broad' : 'Peachtree');
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:60:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-a91c7-ns-calculate-with-real-data-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-a91c7-ns-calculate-with-real-data-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-a91c7-ns-calculate-with-real-data-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-a91c7-ns-calculate-with-real-data-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-a91c7-ns-calculate-with-real-data-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:97604) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K  4) [mobile] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo sanFrancisco: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected substring: [32m"Market"[39m
+    Received string:    [31m"123 N Central Ave,​ Phoenix,​ AZ"[39m
+
+      58 |         const addressElement = page.getByTestId('hdr-address');
+      59 |         const displayedAddress = await addressElement.innerText();
+    > 60 |         expect(displayedAddress).toContain(city === 'sanFrancisco' ? 'Market' : 
+         |                                  ^
+      61 |                                           city === 'miami' ? 'Brickell' :
+      62 |                                           city === 'phoenix' ? 'Central' :
+      63 |                                           city === 'seattle' ? 'Broad' : 'Peachtree');
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:60:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-a91c7-ns-calculate-with-real-data-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-a91c7-ns-calculate-with-real-data-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-a91c7-ns-calculate-with-real-data-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-a91c7-ns-calculate-with-real-data-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-a91c7-ns-calculate-with-real-data-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:97605) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:97604) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[5/42] [chromium] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo miami: All estimations calculate with real data
+[1A[2K(node:97605) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[6/42] [mobile] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo miami: All estimations calculate with real data
+[1A[2K  5) [chromium] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo miami: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected substring: [32m"Brickell"[39m
+    Received string:    [31m"123 N Central Ave,​ Phoenix,​ AZ"[39m
+
+      58 |         const addressElement = page.getByTestId('hdr-address');
+      59 |         const displayedAddress = await addressElement.innerText();
+    > 60 |         expect(displayedAddress).toContain(city === 'sanFrancisco' ? 'Market' : 
+         |                                  ^
+      61 |                                           city === 'miami' ? 'Brickell' :
+      62 |                                           city === 'phoenix' ? 'Central' :
+      63 |                                           city === 'seattle' ? 'Broad' : 'Peachtree');
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:60:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-6bcb8-ns-calculate-with-real-data-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-6bcb8-ns-calculate-with-real-data-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-6bcb8-ns-calculate-with-real-data-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-6bcb8-ns-calculate-with-real-data-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-6bcb8-ns-calculate-with-real-data-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:97719) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:97719) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[7/42] [chromium] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo phoenix: All estimations calculate with real data
+[1A[2K  6) [mobile] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo miami: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected substring: [32m"Brickell"[39m
+    Received string:    [31m"123 N Central Ave,​ Phoenix,​ AZ"[39m
+
+      58 |         const addressElement = page.getByTestId('hdr-address');
+      59 |         const displayedAddress = await addressElement.innerText();
+    > 60 |         expect(displayedAddress).toContain(city === 'sanFrancisco' ? 'Market' : 
+         |                                  ^
+      61 |                                           city === 'miami' ? 'Brickell' :
+      62 |                                           city === 'phoenix' ? 'Central' :
+      63 |                                           city === 'seattle' ? 'Broad' : 'Peachtree');
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:60:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-6bcb8-ns-calculate-with-real-data-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-6bcb8-ns-calculate-with-real-data-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-6bcb8-ns-calculate-with-real-data-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-6bcb8-ns-calculate-with-real-data-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-6bcb8-ns-calculate-with-real-data-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:97721) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:97721) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[8/42] [mobile] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo phoenix: All estimations calculate with real data
+[1A[2K[chromium] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo phoenix: All estimations calculate with real data
+✅ phoenix: System=7.2kW, Production=12956kWh, Ratio=1799
+
+[1A[2K[9/42] [chromium] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo seattle: All estimations calculate with real data
+[1A[2K[mobile] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo phoenix: All estimations calculate with real data
+✅ phoenix: System=7.2kW, Production=12956kWh, Ratio=1799
+
+[1A[2K[10/42] [mobile] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo seattle: All estimations calculate with real data
+[1A[2K  7) [chromium] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo seattle: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected substring: [32m"Broad"[39m
+    Received string:    [31m"123 N Central Ave,​ Phoenix,​ AZ"[39m
+
+      58 |         const addressElement = page.getByTestId('hdr-address');
+      59 |         const displayedAddress = await addressElement.innerText();
+    > 60 |         expect(displayedAddress).toContain(city === 'sanFrancisco' ? 'Market' : 
+         |                                  ^
+      61 |                                           city === 'miami' ? 'Brickell' :
+      62 |                                           city === 'phoenix' ? 'Central' :
+      63 |                                           city === 'seattle' ? 'Broad' : 'Peachtree');
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:60:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-729f1-ns-calculate-with-real-data-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-729f1-ns-calculate-with-real-data-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-729f1-ns-calculate-with-real-data-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-729f1-ns-calculate-with-real-data-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-729f1-ns-calculate-with-real-data-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:97882) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:97882) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[11/42] [chromium] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid atlanta: All estimations calculate with real data
+[1A[2K  8) [mobile] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo seattle: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoContain[2m([22m[32mexpected[39m[2m) // indexOf[22m
+
+    Expected substring: [32m"Broad"[39m
+    Received string:    [31m"123 N Central Ave,​ Phoenix,​ AZ"[39m
+
+      58 |         const addressElement = page.getByTestId('hdr-address');
+      59 |         const displayedAddress = await addressElement.innerText();
+    > 60 |         expect(displayedAddress).toContain(city === 'sanFrancisco' ? 'Market' : 
+         |                                  ^
+      61 |                                           city === 'miami' ? 'Brickell' :
+      62 |                                           city === 'phoenix' ? 'Central' :
+      63 |                                           city === 'seattle' ? 'Broad' : 'Peachtree');
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:60:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-729f1-ns-calculate-with-real-data-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-729f1-ns-calculate-with-real-data-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-729f1-ns-calculate-with-real-data-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-729f1-ns-calculate-with-real-data-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-729f1-ns-calculate-with-real-data-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:97902) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:97902) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[12/42] [mobile] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid atlanta: All estimations calculate with real data
+[1A[2K  9) [chromium] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid atlanta: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('tile-systemSize')
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 20000ms[22m
+    [2m  - waiting for getByTestId('tile-systemSize')[22m
+
+
+      84 |         // Verify system size
+      85 |         const systemSizeTile = page.getByTestId('tile-systemSize');
+    > 86 |         await expect(systemSizeTile).toBeVisible({ timeout: 20000 });
+         |                                      ^
+      87 |         const systemSizeText = await systemSizeTile.innerText();
+      88 |         const systemSize = parseFloat(systemSizeText.replace(/[^0-9.]/g, ''));
+      89 |         
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:86:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-3a87d-ns-calculate-with-real-data-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-3a87d-ns-calculate-with-real-data-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-3a87d-ns-calculate-with-real-data-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-3a87d-ns-calculate-with-real-data-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-3a87d-ns-calculate-with-real-data-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:98149) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:98149) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[13/42] [chromium] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid sanFrancisco: All estimations calculate with real data
+[1A[2K  10) [mobile] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid atlanta: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('tile-systemSize')
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 20000ms[22m
+    [2m  - waiting for getByTestId('tile-systemSize')[22m
+
+
+      84 |         // Verify system size
+      85 |         const systemSizeTile = page.getByTestId('tile-systemSize');
+    > 86 |         await expect(systemSizeTile).toBeVisible({ timeout: 20000 });
+         |                                      ^
+      87 |         const systemSizeText = await systemSizeTile.innerText();
+      88 |         const systemSize = parseFloat(systemSizeText.replace(/[^0-9.]/g, ''));
+      89 |         
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:86:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-3a87d-ns-calculate-with-real-data-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-3a87d-ns-calculate-with-real-data-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-3a87d-ns-calculate-with-real-data-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-3a87d-ns-calculate-with-real-data-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-3a87d-ns-calculate-with-real-data-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:98169) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:98169) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[14/42] [mobile] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid sanFrancisco: All estimations calculate with real data
+[1A[2K  11) [chromium] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid sanFrancisco: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('tile-systemSize')
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 20000ms[22m
+    [2m  - waiting for getByTestId('tile-systemSize')[22m
+
+
+      84 |         // Verify system size
+      85 |         const systemSizeTile = page.getByTestId('tile-systemSize');
+    > 86 |         await expect(systemSizeTile).toBeVisible({ timeout: 20000 });
+         |                                      ^
+      87 |         const systemSizeText = await systemSizeTile.innerText();
+      88 |         const systemSize = parseFloat(systemSizeText.replace(/[^0-9.]/g, ''));
+      89 |         
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:86:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-39c2f-ns-calculate-with-real-data-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-39c2f-ns-calculate-with-real-data-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-39c2f-ns-calculate-with-real-data-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-39c2f-ns-calculate-with-real-data-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-39c2f-ns-calculate-with-real-data-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:98426) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:98426) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[15/42] [chromium] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid miami: All estimations calculate with real data
+[1A[2K  12) [mobile] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid sanFrancisco: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('tile-systemSize')
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 20000ms[22m
+    [2m  - waiting for getByTestId('tile-systemSize')[22m
+
+
+      84 |         // Verify system size
+      85 |         const systemSizeTile = page.getByTestId('tile-systemSize');
+    > 86 |         await expect(systemSizeTile).toBeVisible({ timeout: 20000 });
+         |                                      ^
+      87 |         const systemSizeText = await systemSizeTile.innerText();
+      88 |         const systemSize = parseFloat(systemSizeText.replace(/[^0-9.]/g, ''));
+      89 |         
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:86:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-39c2f-ns-calculate-with-real-data-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-39c2f-ns-calculate-with-real-data-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-39c2f-ns-calculate-with-real-data-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-39c2f-ns-calculate-with-real-data-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-39c2f-ns-calculate-with-real-data-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:98439) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:98439) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[16/42] [mobile] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid miami: All estimations calculate with real data
+[1A[2K  13) [chromium] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid miami: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('tile-systemSize')
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 20000ms[22m
+    [2m  - waiting for getByTestId('tile-systemSize')[22m
+
+
+      84 |         // Verify system size
+      85 |         const systemSizeTile = page.getByTestId('tile-systemSize');
+    > 86 |         await expect(systemSizeTile).toBeVisible({ timeout: 20000 });
+         |                                      ^
+      87 |         const systemSizeText = await systemSizeTile.innerText();
+      88 |         const systemSize = parseFloat(systemSizeText.replace(/[^0-9.]/g, ''));
+      89 |         
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:86:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-e87a8-ns-calculate-with-real-data-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-e87a8-ns-calculate-with-real-data-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-e87a8-ns-calculate-with-real-data-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-e87a8-ns-calculate-with-real-data-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-e87a8-ns-calculate-with-real-data-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:98696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:98696) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[17/42] [chromium] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid phoenix: All estimations calculate with real data
+[1A[2K  14) [mobile] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid miami: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('tile-systemSize')
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 20000ms[22m
+    [2m  - waiting for getByTestId('tile-systemSize')[22m
+
+
+      84 |         // Verify system size
+      85 |         const systemSizeTile = page.getByTestId('tile-systemSize');
+    > 86 |         await expect(systemSizeTile).toBeVisible({ timeout: 20000 });
+         |                                      ^
+      87 |         const systemSizeText = await systemSizeTile.innerText();
+      88 |         const systemSize = parseFloat(systemSizeText.replace(/[^0-9.]/g, ''));
+      89 |         
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:86:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-e87a8-ns-calculate-with-real-data-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-e87a8-ns-calculate-with-real-data-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-e87a8-ns-calculate-with-real-data-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-e87a8-ns-calculate-with-real-data-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-e87a8-ns-calculate-with-real-data-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:98705) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:98705) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[18/42] [mobile] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid phoenix: All estimations calculate with real data
+[1A[2K  15) [chromium] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid phoenix: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('tile-systemSize')
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 20000ms[22m
+    [2m  - waiting for getByTestId('tile-systemSize')[22m
+
+
+      84 |         // Verify system size
+      85 |         const systemSizeTile = page.getByTestId('tile-systemSize');
+    > 86 |         await expect(systemSizeTile).toBeVisible({ timeout: 20000 });
+         |                                      ^
+      87 |         const systemSizeText = await systemSizeTile.innerText();
+      88 |         const systemSize = parseFloat(systemSizeText.replace(/[^0-9.]/g, ''));
+      89 |         
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:86:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-048b4-ns-calculate-with-real-data-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-048b4-ns-calculate-with-real-data-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-048b4-ns-calculate-with-real-data-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-048b4-ns-calculate-with-real-data-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-048b4-ns-calculate-with-real-data-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:98966) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:98966) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K  16) [mobile] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid phoenix: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('tile-systemSize')
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 20000ms[22m
+    [2m  - waiting for getByTestId('tile-systemSize')[22m
+
+
+      84 |         // Verify system size
+      85 |         const systemSizeTile = page.getByTestId('tile-systemSize');
+    > 86 |         await expect(systemSizeTile).toBeVisible({ timeout: 20000 });
+         |                                      ^
+      87 |         const systemSizeText = await systemSizeTile.innerText();
+      88 |         const systemSize = parseFloat(systemSizeText.replace(/[^0-9.]/g, ''));
+      89 |         
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:86:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-048b4-ns-calculate-with-real-data-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-048b4-ns-calculate-with-real-data-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-048b4-ns-calculate-with-real-data-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-048b4-ns-calculate-with-real-data-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-048b4-ns-calculate-with-real-data-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K[19/42] [chromium] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid seattle: All estimations calculate with real data
+[1A[2K(node:98967) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:98967) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[20/42] [mobile] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid seattle: All estimations calculate with real data
+[1A[2K  17) [chromium] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid seattle: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('tile-systemSize')
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 20000ms[22m
+    [2m  - waiting for getByTestId('tile-systemSize')[22m
+
+
+      84 |         // Verify system size
+      85 |         const systemSizeTile = page.getByTestId('tile-systemSize');
+    > 86 |         await expect(systemSizeTile).toBeVisible({ timeout: 20000 });
+         |                                      ^
+      87 |         const systemSizeText = await systemSizeTile.innerText();
+      88 |         const systemSize = parseFloat(systemSizeText.replace(/[^0-9.]/g, ''));
+      89 |         
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:86:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-3ba62-ns-calculate-with-real-data-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-3ba62-ns-calculate-with-real-data-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-3ba62-ns-calculate-with-real-data-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-3ba62-ns-calculate-with-real-data-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-3ba62-ns-calculate-with-real-data-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:99245) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K  18) [mobile] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid seattle: All estimations calculate with real data 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('tile-systemSize')
+    Expected: visible
+    Timeout: 20000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 20000ms[22m
+    [2m  - waiting for getByTestId('tile-systemSize')[22m
+
+
+      84 |         // Verify system size
+      85 |         const systemSizeTile = page.getByTestId('tile-systemSize');
+    > 86 |         await expect(systemSizeTile).toBeVisible({ timeout: 20000 });
+         |                                      ^
+      87 |         const systemSizeText = await systemSizeTile.innerText();
+      88 |         const systemSize = parseFloat(systemSizeText.replace(/[^0-9.]/g, ''));
+      89 |         
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:86:38
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-3ba62-ns-calculate-with-real-data-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-3ba62-ns-calculate-with-real-data-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-3ba62-ns-calculate-with-real-data-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-3ba62-ns-calculate-with-real-data-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-3ba62-ns-calculate-with-real-data-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:99253) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:99245) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[21/42] [chromium] › tests/exhaustive-estimations.spec.ts:131:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Data Non-Fallback Verification › Demo: Verify calculations are NOT using fallback data
+[1A[2K(node:99253) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[22/42] [mobile] › tests/exhaustive-estimations.spec.ts:131:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Data Non-Fallback Verification › Demo: Verify calculations are NOT using fallback data
+[1A[2K  19) [chromium] › tests/exhaustive-estimations.spec.ts:131:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Data Non-Fallback Verification › Demo: Verify calculations are NOT using fallback data 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m3[39m
+    Received:   [31m3[39m
+
+      142 |       // Should have at least 3 different values
+      143 |       const uniqueNumbers = new Set(numbers);
+    > 144 |       expect(uniqueNumbers.size).toBeGreaterThan(3);
+          |                                  ^
+      145 |       
+      146 |       // None should be exactly 0 or 10
+      147 |       expect(numbers.every(n => n !== 0 && n !== 10)).toBe(true);
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:144:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-2caed-are-NOT-using-fallback-data-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-2caed-are-NOT-using-fallback-data-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-2caed-are-NOT-using-fallback-data-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-2caed-are-NOT-using-fallback-data-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-2caed-are-NOT-using-fallback-data-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  20) [mobile] › tests/exhaustive-estimations.spec.ts:131:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Data Non-Fallback Verification › Demo: Verify calculations are NOT using fallback data 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m3[39m
+    Received:   [31m3[39m
+
+      142 |       // Should have at least 3 different values
+      143 |       const uniqueNumbers = new Set(numbers);
+    > 144 |       expect(uniqueNumbers.size).toBeGreaterThan(3);
+          |                                  ^
+      145 |       
+      146 |       // None should be exactly 0 or 10
+      147 |       expect(numbers.every(n => n !== 0 && n !== 10)).toBe(true);
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:144:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-2caed-are-NOT-using-fallback-data-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-2caed-are-NOT-using-fallback-data-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-2caed-are-NOT-using-fallback-data-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-2caed-are-NOT-using-fallback-data-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-2caed-are-NOT-using-fallback-data-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:99350) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:99351) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:99350) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[23/42] [chromium] › tests/exhaustive-estimations.spec.ts:154:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Data Non-Fallback Verification › Paid: Verify calculations are NOT using fallback data
+[1A[2K(node:99351) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[24/42] [mobile] › tests/exhaustive-estimations.spec.ts:154:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Data Non-Fallback Verification › Paid: Verify calculations are NOT using fallback data
+[1A[2K  21) [chromium] › tests/exhaustive-estimations.spec.ts:154:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Data Non-Fallback Verification › Paid: Verify calculations are NOT using fallback data 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m3[39m
+    Received:   [31m0[39m
+
+      161 |       
+      162 |       const uniqueNumbers = new Set(numbers);
+    > 163 |       expect(uniqueNumbers.size).toBeGreaterThan(3);
+          |                                  ^
+      164 |       expect(numbers.every(n => n !== 0 && n !== 10)).toBe(true);
+      165 |       
+      166 |       const hasDecimals = numbers.some(n => n % 1 !== 0);
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:163:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-fdfb1-are-NOT-using-fallback-data-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-fdfb1-are-NOT-using-fallback-data-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-fdfb1-are-NOT-using-fallback-data-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-fdfb1-are-NOT-using-fallback-data-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-fdfb1-are-NOT-using-fallback-data-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  22) [mobile] › tests/exhaustive-estimations.spec.ts:154:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Data Non-Fallback Verification › Paid: Verify calculations are NOT using fallback data 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m3[39m
+    Received:   [31m0[39m
+
+      161 |       
+      162 |       const uniqueNumbers = new Set(numbers);
+    > 163 |       expect(uniqueNumbers.size).toBeGreaterThan(3);
+          |                                  ^
+      164 |       expect(numbers.every(n => n !== 0 && n !== 10)).toBe(true);
+      165 |       
+      166 |       const hasDecimals = numbers.some(n => n % 1 !== 0);
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:163:34
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-fdfb1-are-NOT-using-fallback-data-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-fdfb1-are-NOT-using-fallback-data-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-fdfb1-are-NOT-using-fallback-data-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-fdfb1-are-NOT-using-fallback-data-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-fdfb1-are-NOT-using-fallback-data-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:99450) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:99451) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:99450) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[25/42] [chromium] › tests/exhaustive-estimations.spec.ts:172:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Location-Specific Solar Resource Validation › Phoenix (sunny) should have higher production than Seattle (cloudy)
+[1A[2K(node:99451) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[26/42] [mobile] › tests/exhaustive-estimations.spec.ts:172:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Location-Specific Solar Resource Validation › Phoenix (sunny) should have higher production than Seattle (cloudy)
+[1A[2K  23) [chromium] › tests/exhaustive-estimations.spec.ts:172:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Location-Specific Solar Resource Validation › Phoenix (sunny) should have higher production than Seattle (cloudy) 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m12956[39m
+    Received:   [31m12956[39m
+
+      190 |       
+      191 |       // Phoenix should have higher production (more sun)
+    > 192 |       expect(phoenixProduction).toBeGreaterThan(seattleProduction);
+          |                                 ^
+      193 |       
+      194 |       console.log(`🌞 Phoenix: ${phoenixProduction} kWh/yr`);
+      195 |       console.log(`☁️ Seattle: ${seattleProduction} kWh/yr`);
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:192:33
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-4089e-uction-than-Seattle-cloudy--chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-4089e-uction-than-Seattle-cloudy--chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-4089e-uction-than-Seattle-cloudy--chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-4089e-uction-than-Seattle-cloudy--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-4089e-uction-than-Seattle-cloudy--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  24) [mobile] › tests/exhaustive-estimations.spec.ts:172:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Location-Specific Solar Resource Validation › Phoenix (sunny) should have higher production than Seattle (cloudy) 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m12956[39m
+    Received:   [31m12956[39m
+
+      190 |       
+      191 |       // Phoenix should have higher production (more sun)
+    > 192 |       expect(phoenixProduction).toBeGreaterThan(seattleProduction);
+          |                                 ^
+      193 |       
+      194 |       console.log(`🌞 Phoenix: ${phoenixProduction} kWh/yr`);
+      195 |       console.log(`☁️ Seattle: ${seattleProduction} kWh/yr`);
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:192:33
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-4089e-uction-than-Seattle-cloudy--mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-4089e-uction-than-Seattle-cloudy--mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-4089e-uction-than-Seattle-cloudy--mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-4089e-uction-than-Seattle-cloudy--mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-4089e-uction-than-Seattle-cloudy--mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:99625) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:99626) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:99626) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:99625) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[27/42] [chromium] › tests/exhaustive-estimations.spec.ts:201:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › API Integration Verification › Demo: Verify API calls are made (not cached/fallback)
+[1A[2K[28/42] [mobile] › tests/exhaustive-estimations.spec.ts:201:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › API Integration Verification › Demo: Verify API calls are made (not cached/fallback)
+[1A[2K[mobile] › tests/exhaustive-estimations.spec.ts:201:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › API Integration Verification › Demo: Verify API calls are made (not cached/fallback)
+📡 API calls made: 2
+
+[1A[2K🔗 API endpoints: /api/estimate
+
+[1A[2K[chromium] › tests/exhaustive-estimations.spec.ts:201:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › API Integration Verification › Demo: Verify API calls are made (not cached/fallback)
+📡 API calls made: 2
+
+[1A[2K🔗 API endpoints: /api/estimate
+
+[1A[2K[29/42] [chromium] › tests/exhaustive-estimations.spec.ts:222:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › API Integration Verification › Paid: Verify API calls are made (not cached/fallback)
+[1A[2K[30/42] [mobile] › tests/exhaustive-estimations.spec.ts:222:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › API Integration Verification › Paid: Verify API calls are made (not cached/fallback)
+[1A[2K[chromium] › tests/exhaustive-estimations.spec.ts:222:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › API Integration Verification › Paid: Verify API calls are made (not cached/fallback)
+📡 PAID API calls made: 4
+
+[1A[2K[mobile] › tests/exhaustive-estimations.spec.ts:222:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › API Integration Verification › Paid: Verify API calls are made (not cached/fallback)
+📡 PAID API calls made: 4
+
+[1A[2K[31/42] [chromium] › tests/exhaustive-estimations.spec.ts:242:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Calculation Accuracy Cross-Check › Demo: System size * capacity factor ≈ annual production
+[1A[2K[32/42] [mobile] › tests/exhaustive-estimations.spec.ts:242:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Calculation Accuracy Cross-Check › Demo: System size * capacity factor ≈ annual production
+[1A[2K[chromium] › tests/exhaustive-estimations.spec.ts:242:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Calculation Accuracy Cross-Check › Demo: System size * capacity factor ≈ annual production
+⚡ System: 7.2 kW
+
+[1A[2K📊 Production: 12956 kWh/yr
+
+[1A[2K📈 Capacity Factor: 20.5%
+
+[1A[2K[mobile] › tests/exhaustive-estimations.spec.ts:242:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Calculation Accuracy Cross-Check › Demo: System size * capacity factor ≈ annual production
+⚡ System: 7.2 kW
+
+[1A[2K📊 Production: 12956 kWh/yr
+
+[1A[2K📈 Capacity Factor: 20.5%
+
+[1A[2K[33/42] [chromium] › tests/exhaustive-estimations.spec.ts:266:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Calculation Accuracy Cross-Check › Paid: Verify cost calculations are realistic
+[1A[2K[34/42] [mobile] › tests/exhaustive-estimations.spec.ts:266:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Calculation Accuracy Cross-Check › Paid: Verify cost calculations are realistic
+[1A[2K  25) [mobile] › tests/exhaustive-estimations.spec.ts:266:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Calculation Accuracy Cross-Check › Paid: Verify cost calculations are realistic 
+
+    [31mTest timeout of 180000ms exceeded.[39m
+
+    Error: locator.innerText: Test timeout of 180000ms exceeded.
+    Call log:
+    [2m  - waiting for getByTestId('tile-systemSize')[22m
+
+
+      269 |       await page.waitForTimeout(5000);
+      270 |       
+    > 271 |       const systemSizeText = await page.getByTestId('tile-systemSize').innerText();
+          |                                                                        ^
+      272 |       const systemSize = parseFloat(systemSizeText.replace(/[^0-9.]/g, ''));
+      273 |       
+      274 |       // Check for install cost tile
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:271:72
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-508ed--calculations-are-realistic-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-508ed--calculations-are-realistic-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-508ed--calculations-are-realistic-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-508ed--calculations-are-realistic-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-508ed--calculations-are-realistic-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  26) [chromium] › tests/exhaustive-estimations.spec.ts:266:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Calculation Accuracy Cross-Check › Paid: Verify cost calculations are realistic 
+
+    [31mTest timeout of 180000ms exceeded.[39m
+
+    Error: locator.innerText: Test timeout of 180000ms exceeded.
+    Call log:
+    [2m  - waiting for getByTestId('tile-systemSize')[22m
+
+
+      269 |       await page.waitForTimeout(5000);
+      270 |       
+    > 271 |       const systemSizeText = await page.getByTestId('tile-systemSize').innerText();
+          |                                                                        ^
+      272 |       const systemSize = parseFloat(systemSizeText.replace(/[^0-9.]/g, ''));
+      273 |       
+      274 |       // Check for install cost tile
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:271:72
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-508ed--calculations-are-realistic-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-508ed--calculations-are-realistic-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-508ed--calculations-are-realistic-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-508ed--calculations-are-realistic-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-508ed--calculations-are-realistic-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:1775) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:1776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:1776) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:1775) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[35/42] [chromium] › tests/exhaustive-estimations.spec.ts:294:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Environmental Calculations Verification › Demo: CO2 offset correlates with production
+[1A[2K[36/42] [mobile] › tests/exhaustive-estimations.spec.ts:294:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Environmental Calculations Verification › Demo: CO2 offset correlates with production
+[1A[2K[37/42] [chromium] › tests/exhaustive-estimations.spec.ts:321:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has consultation booking functionality
+[1A[2K[38/42] [mobile] › tests/exhaustive-estimations.spec.ts:321:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has consultation booking functionality
+[1A[2K  27) [mobile] › tests/exhaustive-estimations.spec.ts:321:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has consultation booking functionality 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByRole('button', { name: /Book a Consultation/i })
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for getByRole('button', { name: /Book a Consultation/i })[22m
+
+
+      325 |       
+      326 |       const bookButton = page.getByRole('button', { name: /Book a Consultation/i });
+    > 327 |       await expect(bookButton).toBeVisible();
+          |                                ^
+      328 |       
+      329 |       // Verify button is clickable
+      330 |       await expect(bookButton).toBeEnabled();
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:327:32
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-a6433-ation-booking-functionality-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-a6433-ation-booking-functionality-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-a6433-ation-booking-functionality-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-a6433-ation-booking-functionality-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-a6433-ation-booking-functionality-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  28) [chromium] › tests/exhaustive-estimations.spec.ts:321:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has consultation booking functionality 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByRole('button', { name: /Book a Consultation/i })
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for getByRole('button', { name: /Book a Consultation/i })[22m
+
+
+      325 |       
+      326 |       const bookButton = page.getByRole('button', { name: /Book a Consultation/i });
+    > 327 |       await expect(bookButton).toBeVisible();
+          |                                ^
+      328 |       
+      329 |       // Verify button is clickable
+      330 |       await expect(bookButton).toBeEnabled();
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:327:32
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-a6433-ation-booking-functionality-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-a6433-ation-booking-functionality-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-a6433-ation-booking-functionality-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-a6433-ation-booking-functionality-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-a6433-ation-booking-functionality-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:2027) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:2028) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:2027) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:2028) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[39/42] [mobile] › tests/exhaustive-estimations.spec.ts:340:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has PDF download functionality
+[1A[2K[40/42] [chromium] › tests/exhaustive-estimations.spec.ts:340:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has PDF download functionality
+[1A[2K  29) [mobile] › tests/exhaustive-estimations.spec.ts:340:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has PDF download functionality 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByRole('button', { name: /Download PDF/i })
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for getByRole('button', { name: /Download PDF/i })[22m
+
+
+      344 |       
+      345 |       const pdfButton = page.getByRole('button', { name: /Download PDF/i });
+    > 346 |       await expect(pdfButton).toBeVisible();
+          |                               ^
+      347 |       await expect(pdfButton).toBeEnabled();
+      348 |     });
+      349 |
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:346:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-df51a--PDF-download-functionality-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-df51a--PDF-download-functionality-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-df51a--PDF-download-functionality-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-df51a--PDF-download-functionality-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-df51a--PDF-download-functionality-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:2193) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K  30) [chromium] › tests/exhaustive-estimations.spec.ts:340:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has PDF download functionality 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByRole('button', { name: /Download PDF/i })
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for getByRole('button', { name: /Download PDF/i })[22m
+
+
+      344 |       
+      345 |       const pdfButton = page.getByRole('button', { name: /Download PDF/i });
+    > 346 |       await expect(pdfButton).toBeVisible();
+          |                               ^
+      347 |       await expect(pdfButton).toBeEnabled();
+      348 |     });
+      349 |
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:346:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-df51a--PDF-download-functionality-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-df51a--PDF-download-functionality-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-df51a--PDF-download-functionality-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-df51a--PDF-download-functionality-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-df51a--PDF-download-functionality-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:2194) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:2193) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[41/42] [mobile] › tests/exhaustive-estimations.spec.ts:350:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has share link functionality
+[1A[2K(node:2194) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[42/42] [chromium] › tests/exhaustive-estimations.spec.ts:350:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has share link functionality
+[1A[2K  31) [mobile] › tests/exhaustive-estimations.spec.ts:350:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has share link functionality 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByRole('button', { name: /Copy Share Link/i })
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for getByRole('button', { name: /Copy Share Link/i })[22m
+
+
+      354 |       
+      355 |       const shareButton = page.getByRole('button', { name: /Copy Share Link/i });
+    > 356 |       await expect(shareButton).toBeVisible();
+          |                                 ^
+      357 |       await expect(shareButton).toBeEnabled();
+      358 |     });
+      359 |   });
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:356:33
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-14732-as-share-link-functionality-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-14732-as-share-link-functionality-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-14732-as-share-link-functionality-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-14732-as-share-link-functionality-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-14732-as-share-link-functionality-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  32) [chromium] › tests/exhaustive-estimations.spec.ts:350:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has share link functionality 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByRole('button', { name: /Copy Share Link/i })
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for getByRole('button', { name: /Copy Share Link/i })[22m
+
+
+      354 |       
+      355 |       const shareButton = page.getByRole('button', { name: /Copy Share Link/i });
+    > 356 |       await expect(shareButton).toBeVisible();
+          |                                 ^
+      357 |       await expect(shareButton).toBeEnabled();
+      358 |     });
+      359 |   });
+        at /Users/hugowentzel/sunspire-clean/tests/exhaustive-estimations.spec.ts:356:33
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-14732-as-share-link-functionality-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-14732-as-share-link-functionality-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/exhaustive-estimations-EXH-14732-as-share-link-functionality-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/exhaustive-estimations-EXH-14732-as-share-link-functionality-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/exhaustive-estimations-EXH-14732-as-share-link-functionality-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  32 failed
+    [chromium] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo atlanta: All estimations calculate with real data 
+    [chromium] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo sanFrancisco: All estimations calculate with real data 
+    [chromium] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo miami: All estimations calculate with real data 
+    [chromium] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo seattle: All estimations calculate with real data 
+    [chromium] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid atlanta: All estimations calculate with real data 
+    [chromium] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid sanFrancisco: All estimations calculate with real data 
+    [chromium] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid miami: All estimations calculate with real data 
+    [chromium] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid phoenix: All estimations calculate with real data 
+    [chromium] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid seattle: All estimations calculate with real data 
+    [chromium] › tests/exhaustive-estimations.spec.ts:131:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Data Non-Fallback Verification › Demo: Verify calculations are NOT using fallback data 
+    [chromium] › tests/exhaustive-estimations.spec.ts:154:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Data Non-Fallback Verification › Paid: Verify calculations are NOT using fallback data 
+    [chromium] › tests/exhaustive-estimations.spec.ts:172:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Location-Specific Solar Resource Validation › Phoenix (sunny) should have higher production than Seattle (cloudy) 
+    [chromium] › tests/exhaustive-estimations.spec.ts:266:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Calculation Accuracy Cross-Check › Paid: Verify cost calculations are realistic 
+    [chromium] › tests/exhaustive-estimations.spec.ts:321:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has consultation booking functionality 
+    [chromium] › tests/exhaustive-estimations.spec.ts:340:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has PDF download functionality 
+    [chromium] › tests/exhaustive-estimations.spec.ts:350:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has share link functionality 
+    [mobile] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo atlanta: All estimations calculate with real data 
+    [mobile] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo sanFrancisco: All estimations calculate with real data 
+    [mobile] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo miami: All estimations calculate with real data 
+    [mobile] › tests/exhaustive-estimations.spec.ts:16:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Demo Version - Multiple Locations › Demo seattle: All estimations calculate with real data 
+    [mobile] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid atlanta: All estimations calculate with real data 
+    [mobile] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid sanFrancisco: All estimations calculate with real data 
+    [mobile] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid miami: All estimations calculate with real data 
+    [mobile] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid phoenix: All estimations calculate with real data 
+    [mobile] › tests/exhaustive-estimations.spec.ts:72:11 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version - Multiple Locations with Live URL › Paid seattle: All estimations calculate with real data 
+    [mobile] › tests/exhaustive-estimations.spec.ts:131:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Data Non-Fallback Verification › Demo: Verify calculations are NOT using fallback data 
+    [mobile] › tests/exhaustive-estimations.spec.ts:154:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Data Non-Fallback Verification › Paid: Verify calculations are NOT using fallback data 
+    [mobile] › tests/exhaustive-estimations.spec.ts:172:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Location-Specific Solar Resource Validation › Phoenix (sunny) should have higher production than Seattle (cloudy) 
+    [mobile] › tests/exhaustive-estimations.spec.ts:266:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Calculation Accuracy Cross-Check › Paid: Verify cost calculations are realistic 
+    [mobile] › tests/exhaustive-estimations.spec.ts:321:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has consultation booking functionality 
+    [mobile] › tests/exhaustive-estimations.spec.ts:340:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has PDF download functionality 
+    [mobile] › tests/exhaustive-estimations.spec.ts:350:9 › EXHAUSTIVE Estimation Tests - Real Data Verification › Paid Version Exclusive Features › Paid: Has share link functionality 
+  10 passed (8.0m)

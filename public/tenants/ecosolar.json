@@ -1,0 +1,68 @@
+{
+  "slug": "ecosolar",
+  "name": "EcoSolar Solutions",
+  "tagline": "Sustainable Energy for Tomorrow",
+  "logo": "/logo-ecosolar.svg",
+  "colors": {
+    "primary": "#16A34A",
+    "secondary": "#22C55E",
+    "accent": "#84CC16",
+    "success": "#16A34A",
+    "warning": "#EAB308",
+    "error": "#EF4444",
+    "background": "#F7FEE7",
+    "surface": "#FFFFFF",
+    "text": "#14532D",
+    "textSecondary": "#166534",
+    "border": "#BBF7D0"
+  },
+  "contact": {
+    "email": "hello@ecosolar.com",
+    "phone": "+1 (404) 770-2672",
+    "address": "456 Green Street, Eco City, EC 54321"
+  },
+  "social": {
+    "website": "https://ecosolar.com",
+    "facebook": "https://facebook.com/ecosolar",
+    "twitter": "https://twitter.com/ecosolar",
+    "linkedin": "https://linkedin.com/company/ecosolar"
+  },
+  "features": {
+    "showTestimonials": true,
+    "showTrustBadges": true,
+    "showMethodology": true,
+    "showPricing": false
+  },
+  "testimonials": [
+    {
+      "id": "1",
+      "name": "Michael Rodriguez",
+      "role": "Environmental Consultant",
+      "location": "Portland, OR",
+      "content": "EcoSolar's commitment to sustainability is unmatched. They helped us achieve carbon neutrality goals.",
+      "rating": 5
+    },
+    {
+      "id": "2",
+      "name": "Lisa Thompson",
+      "role": "Homeowner",
+      "location": "Seattle, WA",
+      "content": "Amazing experience with EcoSolar. Our home is now powered by clean, renewable energy.",
+      "rating": 5
+    },
+    {
+      "id": "3",
+      "name": "David Kim",
+      "role": "Property Manager",
+      "location": "1700 Northside Drive Suite A7 #5164 Atlanta, GA 30318",
+      "content": "Professional service and excellent ROI. Our tenants love the green energy initiative.",
+      "rating": 5
+    }
+  ],
+  "trustBadges": [
+    "100% Renewable Energy",
+    "Carbon Neutral Operations",
+    "Green Business Certified",
+    "Environmental Excellence Award"
+  ]
+}

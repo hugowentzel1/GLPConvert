@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Runs Reset - Sunspire</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #1e293b;
+            margin-bottom: 20px;
+        }
+        .button {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            width: 100%;
+        }
+        .button:hover {
+            background: #b91c1c;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+        }
+        .success {
+            background: #f0fdf4;
+            border-color: #22c55e;
+            color: #166534;
+        }
+        .info {
+            background: #fef3c7;
+            border-color: #f59e0b;
+            color: #92400e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 Demo Runs Reset Tool</h1>
+        <p>This tool will reset your demo runs and give you unlimited access to test the Sunspire demo.</p>
+        
+        <button class="button" onclick="resetDemoRuns()">
+            🔄 Reset Demo Runs (Unlimited Access)
+        </button>
+        
+        <button class="button" onclick="checkStatus()">
+            📊 Check Current Status
+        </button>
+        
+        <button class="button" onclick="goToDemo()">
+            🚀 Go to Tesla Demo
+        </button>
+        
+        <div id="status" class="status" style="display: none;"></div>
+    </div>
+
+    <script>
+        function resetDemoRuns() {
+            try {
+                // Clear ALL localStorage
+                localStorage.clear();
+                
+                // Re-set the brand takeover data with unlimited runs
+                const brandData = {
+                    enabled: true,
+                    brand: "tesla",
+                    primary: "#CC0000",
+                    logo: null,
+                    domain: "tesla",
+                    city: null,
+                    rep: null,
+                    firstName: null,
+                    role: null,
+                    expireDays: 7,
+                    runs: 999, // Set to unlimited
+                    blur: true,
+                    pilot: false,
+                    isDemo: true,
+                    _timestamp: Date.now()
+                };
+                
+                localStorage.setItem('sunspire-brand-takeover', JSON.stringify(brandData));
+                
+                showStatus('✅ Demo runs completely reset! You now have unlimited access.', 'success');
+                console.log("✅ Demo runs completely reset - unlimited access granted");
+                
+            } catch (error) {
+                showStatus('❌ Error resetting demo runs: ' + error.message, 'error');
+                console.error('Error resetting demo runs:', error);
+            }
+        }
+        
+        function checkStatus() {
+            try {
+                const brandData = localStorage.getItem('sunspire-brand-takeover');
+                const demoQuota = localStorage.getItem('demo_quota_v5');
+                
+                if (brandData) {
+                    const parsed = JSON.parse(brandData);
+                    const runs = parsed.runs || 0;
+                    const status = runs >= 999 ? 'Unlimited' : `${runs} runs remaining`;
+                    
+                    showStatus(`📊 Current Status: ${status}<br>Brand: ${parsed.brand || 'None'}<br>Demo Quota: ${demoQuota || 'None'}`, 'info');
+                } else {
+                    showStatus('📊 No demo data found. Click "Reset Demo Runs" to get started.', 'info');
+                }
+            } catch (error) {
+                showStatus('❌ Error checking status: ' + error.message, 'error');
+            }
+        }
+        
+        function goToDemo() {
+            window.open('https://sunspire-web-app.vercel.app/?company=tesla&demo=1', '_blank');
+        }
+        
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = message;
+            statusDiv.className = `status ${type}`;
+            statusDiv.style.display = 'block';
+        }
+        
+        // Auto-check status on page load
+        window.onload = function() {
+            checkStatus();
+        };
+    </script>
+</body>
+</html>

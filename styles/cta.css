@@ -1,0 +1,57 @@
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.3rem;
+  border-radius: 10px;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  background: #ef4444;
+  color: #ffffff;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.cta:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.cta__inner { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 0.5rem; 
+}
+
+.cta__icon { 
+  transform: translateY(0.5px); 
+  font-size: 1.1em;
+}
+
+.cta__text {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.cta:focus-visible {
+  outline: 3px solid #111827;
+  outline-offset: 2px;
+}
+
+.cta:active {
+  transform: translateY(0);
+}
+
+/* Brand color override */
+.cta[style*="--brand"] {
+  background: var(--brand);
+}
+
+.cta[style*="--brand"]:hover {
+  background: color-mix(in srgb, var(--brand) 85%, black);
+}

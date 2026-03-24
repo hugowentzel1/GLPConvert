@@ -1,0 +1,26 @@
+Subject: quick idea to lift booked solar calls
+
+Hey {{first_name}} — noticed {{company}}'s quote flow.
+
+We built Sunspire: a drop-in quote widget that turns visitors into booked calls (no dev time).
+
+60-sec walkthrough + live demo (unique to {{company}}): {{outreach_link}}
+
+If it doesn't move the needle in 14 days, you don't keep it.
+
+— Hugo
+
+---
+
+Unsubscribe: {{unsubscribe_link}}
+Postal Address: [Your Business Address]
+
+---
+
+CAMPAIGN SETTINGS:
+- Rotation: ON for all inboxes
+- Schedule: Mon–Fri, business hours
+- Pause on reply: ON
+- Daily send caps per inbox: start 20 → 40 → 70 → 100–150 (watch deliverability)
+- Tracking: {{outreach_link}} clicks and page visits
+- Follow-up: 3 days after no response

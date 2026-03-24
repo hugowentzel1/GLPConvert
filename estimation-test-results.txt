@@ -1,0 +1,411 @@
+
+Running 40 tests using 2 workers
+
+[1A[2K(node:94171) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:94170) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:94170) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:94171) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/40] [chromium] › tests/estimations-comprehensive.spec.ts:7:9 › Solar Estimations - Comprehensive Validation › System Size Calculations › System size is reasonable for residential property
+[1A[2K[2/40] [mobile] › tests/estimations-comprehensive.spec.ts:7:9 › Solar Estimations - Comprehensive Validation › System Size Calculations › System size is reasonable for residential property
+[1A[2K[3/40] [chromium] › tests/estimations-comprehensive.spec.ts:25:9 › Solar Estimations - Comprehensive Validation › System Size Calculations › System size has proper unit (kW)
+[1A[2K[4/40] [mobile] › tests/estimations-comprehensive.spec.ts:25:9 › Solar Estimations - Comprehensive Validation › System Size Calculations › System size has proper unit (kW)
+[1A[2K[5/40] [chromium] › tests/estimations-comprehensive.spec.ts:37:9 › Solar Estimations - Comprehensive Validation › Annual Production Estimates › Annual production is realistic for system size
+[1A[2K[6/40] [mobile] › tests/estimations-comprehensive.spec.ts:37:9 › Solar Estimations - Comprehensive Validation › Annual Production Estimates › Annual production is realistic for system size
+[1A[2K[7/40] [chromium] › tests/estimations-comprehensive.spec.ts:53:9 › Solar Estimations - Comprehensive Validation › Annual Production Estimates › Annual production has proper unit (kWh)
+[1A[2K[8/40] [mobile] › tests/estimations-comprehensive.spec.ts:53:9 › Solar Estimations - Comprehensive Validation › Annual Production Estimates › Annual production has proper unit (kWh)
+[1A[2K[9/40] [mobile] › tests/estimations-comprehensive.spec.ts:63:9 › Solar Estimations - Comprehensive Validation › Annual Production Estimates › Production-to-system-size ratio is realistic
+[1A[2K[10/40] [chromium] › tests/estimations-comprehensive.spec.ts:63:9 › Solar Estimations - Comprehensive Validation › Annual Production Estimates › Production-to-system-size ratio is realistic
+[1A[2K[11/40] [chromium] › tests/estimations-comprehensive.spec.ts:82:9 › Solar Estimations - Comprehensive Validation › Cost Calculations › Installation cost is market-realistic
+[1A[2K[12/40] [mobile] › tests/estimations-comprehensive.spec.ts:82:9 › Solar Estimations - Comprehensive Validation › Cost Calculations › Installation cost is market-realistic
+[1A[2K[13/40] [chromium] › tests/estimations-comprehensive.spec.ts:98:9 › Solar Estimations - Comprehensive Validation › Cost Calculations › Annual savings is positive and realistic
+[1A[2K[14/40] [mobile] › tests/estimations-comprehensive.spec.ts:98:9 › Solar Estimations - Comprehensive Validation › Cost Calculations › Annual savings is positive and realistic
+[1A[2K[15/40] [chromium] › tests/estimations-comprehensive.spec.ts:114:9 › Solar Estimations - Comprehensive Validation › Cost Calculations › 25-year savings exceeds installation cost
+[1A[2K[16/40] [mobile] › tests/estimations-comprehensive.spec.ts:114:9 › Solar Estimations - Comprehensive Validation › Cost Calculations › 25-year savings exceeds installation cost
+[1A[2K[17/40] [chromium] › tests/estimations-comprehensive.spec.ts:136:9 › Solar Estimations - Comprehensive Validation › Financial Projections › Payback period is reasonable
+[1A[2K[18/40] [mobile] › tests/estimations-comprehensive.spec.ts:136:9 › Solar Estimations - Comprehensive Validation › Financial Projections › Payback period is reasonable
+[1A[2K[19/40] [chromium] › tests/estimations-comprehensive.spec.ts:152:9 › Solar Estimations - Comprehensive Validation › Financial Projections › ROI is positive
+[1A[2K[20/40] [mobile] › tests/estimations-comprehensive.spec.ts:152:9 › Solar Estimations - Comprehensive Validation › Financial Projections › ROI is positive
+[1A[2K  1) [chromium] › tests/estimations-comprehensive.spec.ts:152:9 › Solar Estimations - Comprehensive Validation › Financial Projections › ROI is positive 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m0[39m
+    Received:   [31mNaN[39m
+
+      162 |         
+      163 |         // ROI should be positive
+    > 164 |         expect(roi).toBeGreaterThan(0);
+          |                     ^
+      165 |       }
+      166 |     });
+      167 |   });
+        at /Users/hugowentzel/sunspire-clean/tests/estimations-comprehensive.spec.ts:164:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--a9a33-Projections-ROI-is-positive-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--a9a33-Projections-ROI-is-positive-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/estimations-comprehensive--a9a33-Projections-ROI-is-positive-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--a9a33-Projections-ROI-is-positive-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/estimations-comprehensive--a9a33-Projections-ROI-is-positive-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  2) [mobile] › tests/estimations-comprehensive.spec.ts:152:9 › Solar Estimations - Comprehensive Validation › Financial Projections › ROI is positive 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThan[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: > [32m0[39m
+    Received:   [31mNaN[39m
+
+      162 |         
+      163 |         // ROI should be positive
+    > 164 |         expect(roi).toBeGreaterThan(0);
+          |                     ^
+      165 |       }
+      166 |     });
+      167 |   });
+        at /Users/hugowentzel/sunspire-clean/tests/estimations-comprehensive.spec.ts:164:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--a9a33-Projections-ROI-is-positive-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--a9a33-Projections-ROI-is-positive-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/estimations-comprehensive--a9a33-Projections-ROI-is-positive-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--a9a33-Projections-ROI-is-positive-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/estimations-comprehensive--a9a33-Projections-ROI-is-positive-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:94684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:94685) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:94684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:94685) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[21/40] [chromium] › tests/estimations-comprehensive.spec.ts:170:9 › Solar Estimations - Comprehensive Validation › Environmental Impact › CO2 offset is calculated
+[1A[2K[22/40] [mobile] › tests/estimations-comprehensive.spec.ts:170:9 › Solar Estimations - Comprehensive Validation › Environmental Impact › CO2 offset is calculated
+[1A[2K[23/40] [chromium] › tests/estimations-comprehensive.spec.ts:186:9 › Solar Estimations - Comprehensive Validation › Environmental Impact › Tree equivalent is calculated
+[1A[2K[24/40] [mobile] › tests/estimations-comprehensive.spec.ts:186:9 › Solar Estimations - Comprehensive Validation › Environmental Impact › Tree equivalent is calculated
+[1A[2K[25/40] [chromium] › tests/estimations-comprehensive.spec.ts:204:9 › Solar Estimations - Comprehensive Validation › Data Consistency Across UI › Numbers are consistent between tiles and charts
+[1A[2K[26/40] [mobile] › tests/estimations-comprehensive.spec.ts:204:9 › Solar Estimations - Comprehensive Validation › Data Consistency Across UI › Numbers are consistent between tiles and charts
+[1A[2K[27/40] [mobile] › tests/estimations-comprehensive.spec.ts:221:9 › Solar Estimations - Comprehensive Validation › Data Consistency Across UI › All numeric values are properly formatted
+[1A[2K[28/40] [chromium] › tests/estimations-comprehensive.spec.ts:221:9 › Solar Estimations - Comprehensive Validation › Data Consistency Across UI › All numeric values are properly formatted
+[1A[2K[29/40] [mobile] › tests/estimations-comprehensive.spec.ts:243:9 › Solar Estimations - Comprehensive Validation › Data Consistency Across UI › Currency values use proper formatting
+[1A[2K[30/40] [chromium] › tests/estimations-comprehensive.spec.ts:243:9 › Solar Estimations - Comprehensive Validation › Data Consistency Across UI › Currency values use proper formatting
+[1A[2K  3) [chromium] › tests/estimations-comprehensive.spec.ts:243:9 › Solar Estimations - Comprehensive Validation › Data Consistency Across UI › Currency values use proper formatting 
+
+    Error: locator.innerText: Error: Node is not an HTMLElement
+    Call log:
+    [2m  - waiting for locator('text=/\\$[0-9,]+/').first()[22m
+
+
+      253 |       
+      254 |       for (let i = 0; i < Math.min(count, 5); i++) {
+    > 255 |         const text = await currencyElements.nth(i).innerText();
+          |                                                    ^
+      256 |         
+      257 |         // Should have $ symbol and numbers
+      258 |         expect(text).toMatch(/\$[0-9,]+/);
+        at /Users/hugowentzel/sunspire-clean/tests/estimations-comprehensive.spec.ts:255:52
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--38fd0-alues-use-proper-formatting-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--38fd0-alues-use-proper-formatting-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/estimations-comprehensive--38fd0-alues-use-proper-formatting-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--38fd0-alues-use-proper-formatting-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/estimations-comprehensive--38fd0-alues-use-proper-formatting-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  4) [mobile] › tests/estimations-comprehensive.spec.ts:243:9 › Solar Estimations - Comprehensive Validation › Data Consistency Across UI › Currency values use proper formatting 
+
+    Error: locator.innerText: Error: Node is not an HTMLElement
+    Call log:
+    [2m  - waiting for locator('text=/\\$[0-9,]+/').first()[22m
+
+
+      253 |       
+      254 |       for (let i = 0; i < Math.min(count, 5); i++) {
+    > 255 |         const text = await currencyElements.nth(i).innerText();
+          |                                                    ^
+      256 |         
+      257 |         // Should have $ symbol and numbers
+      258 |         expect(text).toMatch(/\$[0-9,]+/);
+        at /Users/hugowentzel/sunspire-clean/tests/estimations-comprehensive.spec.ts:255:52
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--38fd0-alues-use-proper-formatting-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--38fd0-alues-use-proper-formatting-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/estimations-comprehensive--38fd0-alues-use-proper-formatting-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--38fd0-alues-use-proper-formatting-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/estimations-comprehensive--38fd0-alues-use-proper-formatting-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:95000) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:95001) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:95000) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:95001) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[31/40] [chromium] › tests/estimations-comprehensive.spec.ts:264:9 › Solar Estimations - Comprehensive Validation › Different Locations › Estimates vary by location (Georgia vs California)
+[1A[2K[32/40] [mobile] › tests/estimations-comprehensive.spec.ts:264:9 › Solar Estimations - Comprehensive Validation › Different Locations › Estimates vary by location (Georgia vs California)
+[1A[2K[33/40] [chromium] › tests/estimations-comprehensive.spec.ts:290:9 › Solar Estimations - Comprehensive Validation › Error Handling › Handles invalid address gracefully
+[1A[2K[34/40] [mobile] › tests/estimations-comprehensive.spec.ts:290:9 › Solar Estimations - Comprehensive Validation › Error Handling › Handles invalid address gracefully
+[1A[2K  5) [chromium] › tests/estimations-comprehensive.spec.ts:290:9 › Solar Estimations - Comprehensive Validation › Error Handling › Handles invalid address gracefully 
+
+    Error: locator.isVisible: Unexpected token "=" while parsing css selector ".error, [data-testid*="error"], text=/error/i". Did you mean to CSS.escape it?
+    Call log:
+    [2m    - checking visibility of .error, [data-testid*="error"], text=/error/i[22m
+
+
+      293 |       
+      294 |       // Should show error or redirect
+    > 295 |       const hasError = await page.locator('.error, [data-testid*="error"], text=/error/i').isVisible();
+          |                                                                                            ^
+      296 |       const isRedirected = page.url().includes('/') && !page.url().includes('/report');
+      297 |       
+      298 |       expect(hasError || isRedirected).toBe(true);
+        at /Users/hugowentzel/sunspire-clean/tests/estimations-comprehensive.spec.ts:295:92
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--bd3c0--invalid-address-gracefully-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--bd3c0--invalid-address-gracefully-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/estimations-comprehensive--bd3c0--invalid-address-gracefully-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--bd3c0--invalid-address-gracefully-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/estimations-comprehensive--bd3c0--invalid-address-gracefully-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  6) [mobile] › tests/estimations-comprehensive.spec.ts:290:9 › Solar Estimations - Comprehensive Validation › Error Handling › Handles invalid address gracefully 
+
+    Error: locator.isVisible: Unexpected token "=" while parsing css selector ".error, [data-testid*="error"], text=/error/i". Did you mean to CSS.escape it?
+    Call log:
+    [2m    - checking visibility of .error, [data-testid*="error"], text=/error/i[22m
+
+
+      293 |       
+      294 |       // Should show error or redirect
+    > 295 |       const hasError = await page.locator('.error, [data-testid*="error"], text=/error/i').isVisible();
+          |                                                                                            ^
+      296 |       const isRedirected = page.url().includes('/') && !page.url().includes('/report');
+      297 |       
+      298 |       expect(hasError || isRedirected).toBe(true);
+        at /Users/hugowentzel/sunspire-clean/tests/estimations-comprehensive.spec.ts:295:92
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--bd3c0--invalid-address-gracefully-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--bd3c0--invalid-address-gracefully-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/estimations-comprehensive--bd3c0--invalid-address-gracefully-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--bd3c0--invalid-address-gracefully-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/estimations-comprehensive--bd3c0--invalid-address-gracefully-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:95186) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:95187) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:95186) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:95187) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[35/40] [chromium] › tests/estimations-comprehensive.spec.ts:301:9 › Solar Estimations - Comprehensive Validation › Error Handling › Shows loading state during calculation
+[1A[2K[36/40] [mobile] › tests/estimations-comprehensive.spec.ts:301:9 › Solar Estimations - Comprehensive Validation › Error Handling › Shows loading state during calculation
+[1A[2K[37/40] [chromium] › tests/estimations-comprehensive.spec.ts:318:9 › Solar Estimations - Comprehensive Validation › Demo vs Paid Differences › Demo mode shows all basic estimations
+[1A[2K[38/40] [mobile] › tests/estimations-comprehensive.spec.ts:318:9 › Solar Estimations - Comprehensive Validation › Demo vs Paid Differences › Demo mode shows all basic estimations
+[1A[2K[39/40] [chromium] › tests/estimations-comprehensive.spec.ts:328:9 › Solar Estimations - Comprehensive Validation › Demo vs Paid Differences › Paid mode shows detailed financial analysis
+[1A[2K[40/40] [mobile] › tests/estimations-comprehensive.spec.ts:328:9 › Solar Estimations - Comprehensive Validation › Demo vs Paid Differences › Paid mode shows detailed financial analysis
+[1A[2K  7) [mobile] › tests/estimations-comprehensive.spec.ts:328:9 › Solar Estimations - Comprehensive Validation › Demo vs Paid Differences › Paid mode shows detailed financial analysis 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('tile-systemSize')
+    Expected: visible
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 15000ms[22m
+    [2m  - waiting for getByTestId('tile-systemSize')[22m
+
+
+      338 |       
+      339 |       // At minimum, tiles should be visible
+    > 340 |       await expect(page.getByTestId('tile-systemSize')).toBeVisible({ timeout: 15000 });
+          |                                                         ^
+      341 |     });
+      342 |   });
+      343 | });
+        at /Users/hugowentzel/sunspire-clean/tests/estimations-comprehensive.spec.ts:340:57
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--6ab67-detailed-financial-analysis-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--6ab67-detailed-financial-analysis-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/estimations-comprehensive--6ab67-detailed-financial-analysis-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--6ab67-detailed-financial-analysis-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/estimations-comprehensive--6ab67-detailed-financial-analysis-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  8) [chromium] › tests/estimations-comprehensive.spec.ts:328:9 › Solar Estimations - Comprehensive Validation › Demo vs Paid Differences › Paid mode shows detailed financial analysis 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('tile-systemSize')
+    Expected: visible
+    Timeout: 15000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 15000ms[22m
+    [2m  - waiting for getByTestId('tile-systemSize')[22m
+
+
+      338 |       
+      339 |       // At minimum, tiles should be visible
+    > 340 |       await expect(page.getByTestId('tile-systemSize')).toBeVisible({ timeout: 15000 });
+          |                                                         ^
+      341 |     });
+      342 |   });
+      343 | });
+        at /Users/hugowentzel/sunspire-clean/tests/estimations-comprehensive.spec.ts:340:57
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--6ab67-detailed-financial-analysis-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--6ab67-detailed-financial-analysis-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/estimations-comprehensive--6ab67-detailed-financial-analysis-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/estimations-comprehensive--6ab67-detailed-financial-analysis-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/estimations-comprehensive--6ab67-detailed-financial-analysis-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  8 failed
+    [chromium] › tests/estimations-comprehensive.spec.ts:152:9 › Solar Estimations - Comprehensive Validation › Financial Projections › ROI is positive 
+    [chromium] › tests/estimations-comprehensive.spec.ts:243:9 › Solar Estimations - Comprehensive Validation › Data Consistency Across UI › Currency values use proper formatting 
+    [chromium] › tests/estimations-comprehensive.spec.ts:290:9 › Solar Estimations - Comprehensive Validation › Error Handling › Handles invalid address gracefully 
+    [chromium] › tests/estimations-comprehensive.spec.ts:328:9 › Solar Estimations - Comprehensive Validation › Demo vs Paid Differences › Paid mode shows detailed financial analysis 
+    [mobile] › tests/estimations-comprehensive.spec.ts:152:9 › Solar Estimations - Comprehensive Validation › Financial Projections › ROI is positive 
+    [mobile] › tests/estimations-comprehensive.spec.ts:243:9 › Solar Estimations - Comprehensive Validation › Data Consistency Across UI › Currency values use proper formatting 
+    [mobile] › tests/estimations-comprehensive.spec.ts:290:9 › Solar Estimations - Comprehensive Validation › Error Handling › Handles invalid address gracefully 
+    [mobile] › tests/estimations-comprehensive.spec.ts:328:9 › Solar Estimations - Comprehensive Validation › Demo vs Paid Differences › Paid mode shows detailed financial analysis 
+  32 passed (2.2m)

@@ -1,0 +1,919 @@
+
+Running 30 tests using 1 worker
+
+[1A[2K(node:22703) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:22703) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo California: Real data verification
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo California: Real data verification
+✅ California Demo: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[2/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo New York: Real data verification
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo New York: Real data verification
+✅ New York Demo: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[3/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Arizona: Real data verification
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Arizona: Real data verification
+✅ Arizona Demo: System=7.2kW, Production=12956kWh, CF=20.5%
+
+[1A[2K[4/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Florida: Real data verification
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Florida: Real data verification
+✅ Florida Demo: System=7.2kW, Production=10722kWh, CF=17.0%
+
+[1A[2K[5/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Georgia: Real data verification
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Georgia: Real data verification
+✅ Georgia Demo: System=7.2kW, Production=10052kWh, CF=15.9%
+
+[1A[2K[6/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid California: Real data + paid features
+[1A[2K  1) [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid California: Real data + paid features 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByText('(Live Preview)')
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByText('(Live Preview)')[22m
+    [2m    14 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      131 |         
+      132 |         // Verify NO demo elements - THIS SHOULD NOW PASS
+    > 133 |         await expect(page.getByText('(Live Preview)')).toHaveCount(0);
+          |                                                        ^
+      134 |         await expect(page.getByText(/runs left/i)).toHaveCount(0);
+      135 |         
+      136 |         // Verify brand (Apple)
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:133:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-f23df-nia-Real-data-paid-features-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-f23df-nia-Real-data-paid-features-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-f23df-nia-Real-data-paid-features-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-f23df-nia-Real-data-paid-features-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-f23df-nia-Real-data-paid-features-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:23422) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:23422) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[7/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid New York: Real data + paid features
+[1A[2K  2) [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid New York: Real data + paid features 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByText('(Live Preview)')
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByText('(Live Preview)')[22m
+    [2m    14 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      131 |         
+      132 |         // Verify NO demo elements - THIS SHOULD NOW PASS
+    > 133 |         await expect(page.getByText('(Live Preview)')).toHaveCount(0);
+          |                                                        ^
+      134 |         await expect(page.getByText(/runs left/i)).toHaveCount(0);
+      135 |         
+      136 |         // Verify brand (Apple)
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:133:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-2666e-ork-Real-data-paid-features-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-2666e-ork-Real-data-paid-features-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-2666e-ork-Real-data-paid-features-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-2666e-ork-Real-data-paid-features-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-2666e-ork-Real-data-paid-features-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:23619) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:23619) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[8/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Arizona: Real data + paid features
+[1A[2K  3) [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Arizona: Real data + paid features 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByText('(Live Preview)')
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByText('(Live Preview)')[22m
+    [2m    14 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      131 |         
+      132 |         // Verify NO demo elements - THIS SHOULD NOW PASS
+    > 133 |         await expect(page.getByText('(Live Preview)')).toHaveCount(0);
+          |                                                        ^
+      134 |         await expect(page.getByText(/runs left/i)).toHaveCount(0);
+      135 |         
+      136 |         // Verify brand (Apple)
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:133:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-b43f1-ona-Real-data-paid-features-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-b43f1-ona-Real-data-paid-features-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-b43f1-ona-Real-data-paid-features-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-b43f1-ona-Real-data-paid-features-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-b43f1-ona-Real-data-paid-features-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:23811) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:23811) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[9/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Florida: Real data + paid features
+[1A[2K  4) [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Florida: Real data + paid features 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByText('(Live Preview)')
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByText('(Live Preview)')[22m
+    [2m    14 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      131 |         
+      132 |         // Verify NO demo elements - THIS SHOULD NOW PASS
+    > 133 |         await expect(page.getByText('(Live Preview)')).toHaveCount(0);
+          |                                                        ^
+      134 |         await expect(page.getByText(/runs left/i)).toHaveCount(0);
+      135 |         
+      136 |         // Verify brand (Apple)
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:133:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-ce8cd-ida-Real-data-paid-features-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-ce8cd-ida-Real-data-paid-features-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-ce8cd-ida-Real-data-paid-features-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-ce8cd-ida-Real-data-paid-features-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-ce8cd-ida-Real-data-paid-features-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:24039) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:24039) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[10/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Georgia: Real data + paid features
+[1A[2K  5) [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Georgia: Real data + paid features 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByText('(Live Preview)')
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByText('(Live Preview)')[22m
+    [2m    14 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      131 |         
+      132 |         // Verify NO demo elements - THIS SHOULD NOW PASS
+    > 133 |         await expect(page.getByText('(Live Preview)')).toHaveCount(0);
+          |                                                        ^
+      134 |         await expect(page.getByText(/runs left/i)).toHaveCount(0);
+      135 |         
+      136 |         // Verify brand (Apple)
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:133:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-3656c-gia-Real-data-paid-features-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-3656c-gia-Real-data-paid-features-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-3656c-gia-Real-data-paid-features-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-3656c-gia-Real-data-paid-features-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-3656c-gia-Real-data-paid-features-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:24235) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:24235) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[11/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values
+[1A[2K  6) [chromium] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values 
+
+    TimeoutError: page.waitForURL: Timeout 30000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      190 |       await generateButton.click({ force: true });
+      191 |       
+    > 192 |       await page.waitForURL(/\/report\?/, { timeout: 30000 });
+          |                  ^
+      193 |       await page.waitForLoadState('networkidle');
+      194 |       await page.waitForTimeout(6000);
+      195 |       
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:192:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-662c2-Different-production-values-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-662c2-Different-production-values-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:24659) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:24659) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[12/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:221:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Demo: Verify API calls and NOT fallback data
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:221:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Demo: Verify API calls and NOT fallback data
+📡 API calls: 12
+
+[1A[2K🔢 Unique values: 3
+
+[1A[2K📊 Has decimals: true
+
+[1A[2K[13/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:271:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Paid: Verify API calls and NOT fallback data
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:271:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Paid: Verify API calls and NOT fallback data
+📡 PAID API calls: 10
+
+[1A[2K🔢 PAID Unique values: 4
+
+[1A[2K[14/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:318:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: NO demo badge, YES paid features
+[1A[2K  7) [chromium] › tests/final-comprehensive-estimations.spec.ts:318:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: NO demo badge, YES paid features 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByText('(Live Preview)')
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByText('(Live Preview)')[22m
+    [2m    14 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      339 |       
+      340 |       // CRITICAL: Verify NO demo badge
+    > 341 |       await expect(page.getByText('(Live Preview)')).toHaveCount(0);
+          |                                                      ^
+      342 |       await expect(page.getByText(/runs left/i)).toHaveCount(0);
+      343 |       await expect(page.getByText(/Expires in/i)).toHaveCount(0);
+      344 |       
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:341:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-e4acd-emo-badge-YES-paid-features-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-e4acd-emo-badge-YES-paid-features-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-e4acd-emo-badge-YES-paid-features-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-e4acd-emo-badge-YES-paid-features-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-e4acd-emo-badge-YES-paid-features-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:25052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:25052) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[15/30] [chromium] › tests/final-comprehensive-estimations.spec.ts:357:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: Google branding works correctly
+[1A[2K  8) [chromium] › tests/final-comprehensive-estimations.spec.ts:357:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: Google branding works correctly 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByText('(Live Preview)')
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByText('(Live Preview)')[22m
+    [2m    14 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      382 |       
+      383 |       // Verify NO demo badge
+    > 384 |       await expect(page.getByText('(Live Preview)')).toHaveCount(0);
+          |                                                      ^
+      385 |       
+      386 |       console.log(`✅ Google PAID: Branding correct, NO demo badge`);
+      387 |     });
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:384:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-40d61-le-branding-works-correctly-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-40d61-le-branding-works-correctly-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-40d61-le-branding-works-correctly-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-40d61-le-branding-works-correctly-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-40d61-le-branding-works-correctly-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:25243) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:25243) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[16/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo California: Real data verification
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo California: Real data verification
+✅ California Demo: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[17/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo New York: Real data verification
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo New York: Real data verification
+✅ New York Demo: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[18/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Arizona: Real data verification
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Arizona: Real data verification
+✅ Arizona Demo: System=7.2kW, Production=12956kWh, CF=20.5%
+
+[1A[2K[19/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Florida: Real data verification
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Florida: Real data verification
+✅ Florida Demo: System=7.2kW, Production=10722kWh, CF=17.0%
+
+[1A[2K[20/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Georgia: Real data verification
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Georgia: Real data verification
+✅ Georgia Demo: System=7.2kW, Production=10052kWh, CF=15.9%
+
+[1A[2K[21/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid California: Real data + paid features
+[1A[2K  9) [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid California: Real data + paid features 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByText('(Live Preview)')
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByText('(Live Preview)')[22m
+    [2m    14 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      131 |         
+      132 |         // Verify NO demo elements - THIS SHOULD NOW PASS
+    > 133 |         await expect(page.getByText('(Live Preview)')).toHaveCount(0);
+          |                                                        ^
+      134 |         await expect(page.getByText(/runs left/i)).toHaveCount(0);
+      135 |         
+      136 |         // Verify brand (Apple)
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:133:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-f23df-nia-Real-data-paid-features-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-f23df-nia-Real-data-paid-features-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-f23df-nia-Real-data-paid-features-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-f23df-nia-Real-data-paid-features-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-f23df-nia-Real-data-paid-features-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:25998) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:25998) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[22/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid New York: Real data + paid features
+[1A[2K  10) [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid New York: Real data + paid features 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByText('(Live Preview)')
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByText('(Live Preview)')[22m
+    [2m    14 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      131 |         
+      132 |         // Verify NO demo elements - THIS SHOULD NOW PASS
+    > 133 |         await expect(page.getByText('(Live Preview)')).toHaveCount(0);
+          |                                                        ^
+      134 |         await expect(page.getByText(/runs left/i)).toHaveCount(0);
+      135 |         
+      136 |         // Verify brand (Apple)
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:133:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-2666e-ork-Real-data-paid-features-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-2666e-ork-Real-data-paid-features-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-2666e-ork-Real-data-paid-features-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-2666e-ork-Real-data-paid-features-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-2666e-ork-Real-data-paid-features-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:26198) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:26198) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[23/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Arizona: Real data + paid features
+[1A[2K  11) [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Arizona: Real data + paid features 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByText('(Live Preview)')
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByText('(Live Preview)')[22m
+    [2m    13 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      131 |         
+      132 |         // Verify NO demo elements - THIS SHOULD NOW PASS
+    > 133 |         await expect(page.getByText('(Live Preview)')).toHaveCount(0);
+          |                                                        ^
+      134 |         await expect(page.getByText(/runs left/i)).toHaveCount(0);
+      135 |         
+      136 |         // Verify brand (Apple)
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:133:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-b43f1-ona-Real-data-paid-features-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-b43f1-ona-Real-data-paid-features-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-b43f1-ona-Real-data-paid-features-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-b43f1-ona-Real-data-paid-features-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-b43f1-ona-Real-data-paid-features-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:26387) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:26387) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[24/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Florida: Real data + paid features
+[1A[2K  12) [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Florida: Real data + paid features 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByText('(Live Preview)')
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByText('(Live Preview)')[22m
+    [2m    14 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      131 |         
+      132 |         // Verify NO demo elements - THIS SHOULD NOW PASS
+    > 133 |         await expect(page.getByText('(Live Preview)')).toHaveCount(0);
+          |                                                        ^
+      134 |         await expect(page.getByText(/runs left/i)).toHaveCount(0);
+      135 |         
+      136 |         // Verify brand (Apple)
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:133:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-ce8cd-ida-Real-data-paid-features-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-ce8cd-ida-Real-data-paid-features-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-ce8cd-ida-Real-data-paid-features-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-ce8cd-ida-Real-data-paid-features-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-ce8cd-ida-Real-data-paid-features-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:26605) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:26605) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[25/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Georgia: Real data + paid features
+[1A[2K  13) [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Georgia: Real data + paid features 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByText('(Live Preview)')
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByText('(Live Preview)')[22m
+    [2m    14 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      131 |         
+      132 |         // Verify NO demo elements - THIS SHOULD NOW PASS
+    > 133 |         await expect(page.getByText('(Live Preview)')).toHaveCount(0);
+          |                                                        ^
+      134 |         await expect(page.getByText(/runs left/i)).toHaveCount(0);
+      135 |         
+      136 |         // Verify brand (Apple)
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:133:56
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-3656c-gia-Real-data-paid-features-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-3656c-gia-Real-data-paid-features-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-3656c-gia-Real-data-paid-features-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-3656c-gia-Real-data-paid-features-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-3656c-gia-Real-data-paid-features-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:26800) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:26800) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[26/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values
+[1A[2K  14) [mobile] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values 
+
+    TimeoutError: page.waitForURL: Timeout 30000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      190 |       await generateButton.click({ force: true });
+      191 |       
+    > 192 |       await page.waitForURL(/\/report\?/, { timeout: 30000 });
+          |                  ^
+      193 |       await page.waitForLoadState('networkidle');
+      194 |       await page.waitForTimeout(6000);
+      195 |       
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:192:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-662c2-Different-production-values-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-662c2-Different-production-values-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:27237) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:27237) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[27/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:221:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Demo: Verify API calls and NOT fallback data
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:221:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Demo: Verify API calls and NOT fallback data
+📡 API calls: 12
+
+[1A[2K🔢 Unique values: 3
+
+[1A[2K📊 Has decimals: true
+
+[1A[2K[28/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:271:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Paid: Verify API calls and NOT fallback data
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:271:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Paid: Verify API calls and NOT fallback data
+📡 PAID API calls: 9
+
+[1A[2K🔢 PAID Unique values: 4
+
+[1A[2K[29/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:318:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: NO demo badge, YES paid features
+[1A[2K  15) [mobile] › tests/final-comprehensive-estimations.spec.ts:318:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: NO demo badge, YES paid features 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByText('(Live Preview)')
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByText('(Live Preview)')[22m
+    [2m    14 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      339 |       
+      340 |       // CRITICAL: Verify NO demo badge
+    > 341 |       await expect(page.getByText('(Live Preview)')).toHaveCount(0);
+          |                                                      ^
+      342 |       await expect(page.getByText(/runs left/i)).toHaveCount(0);
+      343 |       await expect(page.getByText(/Expires in/i)).toHaveCount(0);
+      344 |       
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:341:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-e4acd-emo-badge-YES-paid-features-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-e4acd-emo-badge-YES-paid-features-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-e4acd-emo-badge-YES-paid-features-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-e4acd-emo-badge-YES-paid-features-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-e4acd-emo-badge-YES-paid-features-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:27641) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:27641) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[30/30] [mobile] › tests/final-comprehensive-estimations.spec.ts:357:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: Google branding works correctly
+[1A[2K  16) [mobile] › tests/final-comprehensive-estimations.spec.ts:357:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: Google branding works correctly 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByText('(Live Preview)')
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByText('(Live Preview)')[22m
+    [2m    14 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      382 |       
+      383 |       // Verify NO demo badge
+    > 384 |       await expect(page.getByText('(Live Preview)')).toHaveCount(0);
+          |                                                      ^
+      385 |       
+      386 |       console.log(`✅ Google PAID: Branding correct, NO demo badge`);
+      387 |     });
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:384:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-40d61-le-branding-works-correctly-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-40d61-le-branding-works-correctly-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-40d61-le-branding-works-correctly-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-40d61-le-branding-works-correctly-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-40d61-le-branding-works-correctly-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  16 failed
+    [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid California: Real data + paid features 
+    [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid New York: Real data + paid features 
+    [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Arizona: Real data + paid features 
+    [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Florida: Real data + paid features 
+    [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Georgia: Real data + paid features 
+    [chromium] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values 
+    [chromium] › tests/final-comprehensive-estimations.spec.ts:318:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: NO demo badge, YES paid features 
+    [chromium] › tests/final-comprehensive-estimations.spec.ts:357:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: Google branding works correctly 
+    [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid California: Real data + paid features 
+    [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid New York: Real data + paid features 
+    [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Arizona: Real data + paid features 
+    [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Florida: Real data + paid features 
+    [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Georgia: Real data + paid features 
+    [mobile] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values 
+    [mobile] › tests/final-comprehensive-estimations.spec.ts:318:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: NO demo badge, YES paid features 
+    [mobile] › tests/final-comprehensive-estimations.spec.ts:357:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: Google branding works correctly 
+  14 passed (9.5m)

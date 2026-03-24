@@ -1,0 +1,154 @@
+/* COLORS */
+[data-report] .btn-primary {
+  background: var(--report-primary);
+  color: #fff;
+}
+[data-report] .btn-primary:hover {
+  background: var(--report-accent);
+}
+[data-report] .badge-accent {
+  background: var(--report-accent);
+  color: #fff;
+}
+[data-report] .card-muted {
+  background: var(--report-muted);
+}
+
+/* UNLOCK button must be pure black as per screenshots */
+[data-report] .unlock-btn {
+  background: var(--report-unlockblack);
+  color: #fff;
+}
+
+/* BUTTON HEIGHTS – match c548b88 exactly */
+[data-report] .btn,
+[data-report] .unlock-btn,
+[data-report] .cta-btn {
+  height: 64px;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
+  font-weight: 600;
+  border-radius: 12px;
+}
+
+/* TILE / CARD SHADOWS & RADII – identical to c548b88 */
+[data-report] .tile,
+[data-report] .card,
+[data-report] .graph-card,
+[data-report] .cta-band {
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(16, 24, 40, 0.08);
+}
+
+/* BLUR/LOCK OVERLAY – identical strength */
+[data-report] .blur-target {
+  filter: blur(7px);
+  pointer-events: none;
+}
+[data-report] .blur-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: inherit;
+}
+
+/* GUARANTEED BLUR OVERLAY FOR DEMO MODE */
+.locked-blur {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.locked-blur__content {
+  position: relative;
+}
+
+/* Pseudo-element does the actual blur */
+.locked-blur__content::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.28); /* translucency so blur is visible */
+  pointer-events: none;
+}
+
+/* Overlay text layer */
+.locked-blur__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+.locked-blur__text {
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  background: var(--brand, #ff7a00); /* Use brand color with fallback */
+  color: #fff; /* White text on brand background */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Hard fallback when browser lacks backdrop-filter: use a frosted PNG gradient instead of true blur */
+@supports not (
+  (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))
+) {
+  .locked-blur__content::after {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    /* fallback glass effect */
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.78),
+      rgba(255, 255, 255, 0.78)
+    );
+  }
+}
+
+/* Tailwind enhancement layer */
+@layer utilities {
+  .locked-blur__content {
+    @apply backdrop-blur-md bg-white/20;
+  }
+}
+
+/* KPIs under chart – spacing and typography */
+[data-report] .kpi-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* Headline & subheadline spacing */
+[data-report] .headline {
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+[data-report] .subhead {
+  margin-bottom: 24px;
+  color: #475467;
+}
+
+/* Responsive breakpoints same as c548b88 */
+@media (max-width: 1024px) {
+  [data-report] .tiles {
+    grid-template-columns: 1fr 1fr;
+  }
+  [data-report] .kpi-row {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 640px) {
+  [data-report] .tiles {
+    grid-template-columns: 1fr;
+  }
+}

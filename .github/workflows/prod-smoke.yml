@@ -1,0 +1,39 @@
+# Synthetic smoke tests against production (run after deploy or on schedule).
+# Alerts you before users report issues. Set PROD_APP_URL in repo vars or default below.
+
+name: Prod smoke
+
+on:
+  schedule:
+    - cron: '0 14 * * *'  # 2pm UTC daily
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+
+jobs:
+  prod-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run smoke against production
+        run: npx playwright test tests/e2e/smoke.spec.ts tests/api/route-integration.spec.ts --reporter=list
+        env:
+          BASE_URL: ${{ vars.PROD_APP_URL || 'https://sunspire-web-app.vercel.app' }}
+        timeout-minutes: 5

@@ -1,0 +1,847 @@
+
+Running 54 tests using 1 worker
+
+[1A[2K(node:48720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:48720) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/54] [chromium] › tests/accessibility-responsive.spec.ts:6:7 › Accessibility & Responsive Design › No serious a11y issues on demo header (mobile)
+[1A[2K  1) [chromium] › tests/accessibility-responsive.spec.ts:6:7 › Accessibility & Responsive Design › No serious a11y issues on demo header (mobile) 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m1[39m
+    Received array:  [31m[{"description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds", "help": "Elements must meet minimum color contrast ratio thresholds", "helpUrl": "https://dequeuniversity.com/rules/axe/4.10/color-contrast?application=playwright", "id": "color-contrast", "impact": "serious", "nodes": [{"all": [], "any": [{"data": {"bgColor": "#fcfdfe", "contrastRatio": 2.82, "expectedContrastRatio": "4.5:1", "fgColor": "#9299a2", "fontSize": "12.4pt (16.5px)", "fontWeight": "normal", "messageKey": null}, "id": "color-contrast", "impact": "serious", "message": "Element has insufficient color contrast of 2.82 (foreground color: #9299a2, background color: #fcfdfe, font size: 12.4pt (16.5px), font weight: normal). Expected contrast ratio of 4.5:1", "relatedNodes": [{"html": "<div data-testid=\"tile-systemSize\" class=\"relative rounded-2xl overflow-hidden bg-white border border-gray-200/50 hover:shadow-xl transition-all duration-300\">", "target": ["div[data-testid=\"tile-systemSize\"]"]}]}], "failureSummary": "Fix any of the following:[39m
+    [31m  Element has insufficient color contrast of 2.82 (foreground color: #9299a2, background color: #fcfdfe, font size: 12.4pt (16.5px), font weight: normal). Expected contrast ratio of 4.5:1", "html": "<div class=\"text-gray-600 font-semibold\">System Size</div>", "impact": "serious", "none": [], "target": ["div[data-testid=\"tile-systemSize\"] > .p-8.z-10.text-center > .font-semibold.text-gray-600"]}, {"all": [], "any": [{"data": {"bgColor": "#fcfdfe", "contrastRatio": 2.82, "expectedContrastRatio": "4.5:1", "fgColor": "#9299a2", "fontSize": "12.4pt (16.5px)", "fontWeight": "normal", "messageKey": null}, "id": "color-contrast", "impact": "serious", "message": "Element has insufficient color contrast of 2.82 (foreground color: #9299a2, background color: #fcfdfe, font size: 12.4pt (16.5px), font weight: normal). Expected contrast ratio of 4.5:1", "relatedNodes": [{"html": "<div data-testid=\"tile-annualProduction\" class=\"relative rounded-2xl overflow-hidden bg-white border border-gray-200/50 hover:shadow-xl transition-all duration-300\">", "target": ["div[data-testid=\"tile-annualProduction\"]"]}]}], "failureSummary": "Fix any of the following:[39m
+    [31m  Element has insufficient color contrast of 2.82 (foreground color: #9299a2, background color: #fcfdfe, font size: 12.4pt (16.5px), font weight: normal). Expected contrast ratio of 4.5:1", "html": "<div class=\"text-gray-600 font-semibold\">Annual Production</div>", "impact": "serious", "none": [], "target": ["div[data-testid=\"tile-annualProduction\"] > .p-8.z-10.text-center > .font-semibold.text-gray-600"]}], "tags": ["cat.color", "wcag2aa", "wcag143", "TTv5", "TT13.c", "EN-301-549", "EN-9.1.4.3", "ACT"]}][39m
+
+      16 |     );
+      17 |     
+    > 18 |     expect(seriousViolations).toHaveLength(0);
+         |                               ^
+      19 |   });
+      20 |
+      21 |   test('No serious a11y issues on paid full report (desktop)', async ({ page }) => {
+        at /Users/hugowentzel/sunspire-clean/tests/accessibility-responsive.spec.ts:18:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-a1d42-sues-on-demo-header-mobile--chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-a1d42-sues-on-demo-header-mobile--chromium/video-1.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-a1d42-sues-on-demo-header-mobile--chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/accessibility-responsive-A-a1d42-sues-on-demo-header-mobile--chromium/error-context.md
+
+    attachment #5: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-a1d42-sues-on-demo-header-mobile--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/accessibility-responsive-A-a1d42-sues-on-demo-header-mobile--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:48836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:48836) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[2/54] [chromium] › tests/accessibility-responsive.spec.ts:21:7 › Accessibility & Responsive Design › No serious a11y issues on paid full report (desktop)
+[1A[2K[3/54] [chromium] › tests/accessibility-responsive.spec.ts:35:7 › Accessibility & Responsive Design › Keyboard navigation works
+[1A[2K[4/54] [chromium] › tests/accessibility-responsive.spec.ts:56:7 › Accessibility & Responsive Design › Color contrast meets standards
+[1A[2K[5/54] [chromium] › tests/accessibility-responsive.spec.ts:76:7 › Accessibility & Responsive Design › Responsive design works on different screen sizes
+[1A[2K  2) [chromium] › tests/accessibility-responsive.spec.ts:76:7 › Accessibility & Responsive Design › Responsive design works on different screen sizes 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('hdr-h1')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for getByTestId('hdr-h1')[22m
+
+
+      87 |       
+      88 |       // Check that header is visible
+    > 89 |       await expect(page.getByTestId('hdr-h1')).toBeVisible();
+         |                                                ^
+      90 |       
+      91 |       // Check that buttons are accessible
+      92 |       const bookButton = page.getByRole('button', { name: /Book a Consultation/i });
+        at /Users/hugowentzel/sunspire-clean/tests/accessibility-responsive.spec.ts:89:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-ca2d6-s-on-different-screen-sizes-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-ca2d6-s-on-different-screen-sizes-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/accessibility-responsive-A-ca2d6-s-on-different-screen-sizes-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-ca2d6-s-on-different-screen-sizes-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/accessibility-responsive-A-ca2d6-s-on-different-screen-sizes-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:49024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:49024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[6/54] [chromium] › tests/accessibility-responsive.spec.ts:102:7 › Accessibility & Responsive Design › Mobile-specific interactions work
+[1A[2K[7/54] [chromium] › tests/accessibility-responsive.spec.ts:121:7 › Accessibility & Responsive Design › Screen reader compatibility
+[1A[2K  3) [chromium] › tests/accessibility-responsive.spec.ts:121:7 › Accessibility & Responsive Design › Screen reader compatibility 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('h1')
+    Expected: visible
+    Error: strict mode violation: locator('h1') resolved to 2 elements:
+        1) <h1 class="text-2xl font-black text-[var(--brand-primary)] leading-tight">Apple</h1> aka getByRole('link', { name: 'Apple logo Apple Solar' })
+        2) <h1 class="text-5xl md:text-7xl font-black text-gray-900 leading-tight">Instant Solar Analysis for Your Home</h1> aka getByRole('heading', { name: 'Instant Solar Analysis for' })
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for locator('h1')[22m
+
+
+      139 |     // Check for proper heading structure
+      140 |     const h1 = page.locator('h1');
+    > 141 |     await expect(h1).toBeVisible();
+          |                      ^
+      142 |     
+      143 |     // Check for alt text on images
+      144 |     const images = page.locator('img');
+        at /Users/hugowentzel/sunspire-clean/tests/accessibility-responsive.spec.ts:141:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-567c9-Screen-reader-compatibility-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-567c9-Screen-reader-compatibility-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/accessibility-responsive-A-567c9-Screen-reader-compatibility-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-567c9-Screen-reader-compatibility-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/accessibility-responsive-A-567c9-Screen-reader-compatibility-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:49074) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:49074) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[8/54] [chromium] › tests/accessibility-responsive.spec.ts:157:7 › Accessibility & Responsive Design › Focus management and tab order
+[1A[2K[9/54] [chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo California: Real data verification
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo California: Real data verification
+✅ California Demo: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[10/54] [chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo New York: Real data verification
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo New York: Real data verification
+✅ New York Demo: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[11/54] [chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Arizona: Real data verification
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Arizona: Real data verification
+✅ Arizona Demo: System=7.2kW, Production=12956kWh, CF=20.5%
+
+[1A[2K[12/54] [chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Florida: Real data verification
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Florida: Real data verification
+✅ Florida Demo: System=7.2kW, Production=10722kWh, CF=17.0%
+
+[1A[2K[13/54] [chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Georgia: Real data verification
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Georgia: Real data verification
+✅ Georgia Demo: System=7.2kW, Production=10052kWh, CF=15.9%
+
+[1A[2K[14/54] [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid California: Real data + paid features
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid California: Real data + paid features
+✅ California PAID: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[15/54] [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid New York: Real data + paid features
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid New York: Real data + paid features
+✅ New York PAID: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[16/54] [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Arizona: Real data + paid features
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Arizona: Real data + paid features
+✅ Arizona PAID: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[17/54] [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Florida: Real data + paid features
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Florida: Real data + paid features
+✅ Florida PAID: System=7.2kW, Production=10722kWh, CF=17.0%
+
+[1A[2K[18/54] [chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Georgia: Real data + paid features
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Georgia: Real data + paid features
+✅ Georgia PAID: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[19/54] [chromium] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values
+[1A[2K  4) [chromium] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values 
+
+    TimeoutError: page.waitForURL: Timeout 30000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      190 |       await generateButton.click({ force: true });
+      191 |       
+    > 192 |       await page.waitForURL(/\/report\?/, { timeout: 30000 });
+          |                  ^
+      193 |       await page.waitForLoadState('networkidle');
+      194 |       await page.waitForTimeout(6000);
+      195 |       
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:192:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-662c2-Different-production-values-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-662c2-Different-production-values-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:50870) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:50870) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[20/54] [chromium] › tests/final-comprehensive-estimations.spec.ts:221:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Demo: Verify API calls and NOT fallback data
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:221:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Demo: Verify API calls and NOT fallback data
+📡 API calls: 12
+
+[1A[2K🔢 Unique values: 3
+
+[1A[2K📊 Has decimals: true
+
+[1A[2K[21/54] [chromium] › tests/final-comprehensive-estimations.spec.ts:271:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Paid: Verify API calls and NOT fallback data
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:271:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Paid: Verify API calls and NOT fallback data
+📡 PAID API calls: 9
+
+[1A[2K🔢 PAID Unique values: 4
+
+[1A[2K[22/54] [chromium] › tests/final-comprehensive-estimations.spec.ts:318:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: NO demo badge, YES paid features
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:318:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: NO demo badge, YES paid features
+✅ Tesla PAID: NO demo badge, ALL paid features present
+
+[1A[2K[23/54] [chromium] › tests/final-comprehensive-estimations.spec.ts:357:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: Google branding works correctly
+[1A[2K[chromium] › tests/final-comprehensive-estimations.spec.ts:357:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: Google branding works correctly
+✅ Google PAID: Branding correct, NO demo badge
+
+[1A[2K[24/54] [chromium] › tests/header-theming.spec.ts:6:9 › Header & theming › H1 before logo; brand color; spacing — demo
+[1A[2K[25/54] [chromium] › tests/header-theming.spec.ts:53:9 › Header & theming › Header spacing matches 8px rhythm — demo
+[1A[2K  5) [chromium] › tests/header-theming.spec.ts:53:9 › Header & theming › Header spacing matches 8px rhythm — demo 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: >= [32m24[39m
+    Received:    [31m23[39m
+
+      63 |       // H1 → Logo = 24px
+      64 |       const g1 = await gap(page, '[data-testid="hdr-h1"]', '[data-testid="hdr-logo"]');
+    > 65 |       expect(g1).toBeGreaterThanOrEqual(24);
+         |                  ^
+      66 |       expect(g1).toBeLessThanOrEqual(24);
+      67 |
+      68 |       // Logo → Sub = 16px  
+        at /Users/hugowentzel/sunspire-clean/tests/header-theming.spec.ts:65:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-6970a-g-matches-8px-rhythm-—-demo-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-6970a-g-matches-8px-rhythm-—-demo-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/header-theming-Header-them-6970a-g-matches-8px-rhythm-—-demo-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-6970a-g-matches-8px-rhythm-—-demo-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/header-theming-Header-them-6970a-g-matches-8px-rhythm-—-demo-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:51387) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:51387) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[26/54] [chromium] › tests/header-theming.spec.ts:6:9 › Header & theming › H1 before logo; brand color; spacing — paid
+[1A[2K  6) [chromium] › tests/header-theming.spec.ts:6:9 › Header & theming › H1 before logo; brand color; spacing — paid 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('hdr-h1')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for getByTestId('hdr-h1')[22m
+
+
+      13 |       const meta = page.getByTestId('hdr-meta');
+      14 |
+    > 15 |       await expect(h1).toBeVisible();
+         |                        ^
+      16 |       await expect(logo).toBeVisible();
+      17 |       await expect(sub).toBeVisible();
+      18 |       await expect(addr).toBeVisible();
+        at /Users/hugowentzel/sunspire-clean/tests/header-theming.spec.ts:15:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-69c58--brand-color-spacing-—-paid-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-69c58--brand-color-spacing-—-paid-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/header-theming-Header-them-69c58--brand-color-spacing-—-paid-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-69c58--brand-color-spacing-—-paid-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/header-theming-Header-them-69c58--brand-color-spacing-—-paid-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:51523) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:51523) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[27/54] [chromium] › tests/header-theming.spec.ts:53:9 › Header & theming › Header spacing matches 8px rhythm — paid
+[1A[2K  7) [chromium] › tests/header-theming.spec.ts:53:9 › Header & theming › Header spacing matches 8px rhythm — paid 
+
+    [31mTest timeout of 180000ms exceeded.[39m
+
+    Error: locator.boundingBox: Test timeout of 180000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('[data-testid="hdr-h1"]')[22m
+
+
+       at _utils.ts:24
+
+      22 |   const a = page.locator(aSel);
+      23 |   const b = page.locator(bSel);
+    > 24 |   const ab = await a.boundingBox();
+         |                      ^
+      25 |   const bb = await b.boundingBox();
+      26 |   return Math.round(bb!.y - (ab!.y + ab!.height)); // vertical gap in px
+      27 | }
+        at gap (/Users/hugowentzel/sunspire-clean/tests/_utils.ts:24:22)
+        at /Users/hugowentzel/sunspire-clean/tests/header-theming.spec.ts:64:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-61e49-g-matches-8px-rhythm-—-paid-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-61e49-g-matches-8px-rhythm-—-paid-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/header-theming-Header-them-61e49-g-matches-8px-rhythm-—-paid-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-61e49-g-matches-8px-rhythm-—-paid-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/header-theming-Header-them-61e49-g-matches-8px-rhythm-—-paid-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:53461) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:53461) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[28/54] [mobile] › tests/accessibility-responsive.spec.ts:6:7 › Accessibility & Responsive Design › No serious a11y issues on demo header (mobile)
+[1A[2K  8) [mobile] › tests/accessibility-responsive.spec.ts:6:7 › Accessibility & Responsive Design › No serious a11y issues on demo header (mobile) 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoHaveLength[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected length: [32m0[39m
+    Received length: [31m1[39m
+    Received array:  [31m[{"description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds", "help": "Elements must meet minimum color contrast ratio thresholds", "helpUrl": "https://dequeuniversity.com/rules/axe/4.10/color-contrast?application=playwright", "id": "color-contrast", "impact": "serious", "nodes": [{"all": [], "any": [[Object]], "failureSummary": "Fix any of the following:[39m
+    [31m  Element has insufficient color contrast of 4.06 (foreground color: #767e89, background color: #fdfefe, font size: 12.4pt (16.5px), font weight: normal). Expected contrast ratio of 4.5:1", "html": "<div class=\"text-gray-600 font-semibold\">System Size</div>", "impact": "serious", "none": [], "target": ["div[data-testid=\"tile-systemSize\"] > .p-8.z-10.text-center > .font-semibold.text-gray-600"]}, {"all": [], "any": [[Object]], "failureSummary": "Fix any of the following:[39m
+    [31m  Element has insufficient color contrast of 4.06 (foreground color: #767e89, background color: #fdfefe, font size: 12.4pt (16.5px), font weight: normal). Expected contrast ratio of 4.5:1", "html": "<div class=\"text-gray-600 font-semibold\">Annual Production</div>", "impact": "serious", "none": [], "target": ["div[data-testid=\"tile-annualProduction\"] > .p-8.z-10.text-center > .font-semibold.text-gray-600"]}, {"all": [], "any": [[Object]], "failureSummary": "Fix any of the following:[39m
+    [31m  Element has insufficient color contrast of 1.24 (foreground color: #e0e3e6, background color: #f9fbfc, font size: 13.5pt (18px), font weight: normal). Expected contrast ratio of 4.5:1", "html": "<h2 class=\"text-lg md:text-xl font-semibold text-gray-900 mb-6\">Calculation Details &amp; Data Sources</h2>", "impact": "serious", "none": [], "target": [".z-10.relative > .md\\:text-xl"]}, {"all": [], "any": [[Object]], "failureSummary": "Fix any of the following:[39m
+    [31m  Element has insufficient color contrast of 1.22 (foreground color: #e2e4e8, background color: #f9fbfc, font size: 13.5pt (18px), font weight: normal). Expected contrast ratio of 4.5:1", "html": "<h3 class=\"text-lg font-semibold text-gray-800 mb-4\">Calculation Assumptions</h3>", "impact": "serious", "none": [], "target": [".text-gray-800"]}, {"all": [], "any": [[Object]], "failureSummary": "Fix any of the following:[39m
+    [31m  Element has insufficient color contrast of 1.17 (foreground color: #e6e9ec, background color: #f9fbfc, font size: 12.4pt (16.5px), font weight: normal). Expected contrast ratio of 4.5:1", "html": "<span class=\"text-gray-600\">Federal Tax Credit (ITC)</span>", "impact": "serious", "none": [], "target": [".py-3.border-b.border-gray-200:nth-child(1) > .text-gray-600"]}, {"all": [], "any": [[Object]], "failureSummary": "Fix any of the following:[39m
+    [31m  Element has insufficient color contrast of 1.24 (foreground color: #e0e3e6, background color: #f9fbfc, font size: 12.4pt (16.5px), font weight: bold). Expected contrast ratio of 4.5:1", "html": "<span class=\"text-gray-900 font-bold\">30%</span>", "impact": "serious", "none": [], "target": [".py-3.border-b.border-gray-200:nth-child(1) > .font-bold.text-gray-900"]}, {"all": [], "any": [[Object]], "failureSummary": "Fix any of the following:[39m
+    [31m  Element has insufficient color contrast of 1.17 (foreground color: #e6e9ec, background color: #f9fbfc, font size: 12.4pt (16.5px), font weight: normal). Expected contrast ratio of 4.5:1", "html": "<span class=\"text-gray-600\">Cost per Watt</span>", "impact": "serious", "none": [], "target": [".py-3.border-b.border-gray-200:nth-child(2) > .text-gray-600"]}, {"all": [], "any": [[Object]], "failureSummary": "Fix any of the following:[39m
+    [31m  Element has insufficient color contrast of 1.24 (foreground color: #e0e3e6, background color: #f9fbfc, font size: 12.4pt (16.5px), font weight: bold). Expected contrast ratio of 4.5:1", "html": "<span class=\"text-gray-900 font-bold\">$3</span>", "impact": "serious", "none": [], "target": [".py-3.border-b.border-gray-200:nth-child(2) > .font-bold.text-gray-900"]}, {"all": [], "any": [[Object]], "failureSummary": "Fix any of the following:[39m
+    [31m  Element has insufficient color contrast of 1.17 (foreground color: #e6e9ec, background color: #f9fbfc, font size: 12.4pt (16.5px), font weight: normal). Expected contrast ratio of 4.5:1", "html": "<span class=\"text-gray-600\">Panel Degradation</span>", "impact": "serious", "none": [], "target": [".py-3.border-b.border-gray-200:nth-child(3) > .text-gray-600"]}, {"all": [], "any": [[Object]], "failureSummary": "Fix any of the following:[39m
+    [31m  Element has insufficient color contrast of 1.24 (foreground color: #e0e3e6, background color: #f9fbfc, font size: 12.4pt (16.5px), font weight: bold). Expected contrast ratio of 4.5:1", "html": "<span class=\"text-gray-900 font-bold\">0.5%/year</span>", "impact": "serious", "none": [], "target": [".py-3.border-b.border-gray-200:nth-child(3) > .font-bold.text-gray-900"]}, …], "tags": ["cat.color", "wcag2aa", "wcag143", "TTv5", "TT13.c", "EN-301-549", "EN-9.1.4.3", "ACT"]}][39m
+
+      16 |     );
+      17 |     
+    > 18 |     expect(seriousViolations).toHaveLength(0);
+         |                               ^
+      19 |   });
+      20 |
+      21 |   test('No serious a11y issues on paid full report (desktop)', async ({ page }) => {
+        at /Users/hugowentzel/sunspire-clean/tests/accessibility-responsive.spec.ts:18:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-a1d42-sues-on-demo-header-mobile--mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-a1d42-sues-on-demo-header-mobile--mobile/video-1.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #3: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-a1d42-sues-on-demo-header-mobile--mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/accessibility-responsive-A-a1d42-sues-on-demo-header-mobile--mobile/error-context.md
+
+    attachment #5: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-a1d42-sues-on-demo-header-mobile--mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/accessibility-responsive-A-a1d42-sues-on-demo-header-mobile--mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:53580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:53580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[29/54] [mobile] › tests/accessibility-responsive.spec.ts:21:7 › Accessibility & Responsive Design › No serious a11y issues on paid full report (desktop)
+[1A[2K[30/54] [mobile] › tests/accessibility-responsive.spec.ts:35:7 › Accessibility & Responsive Design › Keyboard navigation works
+[1A[2K[31/54] [mobile] › tests/accessibility-responsive.spec.ts:56:7 › Accessibility & Responsive Design › Color contrast meets standards
+[1A[2K[32/54] [mobile] › tests/accessibility-responsive.spec.ts:76:7 › Accessibility & Responsive Design › Responsive design works on different screen sizes
+[1A[2K  9) [mobile] › tests/accessibility-responsive.spec.ts:76:7 › Accessibility & Responsive Design › Responsive design works on different screen sizes 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('hdr-h1')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for getByTestId('hdr-h1')[22m
+
+
+      87 |       
+      88 |       // Check that header is visible
+    > 89 |       await expect(page.getByTestId('hdr-h1')).toBeVisible();
+         |                                                ^
+      90 |       
+      91 |       // Check that buttons are accessible
+      92 |       const bookButton = page.getByRole('button', { name: /Book a Consultation/i });
+        at /Users/hugowentzel/sunspire-clean/tests/accessibility-responsive.spec.ts:89:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-ca2d6-s-on-different-screen-sizes-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-ca2d6-s-on-different-screen-sizes-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/accessibility-responsive-A-ca2d6-s-on-different-screen-sizes-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-ca2d6-s-on-different-screen-sizes-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/accessibility-responsive-A-ca2d6-s-on-different-screen-sizes-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:53809) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:53809) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[33/54] [mobile] › tests/accessibility-responsive.spec.ts:102:7 › Accessibility & Responsive Design › Mobile-specific interactions work
+[1A[2K[34/54] [mobile] › tests/accessibility-responsive.spec.ts:121:7 › Accessibility & Responsive Design › Screen reader compatibility
+[1A[2K  10) [mobile] › tests/accessibility-responsive.spec.ts:121:7 › Accessibility & Responsive Design › Screen reader compatibility 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('h1')
+    Expected: visible
+    Error: strict mode violation: locator('h1') resolved to 2 elements:
+        1) <h1 class="text-2xl font-black text-[var(--brand-primary)] leading-tight">Apple</h1> aka getByRole('link', { name: 'Apple logo Apple Solar' })
+        2) <h1 class="text-5xl md:text-7xl font-black text-gray-900 leading-tight">Instant Solar Analysis for Your Home</h1> aka getByRole('heading', { name: 'Instant Solar Analysis for' })
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for locator('h1')[22m
+
+
+      139 |     // Check for proper heading structure
+      140 |     const h1 = page.locator('h1');
+    > 141 |     await expect(h1).toBeVisible();
+          |                      ^
+      142 |     
+      143 |     // Check for alt text on images
+      144 |     const images = page.locator('img');
+        at /Users/hugowentzel/sunspire-clean/tests/accessibility-responsive.spec.ts:141:22
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-567c9-Screen-reader-compatibility-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-567c9-Screen-reader-compatibility-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/accessibility-responsive-A-567c9-Screen-reader-compatibility-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/accessibility-responsive-A-567c9-Screen-reader-compatibility-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/accessibility-responsive-A-567c9-Screen-reader-compatibility-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:53900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:53900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[35/54] [mobile] › tests/accessibility-responsive.spec.ts:157:7 › Accessibility & Responsive Design › Focus management and tab order
+[1A[2K[36/54] [mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo California: Real data verification
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo California: Real data verification
+✅ California Demo: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[37/54] [mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo New York: Real data verification
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo New York: Real data verification
+✅ New York Demo: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[38/54] [mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Arizona: Real data verification
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Arizona: Real data verification
+✅ Arizona Demo: System=7.2kW, Production=12956kWh, CF=20.5%
+
+[1A[2K[39/54] [mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Florida: Real data verification
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Florida: Real data verification
+✅ Florida Demo: System=7.2kW, Production=10722kWh, CF=17.0%
+
+[1A[2K[40/54] [mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Georgia: Real data verification
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:16:11 › FINAL COMPREHENSIVE Estimation Tests › Demo Version - Multiple Real Locations › Demo Georgia: Real data verification
+✅ Georgia Demo: System=7.2kW, Production=10052kWh, CF=15.9%
+
+[1A[2K[41/54] [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid California: Real data + paid features
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid California: Real data + paid features
+✅ California PAID: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[42/54] [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid New York: Real data + paid features
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid New York: Real data + paid features
+✅ New York PAID: System=7.2kW, Production=9382kWh, CF=14.9%
+
+[1A[2K[43/54] [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Arizona: Real data + paid features
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Arizona: Real data + paid features
+✅ Arizona PAID: System=7.2kW, Production=12956kWh, CF=20.5%
+
+[1A[2K[44/54] [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Florida: Real data + paid features
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Florida: Real data + paid features
+✅ Florida PAID: System=7.2kW, Production=10722kWh, CF=17.0%
+
+[1A[2K[45/54] [mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Georgia: Real data + paid features
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:85:11 › FINAL COMPREHENSIVE Estimation Tests › Paid Version - Multiple Real Locations on Live URL › Paid Georgia: Real data + paid features
+✅ Georgia PAID: System=7.2kW, Production=10052kWh, CF=15.9%
+
+[1A[2K[46/54] [mobile] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values
+[1A[2K  11) [mobile] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values 
+
+    TimeoutError: page.waitForURL: Timeout 30000ms exceeded.
+    =========================== logs ===========================
+    waiting for navigation until "load"
+    ============================================================
+
+      190 |       await generateButton.click({ force: true });
+      191 |       
+    > 192 |       await page.waitForURL(/\/report\?/, { timeout: 30000 });
+          |                  ^
+      193 |       await page.waitForLoadState('networkidle');
+      194 |       await page.waitForTimeout(6000);
+      195 |       
+        at /Users/hugowentzel/sunspire-clean/tests/final-comprehensive-estimations.spec.ts:192:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final-comprehensive-estima-662c2-Different-production-values-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final-comprehensive-estima-662c2-Different-production-values-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final-comprehensive-estima-662c2-Different-production-values-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:55602) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:55602) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[47/54] [mobile] › tests/final-comprehensive-estimations.spec.ts:221:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Demo: Verify API calls and NOT fallback data
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:221:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Demo: Verify API calls and NOT fallback data
+📡 API calls: 12
+
+[1A[2K🔢 Unique values: 3
+
+[1A[2K📊 Has decimals: true
+
+[1A[2K[48/54] [mobile] › tests/final-comprehensive-estimations.spec.ts:271:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Paid: Verify API calls and NOT fallback data
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:271:9 › FINAL COMPREHENSIVE Estimation Tests › API Integration - Real vs Fallback › Paid: Verify API calls and NOT fallback data
+📡 PAID API calls: 9
+
+[1A[2K🔢 PAID Unique values: 4
+
+[1A[2K[49/54] [mobile] › tests/final-comprehensive-estimations.spec.ts:318:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: NO demo badge, YES paid features
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:318:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: NO demo badge, YES paid features
+✅ Tesla PAID: NO demo badge, ALL paid features present
+
+[1A[2K[50/54] [mobile] › tests/final-comprehensive-estimations.spec.ts:357:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: Google branding works correctly
+[1A[2K[mobile] › tests/final-comprehensive-estimations.spec.ts:357:9 › FINAL COMPREHENSIVE Estimation Tests › Paid Version Branding & Features › Paid: Google branding works correctly
+✅ Google PAID: Branding correct, NO demo badge
+
+[1A[2K[51/54] [mobile] › tests/header-theming.spec.ts:6:9 › Header & theming › H1 before logo; brand color; spacing — demo
+[1A[2K[52/54] [mobile] › tests/header-theming.spec.ts:53:9 › Header & theming › Header spacing matches 8px rhythm — demo
+[1A[2K  12) [mobile] › tests/header-theming.spec.ts:53:9 › Header & theming › Header spacing matches 8px rhythm — demo 
+
+    Error: [2mexpect([22m[31mreceived[39m[2m).[22mtoBeGreaterThanOrEqual[2m([22m[32mexpected[39m[2m)[22m
+
+    Expected: >= [32m16[39m
+    Received:    [31m13[39m
+
+      68 |       // Logo → Sub = 16px  
+      69 |       const g2 = await gap(page, '[data-testid="hdr-logo"]', '[data-testid="hdr-sub"]');
+    > 70 |       expect(g2).toBeGreaterThanOrEqual(16);
+         |                  ^
+      71 |       expect(g2).toBeLessThanOrEqual(16);
+      72 |
+      73 |       // Sub → Address = 8px
+        at /Users/hugowentzel/sunspire-clean/tests/header-theming.spec.ts:70:18
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-6970a-g-matches-8px-rhythm-—-demo-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-6970a-g-matches-8px-rhythm-—-demo-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/header-theming-Header-them-6970a-g-matches-8px-rhythm-—-demo-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-6970a-g-matches-8px-rhythm-—-demo-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/header-theming-Header-them-6970a-g-matches-8px-rhythm-—-demo-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:56154) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:56154) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[53/54] [mobile] › tests/header-theming.spec.ts:6:9 › Header & theming › H1 before logo; brand color; spacing — paid
+[1A[2K  13) [mobile] › tests/header-theming.spec.ts:6:9 › Header & theming › H1 before logo; brand color; spacing — paid 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: getByTestId('hdr-h1')
+    Expected: visible
+    Timeout: 10000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 10000ms[22m
+    [2m  - waiting for getByTestId('hdr-h1')[22m
+
+
+      13 |       const meta = page.getByTestId('hdr-meta');
+      14 |
+    > 15 |       await expect(h1).toBeVisible();
+         |                        ^
+      16 |       await expect(logo).toBeVisible();
+      17 |       await expect(sub).toBeVisible();
+      18 |       await expect(addr).toBeVisible();
+        at /Users/hugowentzel/sunspire-clean/tests/header-theming.spec.ts:15:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-69c58--brand-color-spacing-—-paid-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-69c58--brand-color-spacing-—-paid-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/header-theming-Header-them-69c58--brand-color-spacing-—-paid-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-69c58--brand-color-spacing-—-paid-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/header-theming-Header-them-69c58--brand-color-spacing-—-paid-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:56276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:56276) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[54/54] [mobile] › tests/header-theming.spec.ts:53:9 › Header & theming › Header spacing matches 8px rhythm — paid
+[1A[2K  14) [mobile] › tests/header-theming.spec.ts:53:9 › Header & theming › Header spacing matches 8px rhythm — paid 
+
+    [31mTest timeout of 180000ms exceeded.[39m
+
+    Error: locator.boundingBox: Test timeout of 180000ms exceeded.
+    Call log:
+    [2m  - waiting for locator('[data-testid="hdr-h1"]')[22m
+
+
+       at _utils.ts:24
+
+      22 |   const a = page.locator(aSel);
+      23 |   const b = page.locator(bSel);
+    > 24 |   const ab = await a.boundingBox();
+         |                      ^
+      25 |   const bb = await b.boundingBox();
+      26 |   return Math.round(bb!.y - (ab!.y + ab!.height)); // vertical gap in px
+      27 | }
+        at gap (/Users/hugowentzel/sunspire-clean/tests/_utils.ts:24:22)
+        at /Users/hugowentzel/sunspire-clean/tests/header-theming.spec.ts:64:27
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-61e49-g-matches-8px-rhythm-—-paid-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-61e49-g-matches-8px-rhythm-—-paid-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/header-theming-Header-them-61e49-g-matches-8px-rhythm-—-paid-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/header-theming-Header-them-61e49-g-matches-8px-rhythm-—-paid-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/header-theming-Header-them-61e49-g-matches-8px-rhythm-—-paid-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  14 failed
+    [chromium] › tests/accessibility-responsive.spec.ts:6:7 › Accessibility & Responsive Design › No serious a11y issues on demo header (mobile) 
+    [chromium] › tests/accessibility-responsive.spec.ts:76:7 › Accessibility & Responsive Design › Responsive design works on different screen sizes 
+    [chromium] › tests/accessibility-responsive.spec.ts:121:7 › Accessibility & Responsive Design › Screen reader compatibility 
+    [chromium] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values 
+    [chromium] › tests/header-theming.spec.ts:53:9 › Header & theming › Header spacing matches 8px rhythm — demo 
+    [chromium] › tests/header-theming.spec.ts:6:9 › Header & theming › H1 before logo; brand color; spacing — paid 
+    [chromium] › tests/header-theming.spec.ts:53:9 › Header & theming › Header spacing matches 8px rhythm — paid 
+    [mobile] › tests/accessibility-responsive.spec.ts:6:7 › Accessibility & Responsive Design › No serious a11y issues on demo header (mobile) 
+    [mobile] › tests/accessibility-responsive.spec.ts:76:7 › Accessibility & Responsive Design › Responsive design works on different screen sizes 
+    [mobile] › tests/accessibility-responsive.spec.ts:121:7 › Accessibility & Responsive Design › Screen reader compatibility 
+    [mobile] › tests/final-comprehensive-estimations.spec.ts:147:9 › FINAL COMPREHENSIVE Estimation Tests › Location Variance Verification › Arizona (sunny) vs New York (less sunny) - Different production values 
+    [mobile] › tests/header-theming.spec.ts:53:9 › Header & theming › Header spacing matches 8px rhythm — demo 
+    [mobile] › tests/header-theming.spec.ts:6:9 › Header & theming › H1 before logo; brand color; spacing — paid 
+    [mobile] › tests/header-theming.spec.ts:53:9 › Header & theming › Header spacing matches 8px rhythm — paid 
+  40 passed (15.9m)

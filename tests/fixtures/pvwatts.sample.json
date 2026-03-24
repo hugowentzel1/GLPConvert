@@ -1,0 +1,30 @@
+{
+  "version": "8.0",
+  "station_info": {
+    "lat": 37.423,
+    "lon": -122.084,
+    "elev": 30,
+    "tz": -8,
+    "location": "94043",
+    "distance": 1520
+  },
+  "outputs": {
+    "ac_annual": 10450.2,
+    "ac_monthly": [840, 900, 980, 1000, 1020, 980, 920, 860, 780, 700, 640, 630],
+    "poa_monthly": [120, 140, 160, 170, 180, 170, 160, 150, 130, 110, 100, 95],
+    "solrad_annual": 5.5,
+    "solrad_monthly": [4.2, 5.1, 5.8, 6.2, 6.5, 6.2, 5.9, 5.5, 4.8, 4.1, 3.7, 3.5],
+    "capacity_factor": 18.9
+  },
+  "inputs": {
+    "system_capacity": 7.5,
+    "module_type": 1,
+    "losses": 14,
+    "array_type": 2,
+    "tilt": 25,
+    "azimuth": 180,
+    "lat": 37.423,
+    "lon": -122.084
+  }
+}
+

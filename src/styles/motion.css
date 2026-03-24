@@ -1,0 +1,152 @@
+/* Motion Tokens - Centralized animation system */
+
+:root {
+  /* Standardized Durations - Material Design Standard Ease */
+  --motion-ui: 200ms;
+  --motion-default: 250ms;
+  --motion-enter: 300ms;
+  --motion-exit: 150ms;
+  --motion-count: 700ms;
+  
+  /* Standardized Easing - Material Standard */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out: cubic-bezier(0.0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  
+  /* Spring for value tiles */
+  --spring-mass: 1;
+  --spring-stiffness: 170;
+  --spring-damping: 26;
+  
+  /* Stagger delay */
+  --stagger-delay: 40ms;
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-ui: 50ms;
+    --motion-section: 80ms;
+    --motion-count: 200ms;
+  }
+  
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Fade-in animation - uses standardized easing */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Entrance animation for sections */
+@keyframes enterSection {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Count-up pulse */
+@keyframes successPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+}
+
+/* Diff flash */
+@keyframes diffFlash {
+  0%, 100% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(59, 130, 246, 0.1);
+  }
+}
+
+/* Skeleton pulse */
+@keyframes skeletonPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Utility classes - standardized timing */
+.fade-in {
+  animation: fadeIn var(--motion-default) var(--ease-standard) both;
+}
+
+.fade-in-delay-1 {
+  animation: fadeIn var(--motion-default) var(--ease-standard) var(--stagger-delay) both;
+}
+
+.fade-in-delay-2 {
+  animation: fadeIn var(--motion-default) var(--ease-standard) calc(var(--stagger-delay) * 2) both;
+}
+
+.fade-in-delay-3 {
+  animation: fadeIn var(--motion-default) var(--ease-standard) calc(var(--stagger-delay) * 3) both;
+}
+
+.enter-section {
+  animation: enterSection var(--motion-enter) var(--ease-standard) both;
+}
+
+.skeleton {
+  animation: skeletonPulse 1.5s ease-in-out infinite;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+}
+
+.hover-lift {
+  transition: transform var(--motion-ui) var(--ease-standard), box-shadow var(--motion-ui) var(--ease-standard);
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus-visible for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--brand-primary, #2563EB);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Remove default focus for mouse users */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Progress bar animation for checkout */
+@keyframes progressSlide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

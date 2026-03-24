@@ -1,0 +1,68 @@
+{
+  "slug": "default",
+  "name": "Sunspire",
+  "tagline": "Premium Solar Intelligence",
+  "logo": "/logo-default.svg",
+  "colors": {
+    "primary": "#FFA63D",
+    "secondary": "#FF6F3C",
+    "accent": "#1A99E6",
+    "success": "#1AB380",
+    "warning": "#FFA63D",
+    "error": "#FF6F3C",
+    "background": "#FAFAFF",
+    "surface": "#FDFDFF",
+    "text": "#1F2937",
+    "textSecondary": "#6B7280",
+    "border": "#E5E7EB"
+  },
+  "contact": {
+    "email": "hello@sunspire.com",
+    "phone": "+1 (404) 770-2672",
+    "address": "123 Solar Street, Sunny City, SC 12345"
+  },
+  "social": {
+    "website": "https://sunspire.com",
+    "facebook": "https://facebook.com/sunspire",
+    "twitter": "https://twitter.com/sunspire",
+    "linkedin": "https://linkedin.com/company/sunspire"
+  },
+  "features": {
+    "showTestimonials": true,
+    "showTrustBadges": true,
+    "showMethodology": true,
+    "showPricing": false
+  },
+  "testimonials": [
+    {
+      "id": "1",
+      "name": "Sarah Johnson",
+      "role": "Homeowner",
+      "location": "Austin, TX",
+      "content": "Sunspire's estimate was spot-on! We saved $2,400 in our first year and the installation was seamless.",
+      "rating": 5
+    },
+    {
+      "id": "2",
+      "name": "Mike Chen",
+      "role": "Property Manager",
+      "location": "San Diego, CA",
+      "content": "The accuracy of their solar estimates helped us make informed decisions for our portfolio. Highly recommended!",
+      "rating": 5
+    },
+    {
+      "id": "3",
+      "name": "Lisa Rodriguez",
+      "role": "Business Owner",
+      "location": "Miami, FL",
+      "content": "Professional service from start to finish. The ROI calculations were exactly what we needed to justify the investment.",
+      "rating": 5
+    }
+  ],
+  "trustBadges": [
+    "Used by 50+ Solar Companies",
+    "Bank-Level Security",
+    "SOC 2 Compliant",
+    "24/7 Support"
+  ]
+}

@@ -1,0 +1,971 @@
+
+Running 1932 tests using 4 workers
+
+  ✘     2 [chromium] › tests/actual-changes-verification.spec.ts:4:7 › Actual Changes Verification › Support Page - No Green Colors (Should Use Brand Colors) (760ms)
+  ✘     5 [chromium] › tests/actual-changes-verification.spec.ts:20:7 › Actual Changes Verification › Partners Page - No Green Colors Except Checkmarks (238ms)
+  ✘     6 [chromium] › tests/actual-changes-verification.spec.ts:40:7 › Actual Changes Verification › Support Page - No Blue Colors (Should Use Brand Colors) (288ms)
+  ✓     4 [chromium] › tests/accessibility-responsive.spec.ts:6:7 › Accessibility & Responsive Design › No serious a11y issues on demo header (mobile) (4.1s)
+  ✘     8 [chromium] › tests/actual-changes-verification.spec.ts:56:7 › Actual Changes Verification › Partners Page - No Blue Colors (Should Use Brand Colors) (259ms)
+  ✘     9 [chromium] › tests/actual-changes-verification.spec.ts:72:7 › Actual Changes Verification › Report Page - Has Navigation Links Like Home Page (324ms)
+  ✓     7 [chromium] › tests/accessibility-responsive.spec.ts:22:7 › Accessibility & Responsive Design › No serious a11y issues on paid full report (desktop) (2.1s)
+  ✘    10 [chromium] › tests/actual-changes-verification.spec.ts:91:7 › Actual Changes Verification › All Pages Use Brand Colors Consistently (287ms)
+  ✓    11 [chromium] › tests/accessibility-responsive.spec.ts:36:7 › Accessibility & Responsive Design › Keyboard navigation works (685ms)
+  ✓    12 [chromium] › tests/accessibility-responsive.spec.ts:57:7 › Accessibility & Responsive Design › Color contrast meets standards (983ms)
+  ✘     3 [chromium] › tests/address-verification.spec.ts:7:7 › Address Verification › footer shows new address (13.5s)
+  ✓    15 [chromium] › tests/address-verification.spec.ts:23:7 › Address Verification › privacy page shows new address (1.5s)
+  ✓    16 [chromium] › tests/address-verification.spec.ts:39:7 › Address Verification › terms page shows new address (1.5s)
+  ✘    13 [chromium] › tests/all-changes-verification.spec.ts:4:7 › All Changes Verification › Support Page - Icon Circles with Gradients and Company Colors (13.0s)
+  ✓    14 [chromium] › tests/accessibility-responsive.spec.ts:77:7 › Accessibility & Responsive Design › Responsive design works on different screen sizes (15.3s)
+  ✓    18 [chromium] › tests/all-changes-verification.spec.ts:20:7 › All Changes Verification › Partners Page - Company Color Gradient Background (3.3s)
+  ✓    19 [chromium] › tests/accessibility-responsive.spec.ts:105:7 › Accessibility & Responsive Design › Mobile-specific interactions work (2.7s)
+  ✓    17 [chromium] › tests/all-pages-parameter-test.spec.ts:7:7 › ALL PAGES - Parameter Preservation Test › DEMO MODE - All major pages preserve parameters (14.7s)
+  ✓    22 [chromium] › tests/all-pages-parameter-test.spec.ts:64:7 › ALL PAGES - Parameter Preservation Test › PAID MODE - All major pages preserve parameters (3.6s)
+  ✘    20 [chromium] › tests/all-changes-verification.spec.ts:44:7 › All Changes Verification › Pricing Page - CTA Button Uses Company Colors (11.8s)
+Found images: [33m2[39m
+Image 0: https://logo.clearbit.com/apple.com
+Image 1: https://logo.clearbit.com/apple.com
+HeroBrand component visible: [33mtrue[39m
+Sun icon visible: [33mfalse[39m
+Content shown flag: [33mtrue[39m
+  ✓    23 [chromium] › tests/apple-logo-debug.spec.ts:3:5 › Debug Apple logo in demo version (2.3s)
+  ✘    25 [chromium] › tests/attribution.spec.ts:5:5 › required attributions appear once and near footer (191ms)
+  ✘    21 [chromium] › tests/accessibility-responsive.spec.ts:124:7 › Accessibility & Responsive Design › Screen reader compatibility (12.8s)
+Checking Pricing page background...
+  ✘    26 [chromium] › tests/background-fix-verification.spec.ts:4:7 › Background Color Fix Verification › Check all pages have white/neutral backgrounds with company color accents (215ms)
+  ✓    27 [chromium] › tests/accessibility-responsive.spec.ts:160:7 › Accessibility & Responsive Design › Focus management and tab order (942ms)
+  ✓    29 [chromium] › tests/brand-aware-header.spec.ts:19:7 › Brand-aware header with automatic contrast safety › H1 above logo and brand color applied safely (1.1s)
+  ✘    30 [chromium] › tests/brand-aware-header.spec.ts:43:7 › Brand-aware header with automatic contrast safety › Typography ladder and spacing rhythm (1.0s)
+  ✓    31 [chromium] › tests/brand-aware-header.spec.ts:66:7 › Brand-aware header with automatic contrast safety › Brand color contrast safety with light colors (936ms)
+  ✘    32 [chromium] › tests/brand-aware-header.spec.ts:79:7 › Brand-aware header with automatic contrast safety › Logo styling matches original spec (979ms)
+  ✓    33 [chromium] › tests/brand-aware-header.spec.ts:108:7 › Brand-aware header with automatic contrast safety › Address wrapping and balance maintained (1.0s)
+  ✓    34 [chromium] › tests/brand-aware-header.spec.ts:119:7 › Brand-aware header with automatic contrast safety › Meta stack structure and single-tone values (1.2s)
+  ✘    35 [chromium] › tests/brand-aware-header.spec.ts:133:7 › Brand-aware header with automatic contrast safety › Mobile responsiveness with brand colors (942ms)
+  ✓    36 [chromium] › tests/brand-aware-header.spec.ts:154:7 › Brand-aware header with automatic contrast safety › Paid mode shows only one meta row (988ms)
+  ✘    28 [chromium] › tests/banner-test.spec.ts:3:5 › Demo banners should show on pricing, support, and partners pages (11.9s)
+  ✘    24 [chromium] › tests/all-changes-verification.spec.ts:68:7 › All Changes Verification › Report Page - Sticky CTA with Cookie Offset Support (14.2s)
+  ✓    39 [chromium] › tests/all-changes-verification.spec.ts:87:7 › All Changes Verification › Cookie Offset Provider Integration (1.5s)
+Brand takeover logs: [
+  [32m'Main page brand state: {enabled: false, brand: Your Company, primary: #2563EB, logo: null, domain: null}'[39m,
+  [32m'Main page localStorage: {"enabled":true,"brand":"Apple","primary":"#FF0000","logo":"https://logo.clearbit.com/apple.com","domain":"Apple","city":null,"rep":null,"firstName":null,"role":null,"expireDays":7,"runs":2,"blur":true,"pilot":false,"isDemo":false,"_timestamp":1760925055582}'[39m,
+  [32m'Main page isDemo: false'[39m,
+  [32m'useBrandColors: Running with searchParams: company=Apple&brandColor=%23FF0000&logo=https%3A%2F%2Flogo.clearbit.com%2Fapple.com'[39m,
+  [32m'useBrandColors: primary: null brandColor: #FF0000 colorParam: #FF0000'[39m,
+  [32m'BrandProvider: URL brandColor parameter: #FF0000'[39m,
+  [32m'BrandProvider: All search params: company=Apple&brandColor=%23FF0000&logo=https%3A%2F%2Flogo.clearbit.com%2Fapple.com'[39m,
+  [32m'Brand CSS injected: Apple with color #FF0000'[39m,
+  [32m'Main page brand state: {enabled: true, brand: Apple, primary: #FF0000, logo: https://logo.clearbit.com/apple.com, domain: Apple}'[39m,
+  [32m'Main page localStorage: {"enabled":true,"brand":"Apple","primary":"#FF0000","logo":"https://logo.clearbit.com/apple.com","domain":"Apple","city":null,"rep":null,"firstName":null,"role":null,"expireDays":7,"runs":2,"blur":true,"pilot":false,"isDemo":false,"_timestamp":1760925055583}'[39m,
+  [32m'Main page isDemo: false'[39m,
+  [32m'BrandProvider: enabled= true primary= #FF0000 brand= Apple'[39m,
+  [32m'BrandProvider: URL brandColor parameter: #FF0000'[39m,
+  [32m'BrandProvider: All search params: company=Apple&brandColor=%23FF0000&logo=https%3A%2F%2Flogo.clearbit.com%2Fapple.com'[39m,
+  [32m'Brand loading check: {brand: Apple, isDemo: false, enabled: true}'[39m,
+  [32m'Failed to fetch RSC payload for https://sunspire-web-app.vercel.app/?company=Apple&brandColor=%23FF0000&logo=https%3A%2F%2Flogo.clearbit.com%2Fapple.com. Falling back to browser navigation. TypeError: Failed to fetch\n'[39m +
+    [32m'    at fetchServerResponse (https://sunspire-web-app.vercel.app/_next/static/chunks/2472-650b3b63e5232563.js:1:46554)\n'[39m +
+    [32m'    at https://sunspire-web-app.vercel.app/_next/static/chunks/2472-650b3b63e5232563.js:1:62807\n'[39m +
+    [32m'    at Object.task (https://sunspire-web-app.vercel.app/_next/static/chunks/2472-650b3b63e5232563.js:1:33506)\n'[39m +
+    [32m'    at PromiseQueue.processNext (https://sunspire-web-app.vercel.app/_next/static/chunks/2472-650b3b63e5232563.js:1:34230)\n'[39m +
+    [32m'    at PromiseQueue.enqueue (https://sunspire-web-app.vercel.app/_next/static/chunks/2472-650b3b63e5232563.js:1:33634)\n'[39m +
+    [32m'    at prefetchReducer (https://sunspire-web-app.vercel.app/_next/static/chunks/2472-650b3b63e5232563.js:1:62770)\n'[39m +
+    [32m'    at clientReducer (https://sunspire-web-app.vercel.app/_next/static/chunks/2472-650b3b63e5232563.js:1:72041)\n'[39m +
+    [32m'    at https://sunspire-web-app.vercel.app/_next/static/chunks/2472-650b3b63e5232563.js:1:77021\n'[39m +
+    [32m'    at eg (https://sunspire-web-app.vercel.app/_next/static/chunks/fd9d1056-496704c1c0520aa2.js:9:42085)\n'[39m +
+    [32m'    at Object.dg [as useReducer] (https://sunspire-web-app.vercel.app/_next/static/chunks/fd9d1056-496704c1c0520aa2.js:9:41323)'[39m,
+  [32m'useBrandColors: Running with searchParams: company=Apple&brandColor=%23FF0000&logo=https%3A%2F%2Flogo.clearbit.com%2Fapple.com'[39m,
+  [32m'useBrandColors: primary: null brandColor: #FF0000 colorParam: #FF0000'[39m,
+  [32m'Paid page brand state: {enabled: false, brand: Your Company, primary: #2563EB, logo: null, domain: null}'[39m,
+  [32m'Paid page localStorage: {"enabled":true,"brand":"Apple","primary":"#FF0000","logo":"https://logo.clearbit.com/apple.com","domain":"Apple","city":null,"rep":null,"firstName":null,"role":null,"expireDays":7,"runs":2,"blur":true,"pilot":false,"isDemo":false,"_timestamp":1760925055912}'[39m,
+  [32m'Paid page isDemo: false'[39m,
+  [32m'useBrandColors: Running with searchParams: company=Apple&brandColor=%23FF0000&logo=https%3A%2F%2Flogo.clearbit.com%2Fapple.com'[39m,
+  [32m'useBrandColors: primary: null brandColor: #FF0000 colorParam: #FF0000'[39m,
+  [32m'BrandProvider: URL brandColor parameter: #FF0000'[39m,
+  [32m'BrandProvider: All search params: company=Apple&brandColor=%23FF0000&logo=https%3A%2F%2Flogo.clearbit.com%2Fapple.com'[39m,
+  [32m'Brand CSS injected: Apple with color #FF0000'[39m,
+  [32m'Paid page brand state: {enabled: true, brand: Apple, primary: #FF0000, logo: https://logo.clearbit.com/apple.com, domain: Apple}'[39m,
+  [32m'Paid page localStorage: {"enabled":true,"brand":"Apple","primary":"#FF0000","logo":"https://logo.clearbit.com/apple.com","domain":"Apple","city":null,"rep":null,"firstName":null,"role":null,"expireDays":7,"runs":2,"blur":true,"pilot":false,"isDemo":false,"_timestamp":1760925055913}'[39m,
+  [32m'Paid page isDemo: false'[39m,
+  [32m'BrandProvider: enabled= true primary= #FF0000 brand= Apple'[39m,
+  [32m'BrandProvider: URL brandColor parameter: #FF0000'[39m,
+  [32m'BrandProvider: All search params: company=Apple&brandColor=%23FF0000&logo=https%3A%2F%2Flogo.clearbit.com%2Fapple.com'[39m
+]
+Final brand state: {
+  enabled: [33mtrue[39m,
+  brand: [32m'Apple'[39m,
+  primary: [32m'#FF0000'[39m,
+  logo: [32m'https://logo.clearbit.com/apple.com'[39m,
+  domain: [32m'Apple'[39m,
+  city: [1mnull[22m,
+  rep: [1mnull[22m,
+  firstName: [1mnull[22m,
+  role: [1mnull[22m,
+  expireDays: [33m7[39m,
+  runs: [33m2[39m,
+  blur: [33mtrue[39m,
+  pilot: [33mfalse[39m,
+  isDemo: [33mfalse[39m,
+  _timestamp: [33m1760925055913[39m
+}
+  ✓    37 [chromium] › tests/brand-console-debug.spec.ts:3:5 › Debug brand takeover console logs (7.2s)
+Brand takeover logs: []
+Brand state from localStorage: {
+  enabled: [33mtrue[39m,
+  brand: [32m'Apple'[39m,
+  primary: [32m'#FF0000'[39m,
+  logo: [32m'https://logo.clearbit.com/apple.com'[39m,
+  domain: [32m'Apple'[39m,
+  city: [1mnull[22m,
+  rep: [1mnull[22m,
+  firstName: [1mnull[22m,
+  role: [1mnull[22m,
+  expireDays: [33m7[39m,
+  runs: [33m2[39m,
+  blur: [33mtrue[39m,
+  pilot: [33mfalse[39m,
+  isDemo: [33mfalse[39m,
+  _timestamp: [33m1760925057622[39m
+}
+Footer contains logo condition: [33mfalse[39m
+Footer contains logo src: [33mtrue[39m
+Images found: [33m2[39m
+Image 0: https://logo.clearbit.com/apple.com
+Image 1: https://logo.clearbit.com/apple.com
+  ✓    38 [chromium] › tests/brand-debug.spec.ts:3:5 › Debug brand takeover on privacy page (6.7s)
+  ✘    42 [chromium] › tests/check-duplicates.spec.ts:3:5 › check for duplicate content on paid report page (431ms)
+  ✓    41 [chromium] › tests/chain-navigation-test.spec.ts:5:7 › Chain Navigation - Parameter Preservation › Home → Support → Setup → Home preserves all parameters (3.1s)
+Loading http://localhost:3000/paid?demo=0&company=Apple&brandColor=%23FF6B35
+  ✓    43 [chromium] › tests/chain-navigation-test.spec.ts:42:7 › Chain Navigation - Parameter Preservation › Home → Support → Back to Home preserves parameters (1.8s)
+  ✓    45 [chromium] › tests/chain-navigation-test.spec.ts:59:7 › Chain Navigation - Parameter Preservation › Support → CRM → Back to Support preserves parameters (1.2s)
+  ✓    46 [chromium] › tests/chain-navigation-test.spec.ts:75:7 › Chain Navigation - Parameter Preservation › Every link in footer from home preserves parameters (1.0s)
+
+=== PAGE LOADED ===
+URL: http://localhost:3000/paid?demo=0&company=Apple&brandColor=%23FF6B35
+Title: Apple — Solar Intelligence
+
+=== CONSOLE MESSAGES ===
+[info] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] [route] render start
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] [route] render start
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] useBrandColors: Running with searchParams: demo=0&company=Apple&brandColor=%23FF6B35
+[log] useBrandColors: primary: null brandColor: #FF6B35 colorParam: #FF6B35
+[log] useBrandColors: decoded color: null
+[log] useBrandColors: No URL brand parameters, not overriding brand takeover colors
+[log] Paid page brand state: {enabled: false, brand: Your Company, primary: #2563EB, logo: null, domain: null}
+[log] Paid page localStorage: {"enabled":true,"brand":"Apple","primary":"#FF6B35","logo":null,"domain":"Apple","city":null,"rep":null,"firstName":null,"role":null,"expireDays":7,"runs":2,"blur":true,"pilot":false,"isDemo":false,"_timestamp":1760925066443}
+[log] Paid page isDemo: false
+[log] useBrandColors: Running with searchParams: demo=0&company=Apple&brandColor=%23FF6B35
+[log] useBrandColors: primary: null brandColor: #FF6B35 colorParam: #FF6B35
+[log] useBrandColors: decoded color: null
+[log] useBrandColors: No URL brand parameters, not overriding brand takeover colors
+[log] [route] hydrated
+[log] BrandProvider: enabled= false primary= #2563EB brand= Your Company
+[log] BrandProvider: URL brandColor parameter: #FF6B35
+[log] BrandProvider: All search params: demo=0&company=Apple&brandColor=%23FF6B35
+[log] BrandProvider: Using URL brand color: #FF6B35
+[log] useBrandColors: Running with searchParams: demo=0&company=Apple&brandColor=%23FF6B35
+[log] useBrandColors: primary: null brandColor: #FF6B35 colorParam: #FF6B35
+[log] useBrandColors: decoded color: null
+[log] useBrandColors: No URL brand parameters, not overriding brand takeover colors
+[log] Paid page brand state: {enabled: false, brand: Your Company, primary: #2563EB, logo: null, domain: null}
+[log] Paid page localStorage: {"enabled":true,"brand":"Apple","primary":"#FF6B35","logo":null,"domain":"Apple","city":null,"rep":null,"firstName":null,"role":null,"expireDays":7,"runs":2,"blur":true,"pilot":false,"isDemo":false,"_timestamp":1760925066451}
+[log] Paid page isDemo: false
+[log] useBrandColors: Running with searchParams: demo=0&company=Apple&brandColor=%23FF6B35
+[log] useBrandColors: primary: null brandColor: #FF6B35 colorParam: #FF6B35
+[log] useBrandColors: decoded color: null
+[log] useBrandColors: No URL brand parameters, not overriding brand takeover colors
+[log] [route] hydrated
+[log] BrandProvider: enabled= false primary= #2563EB brand= Your Company
+[log] BrandProvider: URL brandColor parameter: #FF6B35
+[log] BrandProvider: All search params: demo=0&company=Apple&brandColor=%23FF6B35
+[log] BrandProvider: Using URL brand color: #FF6B35
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] [route] render start
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] [route] render start
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] Brand CSS injected: Apple with color #FF6B35
+[log] Paid page brand state: {enabled: true, brand: Apple, primary: #FF6B35, logo: null, domain: Apple}
+[log] Paid page localStorage: {"enabled":true,"brand":"Apple","primary":"#FF6B35","logo":null,"domain":"Apple","city":null,"rep":null,"firstName":null,"role":null,"expireDays":7,"runs":2,"blur":true,"pilot":false,"isDemo":false,"_timestamp":1760925066452}
+[log] Paid page isDemo: false
+[log] BrandProvider: enabled= true primary= #FF6B35 brand= Apple
+[log] BrandProvider: URL brandColor parameter: #FF6B35
+[log] BrandProvider: All search params: demo=0&company=Apple&brandColor=%23FF6B35
+[log] BrandProvider: Using URL brand color: #FF6B35
+[log] 🔑 Google Maps API key: Present
+[log] 🔍 AddressAutocomplete useEffect triggered, query:  length: 0
+[log] 🔑 Google Maps API key: Present
+[log] Google Maps script already exists, waiting for load...
+[log] 🔍 AddressAutocomplete useEffect triggered, query:  length: 0
+[log] 🔍 Query length < 3, clearing predictions
+[warning] Google Maps JavaScript API has been loaded directly without loading=async. This can result in suboptimal performance. For best-practice loading patterns please see https://goo.gle/js-api-loading
+[log] ✅ Google Places API loaded successfully
+[log] Google Places API loaded from existing script
+[log] [route] render start
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] [route] render start
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] ✅ Google Places API already loaded
+[log] [route] render start
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] [route] render start
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] [route] render start
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] [route] render start
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+[log] getBrandTheme: companyHandle= default key= default result= #2563EB
+
+=== ERRORS ===
+No errors detected
+
+=== PAGE STRUCTURE ===
+Page length: [33m18953[39m
+Has footer tag: [33mtrue[39m
+Has FooterPaid: [33mfalse[39m
+Has "Something went wrong": [33mfalse[39m
+  ✓    44 [chromium] › tests/check-page-errors.spec.ts:3:5 › Check for runtime errors on paid page (5.1s)
+
+📏 PAID VERSION SPACING:
+Address Input bottom: 679.1875px
+Generate Button top: 755.1875px
+Gap between them: 76px
+
+Target: Should be around 64px to match demo version
+
+Screenshot saved to test-results/paid-spacing-check.png
+  ✓    47 [chromium] › tests/check-paid-spacing.spec.ts:3:5 › Check spacing in paid version (3.1s)
+
+📏 SPACING MEASUREMENTS:
+Address Input bottom: 1137.1875px
+Generate Button top: 1184.78125px
+Gap between them: 47.59375px
+
+Target: Should be around 48-64px for proper spacing
+
+Screenshot saved to test-results/spacing-check.png
+  ✓    48 [chromium] › tests/check-spacing.spec.ts:3:5 › Check spacing between address input and generate button (2.5s)
+Checking child elements colors...
+  ✘    40 [chromium] › tests/all-changes-verification.spec.ts:103:7 › All Changes Verification › All Pages Use Consistent Brand Colors (15.7s)
+Client span color: rgb(75, 85, 99)
+Client span classes: text-gray-600 font-semibold
+Recurring b color: rgb(204, 0, 0)
+Recurring b classes: text-brand-600
+Setup b color: rgb(204, 0, 0)
+Setup b classes: text-brand-600
+✓ Child elements check complete
+  ✓    51 [chromium] › tests/click-navigation-full-test.spec.ts:5:7 › Click Navigation - Full Parameter Preservation › Setup Guide - Click Back to Home preserves demo parameters (2.1s)
+  ✓    50 [chromium] › tests/child-elements-check.spec.ts:4:7 › Child Elements Check › Check the colors of child elements in earnings text (4.5s)
+  ✘    49 [chromium] › tests/checkout-and-demo-limit.spec.ts:6:7 › Checkout Flow and Demo Run Limit › Complete checkout flow with quote.yourcompany.com redirect (5.7s)
+  ✓    53 [chromium] › tests/click-navigation-test.spec.ts:5:7 › Click Navigation Test - Parameter Preservation › Setup Guide - Click Back to Home preserves parameters (1.7s)
+  ✓    52 [chromium] › tests/click-navigation-full-test.spec.ts:21:7 › Click Navigation - Full Parameter Preservation › Setup Guide - Click Back to Support preserves demo parameters (2.2s)
+  ✓    55 [chromium] › tests/click-navigation-test.spec.ts:17:7 › Click Navigation Test - Parameter Preservation › Setup Guide - Click Back to Support preserves parameters (1.8s)
+🔍 Starting demo run 1
+⚠️ No autocomplete suggestions for run 1
+🔍 Starting demo run 2
+⚠️ No autocomplete suggestions for run 2
+🔍 Attempting third run (should trigger lock screen)
+  ✓    56 [chromium] › tests/click-navigation-full-test.spec.ts:36:7 › Click Navigation - Full Parameter Preservation › Branding Guide - Click Back to Home preserves demo parameters (2.4s)
+  ✓    57 [chromium] › tests/click-navigation-test.spec.ts:28:7 › Click Navigation Test - Parameter Preservation › Branding - Click Back to Home preserves parameters (2.1s)
+  ✓    58 [chromium] › tests/click-navigation-full-test.spec.ts:51:7 › Click Navigation - Full Parameter Preservation › Branding Guide - Click Back to Support preserves demo parameters (1.2s)
+  ✓    60 [chromium] › tests/click-navigation-full-test.spec.ts:62:7 › Click Navigation - Full Parameter Preservation › API Docs - Click Back to Home preserves demo parameters (1.0s)
+  ✓    59 [chromium] › tests/click-navigation-test.spec.ts:39:7 › Click Navigation Test - Parameter Preservation › Branding - Click Back to Support preserves parameters (1.7s)
+  ✓    61 [chromium] › tests/click-navigation-full-test.spec.ts:73:7 › Click Navigation - Full Parameter Preservation › API Docs - Click Back to Support preserves demo parameters (926ms)
+  ✓    62 [chromium] › tests/click-navigation-test.spec.ts:50:7 › Click Navigation Test - Parameter Preservation › API Docs - Click Back to Home preserves parameters (1.5s)
+  ✓    63 [chromium] › tests/click-navigation-full-test.spec.ts:84:7 › Click Navigation - Full Parameter Preservation › CRM - Click Back to Home preserves demo parameters (1.3s)
+  ✘    54 [chromium] › tests/checkout-and-demo-limit.spec.ts:38:7 › Checkout Flow and Demo Run Limit › Demo run limit with green/red lock screen (7.9s)
+  ✓    64 [chromium] › tests/click-navigation-test.spec.ts:61:7 › Click Navigation Test - Parameter Preservation › API Docs - Click Back to Support preserves parameters (1.4s)
+  ✓    65 [chromium] › tests/click-navigation-full-test.spec.ts:95:7 › Click Navigation - Full Parameter Preservation › CRM - Click Back to Support preserves demo parameters (1.2s)
+  ✓    67 [chromium] › tests/click-navigation-full-test.spec.ts:109:7 › Click Navigation - Full Parameter Preservation › Support - Click Back to Home preserves demo parameters (939ms)
+  ✓    66 [chromium] › tests/click-navigation-test.spec.ts:72:7 › Click Navigation Test - Parameter Preservation › CRM - Click Back to Home preserves parameters (1.2s)
+  ✓    69 [chromium] › tests/click-navigation-full-test.spec.ts:120:7 › Click Navigation - Full Parameter Preservation › Privacy - Click Back to Home preserves demo parameters (1.5s)
+  ✓    70 [chromium] › tests/click-navigation-test.spec.ts:83:7 › Click Navigation Test - Parameter Preservation › CRM - Click Back to Support preserves parameters (1.5s)
+Quota after first run: {}
+  ✓    71 [chromium] › tests/click-navigation-full-test.spec.ts:131:7 › Click Navigation - Full Parameter Preservation › Terms - Click Back to Home preserves demo parameters (1.2s)
+  ✓    72 [chromium] › tests/click-navigation-test.spec.ts:94:7 › Click Navigation Test - Parameter Preservation › Support - Click Back to Home preserves parameters (2.0s)
+  ✓    73 [chromium] › tests/click-navigation-full-test.spec.ts:142:7 › Click Navigation - Full Parameter Preservation › Security - Click Back to Home preserves demo parameters (1.2s)
+Quota after reload: {}
+  ✘    68 [chromium] › tests/checkout-and-demo-limit.spec.ts:97:7 › Checkout Flow and Demo Run Limit › Demo quota persistence across page reloads (4.8s)
+  ✓    74 [chromium] › tests/click-navigation-test.spec.ts:105:7 › Click Navigation Test - Parameter Preservation › Privacy - Click Back to Home preserves parameters (2.3s)
+  ✓    75 [chromium] › tests/click-navigation-full-test.spec.ts:153:7 › Click Navigation - Full Parameter Preservation › Do Not Sell - Click Back to Home preserves demo parameters (2.2s)
+  ✓    78 [chromium] › tests/click-navigation-full-test.spec.ts:164:7 › Click Navigation - Full Parameter Preservation › Refund Policy - Click Back to Home preserves demo parameters (1.9s)
+  ✓    77 [chromium] › tests/click-navigation-test.spec.ts:116:7 › Click Navigation Test - Parameter Preservation › Terms - Click Back to Home preserves parameters (2.2s)
+✅ Stripe checkout includes correct company metadata
+  ✓    76 [chromium] › tests/checkout-and-demo-limit.spec.ts:132:7 › Checkout Flow and Demo Run Limit › Stripe checkout session metadata includes company info (3.0s)
+  ✓    79 [chromium] › tests/click-navigation-full-test.spec.ts:176:7 › Click Navigation - Full Parameter Preservation › Setup Guide PAID - Click Back to Home goes to /paid with parameters (1.4s)
+  ✓    80 [chromium] › tests/click-navigation-test.spec.ts:127:7 › Click Navigation Test - Parameter Preservation › Security - Click Back to Home preserves parameters (1.9s)
+  ✓    82 [chromium] › tests/click-navigation-full-test.spec.ts:191:7 › Click Navigation - Full Parameter Preservation › Privacy PAID - Click Back to Home goes to /paid with parameters (931ms)
+Checking actual computed colors...
+  ✘    81 [chromium] › tests/color-consistency.spec.ts:7:7 › Color Consistency Tests › Paid version uses consistent red brand color throughout (1.8s)
+  ✓    83 [chromium] › tests/click-navigation-test.spec.ts:138:7 › Click Navigation Test - Parameter Preservation › Do Not Sell - Click Back to Home preserves parameters (1.4s)
+  ✓    86 [chromium] › tests/click-navigation-test.spec.ts:149:7 › Click Navigation Test - Parameter Preservation › Refund Policy - Click Back to Home preserves parameters (1.2s)
+Checking Support page...
+  ✘    87 [chromium] › tests/color-layout-check.spec.ts:4:7 › Color and Layout Verification › Check support and partners pages for proper company colors (163ms)
+  ✘    88 [chromium] › tests/color-name-check.spec.ts:7:5 › Chart color description - Netflix (red) (313ms)
+  ✘    89 [chromium] › tests/color-name-check.spec.ts:36:5 › Chart color description - Spotify (green) (204ms)
+  ✘    90 [chromium] › tests/color-name-check.spec.ts:65:5 › Chart color description - Apple (blue) (179ms)
+Setup Guide link color: rgb(0, 113, 227)
+✓ Color inspection complete
+  ✓    84 [chromium] › tests/color-inspection.spec.ts:4:7 › Actual Color Inspection › Check actual computed colors of elements (10.0s)
+🚀 Testing CTA routing to Stripe...
+✅ CTA routes to Stripe checkout
+✅ Company metadata included correctly
+  ✓    92 [chromium] › tests/complete-system-test.spec.ts:6:7 › Complete System Verification @smoke › 1. All CTAs route to Stripe checkout successfully (3.0s)
+🚀 Testing activate page with domain setup...
+  ✘    85 [chromium] › tests/color-consistency.spec.ts:42:7 › Color Consistency Tests › Navigation preserves URL parameters (12.0s)
+  ✓    94 [chromium] › tests/color-consistency.spec.ts:65:7 › Color Consistency Tests › Report page maintains brand consistency (2.5s)
+  ✘    91 [chromium] › tests/complete-19610ab-verification.spec.ts:7:7 › Complete 19610ab Verification › Demo version matches 19610ab exactly (11.8s)
+✅ Activate page shows domain setup
+✅ quote.yourcompany.com mentioned
+  ✓    93 [chromium] › tests/complete-system-test.spec.ts:31:7 › Complete System Verification @smoke › 2. Activate page shows quote.yourcompany.com domain setup (4.7s)
+🚀 Testing demo quota and lock screen...
+✅ Initial quota: [33m2[39m
+✅ Quota after navigation (should still be 2): [33m0[39m
+  ✘    95 [chromium] › tests/color-consistency.spec.ts:92:7 › Color Consistency Tests › Demo version maintains consistent branding (12.1s)
+🔍 VERIFYING ALL TO-DO ITEMS ON LIVE DEPLOYMENT
+============================================================
+
+1️⃣  Testing Demo Quota System...
+   ✅ Demo quota display found: Preview: 2 runs left.
+
+2️⃣  Verifying Lock Screen...
+   ✅ Lock overlay state: Not found (correct if quota available)
+
+3️⃣  Verifying Demo Timer...
+   ✅ Demo timer found: Expires in 6d 23h 59m 59s
+
+4️⃣  Verifying Address Autocomplete...
+   ✅ Address autocomplete input works
+
+5️⃣  Testing Stripe Checkout Routing...
+   ✅ CTA button found: ⚡Launch Your Branded Version Now
+  ✘    98 [chromium] › tests/complete-verification.spec.ts:4:7 › Complete System Verification › All original to-do items verified (2.8s)
+
+🔐 TESTING STRIPE CHECKOUT ROUTING
+   ✅ Stripe checkout button is visible and ready
+   ✅ Stripe checkout request initiated: https://sunspire-web-app.vercel.app/api/stripe/create-checkout-session
+  ✘    97 [chromium] › tests/complete-system-test.spec.ts:57:11 › Complete System Verification @smoke › 3. Demo quota system: 2 runs then lock screen with green/red comparison (16.0s)
+   ✅ Stripe API endpoint status: [33m200[39m (exists)
+  ✓    99 [chromium] › tests/complete-verification.spec.ts:97:7 › Complete System Verification › Stripe checkout button routing test (1.6s)
+🚀 Testing demo timer...
+  ✓   100 [chromium] › tests/comprehensive-e2e.spec.ts:13:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 1. Homepage - Core Functionality › should load homepage successfully (722ms)
+✅ Demo timer visible: Expires in 6d 23h 59m 58s
+  ✓   102 [chromium] › tests/comprehensive-e2e.spec.ts:19:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 1. Homepage - Core Functionality › should have address input with autocomplete (1.6s)
+  ✓   101 [chromium] › tests/complete-system-test.spec.ts:120:7 › Complete System Verification @smoke › 4. Demo timer countdown is visible and working (2.1s)
+🚀 Testing address autocomplete...
+  ✓   103 [chromium] › tests/comprehensive-e2e.spec.ts:26:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 1. Homepage - Core Functionality › should trigger autocomplete on typing (2.6s)
+✅ Address autocomplete suggestions appeared
+✅ First suggestion visible
+  ✓   104 [chromium] › tests/complete-system-test.spec.ts:136:7 › Complete System Verification @smoke › 5. Address autocomplete works correctly (2.9s)
+🚀 Taking visual screenshot...
+  ✓   105 [chromium] › tests/comprehensive-e2e.spec.ts:36:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 1. Homepage - Core Functionality › should have generate report button (866ms)
+✅ Generate button correctly disabled without address
+  ✓   107 [chromium] › tests/comprehensive-e2e.spec.ts:42:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 1. Homepage - Core Functionality › should validate address before submission (1.2s)
+  ✓   108 [chromium] › tests/comprehensive-e2e.spec.ts:61:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 2. Demo Mode - Full Flow › should load demo report page (1.6s)
+✅ Screenshot saved to demo-page-verification.png
+  ✓   109 [chromium] › tests/comprehensive-e2e.spec.ts:67:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 2. Demo Mode - Full Flow › should display demo-specific elements (1.1s)
+  ✓   106 [chromium] › tests/complete-system-test.spec.ts:157:7 › Complete System Verification @smoke › 6. Take visual screenshot of demo page (4.5s)
+🚀 Full quota exhaustion flow...
+✅ All 4 tiles present (2 visible, 2 locked in demo)
+  ✓   110 [chromium] › tests/comprehensive-e2e.spec.ts:82:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 2. Demo Mode - Full Flow › should display all metric cards (1.1s)
+  ✘   112 [chromium] › tests/comprehensive-e2e.spec.ts:97:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 2. Demo Mode - Full Flow › should show blurred/locked cards in demo (684ms)
+✅ Report 1 loaded successfully
+✅ Report 2 loaded successfully
+✅ Demo CTA button visible
+  ✓   113 [chromium] › tests/comprehensive-e2e.spec.ts:107:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 2. Demo Mode - Full Flow › should display demo CTA footer (4.7s)
+  ✓   114 [chromium] › tests/comprehensive-e2e.spec.ts:121:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 2. Demo Mode - Full Flow › should have working back button (1.5s)
+  ✓   115 [chromium] › tests/comprehensive-e2e.spec.ts:132:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 2. Demo Mode - Full Flow › should apply brand colors correctly (940ms)
+  ✓   116 [chromium] › tests/comprehensive-e2e.spec.ts:153:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 3. Paid Mode - Full Flow › should load paid entry page (563ms)
+  ✘   111 [chromium] › tests/complete-system-test.spec.ts:171:7 › Complete System Verification @smoke › 7. Verify lock screen appears on quota exhaustion (full flow) (11.4s)
+  ✓   117 [chromium] › tests/comprehensive-e2e.spec.ts:158:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 3. Paid Mode - Full Flow › should display brand elements on paid entry (1.5s)
+  ✓   119 [chromium] › tests/comprehensive-e2e.spec.ts:174:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 3. Paid Mode - Full Flow › should navigate to paid report after address input (2.2s)
+  ✓   120 [chromium] › tests/comprehensive-e2e.spec.ts:190:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 3. Paid Mode - Full Flow › should NOT show demo elements in paid mode (1.0s)
+  ✓   118 [chromium] › tests/comprehensive-navigation-test.spec.ts:5:7 › Comprehensive Navigation Tests › All documentation pages have Back to Support buttons (3.3s)
+  ✓   122 [chromium] › tests/comprehensive-navigation-test.spec.ts:26:7 › Comprehensive Navigation Tests › All demo pages have Back to Home buttons with correct URL parameters (2.9s)
+  ✓   121 [chromium] › tests/comprehensive-e2e.spec.ts:203:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 3. Paid Mode - Full Flow › should show all cards unlocked in paid mode (4.7s)
+  ✓   123 [chromium] › tests/comprehensive-navigation-test.spec.ts:50:7 › Comprehensive Navigation Tests › All paid pages have Back to Home buttons with correct URL parameters (2.5s)
+  ✓   125 [chromium] › tests/comprehensive-navigation-test.spec.ts:74:7 › Comprehensive Navigation Tests › CRM page buttons go to support@getsunspire.com (820ms)
+  ✓   126 [chromium] › tests/comprehensive-navigation-test.spec.ts:97:7 › Comprehensive Navigation Tests › Support page links work correctly (1.8s)
+  ✓   127 [chromium] › tests/comprehensive-navigation-test.spec.ts:121:7 › Comprehensive Navigation Tests › Demo site preserves branding and runs correctly (1.6s)
+  ✓   124 [chromium] › tests/comprehensive-e2e.spec.ts:219:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 3. Paid Mode - Full Flow › should display paid CTA footer (5.1s)
+  ✓   128 [chromium] › tests/comprehensive-navigation-test.spec.ts:150:7 › Comprehensive Navigation Tests › Paid site preserves branding correctly (3.2s)
+✅ System size and production validated (savings/payback blurred in demo)
+  ✓   129 [chromium] › tests/comprehensive-e2e.spec.ts:237:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 4. APIs & Estimation Engine › should generate valid solar estimation (5.3s)
+  ✓   130 [chromium] › tests/comprehensive-navigation-test.spec.ts:179:7 › Comprehensive Navigation Tests › All pages maintain consistent navigation structure (5.2s)
+  ✘   132 [chromium] › tests/comprehensive-paid-audit.spec.ts:9:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ REMOVE/HIDE: Pricing/Partners/Support nav (paid) (198ms)
+  ✓   131 [chromium] › tests/comprehensive-e2e.spec.ts:253:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 4. APIs & Estimation Engine › should handle different addresses correctly (4.1s)
+  ✘   133 [chromium] › tests/comprehensive-paid-audit.spec.ts:20:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ REMOVE/HIDE: Activation/pricing copy ($99/mo, $399, etc) (247ms)
+  ✓   134 [chromium] › tests/comprehensive-e2e.spec.ts:270:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 4. APIs & Estimation Engine › should handle API errors gracefully (1.2s)
+  ✘   135 [chromium] › tests/comprehensive-paid-audit.spec.ts:32:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ REMOVE/HIDE: Demo ribbon (322ms)
+  ✘   137 [chromium] › tests/comprehensive-paid-audit.spec.ts:41:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ REMOVE/HIDE: Unlock/blur gates on report (259ms)
+  ✘   138 [chromium] › tests/comprehensive-paid-audit.spec.ts:50:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ REMOVE/HIDE: Sunspire support/billing emails (paid footer) (330ms)
+  ✓   136 [chromium] › tests/comprehensive-e2e.spec.ts:287:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 5. Legal Documents & Footer › should have accessible footer on all pages (2.4s)
+  ✓   139 [chromium] › tests/comprehensive-e2e.spec.ts:297:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 5. Legal Documents & Footer › should have working legal links (707ms)
+  ✘   140 [chromium] › tests/comprehensive-paid-audit.spec.ts:60:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ ADD: Address reassurance text (283ms)
+  ✓   141 [chromium] › tests/comprehensive-e2e.spec.ts:319:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 6. Mobile & Responsive Design › should work on mobile (375px) (1.1s)
+  ✘   142 [chromium] › tests/comprehensive-paid-audit.spec.ts:68:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ ADD: Compact trust strip beneath CTA (286ms)
+  ✘   144 [chromium] › tests/comprehensive-paid-audit.spec.ts:76:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ ADD: Report top CTAs (Book + Talk) (262ms)
+  ✓   143 [chromium] › tests/comprehensive-e2e.spec.ts:341:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 6. Mobile & Responsive Design › should work on tablet (768px) (1.2s)
+  ✘   146 [chromium] › tests/comprehensive-paid-audit.spec.ts:86:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ ADD: Report bottom CTAs (398ms)
+  ✓   145 [chromium] › tests/comprehensive-e2e.spec.ts:349:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 6. Mobile & Responsive Design › should work on desktop (1920px) (1.7s)
+  ✘   148 [chromium] › tests/comprehensive-paid-audit.spec.ts:94:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ ADD: Mobile sticky CTA (292ms)
+  ✘   149 [chromium] › tests/comprehensive-paid-audit.spec.ts:104:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ ADD: Tooltips on result tiles (201ms)
+  ✘   150 [chromium] › tests/comprehensive-paid-audit.spec.ts:119:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ KEEP ONE: Download PDF / Copy Link section (244ms)
+  ✘   151 [chromium] › tests/comprehensive-paid-audit.spec.ts:131:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ KEEP ONE: Data sources footnote (239ms)
+✅ Demo mode CTA layout different (expected)
+  ✓   147 [chromium] › tests/comprehensive-e2e.spec.ts:364:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 7. All Buttons & CTAs › should have working CTA buttons in demo footer (4.7s)
+  ✘   153 [chromium] › tests/comprehensive-paid-audit.spec.ts:145:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ ADD: Footer legal links (paid) (322ms)
+  ✓   152 [chromium] › tests/comprehensive-e2e.spec.ts:379:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 7. All Buttons & CTAs › should have working CTA buttons in paid footer (1.0s)
+  ✘   155 [chromium] › tests/comprehensive-paid-audit.spec.ts:158:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ ADD: Footer attribution row (272ms)
+  ✓   154 [chromium] › tests/comprehensive-e2e.spec.ts:396:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 7. All Buttons & CTAs › should have working download PDF button (905ms)
+  ✓   156 [chromium] › tests/comprehensive-e2e.spec.ts:406:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 7. All Buttons & CTAs › should have working copy link button (877ms)
+  ✘   157 [chromium] › tests/comprehensive-paid-audit.spec.ts:171:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ VERIFY: No CPRA link (default) (299ms)
+  ✘   159 [chromium] › tests/comprehensive-paid-audit.spec.ts:179:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ VERIFY: Cookie banner hidden (default) (293ms)
+  ✓   158 [chromium] › tests/comprehensive-e2e.spec.ts:424:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 8. Performance & Loading › should load homepage in under 3 seconds (2.1s)
+  ✘   160 [chromium] › tests/comprehensive-paid-audit.spec.ts:189:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ VERIFY: View Methodology present (240ms)
+  ✘   162 [chromium] › tests/comprehensive-paid-audit.spec.ts:197:7 › 🔍 COMPREHENSIVE PAID VERSION AUDIT › ✅ VERIFY: Google attribution in footer (269ms)
+  ✓   161 [chromium] › tests/comprehensive-e2e.spec.ts:433:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 8. Performance & Loading › should load report page in under 3 seconds (1.6s)
+  ✘   164 [chromium] › tests/comprehensive-site-test.spec.ts:4:7 › Comprehensive Site Test › All legal pages have proper structure and content (277ms)
+  ✘   165 [chromium] › tests/comprehensive-site-test.spec.ts:33:7 › Comprehensive Site Test › Documentation pages exist and are properly linked (315ms)
+  ✘   166 [chromium] › tests/comprehensive-site-test.spec.ts:57:7 › Comprehensive Site Test › Support page links work correctly (205ms)
+  ✓   163 [chromium] › tests/comprehensive-e2e.spec.ts:442:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 8. Performance & Loading › should not have console errors (2.8s)
+  ✘     1 [chromium] › tests/address-flow-model.spec.ts:4:7 › Address flow & model validation › Autocomplete selects; normalized address lands on report; numbers are sane (3.1m)
+  ✘   168 [chromium] › tests/comprehensive-site-test.spec.ts:76:7 › Comprehensive Site Test › Form submissions go to correct email addresses (273ms)
+  ✘   167 [chromium] › tests/comprehensive-e2e.spec.ts:470:9 › 🚀 COMPREHENSIVE SUNSPIRE E2E TESTS › 9. Header Spacing - Final Verification › should have perfect 8px grid spacing (1.1s)
+  ✘   170 [chromium] › tests/comprehensive-site-test.spec.ts:139:7 › Comprehensive Site Test › All pages have consistent branding and styling (281ms)
+Starting comprehensive visual verification...
+  ✓   169 [chromium] › tests/address-flow-model.spec.ts:47:7 › Address flow & model validation › Address wrapping and formatting (1.3s)
+  ✘   171 [chromium] › tests/comprehensive-visual-check.spec.ts:4:7 › Comprehensive Visual Verification › Deep visual check of sticky CTA, cookie banner, and width alignment (284ms)
+  ✘   173 [chromium] › tests/comprehensive-site-test.spec.ts:199:7 › Comprehensive Site Test › Mobile responsiveness works correctly (272ms)
+Testing report page with Apple branding...
+  ✘   174 [chromium] › tests/container-width-verification.spec.ts:4:7 › Container Width Verification › Check report page main content matches footer width (260ms)
+  ✘   175 [chromium] › tests/comprehensive-site-test.spec.ts:241:7 › Comprehensive Site Test › Demo functionality works correctly (348ms)
+  ✘   177 [chromium] › tests/comprehensive-site-test.spec.ts:275:7 › Comprehensive Site Test › Branding system works correctly (261ms)
+  ✓   172 [chromium] › tests/address-flow-model.spec.ts:69:7 › Address flow & model validation › Model calculations are consistent across sections (3.9s)
+Checking --cookie-offset CSS variable...
+  ✘   179 [chromium] › tests/cookie-offset-css-debug.spec.ts:4:7 › Cookie Offset CSS Variable Debug › Check if --cookie-offset CSS variable is set (301ms)
+  ✘   178 [chromium] › tests/address-flow-model.spec.ts:103:7 › Address flow & model validation › Error handling for invalid addresses (920ms)
+Testing cookie offset...
+  ✘   180 [chromium] › tests/cookie-offset-simple.spec.ts:4:7 › Cookie Offset Simple Test › Check cookie offset is working (328ms)
+Testing cookie offset functionality...
+  ✘   181 [chromium] › tests/cookie-offset-test.spec.ts:4:7 › Cookie Offset and Sticky CTA Verification › Check sticky CTA respects cookie banner offset (195ms)
+Countdown elements found: [33m0[39m
+Expires text found: [33m2[39m
+Expires 0: Exclusive preview for Apple — expires in 6d 23:59:55
+Expires 1: Expires in 6d 23h 59m 55s
+All countdown matches: [1mnull[22m
+  ✓   182 [chromium] › tests/countdown-debug.spec.ts:3:5 › Debug countdown timer (5.5s)
+🔍 Testing activate page...
+  ✘   176 [chromium] › tests/cookie-banner-consistency.spec.ts:10:7 › Cookie Banner Consistency › Demo page - cookie banner displays fully without cutoff (12.4s)
+✅ All tabs visible
+✅ Found text: quote.yourcompany.com
+✅ #21-22 FIXED: Activate page shows quote.yourcompany.com
+  ✓   184 [chromium] › tests/critical-fixes-21-24.spec.ts:6:7 › Critical Fixes #21-24 Verification › #21-22: Activate page shows quote.yourcompany.com (4.1s)
+🔍 Testing lock screen logic...
+Initial quota: [33m2[39m
+Quota after setting to 0: [33m0[39m
+✅ Lock screen appeared!
+✅ Green/red comparison visible
+✅ #23-24 FIXED: Lock screen works correctly
+  ✓   186 [chromium] › tests/critical-fixes-21-24.spec.ts:42:7 › Critical Fixes #21-24 Verification › #23-24: Lock screen appears when quota exhausted and new report attempted (10.5s)
+🌐 Testing chromium - Home page...
+  ✘   185 [chromium] › tests/cookie-banner-consistency.spec.ts:40:7 › Cookie Banner Consistency › Paid page - cookie banner matches demo version (12.5s)
+📄 chromium Home Footer Exists: [33mtrue[39m
+✅ chromium Home page consistency verified!
+  ✓   187 [chromium] › tests/cross-browser-consistency.spec.ts:15:11 › Cross-Browser Consistency Tests › chromium: Home page - Tesla colors and functionality (4.4s)
+🌐 Testing chromium - Pricing page...
+📄 chromium Pricing Footer Exists: [33mtrue[39m
+✅ chromium Pricing page consistency verified!
+  ✓   189 [chromium] › tests/cross-browser-consistency.spec.ts:15:11 › Cross-Browser Consistency Tests › chromium: Pricing page - Tesla colors and functionality (3.6s)
+🌐 Testing chromium - Partners page...
+🎨 chromium Partners Colors: {
+  [32m'$30/mo'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'$120'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'30 days'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'$30/client'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'$120/client'[39m: [32m'rgb(204, 0, 0)'[39m
+}
+📄 chromium Partners Footer Exists: [33mtrue[39m
+✅ chromium Partners page consistency verified!
+  ✓   190 [chromium] › tests/cross-browser-consistency.spec.ts:15:11 › Cross-Browser Consistency Tests › chromium: Partners page - Tesla colors and functionality (3.7s)
+🌐 Testing chromium - Support page...
+  ✘   188 [chromium] › tests/cookie-banner-consistency.spec.ts:76:7 › Cookie Banner Consistency › Mobile - cookie banner stacks properly (12.2s)
+🎨 chromium Support Colors: {
+  [32m'Setup Guide'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'CRM Integration Tutorial'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'Branding Customization'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'API Documentation'[39m: [32m'rgb(204, 0, 0)'[39m
+}
+📄 chromium Support Footer Exists: [33mtrue[39m
+Debugging CSS variables...
+✅ chromium Support page consistency verified!
+  ✓   191 [chromium] › tests/cross-browser-consistency.spec.ts:15:11 › Cross-Browser Consistency Tests › chromium: Support page - Tesla colors and functionality (3.8s)
+🌐 Testing chromium - Report page...
+CSS Variables: {
+  brandPrimary: [32m'#CC0000'[39m,
+  brand600: [32m'#CC0000'[39m,
+  brand: [32m'#CC0000'[39m,
+  brand2: [32m'#CC0000'[39m
+}
+Element styles: {
+  color: [32m'rgb(15, 23, 42)'[39m,
+  backgroundColor: [32m'rgba(0, 0, 0, 0)'[39m,
+  allProperties: [
+    { property: [32m'--brand-500'[39m, value: [32m'#CC0000'[39m },
+    { property: [32m'--brand-600'[39m, value: [32m'#CC0000'[39m },
+    { property: [32m'--brand'[39m, value: [32m'#CC0000'[39m },
+    { property: [32m'--brand-primary'[39m, value: [32m'#CC0000'[39m },
+    { property: [32m'--brand-200-override'[39m, value: [32m'rgb(255, 100, 100)'[39m },
+    { property: [32m'--brand-100-override'[39m, value: [32m'rgb(255, 150, 150)'[39m },
+    { property: [32m'--brand-700-override'[39m, value: [32m'#CC0000'[39m },
+    { property: [32m'--brand-900'[39m, value: [32m'#CC0000'[39m },
+    { property: [32m'--brand-600-override'[39m, value: [32m'#CC0000'[39m },
+    { property: [32m'--brand-200'[39m, value: [32m'rgb(255, 100, 100)'[39m },
+    { property: [32m'--brand-50'[39m, value: [32m'rgb(255, 200, 200)'[39m },
+    { property: [32m'--brand-100'[39m, value: [32m'rgb(255, 150, 150)'[39m },
+    { property: [32m'--brand-900-override'[39m, value: [32m'#CC0000'[39m },
+    { property: [32m'--brand-700'[39m, value: [32m'#CC0000'[39m },
+    { property: [32m'--brand-800-override'[39m, value: [32m'#CC0000'[39m },
+    { property: [32m'--brand-500-override'[39m, value: [32m'#CC0000'[39m },
+    { property: [32m'--brand-400'[39m, value: [32m'rgb(229, 25, 25)'[39m },
+    { property: [32m'--brand-2'[39m, value: [32m'#CC0000'[39m },
+    { property: [32m'--brand-50-override'[39m, value: [32m'rgb(255, 200, 200)'[39m },
+    { property: [32m'--brand-800'[39m, value: [32m'#CC0000'[39m },
+    { property: [32m'--brand-400-override'[39m, value: [32m'rgb(229, 25, 25)'[39m },
+    { property: [32m'--brand-300-override'[39m, value: [32m'rgb(254, 50, 50)'[39m },
+    { property: [32m'--brand-300'[39m, value: [32m'rgb(254, 50, 50)'[39m }
+  ]
+}
+Span styles: {
+  color: [32m'rgb(75, 85, 99)'[39m,
+  className: [32m'text-gray-600 font-semibold'[39m,
+  allCSS: [
+    { property: [32m'accent-color'[39m, value: [32m'auto'[39m },
+    { property: [32m'background-color'[39m, value: [32m'rgba(0, 0, 0, 0)'[39m },
+    { property: [32m'border-block-end-color'[39m, value: [32m'rgb(229, 231, 235)'[39m },
+    {
+      property: [32m'border-block-start-color'[39m,
+      value: [32m'rgb(229, 231, 235)'[39m
+    },
+    { property: [32m'border-bottom-color'[39m, value: [32m'rgb(229, 231, 235)'[39m },
+    {
+      property: [32m'border-inline-end-color'[39m,
+      value: [32m'rgb(229, 231, 235)'[39m
+    },
+    {
+      property: [32m'border-inline-start-color'[39m,
+      value: [32m'rgb(229, 231, 235)'[39m
+    },
+    { property: [32m'border-left-color'[39m, value: [32m'rgb(229, 231, 235)'[39m },
+    { property: [32m'border-right-color'[39m, value: [32m'rgb(229, 231, 235)'[39m },
+    { property: [32m'border-top-color'[39m, value: [32m'rgb(229, 231, 235)'[39m },
+    { property: [32m'caret-color'[39m, value: [32m'rgb(75, 85, 99)'[39m },
+    { property: [32m'color'[39m, value: [32m'rgb(75, 85, 99)'[39m },
+    { property: [32m'color-interpolation'[39m, value: [32m'srgb'[39m },
+    { property: [32m'color-interpolation-filters'[39m, value: [32m'linearrgb'[39m },
+    { property: [32m'color-rendering'[39m, value: [32m'auto'[39m },
+    { property: [32m'column-rule-color'[39m, value: [32m'rgb(75, 85, 99)'[39m },
+    { property: [32m'flood-color'[39m, value: [32m'rgb(0, 0, 0)'[39m },
+    { property: [32m'lighting-color'[39m, value: [32m'rgb(255, 255, 255)'[39m },
+    { property: [32m'outline-color'[39m, value: [32m'rgb(75, 85, 99)'[39m },
+    { property: [32m'print-color-adjust'[39m, value: [32m'economy'[39m },
+    { property: [32m'scrollbar-color'[39m, value: [32m'auto'[39m },
+    { property: [32m'stop-color'[39m, value: [32m'rgb(0, 0, 0)'[39m },
+    { property: [32m'text-decoration-color'[39m, value: [32m'rgb(75, 85, 99)'[39m },
+    { property: [32m'text-emphasis-color'[39m, value: [32m'rgb(75, 85, 99)'[39m },
+    {
+      property: [32m'-webkit-tap-highlight-color'[39m,
+      value: [32m'rgba(0, 0, 0, 0)'[39m
+    },
+    { property: [32m'-webkit-text-fill-color'[39m, value: [32m'rgb(75, 85, 99)'[39m },
+    { property: [32m'-webkit-text-stroke-color'[39m, value: [32m'rgb(75, 85, 99)'[39m },
+    { property: [32m'--tw-ring-color'[39m, value: [32m'rgba(59,130,246,.5)'[39m },
+    { property: [32m'--tw-ring-offset-color'[39m, value: [32m'#fff'[39m },
+    { property: [32m'--tw-shadow-colored'[39m, value: [32m'0 0 #0000'[39m }
+  ]
+}
+✓ CSS debug complete
+  ✓   192 [chromium] › tests/css-debug.spec.ts:4:7 › CSS Variables Debug › Debug why CSS variables are not working (4.0s)
+Checking CSS variables on Tesla demo...
+🚫 chromium Quota Exceeded Visible: [33mfalse[39m
+📄 chromium Report Footer Exists: [33mtrue[39m
+✅ chromium Report page consistency verified!
+  ✓   193 [chromium] › tests/cross-browser-consistency.spec.ts:15:11 › Cross-Browser Consistency Tests › chromium: Report page - Tesla colors and functionality (4.7s)
+🌐 Testing safari - Home page...
+Brand Primary CSS variable: #CC0000
+Brand 600 CSS variable: #CC0000
+Earnings text classes: mt-4
+Earnings text computed color: rgb(15, 23, 42)
+✓ CSS variables check complete
+  ✓   194 [chromium] › tests/css-variables-check.spec.ts:4:7 › CSS Variables Check › Check if CSS variables are working on Tesla demo (3.8s)
+Testing CSS variables...
+  ✘   196 [chromium] › tests/css-variables-debug.spec.ts:4:7 › CSS Variables Debug › Check CSS variables are applied correctly (143ms)
+📄 safari Home Footer Exists: [33mtrue[39m
+✅ safari Home page consistency verified!
+  ✓   195 [chromium] › tests/cross-browser-consistency.spec.ts:15:11 › Cross-Browser Consistency Tests › safari: Home page - Tesla colors and functionality (4.4s)
+🌐 Testing safari - Pricing page...
+  ✘   197 [chromium] › tests/cta-final-verification.spec.ts:6:7 › Final CTA Stripe Verification › Demo page primary CTA routes to Stripe successfully (3.9s)
+📄 safari Pricing Footer Exists: [33mtrue[39m
+✅ safari Pricing page consistency verified!
+  ✓   198 [chromium] › tests/cross-browser-consistency.spec.ts:15:11 › Cross-Browser Consistency Tests › safari: Pricing page - Tesla colors and functionality (3.5s)
+🌐 Testing safari - Partners page...
+🎨 safari Partners Colors: {
+  [32m'$30/mo'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'$120'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'30 days'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'$30/client'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'$120/client'[39m: [32m'rgb(204, 0, 0)'[39m
+}
+📄 safari Partners Footer Exists: [33mtrue[39m
+✅ safari Partners page consistency verified!
+  ✓   200 [chromium] › tests/cross-browser-consistency.spec.ts:15:11 › Cross-Browser Consistency Tests › safari: Partners page - Tesla colors and functionality (3.6s)
+🌐 Testing safari - Support page...
+🎨 safari Support Colors: {
+  [32m'Setup Guide'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'CRM Integration Tutorial'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'Branding Customization'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'API Documentation'[39m: [32m'rgb(204, 0, 0)'[39m
+}
+📄 safari Support Footer Exists: [33mtrue[39m
+✅ safari Support page consistency verified!
+  ✓   201 [chromium] › tests/cross-browser-consistency.spec.ts:15:11 › Cross-Browser Consistency Tests › safari: Support page - Tesla colors and functionality (3.5s)
+🌐 Testing safari - Report page...
+🚫 safari Quota Exceeded Visible: [33mfalse[39m
+📄 safari Report Footer Exists: [33mtrue[39m
+✅ safari Report page consistency verified!
+  ✓   202 [chromium] › tests/cross-browser-consistency.spec.ts:15:11 › Cross-Browser Consistency Tests › safari: Report page - Tesla colors and functionality (4.5s)
+🌐 Testing firefox - Home page...
+📄 firefox Home Footer Exists: [33mtrue[39m
+✅ firefox Home page consistency verified!
+  ✓   203 [chromium] › tests/cross-browser-consistency.spec.ts:15:11 › Cross-Browser Consistency Tests › firefox: Home page - Tesla colors and functionality (4.4s)
+🌐 Testing firefox - Pricing page...
+📄 firefox Pricing Footer Exists: [33mtrue[39m
+✅ firefox Pricing page consistency verified!
+  ✓   204 [chromium] › tests/cross-browser-consistency.spec.ts:15:11 › Cross-Browser Consistency Tests › firefox: Pricing page - Tesla colors and functionality (3.6s)
+🌐 Testing firefox - Partners page...
+🎨 firefox Partners Colors: {
+  [32m'$30/mo'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'$120'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'30 days'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'$30/client'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'$120/client'[39m: [32m'rgb(204, 0, 0)'[39m
+}
+📄 firefox Partners Footer Exists: [33mtrue[39m
+✅ firefox Partners page consistency verified!
+  ✓   205 [chromium] › tests/cross-browser-consistency.spec.ts:15:11 › Cross-Browser Consistency Tests › firefox: Partners page - Tesla colors and functionality (3.7s)
+🌐 Testing firefox - Support page...
+🎨 firefox Support Colors: {
+  [32m'Setup Guide'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'CRM Integration Tutorial'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'Branding Customization'[39m: [32m'rgb(204, 0, 0)'[39m,
+  [32m'API Documentation'[39m: [32m'rgb(204, 0, 0)'[39m
+}
+📄 firefox Support Footer Exists: [33mtrue[39m
+✅ firefox Support page consistency verified!
+  ✓   206 [chromium] › tests/cross-browser-consistency.spec.ts:15:11 › Cross-Browser Consistency Tests › firefox: Support page - Tesla colors and functionality (3.5s)
+🌐 Testing firefox - Report page...
+🚫 firefox Quota Exceeded Visible: [33mfalse[39m
+📄 firefox Report Footer Exists: [33mtrue[39m
+✅ firefox Report page consistency verified!
+  ✓   207 [chromium] › tests/cross-browser-consistency.spec.ts:15:11 › Cross-Browser Consistency Tests › firefox: Report page - Tesla colors and functionality (4.8s)
+  ✘    96 [chromium] › tests/complete-19610ab-verification.spec.ts:28:7 › Complete 19610ab Verification › Demo navigation preserves URL parameters correctly (3.0m)
+  ✘   208 [chromium] › tests/cta-sitewide.spec.ts:13:7 › Sunspire sitewide CTA + microcopy › Hero CTA and microcopy visible (12.1s)
+  ✘   210 [chromium] › tests/cta-sitewide.spec.ts:20:7 › Sunspire sitewide CTA + microcopy › Pricing page updated (1.4s)
+  ✓   211 [chromium] › tests/cta-sitewide.spec.ts:27:7 › Sunspire sitewide CTA + microcopy › FAQ and Terms updated (2.4s)
+  ✘   209 [chromium] › tests/complete-19610ab-verification.spec.ts:68:7 › Complete 19610ab Verification › Demo banner shows on main pages but not legal pages (7.0s)
+  ✓   212 [chromium] › tests/cta-sitewide.spec.ts:38:7 › Sunspire sitewide CTA + microcopy › Refund page updated (579ms)
+  ✘   214 [chromium] › tests/cta-sitewide.spec.ts:45:7 › Sunspire sitewide CTA + microcopy › No legacy phrases (738ms)
+  ✓   215 [chromium] › tests/cta-sitewide.spec.ts:58:7 › Sunspire sitewide CTA + microcopy › CTA buttons have lightning emoji and are centered (2.0s)
+  ✓   213 [chromium] › tests/complete-19610ab-verification.spec.ts:106:7 › Complete 19610ab Verification › Demo link removed from footer on all pages (3.7s)
+✅ Demo primary CTA routes to Stripe
+  ✘   217 [chromium] › tests/complete-19610ab-verification.spec.ts:131:7 › Complete 19610ab Verification › Paid version navigation preserves URL parameters (1.8s)
+  ✘   216 [chromium] › tests/cta-stripe-verification.spec.ts:7:7 › CTA Stripe Checkout Verification › Demo page CTAs route to Stripe (2.4s)
+  ✘   218 [chromium] › tests/complete-19610ab-verification.spec.ts:153:7 › Complete 19610ab Verification › Paid version footer shows company logo (7.0s)
+  ✓   220 [chromium] › tests/complete-19610ab-verification.spec.ts:166:7 › Complete 19610ab Verification › Report page preserves URL parameters for both demo and paid (1.6s)
+✓ Home page works correctly
+✓ Pricing page works correctly
+  ✘   219 [chromium] › tests/cta-stripe-verification.spec.ts:33:7 › CTA Stripe Checkout Verification › Paid page CTAs route to Stripe (12.0s)
+✓ Partners page works correctly
+✓ Support page works correctly
+✓ Privacy page works correctly
+✓ Terms page works correctly
+✓ Security page works correctly
+  ✓   221 [chromium] › tests/complete-19610ab-verification.spec.ts:185:7 › Complete 19610ab Verification › All main pages exist and work correctly (6.9s)
+  ✘   223 [chromium] › tests/cta-validation.spec.ts:8:7 › CTA Validation Suite › Home page CTAs unified (1.0s)
+  ✘   224 [chromium] › tests/cta-validation.spec.ts:23:7 › CTA Validation Suite › Pricing page guarantee present (6.0s)
+  ✘   222 [chromium] › tests/cta-stripe-verification.spec.ts:47:7 › CTA Stripe Checkout Verification › Report page CTAs route to Stripe (12.4s)
+🔍 Stripe checkout request data: {"plan":"starter","token":null,"company":"Netflix","utm_source":null,"utm_campaign":null}
+  ✘   226 [chromium] › tests/cta-stripe-verification.spec.ts:62:7 › CTA Stripe Checkout Verification › Stripe checkout session creation (3.6s)
+  ✘   225 [chromium] › tests/cta-validation.spec.ts:33:7 › CTA Validation Suite › Legal text updated (6.1s)
+  ✘   228 [chromium] › tests/cta-validation.spec.ts:40:7 › CTA Validation Suite › Lightning icon visible on CTAs (1.4s)
+CSS variable value: #FF0000
+URL parameters: {
+  company: [32m'Apple'[39m,
+  brandColor: [32m'#FF0000'[39m,
+  logo: [32m'https://logo.clearbit.com/apple.com'[39m
+}
+Console logs:
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   [route] render start
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   useBrandColors: Running with searchParams: company=Apple&brandColor=%23FF0000&logo=https%3A%2F%2Flogo.clearbit.com%2Fapple.com
+   useBrandColors: primary: null brandColor: #FF0000 colorParam: #FF0000
+   useBrandColors: decoded color: null
+   useBrandColors: No URL brand parameters, not overriding brand takeover colors
+   Paid page brand state: {enabled: false, brand: Your Company, primary: #2563EB, logo: null, domain: null}
+   Paid page localStorage: {"enabled":true,"brand":"Apple","primary":"#FF0000","logo":"https://logo.clearbit.com/apple.com","domain":"Apple","city":null,"rep":null,"firstName":null,"role":null,"expireDays":7,"runs":2,"blur":true,"pilot":false,"isDemo":false,"_timestamp":1760925343422}
+   Paid page isDemo: false
+   useBrandColors: Running with searchParams: company=Apple&brandColor=%23FF0000&logo=https%3A%2F%2Flogo.clearbit.com%2Fapple.com
+   useBrandColors: primary: null brandColor: #FF0000 colorParam: #FF0000
+   useBrandColors: decoded color: null
+   useBrandColors: No URL brand parameters, not overriding brand takeover colors
+   [route] hydrated
+   BrandProvider: enabled= false primary= #2563EB brand= Your Company
+   BrandProvider: URL brandColor parameter: #FF0000
+   BrandProvider: All search params: company=Apple&brandColor=%23FF0000&logo=https%3A%2F%2Flogo.clearbit.com%2Fapple.com
+   BrandProvider: Using URL brand color: #FF0000
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   [route] render start
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   Brand CSS injected: Apple with color #FF0000
+   Paid page brand state: {enabled: true, brand: Apple, primary: #FF0000, logo: https://logo.clearbit.com/apple.com, domain: Apple}
+   Paid page localStorage: {"enabled":true,"brand":"Apple","primary":"#FF0000","logo":"https://logo.clearbit.com/apple.com","domain":"Apple","city":null,"rep":null,"firstName":null,"role":null,"expireDays":7,"runs":2,"blur":true,"pilot":false,"isDemo":false,"_timestamp":1760925343424}
+   Paid page isDemo: false
+   BrandProvider: enabled= true primary= #FF0000 brand= Apple
+   BrandProvider: URL brandColor parameter: #FF0000
+   BrandProvider: All search params: company=Apple&brandColor=%23FF0000&logo=https%3A%2F%2Flogo.clearbit.com%2Fapple.com
+   BrandProvider: Using URL brand color: #FF0000
+   🔑 Google Maps API key: Present
+   🔍 AddressAutocomplete useEffect triggered, query:  length: 0
+   ✅ Google Places API loaded successfully
+   🔍 Query length < 3, clearing predictions
+   [route] render start
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   ✅ Google Places API already loaded
+   [route] render start
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   [route] render start
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   [route] render start
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+   getBrandTheme: companyHandle= default key= default result= #2563EB
+  ✘   229 [chromium] › tests/cta-validation.spec.ts:52:7 › CTA Validation Suite › CTA consistency across pages (1.2s)
+  ✓   227 [chromium] › tests/debug-color.spec.ts:5:5 › Debug color issue (4.8s)
+  ✘   231 [chromium] › tests/cta-validation.spec.ts:67:7 › CTA Validation Suite › Mobile sticky CTA consistency (1.1s)
+Page content: NetflixSolar IntelligencePricingPartnersSupportNew AnalysisBack to Home:root{--brand:#E50914;--brand-primary:#E50914;}Your Netflix Solar Quote (Live Preview)Comprehensive analysis for your property at123 Main StGenerated on 10/19/2025Preview: 0 runs leftExpires in 6d 23h 59m 58s⚡7.2 kWSystem Size☀️12,286 kWhAnnual Production💰— — —Net Cost (After ITC)Unlock Full Report📈— — —Year 1 SavingsUnlock Full ReportYour Solar Savings Over TimeSimple view of how your solar investment pays off over 25 yearsView Methodology1510152025Years$0k$20k$40k$60k$80kTotal Savings$15kInvestment7 yearsPayback Time$66k25-Year SavingsHow to read this: The red area shows your total savings growing over time. After 7 years, you'll have saved enough to cover your initial investment. By year 25, you'll have saved $66k total.Financial AnalysisPayback Period— — —25-Year NPV— — —ROI— — —Electricity Rate$0.18/kWh (generic)Unlock Full ReportEnvironmental ImpactCO₂ Offset/Year10,443 lbsSolar Irradiance5.5 kWh/m²/daySystem Tilt0°System Losses5%Shading Analysisproxy (medium accuracy)Annual Shading Loss10%Unlock Full ReportCalculation Details & Data SourcesCalculation AssumptionsFederal Tax Credit (ITC)30%Cost per Watt$3Panel Degradation0.5%/yearO&M Cost$22/kW/yearRate Increase2.5%/yearDiscount Rate7%Modeled estimate — not a performance guarantee. Data from NREL PVWatts® v8, OpenEI URDB / EIA, and geographic shading proxy.Ready to Launch Your Branded, Customer-Facing Tool?Get the full paid version—customer-facing and under your brand—with complete projections, detailed assumptions, and unblurred savings charts.Launch Your Branded Version Now$99/mo + $399 setup • Live in 24 hours — or your setup fee is refunded..Comparable tools cost $2,500+/mo.Book a Free ConsultationSunspire Solar IntelligenceDemo for Netflix — Powered by Sunspire📍1700 Northside Drive Suite A7 #5164Atlanta, GA 30318GDPRCCPASOC 2✉️support@getsunspire.com✉️billing@getsunspire.com☎️+1 (404) 123-4567Quick LinksPricingPartnersSupportLegal & SupportPrivacy PolicyTerms of ServiceRefund PolicySecurityDPADo Not Sell My Data⚡Estimates generatedusing NREL PVWatts® v8Powered by Sunspire🗺️Mapping & locationdata © Google(self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])self.__next_f.push([1,"1:HL[\"/_next/static/media/e4af272ccee01ff0-s.p.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n2:HL[\"/_next/static/css/app/layout.css?v=1760925348050\",\"style\"]\n0:\"$L3\"\n"])self.__next_f.push([1,"4:I[\"(app-pages-browser)/./node_modules/next/dist/client/components/app-router.js\",[\"app-pages-internals\",\"static/chunks/app-pages-internals.js\"],\"\"]\n6:I[\"(app-pages-browser)/./app/global-error.tsx\",[\"app/global-error\",\"static/chunks/app/global-error.js\"],\"\"]\n7:I[\"(app-pages-browser)/./app/BootProbe.tsx\",[\"app/layout\",\"static/chunks/app/layout.js\"],\"\"]\n8:I[\"(app-pages-browser)/./components/AppErrorBoundary.tsx\",[\"app/layout\",\"static/chunks/app/layout.js\"],\"\"]\n9:I[\"(app-pages-browser)/./src/brand/BrandProvid"])self.__next_f.push([1,"er.tsx\",[\"app/layout\",\"static/chunks/app/layout.js\"],\"\"]\na:I[\"(app-pages-browser)/./components/CompanyContext.tsx\",[\"app/layout\",\"static/chunks/app/layout.js\"],\"CompanyProvider\"]\nb:I[\"(app-pages-browser)/./components/BrandCSSInjector.tsx\",[\"app/layout\",\"static/chunks/app/layout.js\"],\"\"]\nc:I[\"(app-pages-browser)/./components/DynamicFavicon.tsx\",[\"app/layout\",\"static/chunks/app/layout.js\"],\"\"]\nd:I[\"(app-pages-browser)/./components/cta/CookieOffsetProvider.tsx\",[\"app/layout\",\"static/chunks/app/layout.js\"],\"\"]\n"])self.__next_f.push([1,"e:I[\"(app-pages-browser)/./components/ConditionalDemoBanner.tsx\",[\"app/layout\",\"static/chunks/app/layout.js\"],\"\"]\nf:I[\"(app-pages-browser)/./components/SharedNavigation.tsx\",[\"app/layout\",\"static/chunks/app/layout.js\"],\"\"]\n10:I[\"(app-pages-browser)/./node_modules/next/dist/client/components/layout-router.js\",[\"app-pages-internals\",\"static/chunks/app-pages-internals.js\"],\"\"]\n11:I[\"(app-pages-browser)/./app/error.tsx\",[\"app/error\",\"static/chunks/app/error.js\"],\"\"]\n12:I[\"(app-pages-browser)/./node_modules/next"])self.__next_f.push([1,"/dist/client/components/render-from-template-context.js\",[\"app-pages-internals\",\"static/chunks/app-pages-internals.js\"],\"\"]\n13:I[\"(app-pages-browser)/./node_modules/next/dist/client/link.js\",[\"app/not-found\",\"static/chunks/app/not-found.js\"],\"\"]\n15:I[\"(app-pages-browser)/./node_modules/next/dist/client/components/static-generation-searchparams-bailout-provider.js\",[\"app-pages-internals\",\"static/chunks/app-pages-internals.js\"],\"\"]\n16:I[\"(app-pages-browser)/./app/report/page.tsx\",[\"app/report/page\",\"static/ch"])self.__next_f.push([1,"unks/app/report/page.js\"],\"\"]\n17:I[\"(app-pages-browser)/./components/CookieConsent.tsx\",[\"app/layout\",\"static/chunks/app/layout.js\"],\"\"]\n"])self.__next_f.push([1,"3:[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/app/layout.css?v=1760925348050\",\"precedence\":\"next_static/css/app/layout.css\",\"crossOrigin\":\"$undefined\"}]],[\"$\",\"$L4\",null,{\"buildId\":\"development\",\"assetPrefix\":\"\",\"initialCanonicalUrl\":\"/report?company=Netflix\u0026demo=1\u0026address=123%20Main%20St\u0026lat=34.0537\u0026lng=-118.2428\u0026placeId=test\",\"initialTree\":[\"\",{\"children\":[\"report\",{\"children\":[\"__PAGE__?{\\\"company\\\":\\\"Netflix\\\",\\\"demo\\\":\\\"1\\\",\\\"address\\\":\\\"123 Main St\\\",\\\"lat\\\":\\\"34.0537\\\",\\\"lng\\\":\\\"-118.2428\\\",\\\"placeId\\\":\\\"test\\\"}\",{}]}]},\"$undefined\",\"$undefined\",true],\"initialHead\":[false,\"$L5\"],\"globalErrorComponent\":\"$6\",\"children\":[null,[\"$\",\"html\",null,{\"lang\":\"en\",\"children\":[[\"$\",\"head\",null,{\"children\":[[\"$\",\"link\",null,{\"rel\":\"preconnect\",\"href\":\"https://fonts.googleapis.com\"}],[\"$\",\"link\",null,{\"rel\":\"preconnect\",\"href\":\"https://fonts.gstatic.com\",\"crossOrigin\":\"anonymous\"}],[\"$\",\"link\",null,{\"rel\":\"preconnect\",\"href\":\"https://js.stripe.com\"}],[\"$\",\"link\",null,{\"rel\":\"dns-prefetch\",\"href\":\"https://maps.googleapis.com\"}]]}],[\"$\",\"body\",null,{\"className\":\"__className_f367f3\",\"children\":[[\"$\",\"$L7\",null,{}],[\"$\",\"$L8\",null,{\"children\":[\"$\",\"$L9\",null,{\"children\":[\"$\",\"$La\",null,{\"children\":[[\"$\",\"$Lb\",null,{}],[\"$\",\"$Lc\",null,{}],[\"$\",\"$Ld\",null,{}],[\"$\",\"$Le\",null,{}],[\"$\",\"$Lf\",null,{}],[\"$\",\"$L10\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$11\",\"errorStyles\":[],\"errorScripts\":[],\"template\":[\"$\",\"$L12\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[\"$\",\"div\",null,{\"className\":\"min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 font-inter flex items-center justify-center\",\"children\":[\"$\",\"div\",null,{\"className\":\"text-center\",\"children\":[[\"$\",\"h1\",null,{\"className\":\"text-6xl font-black text-gray-900 mb-4\",\"children\":\"404\"}],[\"$\",\"h2\",null,{\"className\":\"text-2xl font-bold text-gray-700 mb-6\",\"children\":\"Page Not Found\"}],[\"$\",\"p\",null,{\"className\":\"text-gray-600 mb-8\",\"children\":\"The page you're looking for doesn't exist.\"}],[\"$\",\"$L13\",null,{\"href\":\"/\",\"className\":\"inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[var(--brand-primary)] hover:opacity-90 transition-opacity\",\"children\":\"Return Home\"}]]}]}],\"notFoundStyles\":[],\"childProp\":{\"current\":[\"$\",\"$L10\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"report\",\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L12\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"notFoundStyles\":\"$undefined\",\"childProp\":{\"current\":[\"$L14\",[\"$\",\"$L15\",null,{\"propsForComponent\":{\"params\":{},\"searchParams\":{\"company\":\"Netflix\",\"demo\":\"1\",\"address\":\"123 Main St\",\"lat\":\"34.0537\",\"lng\":\"-118.2428\",\"placeId\":\"test\"}},\"Component\":\"$16\",\"isStaticGeneration\":false}],null],\"segment\":\"__PAGE__?{\\\"company\\\":\\\"Netflix\\\",\\\"demo\\\":\\\"1\\\",\\\"address\\\":\\\"123 Main St\\\",\\\"lat\\\":\\\"34.0537\\\",\\\"lng\\\":\\\"-118.2428\\\",\\\"placeId\\\":\\\"test\\\"}\"},\"styles\":null}],\"segment\":\"report\"},\"styles\":null}]]}]}]}],[\"$\",\"$L17\",null,{}]]}]]}],null]}]]\n"])self.__next_f.push([1,"5:[[\"$\",\"meta\",\"0\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}],[\"$\",\"meta\",\"1\",{\"charSet\":\"utf-8\"}],[\"$\",\"title\",\"2\",{\"children\":\"Sunspire - Solar Intelligence\"}],[\"$\",\"meta\",\"3\",{\"name\":\"description\",\"content\":\"AI-powered solar analysis and installer matching\"}],[\"$\",\"meta\",\"4\",{\"property\":\"og:image:type\",\"content\":\"image/png\"}],[\"$\",\"meta\",\"5\",{\"property\":\"og:image\",\"content\":\"http://localhost:3000/opengraph-image?f9fdc456b432aef8\"}],[\"$\",\"meta\",\"6\",{\"name\":\"twitter:card\",\"content\":\"summary_large_image\"}],[\"$\",\"meta\",\"7\",{\"name\":\"twitter:image:type\",\"content\":\"image/png\"}],[\"$\",\"meta\",\"8\",{\"name\":\"twitter:image\",\"content\":\"http://localhost:3000/opengraph-image?f9fdc456b432aef8\"}],[\"$\",\"meta\",\"9\",{\"name\":\"next-size-adjust\"}]]\n"])self.__next_f.push([1,"14:null\n"])self.__next_f.push([1,""])$0k
+Netflix elements found: [33m3[39m
+Exclusive elements found: [33m0[39m
+Preview elements found: [33m2[39m
+Demo data attributes found: [33m1[39m
+Screenshot saved as debug-demo-page.png
+  ✓   230 [chromium] › tests/debug-demo-page.spec.ts:3:5 › Debug demo page content (3.1s)
+Debugging live site CSS variables...
+Brand Primary: #0071E3
+Brand 600: #0071E3
+Secure Stripe checkout color: rgb(107, 114, 128)
+  ✘   233 [chromium] › tests/debug-live-site.spec.ts:4:7 › Debug Live Site › Check what CSS variables are actually set (20.1s)
+🌐 Debugging LIVE site...
+Total buttons found: 8
+Button 0: "Copy demo link" (data-cta-button: null)
+Button 1: "✕" (data-cta-button: null)
+Button 2: "⚡Launch Your Branded Version Now" (data-cta-button: null)
+Button 3: "⚡Launch Your Branded Version Now" (data-cta-button: true)
+Button 4: "Generate Solar Report" (data-cta-button: true)
+Button 5: "⚡Launch Your Branded Version Now" (data-cta-button: true)
+  ✘   232 [chromium] › tests/cta-validation.spec.ts:81:7 › CTA Validation Suite › Report page CTA consistency (24.5s)
+Button 6: "⚡Launch Your Branded Version Now" (data-cta-button: true)
+Button 7: "Launch Your Branded Version Now" (data-cta-button: true)
+CTA buttons found: 5
+CTA Button 0: "⚡Launch Your Branded Version Now"
+CTA Button 1: "Generate Solar Report"
+CTA Button 2: "⚡Launch Your Branded Version Now"
+CTA Button 3: "⚡Launch Your Branded Version Now"
+CTA Button 4: "Launch Your Branded Version Now"
+📸 Screenshot saved: debug-live.png
+  ✓   234 [chromium] › tests/debug-live.spec.ts:4:7 › Debug Live Site › Debug live site structure (16.1s)
+Response status: [33m200[39m
+Response headers: {
+  [32m'access-control-allow-origin'[39m: [32m'*'[39m,
+  age: [32m'417'[39m,
+  [32m'cache-control'[39m: [32m'public, max-age=0, must-revalidate'[39m,
+  [32m'content-disposition'[39m: [32m'inline'[39m,
+  [32m'content-encoding'[39m: [32m'br'[39m,
+  [32m'content-security-policy'[39m: [32m"default-src 'self'; img-src 'self' data: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://maps.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https:; frame-ancestors 'none';"[39m,
+  [32m'content-type'[39m: [32m'text/html; charset=utf-8'[39m,
+  date: [32m'Mon, 20 Oct 2025 01:59:34 GMT'[39m,
+  etag: [32m'W/"bf0ecbffac3f0799f7d5dda9d0ecc126"'[39m,
+  [32m'permissions-policy'[39m: [32m'camera=(), microphone=(), geolocation=()'[39m,
+  [32m'referrer-policy'[39m: [32m'strict-origin-when-cross-origin'[39m,
+  server: [32m'Vercel'[39m,
+  [32m'strict-transport-security'[39m: [32m'max-age=31536000; includeSubDomains'[39m,
+  vary: [32m'RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Url'[39m,
+  [32m'x-commit-sha'[39m: [32m'unknown'[39m,
+  [32m'x-content-type-options'[39m: [32m'nosniff'[39m,
+  [32m'x-custom-domain'[39m: [32m'true'[39m,
+  [32m'x-frame-options'[39m: [32m'DENY'[39m,
+  [32m'x-matched-path'[39m: [32m'/terms'[39m,
+  [32m'x-tenant'[39m: [32m'sunspire-web-app'[39m,
+  [32m'x-vercel-cache'[39m: [32m'HIT'[39m,
+  [32m'x-vercel-id'[39m: [32m'iad1::sqtsl-1760925574579-5dc822be3ea0'[39m,
+  [32m'x-xss-protection'[39m: [32m'1; mode=block'[39m
+}
+Full page content length: [33m10842[39m
+Page content preview: (self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])self.__next_f.push([1,"1:HL[\"/_next/static/media/e4af272ccee01ff0-s.p.woff2\",\"font\",{\"crossOrigin\":\"\",\"type\":\"font/woff2\"}]\n2:HL[\"/_next/static/css/2aef41b5e34bccda.css\",\"style\",{\"crossOrigin\":\"\"}]\n0:\"$L3\"\n"])self.__next_f.push([1,"4:I[33728,[],\"\"]\n6:I[1827,[\"6470\",\"static/chunks/app/global-error-cb768874da5d482b.js\"],\"\"]\n7:I[11803,[\"8326\",\"static/chunks/8326-48daa3bfc529eba0.js\",\"1099
+Page title: Sunspire - Solar Intelligence
+H1 elements count: [33m2[39m
+First H1 text: Your Company
+Has 404 content: [33mtrue[39m
+  ✘   183 [chromium] › tests/countdown-test.spec.ts:3:5 › Countdown timer should start at 7 days (3.1m)
+Screenshot saved as refund-debug-final.png
+  ✓   235 [chromium] › tests/debug-refund-final.spec.ts:6:7 › Debug Refund Route Final › Check what refund page is actually serving (7.9s)
+Debugging what is actually on the live site...
+Earnings section HTML: [
+  {
+    tagName: [32m'HTML'[39m,
+    className: [32m''[39m,
+    textContent: [32m'tesla — Solar Intelligence\n'[39m +
+      [32m'        .text-brand-600 { color: #CC0000 !important; }\n'[39m +
+      [32m'        .text-brand-primary { color: #CC0000 !important; }\n'[39m +
+      [32m'        .bg-brand-50 { background-color: rgb(255, 200, 200) !important; }\n'[39m +
+      [32m'        .border-brand-200 { border-color: rgb(255, 100, 100) !important; }\n'[39m +
+      [32m'        .text-brand-800 { color: #CC0000 !important; }\n'[39m +
+      [32m`      (self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])self.__next_f.push([1,"1:HL[\\"/_next/static/media/e4af272ccee01ff0-s.p.woff2\\",\\"font\\",{\\"crossOrigin\\":\\"\\",\\"type\\":\\"font/woff2\\"}]\\n2:HL[\\"/_next/static/css/2aef41b5e34bccda.css\\",\\"style\\",{\\"crossOrigin\\":\\"\\"}]\\n0:\\"$L3\\"\\n"])self.__next_f.push([1,"4:I[33728,[],\\"\\"]\\n6:I[1827,[\\"6470\\",\\"static/chunks/app/global-error-cb768874da5d482b.js\\"],\\"\\"]\\n7:I[11803,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\n8:I[95093,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\n9:I[67628,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7"])self.__next_f.push([1,"e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\na:I[63525,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"CompanyProvider\\"]\\nb:I[27277,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\nc:I[55821,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f"])self.__next_f.push([1,"7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\nd:I[28446,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\ne:I[92806,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\nf:I[89829,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa3"])self.__next_f.push([1,"1.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\n10:I[56954,[],\\"\\"]\\n11:I[1598,[\\"7601\\",\\"static/chunks/app/error-8a5ebe1683b635fc.js\\"],\\"\\"]\\n12:I[7264,[],\\"\\"]\\n13:I[68326,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"9160\\",\\"static/chunks/app/not-found-852e7efa8c643c9f.js\\"],\\"\\"]\\n15:I[48297,[],\\"\\"]\\n16:I[30804,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"8676\\",\\"static/chunks/8676-c4e8016f1e2dea2c.js\\",\\"3840\\",\\"static/chunks/app/partners/page-4b4d48d"])self.__next_f.push([1,"4e527ddb0.js\\"],\\"\\"]\\n17:I[12840,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\n"])self.__next_f.push([1,"3:[[[\\"$\\",\\"link\\",\\"0\\",{\\"rel\\":\\"stylesheet\\",\\"href\\":\\"/_next/static/css/2aef41b5e34bccda.css\\",\\"precedence\\":\\"next\\",\\"crossOrigin\\":\\"\\"}]],[\\"$\\",\\"$L4\\",null,{\\"buildId\\":\\"AxPGlxivk99gQcevRSyBo\\",\\"assetPrefix\\":\\"\\",\\"initialCanonicalUrl\\":\\"/partners\\",\\"initialTree\\":[\\"\\",{\\"children\\":[\\"partners\\",{\\"children\\":[\\"__PAGE__\\",{}]}]},\\"$undefined\\",\\"$undefined\\",true],\\"initialHead\\":[false,\\"$L5\\"],\\"globalErrorComponent\\":\\"$6\\",\\"children\\":[null,[\\"$\\",\\"html\\",null,{\\"lang\\":\\"en\\",\\"children\\":[[\\"$\\",\\"head\\",null,{\\"children\\":[[\\"$\\",\\"link\\",null,{\\"rel\\":\\"preconnect\\",\\"href\\":\\"https://fonts.googleapis.com\\"}],[\\"$\\",\\"link\\",null,{\\"rel\\":\\"preconnect\\",\\"href\\":\\"https://fonts.gstatic.com\\",\\"crossOrigin\\":\\"anonymous\\"}],[\\"$\\",\\"link\\",null,{\\"rel\\":\\"preconnect\\",\\"href\\":\\"https://js.stripe.com\\"}],[\\"$\\",\\"link\\",null,{\\"rel\\":\\"dns-prefetch\\",\\"href\\":\\"https://maps.googleapis.com\\"}]]}],[\\"$\\",\\"body\\",null,{\\"className\\":\\"__className_f367f3\\",\\"children\\":[[\\"$\\",\\"$L7\\",null,{}],[\\"$\\",\\"$L8\\",null,{\\"children\\":[\\"$\\",\\"$L9\\",null,{\\"children\\":[\\"$\\",\\"$La\\",null,{\\"children\\":[[\\"$\\",\\"$Lb\\",null,{}],[\\"$\\",\\"$Lc\\",null,{}],[\\"$\\",\\"$Ld\\",null,{}],[\\"$\\",\\"$Le\\",null,{}],[\\"$\\",\\"$Lf\\",null,{}],[\\"$\\",\\"$L10\\",null,{\\"parallelRouterKey\\":\\"children\\",\\"segmentPath\\":[\\"children\\"],\\"loading\\":\\"$undefined\\",\\"loadingStyles\\":\\"$undefined\\",\\"loadingScripts\\":\\"$undefined\\",\\"hasLoading\\":false,\\"error\\":\\"$11\\",\\"errorStyles\\":[],\\"errorScripts\\":[],\\"template\\":[\\"$\\",\\"$L12\\",null,{}],\\"templateStyles\\":\\"$undefined\\",\\"templateScripts\\":\\"$undefined\\",\\"notFound\\":[\\"$\\",\\"div\\",null,{\\"className\\":\\"min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 font-inter flex items-center justify-center\\",\\"children\\":[\\"$\\",\\"div\\",null,{\\"className\\":\\"text-center\\",\\"children\\":[[\\"$\\",\\"h1\\",null,{\\"className\\":\\"text-6xl font-black text-gray-900 mb-4\\",\\"children\\":\\"404\\"}],[\\"$\\",\\"h2\\",null,{\\"className\\":\\"text-2xl font-bold text-gray-700 mb-6\\",\\"children\\":\\"Page Not Found\\"}],[\\"$\\",\\"p\\",null,{\\"className\\":\\"text-gray-600 mb-8\\",\\"children\\":\\"The page you're looking for doesn't exist.\\"}],[\\"$\\",\\"$L13\\",null,{\\"href\\":\\"/\\",\\"className\\":\\"inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[var(--brand-primary)] hover:opacity-90 transition-opacity\\",\\"children\\":\\"Return Home\\"}]]}]}],\\"notFoundStyles\\":[],\\"childProp\\":{\\"current\\":[\\"$\\",\\"$L10\\",null,{\\"parallelRouterKey\\":\\"children\\",\\"segmentPath\\":[\\"children\\",\\"partners\\",\\"children\\"],\\"loading\\":\\"$undefined\\",\\"loadingStyles\\":\\"$undefined\\",\\"loadingScripts\\":\\"$undefined\\",\\"hasLoading\\":false,\\"error\\":\\"$undefined\\",\\"errorStyles\\":\\"$undefined\\",\\"errorScripts\\":\\"$undefined\\",\\"template\\":[\\"$\\",\\"$L12\\",null,{}],\\"templateStyles\\":\\"$undefined\\",\\"templateScripts\\":\\"$undefined\\",\\"notFound\\":\\"$undefined\\",\\"notFoundStyles\\":\\"$undefined\\",\\"childProp\\":{\\"current\\":[\\"$L14\\",[\\"$\\",\\"$L15\\",null,{\\"propsForComponent\\":{\\"params\\":{}},\\"Component\\":\\"$16\\",\\"isStaticGeneration\\":true}],null],\\"segment\\":\\"__PAGE__\\"},\\"styles\\":null}],\\"segment\\":\\"partners\\"},\\"styles\\":null}]]}]}]}],[\\"$\\",\\"$L17\\",null,{}]]}]]}],null]}]]\\n"])self.__next_f.push([1,"5:[[\\"$\\",\\"meta\\",\\"0\\",{\\"name\\":\\"viewport\\",\\"content\\":\\"width=device-width, initial-scale=1\\"}],[\\"$\\",\\"meta\\",\\"1\\",{\\"charSet\\":\\"utf-8\\"}],[\\"$\\",\\"title\\",\\"2\\",{\\"children\\":\\"Sunspire - Solar Intelligence\\"}],[\\"$\\",\\"meta\\",\\"3\\",{\\"name\\":\\"description\\",\\"content\\":\\"AI-powered solar analysis and installer matching\\"}],[\\"$\\",\\"meta\\",\\"4\\",{\\"property\\":\\"og:image:type\\",\\"content\\":\\"image/png\\"}],[\\"$\\",\\"meta\\",\\"5\\",{\\"property\\":\\"og:image\\",\\"content\\":\\"https://sunspire-web-9s1cptpuq-hugo-wentzels-projects.vercel.app/opengraph-image?188ceeaf77743d23\\"}],[\\"$\\",\\"meta\\",\\"6\\",{\\"name\\":\\"twitter:card\\",\\"content\\":\\"summary_large_image\\"}],[\\"$\\",\\"meta\\",\\"7\\",{\\"name\\":\\"twitter:image:type\\",\\"content\\":\\"image/png\\"}],[\\"$\\",\\"meta\\",\\"8\\",{\\"name\\":\\"twitter:image\\",\\"content\\":\\"https://sunspire-web-9s1cptpuq-hugo-wentzels-projects.vercel.app/opengraph-image?188ceeaf77743d23\\"}],[\\"$\\",\\"meta\\",\\"9\\",{\\"name\\":\\"next-size-adjust\\"}]]\\n"])self.__next_f.push([1,"14:null\\n"])self.__next_f.push([1,""])tesla Preview2 runs left•Expires 6d 23hExclusive preview for tesla — expires in 6d 23:59:562 runs leftCopy demo link✕teslaSolar IntelligencePricingPartnersSupport⚡Launch Your Branded Version NowPrivate demo for tesla. Not affiliated.Back to HomePartner ProgramEarn recurring revenue by referring solar installers to SunspirePartner Eligibility & Payouts$30/moPer active client$120One-time setup bonus30 daysCookie windowProgram terms: Cookie window: 30 days (testing 60–90). Payouts Net-30 (paid on the 15th).Commission StructureMonthly recurring:$30/clientSetup bonus:$120/clientCookie window:30 daysEarnings (example)10 clients → $300/mo recurring + $1200 setupPartner BenefitsDedicated partner portalMarketing materials & templatesPriority supportMonthly performance reportsCo-marketing opportunitiesJR“Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.”— Justin Rota, Owner, 30-employee solar firm, GeorgiaApply to Become a PartnerCompany Name *Full Name *Email Address *Phone NumberExpected Monthly ClientsSelect range1-5 clients6-15 clients16-30 clients30+ clientsAdditional InformationSubmit Partner ApplicationApplications are typically reviewed within 48 hoursSunspire Solar IntelligenceDemo for tesla — Powered by Sunspire📍1700 Northside Drive Suite A7 #5164Atlanta, GA 30318GDPRCCPASOC 2✉️support@getsunspire.com✉️billing@getsunspire.com☎️+1 (404) 123-4567Quick LinksPricingPartnersSupportLegal & SupportPrivacy PolicyTerms of ServiceRefund PolicySecurityDPADo Not Sell My Data⚡Estimates generatedusing NREL PVWatts® v8Powered by Sunspire🗺️Mapping & locationdata © Google`[39m,
+    outerHTML: [32m'<html lang="en" style="--brand: #CC0000; --brand-2: #CC0000; --brand-primary: #CC0000; --brand-50: rgb(255, 200, 200); --brand-100: rgb(255, 150, 150); --brand-200: rgb(255, 100, 100); --brand-300: rgb(254, 50, 50); --brand-400: rgb(229, 25, 25); --brand-500: #CC0000; --brand-600: #CC0000; --brand-700: #CC0000; --brand-800: #CC0000; --brand-900: #CC0000; --cookie-offset: 0px;"><head><link rel="stylesheet" href="/_next/static/css/2aef41b5e34bccda.css" crossorigin="" data-precedence="next"><script src="/_next/static/chunks/fd9d1056-496704c1c0520aa2.js" async="" crossorigin=""></script><script src="/_next/static/chunks/2472-650b3b63e5232563.js" async="" crossorigin=""></script><script src="/_next/static/chunks/main-app-b75416f3afaab454.js" async="" crossorigin=""></script><script src="/_next/static/chunks/app/global-error-cb768874da5d482b.js" async=""></script><script src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js" crossorigin="" nomodule=""></script><meta name="viewport" content="width=device-width, initial-scale=1"><meta charset="utf-8"><title>tesla — Solar Intelligence</title><meta name="description" content="AI-powered solar analysis and installer matching"><meta property="og:image:type" content="image/png"><meta property="og:image" content="https://sunspire-web-9s1cptpuq-hugo-wentzels-projects.vercel.app/opengraph-image?188ceeaf77743d23"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image:type" content="image/png"><meta name="twitter:image" content="https://sunspire-web-9s1cptpuq-hugo-wentzels-projects.vercel.app/opengraph-image?188ceeaf77743d23"><meta name="next-size-adjust"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="preconnect" href="https://js.stripe.com"><link rel="dns-prefetch" href="https://maps.googleapis.com"><link rel="apple-touch-icon" href="https://www.tesla.com/themes/custom/tesla_frontend/assets/favicons/favicon-32x32.png"><style>\n'[39m +
+      [32m'        .text-brand-600 { color: #CC0000 !important; }\n'[39m +
+      [32m'        .text-brand-primary { color: #CC0000 !important; }\n'[39m +
+      [32m'        .bg-brand-50 { background-color: rgb(255, 200, 200) !important; }\n'[39m +
+      [32m'        .border-brand-200 { border-color: rgb(255, 100, 100) !important; }\n'[39m +
+      [32m'        .text-brand-800 { color: #CC0000 !important; }\n'[39m +
+      [32m`      </style><link rel="icon" type="image/png" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'&gt;&lt;circle cx='8' cy='8' r='8' fill='%23CC0000'/&gt;&lt;/svg&gt;"><meta name="robots" content="noindex,nofollow"></head><body class="__className_f367f3"><script src="/_next/static/chunks/webpack-af37ef3afb7597ee.js" crossorigin="" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])</script><script>self.__next_f.push([1,"1:HL[\\"/_next/static/media/e4af272ccee01ff0-s.p.woff2\\",\\"font\\",{\\"crossOrigin\\":\\"\\",\\"type\\":\\"font/woff2\\"}]\\n2:HL[\\"/_next/static/css/2aef41b5e34bccda.css\\",\\"style\\",{\\"crossOrigin\\":\\"\\"}]\\n0:\\"$L3\\"\\n"])</script><script>self.__next_f.push([1,"4:I[33728,[],\\"\\"]\\n6:I[1827,[\\"6470\\",\\"static/chunks/app/global-error-cb768874da5d482b.js\\"],\\"\\"]\\n7:I[11803,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\n8:I[95093,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\n9:I[67628,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7"])</script><script>self.__next_f.push([1,"e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\na:I[63525,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"CompanyProvider\\"]\\nb:I[27277,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\nc:I[55821,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f"])</script><script>self.__next_f.push([1,"7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\nd:I[28446,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\ne:I[92806,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\nf:I[89829,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa3"])</script><script>self.__next_f.push([1,"1.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\n10:I[56954,[],\\"\\"]\\n11:I[1598,[\\"7601\\",\\"static/chunks/app/error-8a5ebe1683b635fc.js\\"],\\"\\"]\\n12:I[7264,[],\\"\\"]\\n13:I[68326,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"9160\\",\\"static/chunks/app/not-found-852e7efa8c643c9f.js\\"],\\"\\"]\\n15:I[48297,[],\\"\\"]\\n16:I[30804,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"8676\\",\\"static/chunks/8676-c4e8016f1e2dea2c.js\\",\\"3840\\",\\"static/chunks/app/partners/page-4b4d48d"])</script><script>self.__next_f.push([1,"4e527ddb0.js\\"],\\"\\"]\\n17:I[12840,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\n"])</script><script>self.__next_f.push([1,"3:[[[\\"$\\",\\"link\\",\\"0\\",{\\"rel\\":\\"stylesheet\\",\\"href\\":\\"/_next/static/css/2aef41b5e34bccda.css\\",\\"precedence\\":\\"next\\",\\"crossOrigin\\":\\"\\"}]],[\\"$\\",\\"$L4\\",null,{\\"buildId\\":\\"AxPGlxivk99gQcevRSyBo\\",\\"assetPrefix\\":\\"\\",\\"initialCanonicalUrl\\":\\"/partners\\",\\"initialTree\\":[\\"\\",{\\"children\\":[\\"partners\\",{\\"children\\":[\\"__PAGE__\\",{}]}]},\\"$undefined\\",\\"$undefined\\",true],\\"initialHead\\":[false,\\"$L5\\"],\\"globalErrorComponent\\":\\"$6\\",\\"children\\":[null,[\\"$\\",\\"html\\",null,{\\"lang\\":\\"en\\",\\"children\\":[[\\"$\\",\\"head\\",null,{\\"children\\":[[\\"$\\",\\"link\\",null,{\\"rel\\":\\"preconnect\\",\\"href\\":\\"https://fonts.googleapis.com\\"}],[\\"$\\",\\"link\\",null,{\\"rel\\":\\"preconnect\\",\\"href\\":\\"https://fonts.gstatic.com\\",\\"crossOrigin\\":\\"anonymous\\"}],[\\"$\\",\\"link\\",null,{\\"rel\\":\\"preconnect\\",\\"href\\":\\"https://js.stripe.com\\"}],[\\"$\\",\\"link\\",null,{\\"rel\\":\\"dns-prefetch\\",\\"href\\":\\"https://maps.googleapis.com\\"}]]}],[\\"$\\",\\"body\\",null,{\\"className\\":\\"__className_f367f3\\",\\"children\\":[[\\"$\\",\\"$L7\\",null,{}],[\\"$\\",\\"$L8\\",null,{\\"children\\":[\\"$\\",\\"$L9\\",null,{\\"children\\":[\\"$\\",\\"$La\\",null,{\\"children\\":[[\\"$\\",\\"$Lb\\",null,{}],[\\"$\\",\\"$Lc\\",null,{}],[\\"$\\",\\"$Ld\\",null,{}],[\\"$\\",\\"$Le\\",null,{}],[\\"$\\",\\"$Lf\\",null,{}],[\\"$\\",\\"$L10\\",null,{\\"parallelRouterKey\\":\\"children\\",\\"segmentPath\\":[\\"children\\"],\\"loading\\":\\"$undefined\\",\\"loadingStyles\\":\\"$undefined\\",\\"loadingScripts\\":\\"$undefined\\",\\"hasLoading\\":false,\\"error\\":\\"$11\\",\\"errorStyles\\":[],\\"errorScripts\\":[],\\"template\\":[\\"$\\",\\"$L12\\",null,{}],\\"templateStyles\\":\\"$undefined\\",\\"templateScripts\\":\\"$undefined\\",\\"notFound\\":[\\"$\\",\\"div\\",null,{\\"className\\":\\"min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 font-inter flex items-center justify-center\\",\\"children\\":[\\"$\\",\\"div\\",null,{\\"className\\":\\"text-center\\",\\"children\\":[[\\"$\\",\\"h1\\",null,{\\"className\\":\\"text-6xl font-black text-gray-900 mb-4\\",\\"children\\":\\"404\\"}],[\\"$\\",\\"h2\\",null,{\\"className\\":\\"text-2xl font-bold text-gray-700 mb-6\\",\\"children\\":\\"Page Not Found\\"}],[\\"$\\",\\"p\\",null,{\\"className\\":\\"text-gray-600 mb-8\\",\\"children\\":\\"The page you're looking for doesn't exist.\\"}],[\\"$\\",\\"$L13\\",null,{\\"href\\":\\"/\\",\\"className\\":\\"inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[var(--brand-primary)] hover:opacity-90 transition-opacity\\",\\"children\\":\\"Return Home\\"}]]}]}],\\"notFoundStyles\\":[],\\"childProp\\":{\\"current\\":[\\"$\\",\\"$L10\\",null,{\\"parallelRouterKey\\":\\"children\\",\\"segmentPath\\":[\\"children\\",\\"partners\\",\\"children\\"],\\"loading\\":\\"$undefined\\",\\"loadingStyles\\":\\"$undefined\\",\\"loadingScripts\\":\\"$undefined\\",\\"hasLoading\\":false,\\"error\\":\\"$undefined\\",\\"errorStyles\\":\\"$undefined\\",\\"errorScripts\\":\\"$undefined\\",\\"template\\":[\\"$\\",\\"$L12\\",null,{}],\\"templateStyles\\":\\"$undefined\\",\\"templateScripts\\":\\"$undefined\\",\\"notFound\\":\\"$undefined\\",\\"notFoundStyles\\":\\"$undefined\\",\\"childProp\\":{\\"current\\":[\\"$L14\\",[\\"$\\",\\"$L15\\",null,{\\"propsForComponent\\":{\\"params\\":{}},\\"Component\\":\\"$16\\",\\"isStaticGeneration\\":true}],null],\\"segment\\":\\"__PAGE__\\"},\\"styles\\":null}],\\"segment\\":\\"partners\\"},\\"styles\\":null}]]}]}]}],[\\"$\\",\\"$L17\\",null,{}]]}]]}],null]}]]\\n"])</script><script>self.__next_f.push([1,"5:[[\\"$\\",\\"meta\\",\\"0\\",{\\"name\\":\\"viewport\\",\\"content\\":\\"width=device-width, initial-scale=1\\"}],[\\"$\\",\\"meta\\",\\"1\\",{\\"charSet\\":\\"utf-8\\"}],[\\"$\\",\\"title\\",\\"2\\",{\\"children\\":\\"Sunspire - Solar Intelligence\\"}],[\\"$\\",\\"meta\\",\\"3\\",{\\"name\\":\\"description\\",\\"content\\":\\"AI-powered solar analysis and installer matching\\"}],[\\"$\\",\\"meta\\",\\"4\\",{\\"property\\":\\"og:image:type\\",\\"content\\":\\"image/png\\"}],[\\"$\\",\\"meta\\",\\"5\\",{\\"property\\":\\"og:image\\",\\"content\\":\\"https://sunspire-web-9s1cptpuq-hugo-wentzels-projects.vercel.app/opengraph-image?188ceeaf77743d23\\"}],[\\"$\\",\\"meta\\",\\"6\\",{\\"name\\":\\"twitter:card\\",\\"content\\":\\"summary_large_image\\"}],[\\"$\\",\\"meta\\",\\"7\\",{\\"name\\":\\"twitter:image:type\\",\\"content\\":\\"image/png\\"}],[\\"$\\",\\"meta\\",\\"8\\",{\\"name\\":\\"twitter:image\\",\\"content\\":\\"https://sunspire-web-9s1cptpuq-hugo-wentzels-projects.vercel.app/opengraph-image?188ceeaf77743d23\\"`[39m... 17960 more characters,
+    computedColor: [32m'rgb(15, 23, 42)'[39m
+  },
+  {
+    tagName: [32m'BODY'[39m,
+    className: [32m'__className_f367f3'[39m,
+    textContent: [32m`(self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])self.__next_f.push([1,"1:HL[\\"/_next/static/media/e4af272ccee01ff0-s.p.woff2\\",\\"font\\",{\\"crossOrigin\\":\\"\\",\\"type\\":\\"font/woff2\\"}]\\n2:HL[\\"/_next/static/css/2aef41b5e34bccda.css\\",\\"style\\",{\\"crossOrigin\\":\\"\\"}]\\n0:\\"$L3\\"\\n"])self.__next_f.push([1,"4:I[33728,[],\\"\\"]\\n6:I[1827,[\\"6470\\",\\"static/chunks/app/global-error-cb768874da5d482b.js\\"],\\"\\"]\\n7:I[11803,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\n8:I[95093,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\n9:I[67628,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7"])self.__next_f.push([1,"e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\na:I[63525,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"CompanyProvider\\"]\\nb:I[27277,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\nc:I[55821,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f"])self.__next_f.push([1,"7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\nd:I[28446,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\ne:I[92806,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\nf:I[89829,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa3"])self.__next_f.push([1,"1.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\n10:I[56954,[],\\"\\"]\\n11:I[1598,[\\"7601\\",\\"static/chunks/app/error-8a5ebe1683b635fc.js\\"],\\"\\"]\\n12:I[7264,[],\\"\\"]\\n13:I[68326,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"9160\\",\\"static/chunks/app/not-found-852e7efa8c643c9f.js\\"],\\"\\"]\\n15:I[48297,[],\\"\\"]\\n16:I[30804,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"8676\\",\\"static/chunks/8676-c4e8016f1e2dea2c.js\\",\\"3840\\",\\"static/chunks/app/partners/page-4b4d48d"])self.__next_f.push([1,"4e527ddb0.js\\"],\\"\\"]\\n17:I[12840,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\n"])self.__next_f.push([1,"3:[[[\\"$\\",\\"link\\",\\"0\\",{\\"rel\\":\\"stylesheet\\",\\"href\\":\\"/_next/static/css/2aef41b5e34bccda.css\\",\\"precedence\\":\\"next\\",\\"crossOrigin\\":\\"\\"}]],[\\"$\\",\\"$L4\\",null,{\\"buildId\\":\\"AxPGlxivk99gQcevRSyBo\\",\\"assetPrefix\\":\\"\\",\\"initialCanonicalUrl\\":\\"/partners\\",\\"initialTree\\":[\\"\\",{\\"children\\":[\\"partners\\",{\\"children\\":[\\"__PAGE__\\",{}]}]},\\"$undefined\\",\\"$undefined\\",true],\\"initialHead\\":[false,\\"$L5\\"],\\"globalErrorComponent\\":\\"$6\\",\\"children\\":[null,[\\"$\\",\\"html\\",null,{\\"lang\\":\\"en\\",\\"children\\":[[\\"$\\",\\"head\\",null,{\\"children\\":[[\\"$\\",\\"link\\",null,{\\"rel\\":\\"preconnect\\",\\"href\\":\\"https://fonts.googleapis.com\\"}],[\\"$\\",\\"link\\",null,{\\"rel\\":\\"preconnect\\",\\"href\\":\\"https://fonts.gstatic.com\\",\\"crossOrigin\\":\\"anonymous\\"}],[\\"$\\",\\"link\\",null,{\\"rel\\":\\"preconnect\\",\\"href\\":\\"https://js.stripe.com\\"}],[\\"$\\",\\"link\\",null,{\\"rel\\":\\"dns-prefetch\\",\\"href\\":\\"https://maps.googleapis.com\\"}]]}],[\\"$\\",\\"body\\",null,{\\"className\\":\\"__className_f367f3\\",\\"children\\":[[\\"$\\",\\"$L7\\",null,{}],[\\"$\\",\\"$L8\\",null,{\\"children\\":[\\"$\\",\\"$L9\\",null,{\\"children\\":[\\"$\\",\\"$La\\",null,{\\"children\\":[[\\"$\\",\\"$Lb\\",null,{}],[\\"$\\",\\"$Lc\\",null,{}],[\\"$\\",\\"$Ld\\",null,{}],[\\"$\\",\\"$Le\\",null,{}],[\\"$\\",\\"$Lf\\",null,{}],[\\"$\\",\\"$L10\\",null,{\\"parallelRouterKey\\":\\"children\\",\\"segmentPath\\":[\\"children\\"],\\"loading\\":\\"$undefined\\",\\"loadingStyles\\":\\"$undefined\\",\\"loadingScripts\\":\\"$undefined\\",\\"hasLoading\\":false,\\"error\\":\\"$11\\",\\"errorStyles\\":[],\\"errorScripts\\":[],\\"template\\":[\\"$\\",\\"$L12\\",null,{}],\\"templateStyles\\":\\"$undefined\\",\\"templateScripts\\":\\"$undefined\\",\\"notFound\\":[\\"$\\",\\"div\\",null,{\\"className\\":\\"min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 font-inter flex items-center justify-center\\",\\"children\\":[\\"$\\",\\"div\\",null,{\\"className\\":\\"text-center\\",\\"children\\":[[\\"$\\",\\"h1\\",null,{\\"className\\":\\"text-6xl font-black text-gray-900 mb-4\\",\\"children\\":\\"404\\"}],[\\"$\\",\\"h2\\",null,{\\"className\\":\\"text-2xl font-bold text-gray-700 mb-6\\",\\"children\\":\\"Page Not Found\\"}],[\\"$\\",\\"p\\",null,{\\"className\\":\\"text-gray-600 mb-8\\",\\"children\\":\\"The page you're looking for doesn't exist.\\"}],[\\"$\\",\\"$L13\\",null,{\\"href\\":\\"/\\",\\"className\\":\\"inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[var(--brand-primary)] hover:opacity-90 transition-opacity\\",\\"children\\":\\"Return Home\\"}]]}]}],\\"notFoundStyles\\":[],\\"childProp\\":{\\"current\\":[\\"$\\",\\"$L10\\",null,{\\"parallelRouterKey\\":\\"children\\",\\"segmentPath\\":[\\"children\\",\\"partners\\",\\"children\\"],\\"loading\\":\\"$undefined\\",\\"loadingStyles\\":\\"$undefined\\",\\"loadingScripts\\":\\"$undefined\\",\\"hasLoading\\":false,\\"error\\":\\"$undefined\\",\\"errorStyles\\":\\"$undefined\\",\\"errorScripts\\":\\"$undefined\\",\\"template\\":[\\"$\\",\\"$L12\\",null,{}],\\"templateStyles\\":\\"$undefined\\",\\"templateScripts\\":\\"$undefined\\",\\"notFound\\":\\"$undefined\\",\\"notFoundStyles\\":\\"$undefined\\",\\"childProp\\":{\\"current\\":[\\"$L14\\",[\\"$\\",\\"$L15\\",null,{\\"propsForComponent\\":{\\"params\\":{}},\\"Component\\":\\"$16\\",\\"isStaticGeneration\\":true}],null],\\"segment\\":\\"__PAGE__\\"},\\"styles\\":null}],\\"segment\\":\\"partners\\"},\\"styles\\":null}]]}]}]}],[\\"$\\",\\"$L17\\",null,{}]]}]]}],null]}]]\\n"])self.__next_f.push([1,"5:[[\\"$\\",\\"meta\\",\\"0\\",{\\"name\\":\\"viewport\\",\\"content\\":\\"width=device-width, initial-scale=1\\"}],[\\"$\\",\\"meta\\",\\"1\\",{\\"charSet\\":\\"utf-8\\"}],[\\"$\\",\\"title\\",\\"2\\",{\\"children\\":\\"Sunspire - Solar Intelligence\\"}],[\\"$\\",\\"meta\\",\\"3\\",{\\"name\\":\\"description\\",\\"content\\":\\"AI-powered solar analysis and installer matching\\"}],[\\"$\\",\\"meta\\",\\"4\\",{\\"property\\":\\"og:image:type\\",\\"content\\":\\"image/png\\"}],[\\"$\\",\\"meta\\",\\"5\\",{\\"property\\":\\"og:image\\",\\"content\\":\\"https://sunspire-web-9s1cptpuq-hugo-wentzels-projects.vercel.app/opengraph-image?188ceeaf77743d23\\"}],[\\"$\\",\\"meta\\",\\"6\\",{\\"name\\":\\"twitter:card\\",\\"content\\":\\"summary_large_image\\"}],[\\"$\\",\\"meta\\",\\"7\\",{\\"name\\":\\"twitter:image:type\\",\\"content\\":\\"image/png\\"}],[\\"$\\",\\"meta\\",\\"8\\",{\\"name\\":\\"twitter:image\\",\\"content\\":\\"https://sunspire-web-9s1cptpuq-hugo-wentzels-projects.vercel.app/opengraph-image?188ceeaf77743d23\\"}],[\\"$\\",\\"meta\\",\\"9\\",{\\"name\\":\\"next-size-adjust\\"}]]\\n"])self.__next_f.push([1,"14:null\\n"])self.__next_f.push([1,""])tesla Preview2 runs left•Expires 6d 23hExclusive preview for tesla — expires in 6d 23:59:562 runs leftCopy demo link✕teslaSolar IntelligencePricingPartnersSupport⚡Launch Your Branded Version NowPrivate demo for tesla. Not affiliated.Back to HomePartner ProgramEarn recurring revenue by referring solar installers to SunspirePartner Eligibility & Payouts$30/moPer active client$120One-time setup bonus30 daysCookie windowProgram terms: Cookie window: 30 days (testing 60–90). Payouts Net-30 (paid on the 15th).Commission StructureMonthly recurring:$30/clientSetup bonus:$120/clientCookie window:30 daysEarnings (example)10 clients → $300/mo recurring + $1200 setupPartner BenefitsDedicated partner portalMarketing materials & templatesPriority supportMonthly performance reportsCo-marketing opportunitiesJR“Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.”— Justin Rota, Owner, 30-employee solar firm, GeorgiaApply to Become a PartnerCompany Name *Full Name *Email Address *Phone NumberExpected Monthly ClientsSelect range1-5 clients6-15 clients16-30 clients30+ clientsAdditional InformationSubmit Partner ApplicationApplications are typically reviewed within 48 hoursSunspire Solar IntelligenceDemo for tesla — Powered by Sunspire📍1700 Northside Drive Suite A7 #5164Atlanta, GA 30318GDPRCCPASOC 2✉️support@getsunspire.com✉️billing@getsunspire.com☎️+1 (404) 123-4567Quick LinksPricingPartnersSupportLegal & SupportPrivacy PolicyTerms of ServiceRefund PolicySecurityDPADo Not Sell My Data⚡Estimates generatedusing NREL PVWatts® v8Powered by Sunspire🗺️Mapping & locationdata © Google`[39m,
+    outerHTML: [32m`<body class="__className_f367f3"><script src="/_next/static/chunks/webpack-af37ef3afb7597ee.js" crossorigin="" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])</script><script>self.__next_f.push([1,"1:HL[\\"/_next/static/media/e4af272ccee01ff0-s.p.woff2\\",\\"font\\",{\\"crossOrigin\\":\\"\\",\\"type\\":\\"font/woff2\\"}]\\n2:HL[\\"/_next/static/css/2aef41b5e34bccda.css\\",\\"style\\",{\\"crossOrigin\\":\\"\\"}]\\n0:\\"$L3\\"\\n"])</script><script>self.__next_f.push([1,"4:I[33728,[],\\"\\"]\\n6:I[1827,[\\"6470\\",\\"static/chunks/app/global-error-cb768874da5d482b.js\\"],\\"\\"]\\n7:I[11803,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\n8:I[95093,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\n9:I[67628,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7"])</script><script>self.__next_f.push([1,"e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\na:I[63525,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"CompanyProvider\\"]\\nb:I[27277,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\nc:I[55821,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f"])</script><script>self.__next_f.push([1,"7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\nd:I[28446,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\ne:I[92806,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\nf:I[89829,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa3"])</script><script>self.__next_f.push([1,"1.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\n10:I[56954,[],\\"\\"]\\n11:I[1598,[\\"7601\\",\\"static/chunks/app/error-8a5ebe1683b635fc.js\\"],\\"\\"]\\n12:I[7264,[],\\"\\"]\\n13:I[68326,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"9160\\",\\"static/chunks/app/not-found-852e7efa8c643c9f.js\\"],\\"\\"]\\n15:I[48297,[],\\"\\"]\\n16:I[30804,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"8676\\",\\"static/chunks/8676-c4e8016f1e2dea2c.js\\",\\"3840\\",\\"static/chunks/app/partners/page-4b4d48d"])</script><script>self.__next_f.push([1,"4e527ddb0.js\\"],\\"\\"]\\n17:I[12840,[\\"8326\\",\\"static/chunks/8326-48daa3bfc529eba0.js\\",\\"1099\\",\\"static/chunks/1099-f7e77c3bfef4fa31.js\\",\\"3185\\",\\"static/chunks/app/layout-29e69961fb9615df.js\\"],\\"\\"]\\n"])</script><script>self.__next_f.push([1,"3:[[[\\"$\\",\\"link\\",\\"0\\",{\\"rel\\":\\"stylesheet\\",\\"href\\":\\"/_next/static/css/2aef41b5e34bccda.css\\",\\"precedence\\":\\"next\\",\\"crossOrigin\\":\\"\\"}]],[\\"$\\",\\"$L4\\",null,{\\"buildId\\":\\"AxPGlxivk99gQcevRSyBo\\",\\"assetPrefix\\":\\"\\",\\"initialCanonicalUrl\\":\\"/partners\\",\\"initialTree\\":[\\"\\",{\\"children\\":[\\"partners\\",{\\"children\\":[\\"__PAGE__\\",{}]}]},\\"$undefined\\",\\"$undefined\\",true],\\"initialHead\\":[false,\\"$L5\\"],\\"globalErrorComponent\\":\\"$6\\",\\"children\\":[null,[\\"$\\",\\"html\\",null,{\\"lang\\":\\"en\\",\\"children\\":[[\\"$\\",\\"head\\",null,{\\"children\\":[[\\"$\\",\\"link\\",null,{\\"rel\\":\\"preconnect\\",\\"href\\":\\"https://fonts.googleapis.com\\"}],[\\"$\\",\\"link\\",null,{\\"rel\\":\\"preconnect\\",\\"href\\":\\"https://fonts.gstatic.com\\",\\"crossOrigin\\":\\"anonymous\\"}],[\\"$\\",\\"link\\",null,{\\"rel\\":\\"preconnect\\",\\"href\\":\\"https://js.stripe.com\\"}],[\\"$\\",\\"link\\",null,{\\"rel\\":\\"dns-prefetch\\",\\"href\\":\\"https://maps.googleapis.com\\"}]]}],[\\"$\\",\\"body\\",null,{\\"className\\":\\"__className_f367f3\\",\\"children\\":[[\\"$\\",\\"$L7\\",null,{}],[\\"$\\",\\"$L8\\",null,{\\"children\\":[\\"$\\",\\"$L9\\",null,{\\"children\\":[\\"$\\",\\"$La\\",null,{\\"children\\":[[\\"$\\",\\"$Lb\\",null,{}],[\\"$\\",\\"$Lc\\",null,{}],[\\"$\\",\\"$Ld\\",null,{}],[\\"$\\",\\"$Le\\",null,{}],[\\"$\\",\\"$Lf\\",null,{}],[\\"$\\",\\"$L10\\",null,{\\"parallelRouterKey\\":\\"children\\",\\"segmentPath\\":[\\"children\\"],\\"loading\\":\\"$undefined\\",\\"loadingStyles\\":\\"$undefined\\",\\"loadingScripts\\":\\"$undefined\\",\\"hasLoading\\":false,\\"error\\":\\"$11\\",\\"errorStyles\\":[],\\"errorScripts\\":[],\\"template\\":[\\"$\\",\\"$L12\\",null,{}],\\"templateStyles\\":\\"$undefined\\",\\"templateScripts\\":\\"$undefined\\",\\"notFound\\":[\\"$\\",\\"div\\",null,{\\"className\\":\\"min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 font-inter flex items-center justify-center\\",\\"children\\":[\\"$\\",\\"div\\",null,{\\"className\\":\\"text-center\\",\\"children\\":[[\\"$\\",\\"h1\\",null,{\\"className\\":\\"text-6xl font-black text-gray-900 mb-4\\",\\"children\\":\\"404\\"}],[\\"$\\",\\"h2\\",null,{\\"className\\":\\"text-2xl font-bold text-gray-700 mb-6\\",\\"children\\":\\"Page Not Found\\"}],[\\"$\\",\\"p\\",null,{\\"className\\":\\"text-gray-600 mb-8\\",\\"children\\":\\"The page you're looking for doesn't exist.\\"}],[\\"$\\",\\"$L13\\",null,{\\"href\\":\\"/\\",\\"className\\":\\"inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[var(--brand-primary)] hover:opacity-90 transition-opacity\\",\\"children\\":\\"Return Home\\"}]]}]}],\\"notFoundStyles\\":[],\\"childProp\\":{\\"current\\":[\\"$\\",\\"$L10\\",null,{\\"parallelRouterKey\\":\\"children\\",\\"segmentPath\\":[\\"children\\",\\"partners\\",\\"children\\"],\\"loading\\":\\"$undefined\\",\\"loadingStyles\\":\\"$undefined\\",\\"loadingScripts\\":\\"$undefined\\",\\"hasLoading\\":false,\\"error\\":\\"$undefined\\",\\"errorStyles\\":\\"$undefined\\",\\"errorScripts\\":\\"$undefined\\",\\"template\\":[\\"$\\",\\"$L12\\",null,{}],\\"templateStyles\\":\\"$undefined\\",\\"templateScripts\\":\\"$undefined\\",\\"notFound\\":\\"$undefined\\",\\"notFoundStyles\\":\\"$undefined\\",\\"childProp\\":{\\"current\\":[\\"$L14\\",[\\"$\\",\\"$L15\\",null,{\\"propsForComponent\\":{\\"params\\":{}},\\"Component\\":\\"$16\\",\\"isStaticGeneration\\":true}],null],\\"segment\\":\\"__PAGE__\\"},\\"styles\\":null}],\\"segment\\":\\"partners\\"},\\"styles\\":null}]]}]}]}],[\\"$\\",\\"$L17\\",null,{}]]}]]}],null]}]]\\n"])</script><script>self.__next_f.push([1,"5:[[\\"$\\",\\"meta\\",\\"0\\",{\\"name\\":\\"viewport\\",\\"content\\":\\"width=device-width, initial-scale=1\\"}],[\\"$\\",\\"meta\\",\\"1\\",{\\"charSet\\":\\"utf-8\\"}],[\\"$\\",\\"title\\",\\"2\\",{\\"children\\":\\"Sunspire - Solar Intelligence\\"}],[\\"$\\",\\"meta\\",\\"3\\",{\\"name\\":\\"description\\",\\"content\\":\\"AI-powered solar analysis and installer matching\\"}],[\\"$\\",\\"meta\\",\\"4\\",{\\"property\\":\\"og:image:type\\",\\"content\\":\\"image/png\\"}],[\\"$\\",\\"meta\\",\\"5\\",{\\"property\\":\\"og:image\\",\\"content\\":\\"https://sunspire-web-9s1cptpuq-hugo-wentzels-projects.vercel.app/opengraph-image?188ceeaf77743d23\\"}],[\\"$\\",\\"meta\\",\\"6\\",{\\"name\\":\\"twitter:card\\",\\"content\\":\\"summary_large_image\\"}],[\\"$\\",\\"meta\\",\\"7\\",{\\"name\\":\\"twitter:image:type\\",\\"content\\":\\"image/png\\"}],[\\"$\\",\\"meta\\",\\"8\\",{\\"name\\":\\"twitter:image\\",\\"content\\":\\"https://sunspire-web-9s1cptpuq-hugo-wentzels-projects.vercel.app/opengraph-image?188ceeaf77743d23\\"}],[\\"$\\",\\"meta\\",\\"9\\",{\\"name\\":\\"next-size-adjust\\"}]]\\n"])</script><script>self.__next_f.push([1,"14:null\\n"])</script><script>self.__next_f.push([1,""])</script><div data-testid="demo-banner" style="position: sticky; top: 0px; z-index: 1000; background: linear-gradient(rgb(255, 255, 255) 0%, rgb(250, 251, 252) 100%); border-bottom: 1px solid rgb(229, 231, 235); box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 3px;"><div class="block md:hidden px-4 py-3"><div class="flex flex-col gap-2.5 items-center text-center"><div style="display: inline-flex; align-items: center; padding: 5px 12px; background: color-mix(in srgb, var(--brand-primary, #2563eb) 10%, white); border-radius: 6px; font-size: 13px; font-weight: 600; color: var(--brand-primary, #2563eb); letter-spacing: -0.01em; line-height: 1.4;">tesla Preview</div><div style="display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: rgb(107, 114, 128); font-weight: 500; line-height: 1.5; flex-wrap: wrap;"><span style="white-space: nowrap;">2 runs left</span><span style="color: rgb(209, 213, 219); font-size: 10px;">•</span><span style="font-variant-numeric: tabular-nums; white-space: nowrap;">Expires 6d 23h</span></div></div></div><div class="hidden md:flex" style="flex-wrap: wrap; gap: 16px; justify-content: space-between; align-items: center; padding: 14px 20px;"><div class="justify-start" style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; min-width: 0px; flex: 1 1 auto;"><div style="display: flex; align-items: center; gap: 8px; padding: 8px 14px; background: color-mix(in srgb, var(--brand-primary, #2563eb) 8%, white); border-radius: 8px; border: 1px solid color-mix(in srgb, var(--brand-primary, #2563eb) 20%, white);"><strong style="white-space: nowrap; font-size: 15px; color: var(--brand-primary, #2563eb); font-weight: 600; font-variant-numeric: tabular-nums;">Exclusive preview for tesla — expires in 6d 23:59:56</strong></div><span style="font-size: 15px; color: rgb(107, 114, 128); white-space: nowrap; font-weight: 500;">2 runs left</span></div><div class="md:justify-end justify-center w-full md:w-auto" style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;"><button class="btn" style="font-size: 13px; padding: 8px 14px; white-space: nowrap; font-weight: 500; background: white; color: rgb(55, 65, 81); border: 1px solid rgb(209, 213, 219); border-radius: 8px; cursor: pointer; transition: 0.15s;">Copy demo link</button><button aria-label="Dismiss" style="padding: 6px 10px; font-size: 18px; cursor: pointer; border: none; background: transparen`[39m... 15352 more characters,
+    computedColor: [32m'rgb(15, 23, 42)'[39m
+  },
+  {
+    tagName: [32m'DIV'[39m,
+    className: [32m'min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 font-inter'[39m,
+    textContent: [32m'Back to HomePartner ProgramEarn recurring revenue by referring solar installers to SunspirePartner Eligibility & Payouts$30/moPer active client$120One-time setup bonus30 daysCookie windowProgram terms: Cookie window: 30 days (testing 60–90). Payouts Net-30 (paid on the 15th).Commission StructureMonthly recurring:$30/clientSetup bonus:$120/clientCookie window:30 daysEarnings (example)10 clients → $300/mo recurring + $1200 setupPartner BenefitsDedicated partner portalMarketing materials & templatesPriority supportMonthly performance reportsCo-marketing opportunitiesJR“Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.”— Justin Rota, Owner, 30-employee solar firm, GeorgiaApply to Become a PartnerCompany Name *Full Name *Email Address *Phone NumberExpected Monthly ClientsSelect range1-5 clients6-15 clients16-30 clients30+ clientsAdditional InformationSubmit Partner ApplicationApplications are typically reviewed within 48 hoursSunspire Solar IntelligenceDemo for tesla — Powered by Sunspire📍1700 Northside Drive Suite A7 #5164Atlanta, GA 30318GDPRCCPASOC 2✉️support@getsunspire.com✉️billing@getsunspire.com☎️+1 (404) 123-4567Quick LinksPricingPartnersSupportLegal & SupportPrivacy PolicyTerms of ServiceRefund PolicySecurityDPADo Not Sell My Data⚡Estimates generatedusing NREL PVWatts® v8Powered by Sunspire🗺️Mapping & locationdata © Google'[39m,
+    outerHTML: [32m`<div class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 font-inter" data-brand="true"><section class="pt-10 pb-8 md:pt-16 md:pb-14 "><div class="mx-auto w-full max-w-[var(--content-max)] px-[var(--gutter-x-sm)] md:px-[var(--gutter-x-md)] "><div class="flex flex-col gap-6 md:gap-8 "><div class="mb-8"><a href="/?company=tesla&amp;demo=1" class="inline-flex items-center text-neutral-500 hover:text-neutral-900 transition-colors font-medium"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>Back to Home</a></div><div class="text-center"><h1 class="text-4xl md:text-5xl font-black text-neutral-900 mb-6">Partner Program</h1><p class="text-lg md:text-xl text-neutral-700 max-w-3xl mx-auto">Earn recurring revenue by referring solar installers to Sunspire</p></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm mt-6"><div class="text-center"><h2 class="text-xl font-bold text-neutral-900 mb-4">Partner Eligibility &amp; Payouts</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-6"><div><div class="text-2xl font-bold text-brand-600">$30/mo</div><div class="text-sm text-neutral-600">Per active client</div></div><div><div class="text-2xl font-bold text-brand-600">$120</div><div class="text-sm text-neutral-600">One-time setup bonus</div></div><div><div class="text-2xl font-bold text-brand-600">30 days</div><div class="text-sm text-neutral-600">Cookie window</div></div></div><p class="text-xs text-neutral-500 mt-4">Program terms: Cookie window: 30 days (testing 60–90). Payouts Net-30 (paid on the 15th).</p></div></div><div class="grid grid-cols-12 gap-6 md:gap-8 mt-10 md:mt-16"><div class="col-span-12 lg:col-span-5"><div class="flex flex-col gap-6 md:gap-8 "><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h3 class="text-lg font-semibold mb-4">Commission Structure</h3><div class="space-y-3"><div class="flex justify-between"><span class="text-neutral-700">Monthly recurring:</span><span class="font-semibold text-brand-600">$30/client</span></div><div class="flex justify-between"><span class="text-neutral-700">Setup bonus:</span><span class="font-semibold text-brand-600">$120/client</span></div><div class="flex justify-between"><span class="text-neutral-700">Cookie window:</span><span class="font-semibold text-brand-600">30 days</span></div></div></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><div class="flex items-center justify-between"><h3 class="text-lg font-semibold">Earnings (example)</h3><input aria-label="Clients" min="1" max="1000" class="w-24 h-10 rounded-lg border border-neutral-300 px-3" type="number" value="10"></div><p class="mt-4"><span class="text-gray-600 font-semibold">10</span> clients → <b class="text-brand-600">$300/mo recurring</b> + <b class="text-brand-600">$1200 setup</b></p></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h3 class="text-lg font-semibold mb-4">Partner Benefits</h3><div class="space-y-3"><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Dedicated partner portal</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Marketing materials &amp; templates</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Priority support</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Monthly performance reports</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Co-marketing opportunities</span></div></div></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><div class="flex items-start gap-4"><div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 0 2.5px color-mix(in srgb, var(--brand-primary, #e11d48) 35%, transparent); border: 1px solid rgba(255, 255, 255, 0.5);"><span class="text-gray-800 font-semibold" style="font-size: 16px; line-height: 1;">JR</span></div><div><p class="text-neutral-700 italic mb-2">“Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.”</p><p class="text-sm text-neutral-500">— Justin Rota, Owner, 30-employee solar firm, Georgia</p></div></div></div></div></div><div class="col-span-12 lg:col-span-7"><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h2 class="text-2xl font-bold text-neutral-900 mb-6">Apply to Become a Partner</h2><form class="space-y-4"><div><label for="company" class="block text-sm font-medium text-neutral-700 mb-2">Company Name *</label><input id="company" required="" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="Your company name" type="text" value="" name="company"></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="name" class="block text-sm font-medium text-neutral-700 mb-2">Full Name *</label><input id="name" required="" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="Your full name" type="text" value="" name="name"></div><div><label for="email" class="block text-sm font-medium text-neutral-700 mb-2">Email Address *</label><input id="email" required="" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="your@email.com" type="email" value="" name="email"></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="phone" class="block text-sm font-medium text-neutral-700 mb-2">Phone Number</label><input id="phone" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="(555) 123-4567" type="tel" value="" name="phone"></div><div><label for="clientRange" class="block text-sm font-medium text-neutral-700 mb-2">Expected Monthly Clients</label><select id="clientRange" name="clientRange" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent"><option value="">Select range</option><option value="1-5">1-5 clients</option><option value="6-15">6-15 clients</option><option value="16-30">16-30 clients</option><option value="30+">30+ clients</option></select></div></div><div><label for="message" class="block text-sm font-medium text-neutral-700 mb-2">Additional Information</label><textarea id="message" name="message" rows="4" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="Tell us about your solar business and why you'd like to partner with us..."></textarea></div><button type="submit" data-testid="partner-apply-btn" class="w-full mt-6 inline-flex items-center justify-center rounded-lg bg-[var(--brand-600)] px-4 py-2 text-white hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)] disabled:opacity-50">Submit Partner Application</button></form><p class="text-xs text-neutral-500 mt-2 text-center">Applications are typically reviewed within 48 hours</p></div></div></div></div></div></section><footer class="bg-slate-100/60 py-10" data-testid="footer"><div class="mx-auto w-full max-w-[var(--content-max)] px-[var(--gutter-x-sm)] md:px-[var(--gutter-x-md)] rounded-2xl bg-white shadow-sm ring-1 ring-slate-200"><div class="px-6 py-10 md:px-10 md:py-12"><div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 items-start"><div class="min-w-0 md:max-w-sm text-center md:text-left"><h3 class="text-xl font-semibold text-slate-900">Sunspire Solar Intelligence</h3><p class="mt-2 text-sm text-slate-600">Demo for tesla — Powered by Sunspire</p><div class="mt-5 space-y-3 text-sm leading-relaxed text-slate-700"><div class="flex items-start gap-3 justify-center md:justify-start"><span class="mt-0.5 flex-shrink-0">📍</span><div class="min-w-0 break-words whitespace-normal text-left">1700 Northside Drive Suite A7 #5164<br class="hidd`[39m... 3471 more characters,
+    computedColor: [32m'rgb(15, 23, 42)'[39m
+  },
+  {
+    tagName: [32m'SECTION'[39m,
+    className: [32m'pt-10 pb-8 md:pt-16 md:pb-14 '[39m,
+    textContent: [32m'Back to HomePartner ProgramEarn recurring revenue by referring solar installers to SunspirePartner Eligibility & Payouts$30/moPer active client$120One-time setup bonus30 daysCookie windowProgram terms: Cookie window: 30 days (testing 60–90). Payouts Net-30 (paid on the 15th).Commission StructureMonthly recurring:$30/clientSetup bonus:$120/clientCookie window:30 daysEarnings (example)10 clients → $300/mo recurring + $1200 setupPartner BenefitsDedicated partner portalMarketing materials & templatesPriority supportMonthly performance reportsCo-marketing opportunitiesJR“Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.”— Justin Rota, Owner, 30-employee solar firm, GeorgiaApply to Become a PartnerCompany Name *Full Name *Email Address *Phone NumberExpected Monthly ClientsSelect range1-5 clients6-15 clients16-30 clients30+ clientsAdditional InformationSubmit Partner ApplicationApplications are typically reviewed within 48 hours'[39m,
+    outerHTML: [32m`<section class="pt-10 pb-8 md:pt-16 md:pb-14 "><div class="mx-auto w-full max-w-[var(--content-max)] px-[var(--gutter-x-sm)] md:px-[var(--gutter-x-md)] "><div class="flex flex-col gap-6 md:gap-8 "><div class="mb-8"><a href="/?company=tesla&amp;demo=1" class="inline-flex items-center text-neutral-500 hover:text-neutral-900 transition-colors font-medium"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>Back to Home</a></div><div class="text-center"><h1 class="text-4xl md:text-5xl font-black text-neutral-900 mb-6">Partner Program</h1><p class="text-lg md:text-xl text-neutral-700 max-w-3xl mx-auto">Earn recurring revenue by referring solar installers to Sunspire</p></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm mt-6"><div class="text-center"><h2 class="text-xl font-bold text-neutral-900 mb-4">Partner Eligibility &amp; Payouts</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-6"><div><div class="text-2xl font-bold text-brand-600">$30/mo</div><div class="text-sm text-neutral-600">Per active client</div></div><div><div class="text-2xl font-bold text-brand-600">$120</div><div class="text-sm text-neutral-600">One-time setup bonus</div></div><div><div class="text-2xl font-bold text-brand-600">30 days</div><div class="text-sm text-neutral-600">Cookie window</div></div></div><p class="text-xs text-neutral-500 mt-4">Program terms: Cookie window: 30 days (testing 60–90). Payouts Net-30 (paid on the 15th).</p></div></div><div class="grid grid-cols-12 gap-6 md:gap-8 mt-10 md:mt-16"><div class="col-span-12 lg:col-span-5"><div class="flex flex-col gap-6 md:gap-8 "><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h3 class="text-lg font-semibold mb-4">Commission Structure</h3><div class="space-y-3"><div class="flex justify-between"><span class="text-neutral-700">Monthly recurring:</span><span class="font-semibold text-brand-600">$30/client</span></div><div class="flex justify-between"><span class="text-neutral-700">Setup bonus:</span><span class="font-semibold text-brand-600">$120/client</span></div><div class="flex justify-between"><span class="text-neutral-700">Cookie window:</span><span class="font-semibold text-brand-600">30 days</span></div></div></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><div class="flex items-center justify-between"><h3 class="text-lg font-semibold">Earnings (example)</h3><input aria-label="Clients" min="1" max="1000" class="w-24 h-10 rounded-lg border border-neutral-300 px-3" type="number" value="10"></div><p class="mt-4"><span class="text-gray-600 font-semibold">10</span> clients → <b class="text-brand-600">$300/mo recurring</b> + <b class="text-brand-600">$1200 setup</b></p></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h3 class="text-lg font-semibold mb-4">Partner Benefits</h3><div class="space-y-3"><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Dedicated partner portal</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Marketing materials &amp; templates</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Priority support</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Monthly performance reports</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Co-marketing opportunities</span></div></div></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><div class="flex items-start gap-4"><div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 0 2.5px color-mix(in srgb, var(--brand-primary, #e11d48) 35%, transparent); border: 1px solid rgba(255, 255, 255, 0.5);"><span class="text-gray-800 font-semibold" style="font-size: 16px; line-height: 1;">JR</span></div><div><p class="text-neutral-700 italic mb-2">“Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.”</p><p class="text-sm text-neutral-500">— Justin Rota, Owner, 30-employee solar firm, Georgia</p></div></div></div></div></div><div class="col-span-12 lg:col-span-7"><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h2 class="text-2xl font-bold text-neutral-900 mb-6">Apply to Become a Partner</h2><form class="space-y-4"><div><label for="company" class="block text-sm font-medium text-neutral-700 mb-2">Company Name *</label><input id="company" required="" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="Your company name" type="text" value="" name="company"></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="name" class="block text-sm font-medium text-neutral-700 mb-2">Full Name *</label><input id="name" required="" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="Your full name" type="text" value="" name="name"></div><div><label for="email" class="block text-sm font-medium text-neutral-700 mb-2">Email Address *</label><input id="email" required="" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="your@email.com" type="email" value="" name="email"></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="phone" class="block text-sm font-medium text-neutral-700 mb-2">Phone Number</label><input id="phone" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="(555) 123-4567" type="tel" value="" name="phone"></div><div><label for="clientRange" class="block text-sm font-medium text-neutral-700 mb-2">Expected Monthly Clients</label><select id="clientRange" name="clientRange" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent"><option value="">Select range</option><option value="1-5">1-5 clients</option><option value="6-15">6-15 clients</option><option value="16-30">16-30 clients</option><option value="30+">30+ clients</option></select></div></div><div><label for="message" class="block text-sm font-medium text-neutral-700 mb-2">Additional Information</label><textarea id="message" name="message" rows="4" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="Tell us about your solar business and why you'd like to partner with us..."></textarea></div><button type="submit" data-testid="partner-apply-btn" class="w-full mt-6 inline-flex items-center justify-center rounded-lg bg-[var(--brand-600)] px-4 py-2 text-white hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)] disabled:opacity-50">Submit Partner Application</button></form><p class="text-xs text-neutral-500 mt-2 text-center">Applications are typically reviewed within 48 hours</p></div></div></div></div></div></section>`[39m,
+    computedColor: [32m'rgb(15, 23, 42)'[39m
+  },
+  {
+    tagName: [32m'DIV'[39m,
+    className: [32m'mx-auto w-full max-w-[var(--content-max)] px-[var(--gutter-x-sm)] md:px-[var(--gutter-x-md)] '[39m,
+    textContent: [32m'Back to HomePartner ProgramEarn recurring revenue by referring solar installers to SunspirePartner Eligibility & Payouts$30/moPer active client$120One-time setup bonus30 daysCookie windowProgram terms: Cookie window: 30 days (testing 60–90). Payouts Net-30 (paid on the 15th).Commission StructureMonthly recurring:$30/clientSetup bonus:$120/clientCookie window:30 daysEarnings (example)10 clients → $300/mo recurring + $1200 setupPartner BenefitsDedicated partner portalMarketing materials & templatesPriority supportMonthly performance reportsCo-marketing opportunitiesJR“Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.”— Justin Rota, Owner, 30-employee solar firm, GeorgiaApply to Become a PartnerCompany Name *Full Name *Email Address *Phone NumberExpected Monthly ClientsSelect range1-5 clients6-15 clients16-30 clients30+ clientsAdditional InformationSubmit Partner ApplicationApplications are typically reviewed within 48 hours'[39m,
+    outerHTML: [32m`<div class="mx-auto w-full max-w-[var(--content-max)] px-[var(--gutter-x-sm)] md:px-[var(--gutter-x-md)] "><div class="flex flex-col gap-6 md:gap-8 "><div class="mb-8"><a href="/?company=tesla&amp;demo=1" class="inline-flex items-center text-neutral-500 hover:text-neutral-900 transition-colors font-medium"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>Back to Home</a></div><div class="text-center"><h1 class="text-4xl md:text-5xl font-black text-neutral-900 mb-6">Partner Program</h1><p class="text-lg md:text-xl text-neutral-700 max-w-3xl mx-auto">Earn recurring revenue by referring solar installers to Sunspire</p></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm mt-6"><div class="text-center"><h2 class="text-xl font-bold text-neutral-900 mb-4">Partner Eligibility &amp; Payouts</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-6"><div><div class="text-2xl font-bold text-brand-600">$30/mo</div><div class="text-sm text-neutral-600">Per active client</div></div><div><div class="text-2xl font-bold text-brand-600">$120</div><div class="text-sm text-neutral-600">One-time setup bonus</div></div><div><div class="text-2xl font-bold text-brand-600">30 days</div><div class="text-sm text-neutral-600">Cookie window</div></div></div><p class="text-xs text-neutral-500 mt-4">Program terms: Cookie window: 30 days (testing 60–90). Payouts Net-30 (paid on the 15th).</p></div></div><div class="grid grid-cols-12 gap-6 md:gap-8 mt-10 md:mt-16"><div class="col-span-12 lg:col-span-5"><div class="flex flex-col gap-6 md:gap-8 "><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h3 class="text-lg font-semibold mb-4">Commission Structure</h3><div class="space-y-3"><div class="flex justify-between"><span class="text-neutral-700">Monthly recurring:</span><span class="font-semibold text-brand-600">$30/client</span></div><div class="flex justify-between"><span class="text-neutral-700">Setup bonus:</span><span class="font-semibold text-brand-600">$120/client</span></div><div class="flex justify-between"><span class="text-neutral-700">Cookie window:</span><span class="font-semibold text-brand-600">30 days</span></div></div></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><div class="flex items-center justify-between"><h3 class="text-lg font-semibold">Earnings (example)</h3><input aria-label="Clients" min="1" max="1000" class="w-24 h-10 rounded-lg border border-neutral-300 px-3" type="number" value="10"></div><p class="mt-4"><span class="text-gray-600 font-semibold">10</span> clients → <b class="text-brand-600">$300/mo recurring</b> + <b class="text-brand-600">$1200 setup</b></p></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h3 class="text-lg font-semibold mb-4">Partner Benefits</h3><div class="space-y-3"><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Dedicated partner portal</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Marketing materials &amp; templates</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Priority support</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Monthly performance reports</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Co-marketing opportunities</span></div></div></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><div class="flex items-start gap-4"><div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 0 2.5px color-mix(in srgb, var(--brand-primary, #e11d48) 35%, transparent); border: 1px solid rgba(255, 255, 255, 0.5);"><span class="text-gray-800 font-semibold" style="font-size: 16px; line-height: 1;">JR</span></div><div><p class="text-neutral-700 italic mb-2">“Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.”</p><p class="text-sm text-neutral-500">— Justin Rota, Owner, 30-employee solar firm, Georgia</p></div></div></div></div></div><div class="col-span-12 lg:col-span-7"><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h2 class="text-2xl font-bold text-neutral-900 mb-6">Apply to Become a Partner</h2><form class="space-y-4"><div><label for="company" class="block text-sm font-medium text-neutral-700 mb-2">Company Name *</label><input id="company" required="" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="Your company name" type="text" value="" name="company"></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="name" class="block text-sm font-medium text-neutral-700 mb-2">Full Name *</label><input id="name" required="" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="Your full name" type="text" value="" name="name"></div><div><label for="email" class="block text-sm font-medium text-neutral-700 mb-2">Email Address *</label><input id="email" required="" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="your@email.com" type="email" value="" name="email"></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="phone" class="block text-sm font-medium text-neutral-700 mb-2">Phone Number</label><input id="phone" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="(555) 123-4567" type="tel" value="" name="phone"></div><div><label for="clientRange" class="block text-sm font-medium text-neutral-700 mb-2">Expected Monthly Clients</label><select id="clientRange" name="clientRange" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent"><option value="">Select range</option><option value="1-5">1-5 clients</option><option value="6-15">6-15 clients</option><option value="16-30">16-30 clients</option><option value="30+">30+ clients</option></select></div></div><div><label for="message" class="block text-sm font-medium text-neutral-700 mb-2">Additional Information</label><textarea id="message" name="message" rows="4" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="Tell us about your solar business and why you'd like to partner with us..."></textarea></div><button type="submit" data-testid="partner-apply-btn" class="w-full mt-6 inline-flex items-center justify-center rounded-lg bg-[var(--brand-600)] px-4 py-2 text-white hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)] disabled:opacity-50">Submit Partner Application</button></form><p class="text-xs text-neutral-500 mt-2 text-center">Applications are typically reviewed within 48 hours</p></div></div></div></div></div>`[39m,
+    computedColor: [32m'rgb(15, 23, 42)'[39m
+  },
+  {
+    tagName: [32m'DIV'[39m,
+    className: [32m'flex flex-col gap-6 md:gap-8 '[39m,
+    textContent: [32m'Back to HomePartner ProgramEarn recurring revenue by referring solar installers to SunspirePartner Eligibility & Payouts$30/moPer active client$120One-time setup bonus30 daysCookie windowProgram terms: Cookie window: 30 days (testing 60–90). Payouts Net-30 (paid on the 15th).Commission StructureMonthly recurring:$30/clientSetup bonus:$120/clientCookie window:30 daysEarnings (example)10 clients → $300/mo recurring + $1200 setupPartner BenefitsDedicated partner portalMarketing materials & templatesPriority supportMonthly performance reportsCo-marketing opportunitiesJR“Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.”— Justin Rota, Owner, 30-employee solar firm, GeorgiaApply to Become a PartnerCompany Name *Full Name *Email Address *Phone NumberExpected Monthly ClientsSelect range1-5 clients6-15 clients16-30 clients30+ clientsAdditional InformationSubmit Partner ApplicationApplications are typically reviewed within 48 hours'[39m,
+    outerHTML: [32m`<div class="flex flex-col gap-6 md:gap-8 "><div class="mb-8"><a href="/?company=tesla&amp;demo=1" class="inline-flex items-center text-neutral-500 hover:text-neutral-900 transition-colors font-medium"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>Back to Home</a></div><div class="text-center"><h1 class="text-4xl md:text-5xl font-black text-neutral-900 mb-6">Partner Program</h1><p class="text-lg md:text-xl text-neutral-700 max-w-3xl mx-auto">Earn recurring revenue by referring solar installers to Sunspire</p></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm mt-6"><div class="text-center"><h2 class="text-xl font-bold text-neutral-900 mb-4">Partner Eligibility &amp; Payouts</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-6"><div><div class="text-2xl font-bold text-brand-600">$30/mo</div><div class="text-sm text-neutral-600">Per active client</div></div><div><div class="text-2xl font-bold text-brand-600">$120</div><div class="text-sm text-neutral-600">One-time setup bonus</div></div><div><div class="text-2xl font-bold text-brand-600">30 days</div><div class="text-sm text-neutral-600">Cookie window</div></div></div><p class="text-xs text-neutral-500 mt-4">Program terms: Cookie window: 30 days (testing 60–90). Payouts Net-30 (paid on the 15th).</p></div></div><div class="grid grid-cols-12 gap-6 md:gap-8 mt-10 md:mt-16"><div class="col-span-12 lg:col-span-5"><div class="flex flex-col gap-6 md:gap-8 "><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h3 class="text-lg font-semibold mb-4">Commission Structure</h3><div class="space-y-3"><div class="flex justify-between"><span class="text-neutral-700">Monthly recurring:</span><span class="font-semibold text-brand-600">$30/client</span></div><div class="flex justify-between"><span class="text-neutral-700">Setup bonus:</span><span class="font-semibold text-brand-600">$120/client</span></div><div class="flex justify-between"><span class="text-neutral-700">Cookie window:</span><span class="font-semibold text-brand-600">30 days</span></div></div></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><div class="flex items-center justify-between"><h3 class="text-lg font-semibold">Earnings (example)</h3><input aria-label="Clients" min="1" max="1000" class="w-24 h-10 rounded-lg border border-neutral-300 px-3" type="number" value="10"></div><p class="mt-4"><span class="text-gray-600 font-semibold">10</span> clients → <b class="text-brand-600">$300/mo recurring</b> + <b class="text-brand-600">$1200 setup</b></p></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h3 class="text-lg font-semibold mb-4">Partner Benefits</h3><div class="space-y-3"><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Dedicated partner portal</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Marketing materials &amp; templates</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Priority support</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Monthly performance reports</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Co-marketing opportunities</span></div></div></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><div class="flex items-start gap-4"><div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 0 2.5px color-mix(in srgb, var(--brand-primary, #e11d48) 35%, transparent); border: 1px solid rgba(255, 255, 255, 0.5);"><span class="text-gray-800 font-semibold" style="font-size: 16px; line-height: 1;">JR</span></div><div><p class="text-neutral-700 italic mb-2">“Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.”</p><p class="text-sm text-neutral-500">— Justin Rota, Owner, 30-employee solar firm, Georgia</p></div></div></div></div></div><div class="col-span-12 lg:col-span-7"><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h2 class="text-2xl font-bold text-neutral-900 mb-6">Apply to Become a Partner</h2><form class="space-y-4"><div><label for="company" class="block text-sm font-medium text-neutral-700 mb-2">Company Name *</label><input id="company" required="" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="Your company name" type="text" value="" name="company"></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="name" class="block text-sm font-medium text-neutral-700 mb-2">Full Name *</label><input id="name" required="" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="Your full name" type="text" value="" name="name"></div><div><label for="email" class="block text-sm font-medium text-neutral-700 mb-2">Email Address *</label><input id="email" required="" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="your@email.com" type="email" value="" name="email"></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="phone" class="block text-sm font-medium text-neutral-700 mb-2">Phone Number</label><input id="phone" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="(555) 123-4567" type="tel" value="" name="phone"></div><div><label for="clientRange" class="block text-sm font-medium text-neutral-700 mb-2">Expected Monthly Clients</label><select id="clientRange" name="clientRange" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent"><option value="">Select range</option><option value="1-5">1-5 clients</option><option value="6-15">6-15 clients</option><option value="16-30">16-30 clients</option><option value="30+">30+ clients</option></select></div></div><div><label for="message" class="block text-sm font-medium text-neutral-700 mb-2">Additional Information</label><textarea id="message" name="message" rows="4" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="Tell us about your solar business and why you'd like to partner with us..."></textarea></div><button type="submit" data-testid="partner-apply-btn" class="w-full mt-6 inline-flex items-center justify-center rounded-lg bg-[var(--brand-600)] px-4 py-2 text-white hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)] disabled:opacity-50">Submit Partner Application</button></form><p class="text-xs text-neutral-500 mt-2 text-center">Applications are typically reviewed within 48 hours</p></div></div></div></div>`[39m,
+    computedColor: [32m'rgb(15, 23, 42)'[39m
+  },
+  {
+    tagName: [32m'DIV'[39m,
+    className: [32m'grid grid-cols-12 gap-6 md:gap-8 mt-10 md:mt-16'[39m,
+    textContent: [32m'Commission StructureMonthly recurring:$30/clientSetup bonus:$120/clientCookie window:30 daysEarnings (example)10 clients → $300/mo recurring + $1200 setupPartner BenefitsDedicated partner portalMarketing materials & templatesPriority supportMonthly performance reportsCo-marketing opportunitiesJR“Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.”— Justin Rota, Owner, 30-employee solar firm, GeorgiaApply to Become a PartnerCompany Name *Full Name *Email Address *Phone NumberExpected Monthly ClientsSelect range1-5 clients6-15 clients16-30 clients30+ clientsAdditional InformationSubmit Partner ApplicationApplications are typically reviewed within 48 hours'[39m,
+    outerHTML: [32m`<div class="grid grid-cols-12 gap-6 md:gap-8 mt-10 md:mt-16"><div class="col-span-12 lg:col-span-5"><div class="flex flex-col gap-6 md:gap-8 "><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h3 class="text-lg font-semibold mb-4">Commission Structure</h3><div class="space-y-3"><div class="flex justify-between"><span class="text-neutral-700">Monthly recurring:</span><span class="font-semibold text-brand-600">$30/client</span></div><div class="flex justify-between"><span class="text-neutral-700">Setup bonus:</span><span class="font-semibold text-brand-600">$120/client</span></div><div class="flex justify-between"><span class="text-neutral-700">Cookie window:</span><span class="font-semibold text-brand-600">30 days</span></div></div></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><div class="flex items-center justify-between"><h3 class="text-lg font-semibold">Earnings (example)</h3><input aria-label="Clients" min="1" max="1000" class="w-24 h-10 rounded-lg border border-neutral-300 px-3" type="number" value="10"></div><p class="mt-4"><span class="text-gray-600 font-semibold">10</span> clients → <b class="text-brand-600">$300/mo recurring</b> + <b class="text-brand-600">$1200 setup</b></p></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h3 class="text-lg font-semibold mb-4">Partner Benefits</h3><div class="space-y-3"><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Dedicated partner portal</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Marketing materials &amp; templates</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Priority support</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Monthly performance reports</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Co-marketing opportunities</span></div></div></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><div class="flex items-start gap-4"><div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 0 2.5px color-mix(in srgb, var(--brand-primary, #e11d48) 35%, transparent); border: 1px solid rgba(255, 255, 255, 0.5);"><span class="text-gray-800 font-semibold" style="font-size: 16px; line-height: 1;">JR</span></div><div><p class="text-neutral-700 italic mb-2">“Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.”</p><p class="text-sm text-neutral-500">— Justin Rota, Owner, 30-employee solar firm, Georgia</p></div></div></div></div></div><div class="col-span-12 lg:col-span-7"><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h2 class="text-2xl font-bold text-neutral-900 mb-6">Apply to Become a Partner</h2><form class="space-y-4"><div><label for="company" class="block text-sm font-medium text-neutral-700 mb-2">Company Name *</label><input id="company" required="" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="Your company name" type="text" value="" name="company"></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="name" class="block text-sm font-medium text-neutral-700 mb-2">Full Name *</label><input id="name" required="" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="Your full name" type="text" value="" name="name"></div><div><label for="email" class="block text-sm font-medium text-neutral-700 mb-2">Email Address *</label><input id="email" required="" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="your@email.com" type="email" value="" name="email"></div></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label for="phone" class="block text-sm font-medium text-neutral-700 mb-2">Phone Number</label><input id="phone" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="(555) 123-4567" type="tel" value="" name="phone"></div><div><label for="clientRange" class="block text-sm font-medium text-neutral-700 mb-2">Expected Monthly Clients</label><select id="clientRange" name="clientRange" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent"><option value="">Select range</option><option value="1-5">1-5 clients</option><option value="6-15">6-15 clients</option><option value="16-30">16-30 clients</option><option value="30+">30+ clients</option></select></div></div><div><label for="message" class="block text-sm font-medium text-neutral-700 mb-2">Additional Information</label><textarea id="message" name="message" rows="4" class="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent" placeholder="Tell us about your solar business and why you'd like to partner with us..."></textarea></div><button type="submit" data-testid="partner-apply-btn" class="w-full mt-6 inline-flex items-center justify-center rounded-lg bg-[var(--brand-600)] px-4 py-2 text-white hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)] disabled:opacity-50">Submit Partner Application</button></form><p class="text-xs text-neutral-500 mt-2 text-center">Applications are typically reviewed within 48 hours</p></div></div></div>`[39m,
+    computedColor: [32m'rgb(15, 23, 42)'[39m
+  },
+  {
+    tagName: [32m'DIV'[39m,
+    className: [32m'col-span-12 lg:col-span-5'[39m,
+    textContent: [32m'Commission StructureMonthly recurring:$30/clientSetup bonus:$120/clientCookie window:30 daysEarnings (example)10 clients → $300/mo recurring + $1200 setupPartner BenefitsDedicated partner portalMarketing materials & templatesPriority supportMonthly performance reportsCo-marketing opportunitiesJR“Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.”— Justin Rota, Owner, 30-employee solar firm, Georgia'[39m,
+    outerHTML: [32m'<div class="col-span-12 lg:col-span-5"><div class="flex flex-col gap-6 md:gap-8 "><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h3 class="text-lg font-semibold mb-4">Commission Structure</h3><div class="space-y-3"><div class="flex justify-between"><span class="text-neutral-700">Monthly recurring:</span><span class="font-semibold text-brand-600">$30/client</span></div><div class="flex justify-between"><span class="text-neutral-700">Setup bonus:</span><span class="font-semibold text-brand-600">$120/client</span></div><div class="flex justify-between"><span class="text-neutral-700">Cookie window:</span><span class="font-semibold text-brand-600">30 days</span></div></div></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><div class="flex items-center justify-between"><h3 class="text-lg font-semibold">Earnings (example)</h3><input aria-label="Clients" min="1" max="1000" class="w-24 h-10 rounded-lg border border-neutral-300 px-3" type="number" value="10"></div><p class="mt-4"><span class="text-gray-600 font-semibold">10</span> clients → <b class="text-brand-600">$300/mo recurring</b> + <b class="text-brand-600">$1200 setup</b></p></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h3 class="text-lg font-semibold mb-4">Partner Benefits</h3><div class="space-y-3"><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Dedicated partner portal</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Marketing materials &amp; templates</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Priority support</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Monthly performance reports</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Co-marketing opportunities</span></div></div></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><div class="flex items-start gap-4"><div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 0 2.5px color-mix(in srgb, var(--brand-primary, #e11d48) 35%, transparent); border: 1px solid rgba(255, 255, 255, 0.5);"><span class="text-gray-800 font-semibold" style="font-size: 16px; line-height: 1;">JR</span></div><div><p class="text-neutral-700 italic mb-2">“Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.”</p><p class="text-sm text-neutral-500">— Justin Rota, Owner, 30-employee solar firm, Georgia</p></div></div></div></div></div>'[39m,
+    computedColor: [32m'rgb(15, 23, 42)'[39m
+  },
+  {
+    tagName: [32m'DIV'[39m,
+    className: [32m'flex flex-col gap-6 md:gap-8 '[39m,
+    textContent: [32m'Commission StructureMonthly recurring:$30/clientSetup bonus:$120/clientCookie window:30 daysEarnings (example)10 clients → $300/mo recurring + $1200 setupPartner BenefitsDedicated partner portalMarketing materials & templatesPriority supportMonthly performance reportsCo-marketing opportunitiesJR“Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.”— Justin Rota, Owner, 30-employee solar firm, Georgia'[39m,
+    outerHTML: [32m'<div class="flex flex-col gap-6 md:gap-8 "><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h3 class="text-lg font-semibold mb-4">Commission Structure</h3><div class="space-y-3"><div class="flex justify-between"><span class="text-neutral-700">Monthly recurring:</span><span class="font-semibold text-brand-600">$30/client</span></div><div class="flex justify-between"><span class="text-neutral-700">Setup bonus:</span><span class="font-semibold text-brand-600">$120/client</span></div><div class="flex justify-between"><span class="text-neutral-700">Cookie window:</span><span class="font-semibold text-brand-600">30 days</span></div></div></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><div class="flex items-center justify-between"><h3 class="text-lg font-semibold">Earnings (example)</h3><input aria-label="Clients" min="1" max="1000" class="w-24 h-10 rounded-lg border border-neutral-300 px-3" type="number" value="10"></div><p class="mt-4"><span class="text-gray-600 font-semibold">10</span> clients → <b class="text-brand-600">$300/mo recurring</b> + <b class="text-brand-600">$1200 setup</b></p></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><h3 class="text-lg font-semibold mb-4">Partner Benefits</h3><div class="space-y-3"><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Dedicated partner portal</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Marketing materials &amp; templates</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Priority support</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Monthly performance reports</span></div><div class="flex items-center gap-3"><svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg><span class="text-neutral-700">Co-marketing opportunities</span></div></div></div><div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><div class="flex items-start gap-4"><div class="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0" style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 0 2.5px color-mix(in srgb, var(--brand-primary, #e11d48) 35%, transparent); border: 1px solid rgba(255, 255, 255, 0.5);"><span class="text-gray-800 font-semibold" style="font-size: 16px; line-height: 1;">JR</span></div><div><p class="text-neutral-700 italic mb-2">“Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.”</p><p class="text-sm text-neutral-500">— Justin Rota, Owner, 30-employee solar firm, Georgia</p></div></div></div></div>'[39m,
+    computedColor: [32m'rgb(15, 23, 42)'[39m
+  },
+  {
+    tagName: [32m'DIV'[39m,
+    className: [32m'rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm '[39m,
+    textContent: [32m'Earnings (example)10 clients → $300/mo recurring + $1200 setup'[39m,
+    outerHTML: [32m'<div class="rounded-2xl border border-neutral-200/80 bg-white p-6 md:p-8 shadow-sm "><div class="flex items-center justify-between"><h3 class="text-lg font-semibold">Earnings (example)</h3><input aria-label="Clients" min="1" max="1000" class="w-24 h-10 rounded-lg border border-neutral-300 px-3" type="number" value="10"></div><p class="mt-4"><span class="text-gray-600 font-semibold">10</span> clients → <b class="text-brand-600">$300/mo recurring</b> + <b class="text-brand-600">$1200 setup</b></p></div>'[39m,
+    computedColor: [32m'rgb(15, 23, 42)'[39m
+  },
+  {
+    tagName: [32m'P'[39m,
+    className: [32m'mt-4'[39m,
+    textContent: [32m'10 clients → $300/mo recurring + $1200 setup'[39m,
+    outerHTML: [32m'<p class="mt-4"><span class="text-gray-600 font-semibold">10</span> clients → <b class="text-brand-600">$300/mo recurring</b> + <b class="text-brand-600">$1200 setup</b></p>'[39m,
+    computedColor: [32m'rgb(15, 23, 42)'[39m
+  }
+]
+✓ Reality check complete
+  ✓   237 [chromium] › tests/debug-reality.spec.ts:4:7 › Debug Live Site Reality › Check what is actually showing on the live site (4.5s)
+  ✘   239 [chromium] › tests/demo-functionality.spec.ts:7:7 › Demo Version Functionality › Demo home page loads correctly (275ms)
+  ✘   236 [chromium] › tests/demo-banner-navigation.spec.ts:7:7 › Demo Banner and Navigation Tests › Demo banner shows on main pages but not legal pages (7.2s)
+  ✘   240 [chromium] › tests/demo-functionality.spec.ts:29:7 › Demo Version Functionality › Demo address input and navigation works (3.3s)
+  ✘   199 [chromium] › tests/cta-final-verification.spec.ts:24:7 › Final CTA Stripe Verification › Report page CTA routes to Stripe successfully (3.0m)
+  ✘   242 [chromium] › tests/demo-functionality.spec.ts:51:7 › Demo Version Functionality › Demo report page loads correctly (710ms)
+  ✘   241 [chromium] › tests/demo-banner-navigation.spec.ts:46:7 › Demo Banner and Navigation Tests › Navigation preserves URL parameters correctly (1.1m)
+  ✘   244 [chromium] › tests/demo-functionality.spec.ts:74:7 › Demo Version Functionality › Demo quota system works (495ms)
+  ✘   238 [chromium] › tests/demo-banner-mobile.spec.ts:4:7 › Mobile Layout & Footer Improvements › Desktop - all elements fit properly (1.4m)
+  ✘   243 [chromium] › tests/cta-final-verification.spec.ts:43:7 › Final CTA Stripe Verification › All demo functionality working together (9.4s)
+  ✘   246 [chromium] › tests/demo-functionality.spec.ts:103:7 › Demo Version Functionality › Demo navigation links work (3.1s)
+  ✓   245 [chromium] › tests/demo-banner-navigation.spec.ts:87:7 › Demo Banner and Navigation Tests › Demo link removed from footer on all pages (6.7s)
+  ✘   248 [chromium] › tests/demo-banner-navigation.spec.ts:113:7 › Demo Banner and Navigation Tests › Paid version works correctly with logo in footer (4.1s)

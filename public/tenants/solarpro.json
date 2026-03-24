@@ -1,0 +1,68 @@
+{
+  "slug": "solarpro",
+  "name": "SolarPro Energy",
+  "tagline": "Professional Solar Solutions",
+  "logo": "/logo-solarpro.svg",
+  "colors": {
+    "primary": "#059669",
+    "secondary": "#10B981",
+    "accent": "#3B82F6",
+    "success": "#059669",
+    "warning": "#F59E0B",
+    "error": "#EF4444",
+    "background": "#F0FDF4",
+    "surface": "#FFFFFF",
+    "text": "#064E3B",
+    "textSecondary": "#065F46",
+    "border": "#D1FAE5"
+  },
+  "contact": {
+    "email": "info@solarproenergy.com",
+    "phone": "+1 (404) 770-2672",
+    "address": "789 Solar Avenue, Green City, GC 12345"
+  },
+  "social": {
+    "website": "https://solarproenergy.com",
+    "facebook": "https://facebook.com/solarproenergy",
+    "twitter": "https://twitter.com/solarproenergy",
+    "linkedin": "https://linkedin.com/company/solarproenergy"
+  },
+  "features": {
+    "showTestimonials": true,
+    "showTrustBadges": true,
+    "showMethodology": true,
+    "showPricing": true
+  },
+  "testimonials": [
+    {
+      "id": "1",
+      "name": "Jennifer Martinez",
+      "role": "Homeowner",
+      "location": "Phoenix, AZ",
+      "content": "SolarPro Energy delivered exceptional results. Our energy bills dropped by 85% in the first month!",
+      "rating": 5
+    },
+    {
+      "id": "2",
+      "name": "Robert Chen",
+      "role": "Property Developer",
+      "location": "Las Vegas, NV",
+      "content": "We've used SolarPro for multiple projects. Their estimates are always accurate and service is outstanding.",
+      "rating": 5
+    },
+    {
+      "id": "3",
+      "name": "Sarah Williams",
+      "role": "Business Owner",
+      "location": "Denver, CO",
+      "content": "Professional team with deep solar expertise. They helped us understand every step of the process.",
+      "rating": 5
+    }
+  ],
+  "trustBadges": [
+    "NABCEP Certified Installers",
+    "15+ Years Experience",
+    "BBB A+ Rating",
+    "Lifetime Warranty"
+  ]
+}

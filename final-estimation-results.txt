@@ -1,0 +1,701 @@
+
+Running 14 tests using 2 workers
+
+[1A[2K(node:15204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:15203) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:15204) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:15203) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/14] [chromium] › tests/working-estimations-fixed.spec.ts:14:9 › Solar Estimations - Complete E2E Flow › Demo Version - Full Flow › Demo: California - Enter address, generate report, verify real data
+[1A[2K[2/14] [mobile] › tests/working-estimations-fixed.spec.ts:14:9 › Solar Estimations - Complete E2E Flow › Demo Version - Full Flow › Demo: California - Enter address, generate report, verify real data
+[1A[2K[mobile] › tests/working-estimations-fixed.spec.ts:14:9 › Solar Estimations - Complete E2E Flow › Demo Version - Full Flow › Demo: California - Enter address, generate report, verify real data
+✅ CA Demo: System=7.2kW, Production=9382kWh, Ratio=1303
+
+[1A[2K[chromium] › tests/working-estimations-fixed.spec.ts:14:9 › Solar Estimations - Complete E2E Flow › Demo Version - Full Flow › Demo: California - Enter address, generate report, verify real data
+✅ CA Demo: System=7.2kW, Production=9382kWh, Ratio=1303
+
+[1A[2K[3/14] [chromium] › tests/working-estimations-fixed.spec.ts:65:9 › Solar Estimations - Complete E2E Flow › Demo Version - Full Flow › Demo: New York - Verify different location gives different results
+[1A[2K[4/14] [mobile] › tests/working-estimations-fixed.spec.ts:65:9 › Solar Estimations - Complete E2E Flow › Demo Version - Full Flow › Demo: New York - Verify different location gives different results
+[1A[2K[chromium] › tests/working-estimations-fixed.spec.ts:65:9 › Solar Estimations - Complete E2E Flow › Demo Version - Full Flow › Demo: New York - Verify different location gives different results
+✅ NY Demo: System=7.2kW, Production=9382kWh, Ratio=1303
+
+[1A[2K[mobile] › tests/working-estimations-fixed.spec.ts:65:9 › Solar Estimations - Complete E2E Flow › Demo Version - Full Flow › Demo: New York - Verify different location gives different results
+✅ NY Demo: System=7.2kW, Production=9382kWh, Ratio=1303
+
+[1A[2K[5/14] [chromium] › tests/working-estimations-fixed.spec.ts:106:9 › Solar Estimations - Complete E2E Flow › Paid Version - Full Flow with Live URL › Paid: Enter address on home, generate report, verify features
+[1A[2K[6/14] [mobile] › tests/working-estimations-fixed.spec.ts:106:9 › Solar Estimations - Complete E2E Flow › Paid Version - Full Flow with Live URL › Paid: Enter address on home, generate report, verify features
+[1A[2K  1) [chromium] › tests/working-estimations-fixed.spec.ts:106:9 › Solar Estimations - Complete E2E Flow › Paid Version - Full Flow with Live URL › Paid: Enter address on home, generate report, verify features 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByText('(Live Preview)')
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByText('(Live Preview)')[22m
+    [2m    14 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      154 |       
+      155 |       // Verify NO demo elements
+    > 156 |       await expect(page.getByText('(Live Preview)')).toHaveCount(0);
+          |                                                      ^
+      157 |       
+      158 |       // Verify brand (Apple)
+      159 |       const h1 = page.getByTestId('hdr-h1');
+        at /Users/hugowentzel/sunspire-clean/tests/working-estimations-fixed.spec.ts:156:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--10ea6-rate-report-verify-features-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--10ea6-rate-report-verify-features-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/working-estimations-fixed--10ea6-rate-report-verify-features-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--10ea6-rate-report-verify-features-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/working-estimations-fixed--10ea6-rate-report-verify-features-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K  2) [mobile] › tests/working-estimations-fixed.spec.ts:106:9 › Solar Estimations - Complete E2E Flow › Paid Version - Full Flow with Live URL › Paid: Enter address on home, generate report, verify features 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveCount[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator:  getByText('(Live Preview)')
+    Expected: [32m0[39m
+    Received: [31m1[39m
+    Timeout:  10000ms
+
+    Call log:
+    [2m  - Expect "toHaveCount" with timeout 10000ms[22m
+    [2m  - waiting for getByText('(Live Preview)')[22m
+    [2m    14 × locator resolved to 1 element[22m
+    [2m       - unexpected value "1"[22m
+
+
+      154 |       
+      155 |       // Verify NO demo elements
+    > 156 |       await expect(page.getByText('(Live Preview)')).toHaveCount(0);
+          |                                                      ^
+      157 |       
+      158 |       // Verify brand (Apple)
+      159 |       const h1 = page.getByTestId('hdr-h1');
+        at /Users/hugowentzel/sunspire-clean/tests/working-estimations-fixed.spec.ts:156:54
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--10ea6-rate-report-verify-features-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--10ea6-rate-report-verify-features-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/working-estimations-fixed--10ea6-rate-report-verify-features-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--10ea6-rate-report-verify-features-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/working-estimations-fixed--10ea6-rate-report-verify-features-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:15655) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:15654) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:15655) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:15654) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[7/14] [mobile] › tests/working-estimations-fixed.spec.ts:165:9 › Solar Estimations - Complete E2E Flow › Paid Version - Full Flow with Live URL › Paid: Arizona - Verify location-specific calculations
+[1A[2K[8/14] [chromium] › tests/working-estimations-fixed.spec.ts:165:9 › Solar Estimations - Complete E2E Flow › Paid Version - Full Flow with Live URL › Paid: Arizona - Verify location-specific calculations
+[1A[2K[chromium] › tests/working-estimations-fixed.spec.ts:165:9 › Solar Estimations - Complete E2E Flow › Paid Version - Full Flow with Live URL › Paid: Arizona - Verify location-specific calculations
+✅ AZ PAID: System=7.2kW, Production=9382kWh, Ratio=1303
+
+[1A[2K[9/14] [chromium] › tests/working-estimations-fixed.spec.ts:209:9 › Solar Estimations - Complete E2E Flow › Location Variance Verification › Sunny location (AZ) vs Cloudy location (NY) - Different production
+[1A[2K  3) [mobile] › tests/working-estimations-fixed.spec.ts:165:9 › Solar Estimations - Complete E2E Flow › Paid Version - Full Flow with Live URL › Paid: Arizona - Verify location-specific calculations 
+
+    [31mTest timeout of 180000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 180000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: /Generate.*Report/i })[22m
+    [2m    - locator resolved to <button data-cta-button="true" class="w-full btn-cta" data-testid="cta-primary">…</button>[22m
+    [2m  - attempting click action[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto">…</div> subtree intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto">…</div> subtree intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    335 × waiting for element to be visible, enabled and stable[22m
+    [2m        - element is visible, enabled and stable[22m
+    [2m        - scrolling into view if needed[22m
+    [2m        - done scrolling[22m
+    [2m        - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto">…</div> subtree intercepts pointer events[22m
+    [2m      - retrying click action[22m
+    [2m        - waiting 500ms[22m
+
+
+      177 |       
+      178 |       const generateButton = page.getByRole('button', { name: /Generate.*Report/i });
+    > 179 |       await generateButton.click();
+          |                            ^
+      180 |       
+      181 |       await page.waitForURL(/\/report\?/);
+      182 |       await page.waitForLoadState('networkidle');
+        at /Users/hugowentzel/sunspire-clean/tests/working-estimations-fixed.spec.ts:179:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--9efb4-ation-specific-calculations-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--9efb4-ation-specific-calculations-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/working-estimations-fixed--9efb4-ation-specific-calculations-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--9efb4-ation-specific-calculations-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/working-estimations-fixed--9efb4-ation-specific-calculations-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:17303) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:17303) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[10/14] [mobile] › tests/working-estimations-fixed.spec.ts:209:9 › Solar Estimations - Complete E2E Flow › Location Variance Verification › Sunny location (AZ) vs Cloudy location (NY) - Different production
+[1A[2K  4) [chromium] › tests/working-estimations-fixed.spec.ts:209:9 › Solar Estimations - Complete E2E Flow › Location Variance Verification › Sunny location (AZ) vs Cloudy location (NY) - Different production 
+
+    [31mTest timeout of 180000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 180000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: /Generate.*Report/i })[22m
+    [2m    - locator resolved to <button data-cta-button="true" class="w-full inline-cta btn-cta">…</button>[22m
+    [2m  - attempting click action[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <span>Launch Your Branded Version Now</span> from <div id="stickyCta" class="sticky-cta !hidden md:!block">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    84 × waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m       - waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <span>Launch Your Branded Version Now</span> from <div id="stickyCta" class="sticky-cta !hidden md:!block">…</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m       - waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m       - waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <span>Launch Your Branded Version Now</span> from <div id="stickyCta" class="sticky-cta !hidden md:!block">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+
+
+      222 |       
+      223 |       let generateButton = page.getByRole('button', { name: /Generate.*Report/i });
+    > 224 |       await generateButton.click();
+          |                            ^
+      225 |       
+      226 |       await page.waitForURL(/\/report\?/);
+      227 |       await page.waitForLoadState('networkidle');
+        at /Users/hugowentzel/sunspire-clean/tests/working-estimations-fixed.spec.ts:224:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--f13bb-n-NY---Different-production-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--f13bb-n-NY---Different-production-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/working-estimations-fixed--f13bb-n-NY---Different-production-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--f13bb-n-NY---Different-production-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/working-estimations-fixed--f13bb-n-NY---Different-production-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:17466) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:17466) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[11/14] [chromium] › tests/working-estimations-fixed.spec.ts:269:9 › Solar Estimations - Complete E2E Flow › API Integration Verification › Demo: Verify real API calls are made
+[1A[2K  5) [mobile] › tests/working-estimations-fixed.spec.ts:209:9 › Solar Estimations - Complete E2E Flow › Location Variance Verification › Sunny location (AZ) vs Cloudy location (NY) - Different production 
+
+    [31mTest timeout of 180000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 180000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: /Generate.*Report/i })[22m
+    [2m    - locator resolved to <button data-cta-button="true" class="w-full inline-cta btn-cta">…</button>[22m
+    [2m  - attempting click action[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <button class="w-full h-12 rounded-xl px-5 text-white font-semibold hover:opacity-90 transition-all active:scale-[0.98]">Launch Your Branded Version Now</button> from <div role="region" aria-label="Sticky action" data-testid="sticky-demo-cta" class="fixed inset-x-0 bottom-0 z-40 bg-white/95 backdrop-blur-sm supports-[padding:max(0px)]:pb-[max(env(safe-area-inset-bottom),16px)] shadow-[0_-2px_10px_rgba(0,0,0,0.1)] border-t border-gray-200 md:hidden">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    85 × waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m       - waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <button class="w-full h-12 rounded-xl px-5 text-white font-semibold hover:opacity-90 transition-all active:scale-[0.98]">Launch Your Branded Version Now</button> from <div role="region" aria-label="Sticky action" data-testid="sticky-demo-cta" class="fixed inset-x-0 bottom-0 z-40 bg-white/95 backdrop-blur-sm supports-[padding:max(0px)]:pb-[max(env(safe-area-inset-bottom),16px)] shadow-[0_-2px_10px_rgba(0,0,0,0.1)] border-t border-gray-200 md:hidden">…</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m       - waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m       - waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <button class="w-full h-12 rounded-xl px-5 text-white font-semibold hover:opacity-90 transition-all active:scale-[0.98]">Launch Your Branded Version Now</button> from <div role="region" aria-label="Sticky action" data-testid="sticky-demo-cta" class="fixed inset-x-0 bottom-0 z-40 bg-white/95 backdrop-blur-sm supports-[padding:max(0px)]:pb-[max(env(safe-area-inset-bottom),16px)] shadow-[0_-2px_10px_rgba(0,0,0,0.1)] border-t border-gray-200 md:hidden">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">123 South Central Avenue, Phoenix, AZ 85004, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting 500ms[22m
+
+
+      222 |       
+      223 |       let generateButton = page.getByRole('button', { name: /Generate.*Report/i });
+    > 224 |       await generateButton.click();
+          |                            ^
+      225 |       
+      226 |       await page.waitForURL(/\/report\?/);
+      227 |       await page.waitForLoadState('networkidle');
+        at /Users/hugowentzel/sunspire-clean/tests/working-estimations-fixed.spec.ts:224:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--f13bb-n-NY---Different-production-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--f13bb-n-NY---Different-production-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/working-estimations-fixed--f13bb-n-NY---Different-production-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--f13bb-n-NY---Different-production-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/working-estimations-fixed--f13bb-n-NY---Different-production-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:18975) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:18975) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[12/14] [mobile] › tests/working-estimations-fixed.spec.ts:269:9 › Solar Estimations - Complete E2E Flow › API Integration Verification › Demo: Verify real API calls are made
+[1A[2K  6) [chromium] › tests/working-estimations-fixed.spec.ts:269:9 › Solar Estimations - Complete E2E Flow › API Integration Verification › Demo: Verify real API calls are made 
+
+    [31mTest timeout of 180000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 180000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: /Generate.*Report/i })[22m
+    [2m    - locator resolved to <button data-cta-button="true" class="w-full inline-cta btn-cta">…</button>[22m
+    [2m  - attempting click action[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">1200 Brickell Bay Drive, Miami, FL 33131, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <span>Launch Your Branded Version Now</span> from <div id="stickyCta" class="sticky-cta !hidden md:!block">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">1200 Brickell Bay Drive, Miami, FL 33131, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    85 × waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">1200 Brickell Bay Drive, Miami, FL 33131, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m       - waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <span>Launch Your Branded Version Now</span> from <div id="stickyCta" class="sticky-cta !hidden md:!block">…</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m       - waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">1200 Brickell Bay Drive, Miami, FL 33131, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m       - waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">1200 Brickell Bay Drive, Miami, FL 33131, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">1200 Brickell Bay Drive, Miami, FL 33131, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+
+
+      289 |       
+      290 |       const generateButton = page.getByRole('button', { name: /Generate.*Report/i });
+    > 291 |       await generateButton.click();
+          |                            ^
+      292 |       
+      293 |       await page.waitForURL(/\/report\?/);
+      294 |       await page.waitForLoadState('networkidle');
+        at /Users/hugowentzel/sunspire-clean/tests/working-estimations-fixed.spec.ts:291:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--9a58c-ify-real-API-calls-are-made-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--9a58c-ify-real-API-calls-are-made-chromium/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/working-estimations-fixed--9a58c-ify-real-API-calls-are-made-chromium/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--9a58c-ify-real-API-calls-are-made-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/working-estimations-fixed--9a58c-ify-real-API-calls-are-made-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:19118) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:19118) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[13/14] [chromium] › tests/working-estimations-fixed.spec.ts:304:9 › Solar Estimations - Complete E2E Flow › Calculation Accuracy › Capacity factor is realistic (12-22%)
+[1A[2K[chromium] › tests/working-estimations-fixed.spec.ts:304:9 › Solar Estimations - Complete E2E Flow › Calculation Accuracy › Capacity factor is realistic (12-22%)
+⚡ System: 7.2 kW
+
+[1A[2K📊 Production: 9382 kWh/yr
+
+[1A[2K📈 Capacity Factor: 14.9%
+
+[1A[2K  7) [mobile] › tests/working-estimations-fixed.spec.ts:269:9 › Solar Estimations - Complete E2E Flow › API Integration Verification › Demo: Verify real API calls are made 
+
+    [31mTest timeout of 180000ms exceeded.[39m
+
+    Error: locator.click: Test timeout of 180000ms exceeded.
+    Call log:
+    [2m  - waiting for getByRole('button', { name: /Generate.*Report/i })[22m
+    [2m    - locator resolved to <button data-cta-button="true" class="w-full inline-cta btn-cta">…</button>[22m
+    [2m  - attempting click action[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">1200 Brickell Bay Drive, Miami, FL 33131, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <button class="w-full h-12 rounded-xl px-5 text-white font-semibold hover:opacity-90 transition-all active:scale-[0.98]">Launch Your Branded Version Now</button> from <div role="region" aria-label="Sticky action" data-testid="sticky-demo-cta" class="fixed inset-x-0 bottom-0 z-40 bg-white/95 backdrop-blur-sm supports-[padding:max(0px)]:pb-[max(env(safe-area-inset-bottom),16px)] shadow-[0_-2px_10px_rgba(0,0,0,0.1)] border-t border-gray-200 md:hidden">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting 20ms[22m
+    [2m    2 × waiting for element to be visible, enabled and stable[22m
+    [2m      - element is visible, enabled and stable[22m
+    [2m      - scrolling into view if needed[22m
+    [2m      - done scrolling[22m
+    [2m      - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">1200 Brickell Bay Drive, Miami, FL 33131, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m    - retrying click action[22m
+    [2m      - waiting 100ms[22m
+    [2m    86 × waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">1200 Brickell Bay Drive, Miami, FL 33131, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m       - waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <button class="w-full h-12 rounded-xl px-5 text-white font-semibold hover:opacity-90 transition-all active:scale-[0.98]">Launch Your Branded Version Now</button> from <div role="region" aria-label="Sticky action" data-testid="sticky-demo-cta" class="fixed inset-x-0 bottom-0 z-40 bg-white/95 backdrop-blur-sm supports-[padding:max(0px)]:pb-[max(env(safe-area-inset-bottom),16px)] shadow-[0_-2px_10px_rgba(0,0,0,0.1)] border-t border-gray-200 md:hidden">…</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m       - waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">1200 Brickell Bay Drive, Miami, FL 33131, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m       - waiting for element to be visible, enabled and stable[22m
+    [2m       - element is visible, enabled and stable[22m
+    [2m       - scrolling into view if needed[22m
+    [2m       - done scrolling[22m
+    [2m       - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">1200 Brickell Bay Drive, Miami, FL 33131, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m     - retrying click action[22m
+    [2m       - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">1200 Brickell Bay Drive, Miami, FL 33131, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <button class="w-full h-12 rounded-xl px-5 text-white font-semibold hover:opacity-90 transition-all active:scale-[0.98]">Launch Your Branded Version Now</button> from <div role="region" aria-label="Sticky action" data-testid="sticky-demo-cta" class="fixed inset-x-0 bottom-0 z-40 bg-white/95 backdrop-blur-sm supports-[padding:max(0px)]:pb-[max(env(safe-area-inset-bottom),16px)] shadow-[0_-2px_10px_rgba(0,0,0,0.1)] border-t border-gray-200 md:hidden">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting 500ms[22m
+    [2m    - waiting for element to be visible, enabled and stable[22m
+    [2m    - element is visible, enabled and stable[22m
+    [2m    - scrolling into view if needed[22m
+    [2m    - done scrolling[22m
+    [2m    - <div class="px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors duration-150 ">1200 Brickell Bay Drive, Miami, FL 33131, USA</div> from <div class="w-full max-w-2xl mx-auto space-y-1.5">…</div> subtree intercepts pointer events[22m
+    [2m  - retrying click action[22m
+    [2m    - waiting 500ms[22m
+
+
+      289 |       
+      290 |       const generateButton = page.getByRole('button', { name: /Generate.*Report/i });
+    > 291 |       await generateButton.click();
+          |                            ^
+      292 |       
+      293 |       await page.waitForURL(/\/report\?/);
+      294 |       await page.waitForLoadState('networkidle');
+        at /Users/hugowentzel/sunspire-clean/tests/working-estimations-fixed.spec.ts:291:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--9a58c-ify-real-API-calls-are-made-mobile/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: video (video/webm) ──────────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--9a58c-ify-real-API-calls-are-made-mobile/video.webm
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/working-estimations-fixed--9a58c-ify-real-API-calls-are-made-mobile/error-context.md
+
+    attachment #4: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/working-estimations-fixed--9a58c-ify-real-API-calls-are-made-mobile/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/working-estimations-fixed--9a58c-ify-real-API-calls-are-made-mobile/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+
+[1A[2K(node:20675) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:20675) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[14/14] [mobile] › tests/working-estimations-fixed.spec.ts:304:9 › Solar Estimations - Complete E2E Flow › Calculation Accuracy › Capacity factor is realistic (12-22%)
+[1A[2K[mobile] › tests/working-estimations-fixed.spec.ts:304:9 › Solar Estimations - Complete E2E Flow › Calculation Accuracy › Capacity factor is realistic (12-22%)
+⚡ System: 7.2 kW
+
+[1A[2K📊 Production: 9382 kWh/yr
+
+[1A[2K📈 Capacity Factor: 14.9%
+
+[1A[2K  7 failed
+    [chromium] › tests/working-estimations-fixed.spec.ts:106:9 › Solar Estimations - Complete E2E Flow › Paid Version - Full Flow with Live URL › Paid: Enter address on home, generate report, verify features 
+    [chromium] › tests/working-estimations-fixed.spec.ts:209:9 › Solar Estimations - Complete E2E Flow › Location Variance Verification › Sunny location (AZ) vs Cloudy location (NY) - Different production 
+    [chromium] › tests/working-estimations-fixed.spec.ts:269:9 › Solar Estimations - Complete E2E Flow › API Integration Verification › Demo: Verify real API calls are made 
+    [mobile] › tests/working-estimations-fixed.spec.ts:106:9 › Solar Estimations - Complete E2E Flow › Paid Version - Full Flow with Live URL › Paid: Enter address on home, generate report, verify features 
+    [mobile] › tests/working-estimations-fixed.spec.ts:165:9 › Solar Estimations - Complete E2E Flow › Paid Version - Full Flow with Live URL › Paid: Arizona - Verify location-specific calculations 
+    [mobile] › tests/working-estimations-fixed.spec.ts:209:9 › Solar Estimations - Complete E2E Flow › Location Variance Verification › Sunny location (AZ) vs Cloudy location (NY) - Different production 
+    [mobile] › tests/working-estimations-fixed.spec.ts:269:9 › Solar Estimations - Complete E2E Flow › API Integration Verification › Demo: Verify real API calls are made 
+  7 passed (10.4m)

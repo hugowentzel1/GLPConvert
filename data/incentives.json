@@ -1,0 +1,5 @@
+{
+  "US": { "itc_pct": 0.3 },
+  "MA": { "rebate_per_watt": 0.2 },
+  "NJ": { "rebate_per_watt": 0.1 }
+}

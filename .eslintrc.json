@@ -1,0 +1,16 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          // { "name": "framer-motion", "message": "No motion libs allowed." },
+          { "name": "gsap", "message": "No motion libs allowed." },
+          { "name": "lottie-react", "message": "No motion libs allowed." },
+          { "name": "animejs", "message": "No motion libs allowed." }
+        ]
+      }
+    ]
+  }
+}

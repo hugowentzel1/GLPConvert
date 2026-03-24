@@ -1,0 +1,9 @@
+{
+  "state": "CA",
+  "sector": "residential",
+  "rate_cents_per_kwh": 28.7,
+  "rate_dollars_per_kwh": 0.287,
+  "as_of": "2025-08-01",
+  "source": "U.S. Energy Information Administration"
+}
+

@@ -1,0 +1,44 @@
+Error: Vitest cannot be imported in a CommonJS module using require(). Please use "import" instead.
+
+If you are using "import" in your source code, then it's possible it was bundled into require() automatically by your bundler. In that case, do not bundle CommonJS output since it will never work with Vitest, or use dynamic import() which is available in all CommonJS modules.
+
+   at estimation.integration.test.ts:1
+
+> 1 | import { beforeAll, afterAll, afterEach, describe, it, expect } from "vitest";
+    | ^
+  2 | import { server } from "./msw/server";
+  3 | import { http, HttpResponse } from "msw";
+  4 | import {
+    at Object.<anonymous> (/Users/hugowentzel/sunspire-clean/node_modules/vitest/index.cjs:1:7)
+    at Object.<anonymous> (/Users/hugowentzel/sunspire-clean/tests/estimation.integration.test.ts:1:1)
+
+Error: Vitest cannot be imported in a CommonJS module using require(). Please use "import" instead.
+
+If you are using "import" in your source code, then it's possible it was bundled into require() automatically by your bundler. In that case, do not bundle CommonJS output since it will never work with Vitest, or use dynamic import() which is available in all CommonJS modules.
+
+   at estimation.unit.test.ts:1
+
+> 1 | import { describe, it, expect } from "vitest";
+    | ^
+  2 | import {
+  3 |   annualSavingsUSD,
+  4 |   simplePaybackYears,
+    at Object.<anonymous> (/Users/hugowentzel/sunspire-clean/node_modules/vitest/index.cjs:1:7)
+    at Object.<anonymous> (/Users/hugowentzel/sunspire-clean/tests/estimation.unit.test.ts:1:1)
+
+Error: Vitest cannot be imported in a CommonJS module using require(). Please use "import" instead.
+
+If you are using "import" in your source code, then it's possible it was bundled into require() automatically by your bundler. In that case, do not bundle CommonJS output since it will never work with Vitest, or use dynamic import() which is available in all CommonJS modules.
+
+   at solar-estimation-validation.test.ts:2
+
+  1 | // tests/solar-estimation-validation.test.ts
+> 2 | import { describe, test, expect } from 'vitest';
+    | ^
+  3 | import { buildEstimate } from '../lib/estimate';
+  4 |
+  5 | describe('Solar Estimation Validation', () => {
+    at Object.<anonymous> (/Users/hugowentzel/sunspire-clean/node_modules/vitest/index.cjs:1:7)
+    at Object.<anonymous> (/Users/hugowentzel/sunspire-clean/tests/solar-estimation-validation.test.ts:2:1)
+
+[1A[2K

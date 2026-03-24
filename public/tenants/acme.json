@@ -1,0 +1,68 @@
+{
+  "slug": "acme",
+  "name": "ACME Solar",
+  "tagline": "Your Trusted Solar Partner",
+  "logo": "/logo-acme.svg",
+  "colors": {
+    "primary": "#2563EB",
+    "secondary": "#1D4ED8",
+    "accent": "#059669",
+    "success": "#10B981",
+    "warning": "#F59E0B",
+    "error": "#EF4444",
+    "background": "#F8FAFC",
+    "surface": "#FFFFFF",
+    "text": "#1E293B",
+    "textSecondary": "#64748B",
+    "border": "#E2E8F0"
+  },
+  "contact": {
+    "email": "info@acmesolar.com",
+    "phone": "+1 (404) 770-2672",
+    "address": "456 Green Energy Blvd, Eco City, EC 54321"
+  },
+  "social": {
+    "website": "https://acmesolar.com",
+    "facebook": "https://facebook.com/acmesolar",
+    "twitter": "https://twitter.com/acmesolar",
+    "linkedin": "https://linkedin.com/company/acmesolar"
+  },
+  "features": {
+    "showTestimonials": true,
+    "showTrustBadges": true,
+    "showMethodology": true,
+    "showPricing": true
+  },
+  "testimonials": [
+    {
+      "id": "1",
+      "name": "David Wilson",
+      "role": "Homeowner",
+      "location": "Phoenix, AZ",
+      "content": "ACME Solar delivered exactly what they promised. Our energy bills dropped by 90% in the first month!",
+      "rating": 5
+    },
+    {
+      "id": "2",
+      "name": "Jennifer Martinez",
+      "role": "Small Business Owner",
+      "location": "Denver, CO",
+      "content": "The team at ACME was professional and knowledgeable. They helped us understand every step of the process.",
+      "rating": 5
+    },
+    {
+      "id": "3",
+      "name": "Robert Thompson",
+      "role": "Property Developer",
+      "location": "Las Vegas, NV",
+      "content": "We've used ACME Solar for multiple projects. Their estimates are always accurate and their service is top-notch.",
+      "rating": 5
+    }
+  ],
+  "trustBadges": [
+    "NABCEP Certified Installers",
+    "25+ Years Experience",
+    "BBB A+ Rating",
+    "Lifetime Warranty"
+  ]
+}

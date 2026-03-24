@@ -1,0 +1,18 @@
+{
+  "logos": [],
+  "testimonial": null,
+  "metrics": [
+    { "label": "Installers live", "value": "77" },
+    { "label": "Quotes generated", "value": "12,384" },
+    { "label": "Average increase in completions", "value": "31%" }
+  ],
+  "about": {
+    "heading": "Why We Built Sunspire",
+    "body": "We started Sunspire to give solar companies a simple way to capture more leads without paying for complex CRMs or custom developers. In just 24 hours, you can launch a fully branded quote tool that looks like it was built in-house, helps you win more consultations, and closes more installs."
+  },
+  "footer": {
+    "email": "",
+    "address": "",
+    "guarantee": ""
+  }
+}

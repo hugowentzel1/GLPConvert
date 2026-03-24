@@ -1,0 +1,101 @@
+name: End-to-End Tests
+
+on:
+  pull_request:
+    branches: [main, master]
+  push:
+    branches: [main, master]
+
+# Required secrets (set in GitHub repository settings):
+# - AIRTABLE_API_KEY: Your Airtable Personal Access Token
+# - AIRTABLE_BASE_ID: Your Airtable base ID
+# - STRIPE_SECRET_KEY: Your Stripe test secret key
+# - STRIPE_WEBHOOK_SECRET: Your Stripe webhook secret
+# - STRIPE_PUBLISHABLE_KEY: Your Stripe test publishable key
+# - GOOGLE_MAPS_API_KEY: Your Google Maps API key
+# - NREL_API_KEY: Your NREL API key
+# - EIA_API_KEY: Your EIA API key
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Create environment file
+        run: |
+          cat > .env.test << EOF
+          AIRTABLE_API_KEY=${{ secrets.AIRTABLE_API_KEY }}
+          AIRTABLE_BASE_ID=${{ secrets.AIRTABLE_BASE_ID }}
+          STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_WEBHOOK_SECRET=${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+          GOOGLE_MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }}
+          NREL_API_KEY=${{ secrets.NREL_API_KEY }}
+          EIA_API_KEY=${{ secrets.EIA_API_KEY }}
+          NEXT_PUBLIC_APP_URL=http://localhost:3000
+          EOF
+
+      - name: Build application
+        run: npm run build
+        env:
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          STRIPE_PUBLISHABLE_KEY: ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+          NREL_API_KEY: ${{ secrets.NREL_API_KEY }}
+          EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+          NEXT_PUBLIC_APP_URL: http://localhost:3000
+
+      - name: Start application
+        run: npm start &
+        env:
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          STRIPE_PUBLISHABLE_KEY: ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+          NREL_API_KEY: ${{ secrets.NREL_API_KEY }}
+          EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+          NEXT_PUBLIC_APP_URL: http://localhost:3000
+
+      - name: Wait for application to start
+        run: npx wait-on http://localhost:3000
+
+      - name: Run Playwright tests
+        run: npx playwright test
+        env:
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          STRIPE_PUBLISHABLE_KEY: ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+          NREL_API_KEY: ${{ secrets.NREL_API_KEY }}
+          EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+          NEXT_PUBLIC_APP_URL: http://localhost:3000
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
