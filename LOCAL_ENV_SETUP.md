@@ -36,6 +36,17 @@
 - `npm run lint` — ESLint
 - Playwright: set `BASE_URL=http://localhost:3000` (many legacy tests still assume solar — see `MASTER_TODO_GLPCONVERT.md`)
 
+## Legacy solar report locally
+
+Default vertical is **glp**, so `/api/estimate` returns **503** unless you opt in:
+
+```bash
+NEXT_PUBLIC_ENABLE_SOLAR_ESTIMATE=1
+NREL_API_KEY=your_nrel_key
+```
+
+Then `/report` can load live PVWatts data again.
+
 ## Troubleshooting
 
 - **Zod/env errors:** Ensure `.env.local` exists; compare with `.env.example`.

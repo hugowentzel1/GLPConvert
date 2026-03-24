@@ -75,6 +75,17 @@ function parseInputsFromSearch(url: string): Inputs {
 
 export async function GET(req: NextRequest) {
   try {
+    const { isSolarEstimateEnabled } = await import("@/lib/feature-flags");
+    if (!isSolarEstimateEnabled()) {
+      return NextResponse.json(
+        {
+          error: "Solar estimate API is disabled for this product mode.",
+          hint: "Use /intake and POST /api/recommend for GLPConvert.",
+        },
+        { status: 503 },
+      );
+    }
+
     console.log('[estimate] marker A - handler started');
     
     console.log('[estimate] marker B - importing pvwatts');

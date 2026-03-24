@@ -77,3 +77,10 @@
 
 - Avoid equivalence claims for compounded vs FDA-approved products unless attorney-approved.
 - Prefer “many patients explore programs like X” and “licensed provider determines eligibility.”
+
+## Competitor / positioning notes (non-exhaustive)
+
+- **Generic form builders (Typeform, Jotform):** GLPConvert wins on **vertical-specific intake**, **deterministic recommendation + price signal**, and **clinic dashboard/embed** — not “another form.”
+- **Full practice-management / EMR:** GLPConvert is **not** competing on charts or prescribing; it is **pre-consult conversion** only. Keep messaging narrow to avoid buyer confusion and regulatory over-claiming.
+- **Agency-built landing pages:** GLPConvert wins on **repeatable white-label** deployment, **Stripe self-serve onboarding**, and **compliance-aware copy scaffolding** (still needs counsel per tenant).
+- **Other “GLP funnels”:** Differentiate on **Wellspire multi-vertical engine** (TRT/Pep templates), **CRM handoff quality**, and **no diagnosis/dosing** positioning.

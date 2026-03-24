@@ -25,8 +25,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Create billing portal session
-    const base =
-      process.env.NEXT_PUBLIC_APP_URL || "https://demo.sunspiredemo.com";
+    const base = (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000").replace(
+      /\/$/,
+      "",
+    );
     const portalSession = await stripe.billingPortal.sessions.create({
       customer: session.customer as string,
       return_url: `${base}/success?session_id=${session_id}`,

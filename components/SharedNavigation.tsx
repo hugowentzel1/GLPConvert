@@ -6,6 +6,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import { useCompany } from './CompanyContext';
 import { useIsDemo } from '@/src/lib/isDemo';
+import { PRODUCT_NAME } from '@/lib/product-identity';
 
 export default function SharedNavigation() {
   const pathname = usePathname();
@@ -193,7 +194,9 @@ export default function SharedNavigation() {
               />
             ) : (
               <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center">
-                <span className="text-white text-lg font-bold">☀️</span>
+                <span className="text-white text-lg font-bold" aria-hidden>
+                  ⚕️
+                </span>
               </div>
             )}
             <div>
@@ -201,7 +204,7 @@ export default function SharedNavigation() {
                 {b.enabled ? b.brand : 'Your Company'}
               </h1>
               <p className="text-xs font-semibold text-gray-500 tracking-widest uppercase">
-                Solar Intelligence
+                {b.enabled ? 'Branded intake' : PRODUCT_NAME}
               </p>
             </div>
           </Link>
@@ -210,6 +213,9 @@ export default function SharedNavigation() {
             {/* Demo mode: Show Pricing/Partners/Support + Activation CTA */}
             {isDemo ? (
               <>
+                <Link href={createUrlWithParams("/intake")} className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">
+                  Intake demo
+                </Link>
                 <Link href={createUrlWithParams("/pricing")} className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">Pricing</Link>
                 <Link href={createUrlWithParams("/partners")} className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">Partners</Link>
                 <Link href={createUrlWithParams("/support")} className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">Support</Link>

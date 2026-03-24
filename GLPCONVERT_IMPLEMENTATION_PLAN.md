@@ -61,7 +61,42 @@
 
 ## Files to touch next (priority)
 
-- `app/page.tsx` — replace address block with intake import.
-- `app/report/page.tsx` — deprecation banner + link to `/result`.
-- `public/embed.js` — rebrand.
-- `README.md` — GLPConvert overview.
+- `app/page.tsx` — optional: hide or collapse legacy address block after intake analytics OK.
+- `app/pricing/page.tsx`, `app/partners/page.tsx`, `app/methodology/page.tsx` — Sunspire → GLPConvert copy.
+- `app/privacy/page.tsx`, `app/terms/page.tsx` — emails + product description (with counsel).
+- `src/demo/InstallSheet.tsx` — embed snippet for `glpconvert-*` meta tags.
+
+## Page-by-page snapshot
+
+| Page | GLPConvert state |
+|------|------------------|
+| `/` | Hero + intake CTA; legacy address/report path retained |
+| `/intake` | **Live** stepper (GLP questions) |
+| `/result` | **Live** demo + post-intake handoff |
+| `/report` | Legacy solar; banner + estimate **503** by default |
+| `/pricing`, `/signup`, `/paid` | Reuse SaaS; copy partially Sunspire |
+| `/c/[handle]` | Dashboard; embed strings TODO |
+| Legal | Needs email/domain pass + counsel |
+| `/docs/*` | Still Sunspire-oriented — medium priority sweep |
+
+## Recommendation engine (detailed)
+
+- v1: `lib/verticals/glp/recommend.ts` pure function; unit-test fixtures per answer combo.
+- v2: load `programs` from Supabase by `tenant_id` + filter by `vertical`.
+- TRT/Pep: duplicate file layout; swap `intake.ts` + `recommend.ts` only.
+
+## CRM routing (detailed)
+
+- POST lead payload: `contact`, `answers` (structured), `recommendation`, `utm_*`, **no** free-text clinical narrative in v1.
+- Optional HMAC signature header for clinic webhook verification.
+
+## Testing (expanded)
+
+- Vitest: `recommendGlpProgram`, `recommendTrtProgram` stub flag.
+- Playwright: new `tests/e2e/glp-intake-result.spec.ts` (TODO).
+- Contract test: `POST /api/recommend` JSON schema snapshot.
+
+## Launch (expanded)
+
+- Freeze scope: intake → result → book CTA + Stripe onboarding for clinics.
+- Soft launch: one pilot tenant + manual CRM forward if webhook not ready.

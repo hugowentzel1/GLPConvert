@@ -18,7 +18,13 @@ export const LOCAL_STORAGE_PREFIX = "glpconvert";
 export const STORAGE_KEYS = {
   brandTakeover: `${LOCAL_STORAGE_PREFIX}-brand-takeover`,
   lastAddress: `${LOCAL_STORAGE_PREFIX}-last-address`,
+  intakeDraft: `${LOCAL_STORAGE_PREFIX}-intake-draft`,
   /** Legacy Sunspire keys — read once for migration, then stop writing */
   legacyBrandTakeover: "sunspire-brand-takeover",
   legacyLastAddress: "sunspire-last-address",
+} as const;
+
+/** sessionStorage — recommendation payload after intake POST */
+export const SESSION_KEYS = {
+  lastRecommendation: `${LOCAL_STORAGE_PREFIX}-last-recommendation`,
 } as const;

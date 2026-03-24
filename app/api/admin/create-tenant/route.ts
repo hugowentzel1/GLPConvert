@@ -75,7 +75,7 @@ async function handleCreateTenant(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({
       tenantId: tenant.id,
       apiKey,
-      loginUrl: `${process.env.NEXT_PUBLIC_APP_URL || "https://app.sunspire.com"}/${companyHandle}`,
+      loginUrl: `${(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000").replace(/\/$/, "")}/${companyHandle}`,
       captureUrl,
     });
   } catch (error) {

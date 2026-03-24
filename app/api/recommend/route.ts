@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import type { IntakeAnswer } from "@/lib/verticals/types";
 import { recommendGlpProgram } from "@/lib/verticals/glp/recommend";
+import { recommendTrtProgram } from "@/lib/verticals/trt/recommend";
+import { recommendPepProgram } from "@/lib/verticals/pep/recommend";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -24,16 +26,21 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid body", details: parsed.error.flatten() }, { status: 400 });
     }
     const { vertical, answers } = parsed.data;
+    const list = answers as IntakeAnswer[];
 
-    if (vertical !== "glp") {
-      return NextResponse.json(
-        { error: "Vertical not implemented yet", vertical },
-        { status: 501 },
-      );
+    let recommendation;
+    let stub = false;
+    if (vertical === "glp") {
+      recommendation = recommendGlpProgram(list);
+    } else if (vertical === "trt") {
+      recommendation = recommendTrtProgram(list);
+      stub = true;
+    } else {
+      recommendation = recommendPepProgram(list);
+      stub = true;
     }
 
-    const rec = recommendGlpProgram(answers as IntakeAnswer[]);
-    return NextResponse.json({ ok: true, vertical, recommendation: rec });
+    return NextResponse.json({ ok: true, vertical, recommendation, stub });
   } catch {
     return NextResponse.json({ error: "Bad request" }, { status: 400 });
   }

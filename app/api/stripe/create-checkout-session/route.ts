@@ -79,8 +79,10 @@ export async function POST(req: NextRequest) {
     });
 
     // Build URLs
-    const base =
-      process.env.NEXT_PUBLIC_APP_URL || "https://demo.sunspiredemo.com";
+    const base = (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000").replace(
+      /\/$/,
+      "",
+    );
 
     // Create Stripe checkout session with both setup fee and monthly subscription
     const checkoutSession = await stripeClient.checkout.sessions.create({
@@ -200,8 +202,10 @@ export async function GET(req: NextRequest) {
     });
 
     // Build URLs
-    const base =
-      process.env.NEXT_PUBLIC_APP_URL || "https://demo.sunspiredemo.com";
+    const base = (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000").replace(
+      /\/$/,
+      "",
+    );
 
     // Create Stripe checkout session with both setup fee and monthly subscription
     const checkoutSession = await stripeClient.checkout.sessions.create({

@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import Container from '@/components/layout/Container';
 import { useIsDemo } from '@/src/lib/isDemo';
+import { PLATFORM_DISPLAY_NAME, PRODUCT_NAME, SUPPORT_EMAIL } from '@/lib/product-identity';
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
@@ -83,10 +84,12 @@ export default function Footer() {
                 </div>
               )}
               <h3 className="text-xl font-semibold text-slate-900">
-                Sunspire Solar Intelligence
+                {PRODUCT_NAME}
               </h3>
               <p className="mt-2 text-sm text-slate-600">
-                {isDemo ? `Demo for ${b.brand} — Powered by Sunspire` : `Powered by Sunspire for ${b.brand}`}
+                {isDemo
+                  ? `Demo for ${b.brand} — ${PLATFORM_DISPLAY_NAME}`
+                  : `${PLATFORM_DISPLAY_NAME} for ${b.brand}`}
               </p>
 
               <div className="mt-5 space-y-3 text-sm leading-relaxed text-slate-700">
@@ -107,14 +110,14 @@ export default function Footer() {
                 <ul className="mt-1 space-y-2.5">
                   <li className="flex items-start gap-3 justify-center md:justify-start">
                     <span className="mt-0.5 flex-shrink-0">✉️</span>
-                    <a className="underline-offset-2 hover:underline" href="mailto:support@getsunspire.com">
-                      support@getsunspire.com
+                    <a className="underline-offset-2 hover:underline" href={`mailto:${SUPPORT_EMAIL}`}>
+                      {SUPPORT_EMAIL}
                     </a>
                   </li>
                   <li className="flex items-start gap-3 justify-center md:justify-start">
                     <span className="mt-0.5 flex-shrink-0">✉️</span>
-                    <a className="underline-offset-2 hover:underline" href="mailto:billing@getsunspire.com">
-                      billing@getsunspire.com
+                    <a className="underline-offset-2 hover:underline" href={`mailto:${SUPPORT_EMAIL}`}>
+                      Billing (same inbox until configured)
                     </a>
                   </li>
                   <li className="flex items-start gap-3 justify-center md:justify-start">

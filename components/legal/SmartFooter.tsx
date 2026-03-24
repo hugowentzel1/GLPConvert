@@ -26,6 +26,7 @@ export default function SmartFooter({
       pathname?.includes("/demo") ||
       pathname?.includes("/report") ||
       pathname?.includes("/result") ||
+      pathname?.includes("/intake") ||
       pathname?.includes("/tenant-preview") ||
       searchParams?.get("company")
     ) {

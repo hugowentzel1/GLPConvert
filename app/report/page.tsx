@@ -55,8 +55,11 @@ import LockOverlay from '@/src/demo/LockOverlay';
 import { usePreviewQuota } from '@/src/demo/usePreviewQuota';
 import { useCountdown } from '@/src/demo/useCountdown';
 import Image from 'next/image';
+import Link from 'next/link';
 import { softWrapAddress } from '@/lib/text';
 import { ensureReadableBrandInk } from '@/utils/brandColor';
+import { isGlpPrimaryProduct } from '@/lib/feature-flags';
+import { PRODUCT_NAME } from '@/lib/product-identity';
 
 // Helper function to get state name from coordinates
 function getStateFromCoordinates(lat: number, lng: number): string {
@@ -663,6 +666,23 @@ function ReportContent() {
       className="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-gray-100 font-inter" 
       data-demo={demoMode}
     >
+      {isGlpPrimaryProduct() && (
+        <div
+          role="status"
+          className="bg-amber-50 border-b border-amber-200 text-amber-950 text-sm text-center py-2.5 px-4"
+        >
+          <strong className="font-semibold">Legacy sample report.</strong>{" "}
+          {PRODUCT_NAME}’s primary flow is intake → recommendation — try{" "}
+          <Link href="/intake" className="underline font-medium">
+            /intake
+          </Link>{" "}
+          and{" "}
+          <Link href="/result?demo=1" className="underline font-medium">
+            /result
+          </Link>
+          .
+        </div>
+      )}
       {/* Custom banner for report page */}
       <header className="bg-white/90 backdrop-blur-xl border-b border-gray-200/30 sticky top-0 z-50 shadow-sm">
         <Container>
@@ -696,7 +716,7 @@ function ReportContent() {
                   {capitalizeCompanyName(b.brand)}
                 </h2>
                 <p className="text-xs font-semibold text-gray-500 tracking-widest uppercase">
-                  Solar Intelligence
+                  {isGlpPrimaryProduct() ? "Sample report (legacy)" : "Solar Intelligence"}
                 </p>
               </div>
             </div>

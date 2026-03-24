@@ -66,7 +66,7 @@ export function LeadModal({
           company: b?.brand || tenant?.name || "Demo",
           companyHandle: tenant?.slug || "demo",
           address,
-          crm: "sunspire",
+          crm: "glpconvert",
           source: "lead_modal",
         }),
       });

@@ -25,7 +25,10 @@ export default function ReportLeadModal({
   bookingUrl,
 }: ReportLeadModalProps) {
   const raw = companyName && companyName.trim() ? companyName.trim() : "";
-  const consentCompany = !raw || raw.toLowerCase() === "sunspire" ? "the company" : raw;
+  const consentCompany =
+    !raw || ["sunspire", "glpconvert", "your company"].includes(raw.toLowerCase())
+      ? "the company"
+      : raw;
   const displayCompany = raw && raw.toLowerCase() !== "paid" ? raw : "Your installer";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

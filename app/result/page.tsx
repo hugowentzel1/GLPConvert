@@ -3,20 +3,47 @@
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { PRODUCT_NAME, PLATFORM_DISPLAY_NAME } from "@/lib/product-identity";
+import { PRODUCT_NAME, PLATFORM_DISPLAY_NAME, SESSION_KEYS } from "@/lib/product-identity";
 import type { ProgramRecommendation } from "@/lib/verticals/types";
 
+function formatPriceSignal(rec: ProgramRecommendation): string | null {
+  const ps = rec.priceSignal;
+  if (ps.kind === "range") {
+    return `$${ps.minUsd}–$${ps.maxUsd}${ps.label ? ` — ${ps.label}` : ""}`;
+  }
+  if (ps.kind === "fixed") {
+    return `$${ps.amountUsd}${ps.label ? ` — ${ps.label}` : ""}`;
+  }
+  if (ps.kind === "starts_at") {
+    return `Starts at $${ps.amountUsd}${ps.label ? ` — ${ps.label}` : ""}`;
+  }
+  return null;
+}
+
 /**
- * GLPConvert result scaffold — wire to real intake state / session after flow is built.
- * Query: minimal demo via ?demo=1 (loads sample recommendation client-side).
+ * GLPConvert result — `?demo=1` sample, or `?from=intake` after intake (sessionStorage).
  */
 export default function ResultPage() {
   const sp = useSearchParams();
   const demo = sp?.get("demo") === "1";
+  const fromIntake = sp?.get("from") === "intake";
   const [rec, setRec] = useState<ProgramRecommendation | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
+    if (fromIntake) {
+      try {
+        const raw = sessionStorage.getItem(SESSION_KEYS.lastRecommendation);
+        if (raw) {
+          setRec(JSON.parse(raw) as ProgramRecommendation);
+          return;
+        }
+        setErr("No recommendation in session — start again from intake.");
+      } catch {
+        setErr("Could not read recommendation.");
+      }
+      return;
+    }
     if (!demo) return;
     fetch("/api/recommend", {
       method: "POST",
@@ -35,7 +62,7 @@ export default function ResultPage() {
         else setErr(data.error || "Unknown error");
       })
       .catch(() => setErr("Request failed"));
-  }, [demo]);
+  }, [demo, fromIntake]);
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white px-4 py-16">
@@ -44,9 +71,11 @@ export default function ResultPage() {
         <h1 className="text-2xl font-bold text-slate-900">Your next step</h1>
         <p className="text-slate-600 text-sm leading-relaxed">
           This page will show the recommended program, price signal, and booking CTA after intake.{" "}
-          {!demo && (
+          {!demo && !fromIntake && (
             <>
-              Add <code className="bg-slate-100 px-1 rounded">?demo=1</code> to preview sample output.
+              Try <Link className="underline" href="/intake">intake</Link>,{" "}
+              <code className="bg-slate-100 px-1 rounded">?demo=1</code>, or{" "}
+              <code className="bg-slate-100 px-1 rounded">?from=intake</code> after completing questions.
             </>
           )}
         </p>
@@ -57,11 +86,10 @@ export default function ResultPage() {
           <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
             <h2 className="text-xl font-semibold text-slate-900">{rec.programName}</h2>
             <p className="text-slate-700 text-sm">{rec.rationale}</p>
-            {rec.priceSignal.kind === "range" && (
+            {formatPriceSignal(rec) && (
               <p className="text-slate-600 text-sm">
                 <span className="font-medium">Price signal: </span>
-                ${rec.priceSignal.minUsd}–${rec.priceSignal.maxUsd}
-                {rec.priceSignal.label ? ` — ${rec.priceSignal.label}` : ""}
+                {formatPriceSignal(rec)}
               </p>
             )}
             <ul className="text-xs text-slate-500 space-y-1 list-disc pl-4">

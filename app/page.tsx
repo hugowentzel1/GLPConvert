@@ -50,6 +50,10 @@ function HomeContent() {
   const [showLockScreen, setShowLockScreen] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams(); // Use useSearchParams for client-side access
+  const intakeHref = React.useMemo(() => {
+    const q = searchParams?.toString();
+    return q ? `/intake?${q}` : "/intake";
+  }, [searchParams]);
 
   // Brand takeover mode detection
   const b = useBrandTakeover();
@@ -387,6 +391,17 @@ function HomeContent() {
               <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                 {PRODUCT_NAME} is a white-label conversion layer for medical weight-loss programs: structured leads, program suggestions, and handoff to your calendar — not medical advice.
               </p>
+              <div className="pt-4">
+                <a
+                  href={intakeHref}
+                  className="inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 transition-colors"
+                >
+                  Try the GLP intake flow
+                </a>
+                <span className="block text-sm text-gray-500 mt-2">
+                  Legacy address → report sample still available below for comparison.
+                </span>
+              </div>
             </div>
           </div>
 
