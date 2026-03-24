@@ -14,7 +14,8 @@
 |--------|-----|------|
 | DONE | AUTO | Copy `sunspire-clean` tree into `GLPConvert` (exclude node_modules, .git, .next, .env.local, .vercel) |
 | DONE | AUTO | Rename npm package to `glpconvert` |
-| TODO | HUMAN | `git init`, remote GitHub, first push — **BLOCKS** CI/Vercel Git integration |
+| DONE | AUTO | `git init` + initial commit on `main` (migration baseline) |
+| TODO | HUMAN | Create GitHub repo + `git remote add` + push — **BLOCKS** CI/Vercel Git integration |
 | TODO | AUTO | Replace root `README.md` with GLPConvert + Wellspire overview |
 | TODO | HUMAN | Decide `sunspire-clean` archive strategy |
 
@@ -142,7 +143,7 @@
 
 ## Chronological “next” sequence (for “next step” workflow)
 
-1. **HUMAN** — Git init + GitHub remote + first push (`GLPCONVERT_HUMAN_ACTIONS_ONLY.md` §1).
+1. **HUMAN** — GitHub remote + push (`GLPCONVERT_HUMAN_ACTIONS_ONLY.md` §1); local `git init` + first commit already done.
 2. **HUMAN** — Vercel project + env + deploy preview.
 3. **HUMAN** — Supabase + keys in Vercel.
 4. **HUMAN** — Resend domain verify + API key.

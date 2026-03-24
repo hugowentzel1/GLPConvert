@@ -4,10 +4,11 @@ Smallest set of steps **you** must perform that automation cannot. After each st
 
 ## Next required human step (single)
 
-**1. Initialize Git for this project and connect a remote (GitHub or other).**
+**1. Create a GitHub (or Git host) repository and push this project’s `main` branch.**
 
-- **Why it blocks:** There is no repository history in `/Users/hugowentzel/GLPConvert` yet (workspace was empty; code was copied from `sunspire-clean`). CI, collaboration, and Vercel Git integration need a remote.
-- **What happens immediately after:** Tag the migration baseline, document branch strategy in-repo, and align `MASTER_TODO_GLPCONVERT.md` statuses for GitHub/Vercel tasks.
+- **Local state:** `git init` is already done and the migration baseline is committed on `main` (`022e3cb`).
+- **Why it blocks:** CI, collaboration, and Vercel Git integration need a remote URL.
+- **What happens immediately after:** Connect Vercel to the repo, then mirror env vars per `GITHUB_VERCEL_SUPABASE_RESEND_STRIPE_CHECKLIST.md`.
 
 ---
 
