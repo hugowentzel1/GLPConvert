@@ -248,7 +248,7 @@ Mark **U038** `[x]` when test checkout + test email work.
 
 ### Phase 9 — Infra and launch blockers
 
-- [~] **U035 · HUMAN** Create remote Git repo and push local `main`.
+- [x] **U035 · HUMAN** Create remote Git repo and push local `main`. → `https://github.com/hugowentzel1/GLPConvert`
 - [ ] **U036 · HUMAN** Create Vercel project + envs.
 - [ ] **U037 · HUMAN** Create Supabase project and run migrations.
 - [ ] **U038 · HUMAN** Configure Stripe + Resend + DNS.
@@ -258,9 +258,7 @@ Mark **U038** `[x]` when test checkout + test email work.
 
 ## NEEDS HUMAN INPUT (Exact blockers only)
 
-- **H1 — Git remote creation (`U035`)**  
-  Why blocked: remote repository creation/push is account-scoped.  
-  Next action: create remote repo and push local `main`, then reply `done`.
+- **H1 — Git remote creation (`U035`)** — **done** · https://github.com/hugowentzel1/GLPConvert
 
 - **H2 — Hosted infra credentials (`U036`, `U037`, `U038`)**  
   Why blocked: Vercel/Supabase/Stripe/Resend/DNS credentials and org access are external.  
@@ -274,8 +272,8 @@ Mark **U038** `[x]` when test checkout + test email work.
 
 ## Current Active Step
 
-**U035 · HUMAN — Create remote Git repo and push local `main`.**
+**U036 · HUMAN — Create Vercel project + envs** (import `hugowentzel1/GLPConvert`).
 
-**Step-by-step:** see **Phase 9 → U035** in [Operator playbook — what to click / run](#operator-playbook--what-to-click--run-full-list) above (GitHub **+** → **New repository**, then `git remote add` + `git push`, or GitHub Desktop **Publish**).
+**Step-by-step:** [Operator playbook → U036](#u036--human--vercel-project--envs).
 
-When finished: set **U035** to `[x]` in Phase 9, then start **U036** using the same playbook.
+U035 complete: remote **https://github.com/hugowentzel1/GLPConvert** · branch `main` pushed.
