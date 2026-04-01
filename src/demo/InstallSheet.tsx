@@ -226,7 +226,7 @@ export default function InstallSheet() {
                 <ul className="space-y-2 text-sm text-gray-700">
                   <li className="flex items-center">
                     <span className="text-green-500 mr-2">✓</span>
-                    Full projections & assumptions
+                    Structured intake + recommendation output
                   </li>
                   <li className="flex items-center">
                     <span className="text-green-500 mr-2">✓</span>
@@ -238,7 +238,7 @@ export default function InstallSheet() {
                   </li>
                   <li className="flex items-center">
                     <span className="text-green-500 mr-2">✓</span>
-                    14-day refund
+                    setup fee refund policy
                   </li>
                 </ul>
               </div>
@@ -253,7 +253,7 @@ export default function InstallSheet() {
                     : "bg-orange-600 hover:bg-orange-700 transform hover:scale-[1.02]"
                 }`}
               >
-                {isSubmitting ? "Processing..." : "Start 14-Day Trial"}
+                {isSubmitting ? "Processing..." : "Start Setup"}
               </button>
 
               {/* Billing Note */}
@@ -275,14 +275,14 @@ export default function InstallSheet() {
                 <div className="bg-gray-900 rounded-lg p-4">
                   <code className="text-green-400 text-sm">
                     &lt;script src="https://{subdomain || "solar.yourdomain"}
-                    .sunspire.app/embed.js"&gt;&lt;/script&gt;
+                    .glpconvert.com/embed.js"&gt;&lt;/script&gt;
                   </code>
                 </div>
                 <div className="mt-3">
                   <button
                     onClick={() =>
                       navigator.clipboard.writeText(
-                        `<script src="https://${subdomain || "solar.yourdomain"}.sunspire.app/embed.js"></script>`,
+                        `<script src="https://${subdomain || "solar.yourdomain"}.glpconvert.com/embed.js"></script>`,
                       )
                     }
                     className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
@@ -298,14 +298,14 @@ export default function InstallSheet() {
                 </h3>
                 <div className="bg-gray-900 rounded-lg p-4">
                   <code className="text-green-400 text-sm">
-                    &lt;div id="sunspire-quote-widget"&gt;&lt;/div&gt;
+                    &lt;div id="glpconvert-intake-widget"&gt;&lt;/div&gt;
                   </code>
                 </div>
                 <div className="mt-3">
                   <button
                     onClick={() =>
                       navigator.clipboard.writeText(
-                        '<div id="sunspire-quote-widget"></div>',
+                        '<div id="glpconvert-intake-widget"></div>',
                       )
                     }
                     className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
@@ -321,7 +321,7 @@ export default function InstallSheet() {
                   <ul className="space-y-2 text-sm text-gray-700">
                     <li className="flex items-center">
                       <span className="text-green-500 mr-2">✓</span>
-                      Full projections & assumptions
+                      Structured intake + recommendation output
                     </li>
                     <li className="flex items-center">
                       <span className="text-green-500 mr-2">✓</span>
@@ -333,7 +333,7 @@ export default function InstallSheet() {
                     </li>
                     <li className="flex items-center">
                       <span className="text-green-500 mr-2">✓</span>
-                      14-day refund
+                      setup fee refund policy
                     </li>
                   </ul>
                 </div>
@@ -347,7 +347,7 @@ export default function InstallSheet() {
                       : "bg-orange-600 hover:bg-orange-700 transform hover:scale-[1.02]"
                   }`}
                 >
-                  {isSubmitting ? "Processing..." : "Start 14-Day Trial"}
+                  {isSubmitting ? "Processing..." : "Start Setup"}
                 </button>
 
                 <div className="text-xs text-gray-500 text-center mt-3">

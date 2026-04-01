@@ -332,6 +332,22 @@ export async function upsertLead(leadData: {
   npv25Year?: number;
   co2OffsetPerYear?: number;
   token?: string;
+  vertical?: string;
+  simulation_input?: unknown;
+  simulation_output?: unknown;
+  simulation_version?: string;
+  recommended_path?: string;
+  estimated_timeline_weeks?: number;
+  price_range_low?: number;
+  price_range_high?: number;
+  budget_band?: string;
+  consent_terms?: boolean;
+  consent_contact?: boolean;
+  lead_capture_completed?: boolean;
+  booking_status?: string;
+  lead_source?: string;
+  utm_source?: string;
+  utm_campaign?: string;
 }): Promise<{ success: boolean; error?: string }> {
   try {
     const tenant = await findTenantByHandle(leadData.tenantSlug);
@@ -352,6 +368,22 @@ export async function upsertLead(leadData: {
       npv_25_year: leadData.npv25Year,
       co2_offset_per_year: leadData.co2OffsetPerYear,
       phone: leadData.phone,
+      vertical: leadData.vertical,
+      simulation_input: leadData.simulation_input,
+      simulation_output: leadData.simulation_output,
+      simulation_version: leadData.simulation_version,
+      recommended_path: leadData.recommended_path,
+      estimated_timeline_weeks: leadData.estimated_timeline_weeks,
+      price_range_low: leadData.price_range_low,
+      price_range_high: leadData.price_range_high,
+      budget_band: leadData.budget_band,
+      consent_terms: leadData.consent_terms,
+      consent_contact: leadData.consent_contact,
+      lead_capture_completed: leadData.lead_capture_completed,
+      booking_status: leadData.booking_status,
+      lead_source: leadData.lead_source,
+      utm_source: leadData.utm_source,
+      utm_campaign: leadData.utm_campaign,
     };
     await upsertLeadByEmailAndTenant(leadData.email, tenant.id, fields);
     return { success: true };

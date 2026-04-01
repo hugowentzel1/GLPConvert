@@ -3,6 +3,7 @@
 import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import { useSearchParams } from 'next/navigation';
 import Footer from '@/components/Footer';
+import { PRODUCT_NAME, SUPPORT_EMAIL } from '@/lib/product-identity';
 
 export default function PrivacyPage() {
   const b = useBrandTakeover();
@@ -34,17 +35,17 @@ export default function PrivacyPage() {
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Information We Collect</h2>
               <p className="text-gray-600 mb-4">
-                Sunspire (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our solar intelligence platform.
+                {PRODUCT_NAME} (&ldquo;we,&rdquo; &ldquo;our,&rdquo; or &ldquo;us&rdquo;) is committed to protecting your privacy. This policy explains how we collect, use, and safeguard information in our intake and booking software.
               </p>
               
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Information You Provide Directly</h3>
               <p className="text-gray-600 mb-4">
-                We collect information you provide directly to us, such as when you create an account, submit a solar analysis request, or contact our support team. This may include:
+                We collect information you provide directly to us, such as when you create an account, complete intake questions, request a consult, or contact support. This may include:
               </p>
               <ul className="list-disc pl-6 space-y-2 text-gray-600">
                 <li className="text-[var(--brand-primary)]">Name and contact information (email, phone, address)</li>
-                <li className="text-[var(--brand-primary)]">Property address and details for solar analysis</li>
-                <li className="text-[var(--brand-primary)]">Company information and business details</li>
+                <li className="text-[var(--brand-primary)]">Structured intake answers for educational recommendations</li>
+                <li className="text-[var(--brand-primary)]">Clinic/company configuration details</li>
                 <li className="text-[var(--brand-primary)]">Payment and billing information</li>
                 <li className="text-[var(--brand-primary)]">Communications with our support team</li>
                 <li className="text-[var(--brand-primary)]">Account preferences and settings</li>
@@ -57,20 +58,20 @@ export default function PrivacyPage() {
               <ul className="list-disc pl-6 space-y-2 text-gray-600">
                 <li className="text-[var(--brand-primary)]">Usage data (pages visited, features used, time spent)</li>
                 <li className="text-[var(--brand-primary)]">Device information (IP address, browser type, operating system)</li>
-                <li className="text-[var(--brand-primary)]">Location data (derived from IP address for solar analysis)</li>
+                <li className="text-[var(--brand-primary)]">Location/IP data for security and anti-abuse controls</li>
                 <li className="text-[var(--brand-primary)]">Cookies and similar tracking technologies</li>
                 <li className="text-[var(--brand-primary)]">Log files and analytics data</li>
               </ul>
 
               <h3 className="text-xl font-semibold text-gray-900 mb-3 mt-6">Third-Party Data Sources</h3>
               <p className="text-gray-600 mb-4">
-                We may obtain information from third-party sources to enhance our solar analysis, including:
+                We may obtain information from third-party services to operate the platform, including:
               </p>
               <ul className="list-disc pl-6 space-y-2 text-gray-600">
-                <li className="text-[var(--brand-primary)]">NREL PVWatts v8 for solar irradiance data</li>
-                <li className="text-[var(--brand-primary)]">EIA for electricity rate information</li>
-                <li className="text-[var(--brand-primary)]">Google Maps for property and location data</li>
-                <li className="text-[var(--brand-primary)]">Weather services for climate data</li>
+                <li className="text-[var(--brand-primary)]">Stripe for billing workflows</li>
+                <li className="text-[var(--brand-primary)]">Supabase for data storage/access controls</li>
+                <li className="text-[var(--brand-primary)]">Resend/SMTP for transactional email</li>
+                <li className="text-[var(--brand-primary)]">Optional map/geocoding services if enabled</li>
               </ul>
             </section>
               
@@ -111,10 +112,10 @@ export default function PrivacyPage() {
               
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Marketing emails: legal bases & your rights</h2>
-              <p className="text-gray-600 mb-4"><strong>US (CAN-SPAM):</strong> We identify Sunspire Software, include our postal address, and provide an unsubscribe that works.</p>
+              <p className="text-gray-600 mb-4"><strong>US (CAN-SPAM):</strong> We identify {PRODUCT_NAME}, include our postal address, and provide a functional unsubscribe where applicable.</p>
               <p className="text-gray-600 mb-4"><strong>Canada (CASL):</strong> Our emails include our identity, mailing address, and a functional unsubscribe. We honor unsubscribes within 10 business days (typically immediately).</p>
-              <p className="text-gray-600 mb-4"><strong>EU/UK (GDPR & ePrivacy):</strong> For B2B outreach we rely on <em>Legitimate interests</em> to contact relevant business recipients. You can object to marketing at any time via the unsubscribe link or by emailing <a href="mailto:support@getsunspire.com" className="hover:underline">support@getsunspire.com</a>.</p>
-              <p className="text-gray-600 mb-4"><strong>Your EU/UK rights:</strong> access, rectification, erasure, restriction, portability, and <em>objection to direct marketing</em>. To exercise these rights, email <a href="mailto:support@getsunspire.com" className="hover:underline">support@getsunspire.com</a>. You may also contact your local data protection authority.</p>
+              <p className="text-gray-600 mb-4"><strong>EU/UK (GDPR & ePrivacy):</strong> For B2B outreach we may rely on <em>legitimate interests</em>. You can object to marketing at any time via unsubscribe links or by emailing <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:underline">{SUPPORT_EMAIL}</a>.</p>
+              <p className="text-gray-600 mb-4"><strong>Your EU/UK rights:</strong> access, rectification, erasure, restriction, portability, and <em>objection to direct marketing</em>. To exercise these rights, email <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:underline">{SUPPORT_EMAIL}</a>.</p>
               <p className="text-gray-600 mb-4">We maintain a suppression list to ensure we do not email you again after you unsubscribe.</p>
             </section>
               
@@ -125,8 +126,8 @@ export default function PrivacyPage() {
               </p>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-gray-700">
-                  <strong>Support:</strong> <a href="mailto:support@getsunspire.com" className="hover:underline">support@getsunspire.com</a><br/>
-                  <strong>Billing:</strong> <a href="mailto:billing@getsunspire.com" className="hover:underline">billing@getsunspire.com</a><br/>
+                  <strong>Support:</strong> <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:underline">{SUPPORT_EMAIL}</a><br/>
+                  <strong>Billing:</strong> <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:underline">{SUPPORT_EMAIL}</a><br/>
                   <strong>Address:</strong> 1700 Northside Drive Suite A7 #5164 Atlanta, GA 30318
                 </p>
               </div>

@@ -11,6 +11,7 @@ import { Card } from '@/components/ui/Card';
 import EarningsMini from '@/components/partners/EarningsMini';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/Button';
+import { SUPPORT_EMAIL, PRODUCT_NAME } from '@/lib/product-identity';
 
 export default function PartnersPage() {
   const b = useBrandTakeover();
@@ -48,7 +49,7 @@ export default function PartnersPage() {
         // Fallback to mailto
         const subject = encodeURIComponent(`Partner Application - ${formData.company}`);
         const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nCompany: ${formData.company}\nPhone: ${formData.phone}\nClient Range: ${formData.clientRange}\n\n${formData.message}`);
-        window.location.href = `mailto:support@getsunspire.com?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${subject}&body=${body}`;
         throw new Error('Failed to submit application');
       }
       
@@ -103,7 +104,7 @@ export default function PartnersPage() {
                 Partner Program
               </h1>
               <p className="text-lg md:text-xl text-neutral-700 max-w-3xl mx-auto">
-                Earn recurring revenue by referring solar installers to Sunspire
+                Earn recurring revenue by referring clinics to {PRODUCT_NAME}
               </p>
             </div>
 
@@ -196,9 +197,9 @@ export default function PartnersPage() {
                       </div>
                       <div>
                         <p className="text-neutral-700 italic mb-2">
-                          &ldquo;Partnered with Sunspire 6 months ago. Already earned $2,400 in recurring revenue from just 8 clients — homeowners instantly trusted our estimates.&rdquo;
+                          &ldquo;Partnering with GLPConvert gave our agency a repeatable way to help clinics launch faster with better-qualified consult requests.&rdquo;
                         </p>
-                        <p className="text-sm text-neutral-500">— Justin Rota, Owner, 30-employee solar firm, Georgia</p>
+                        <p className="text-sm text-neutral-500">— Agency partner, healthcare growth consultancy</p>
                       </div>
                     </div>
                   </Card>
@@ -306,7 +307,7 @@ export default function PartnersPage() {
                         onChange={handleChange}
                         rows={4}
                         className="w-full px-4 py-3 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-500)] focus:border-transparent"
-                        placeholder="Tell us about your solar business and why you'd like to partner with us..."
+                        placeholder="Tell us about your business and why you'd like to partner with us..."
                       />
                     </div>
 
@@ -329,7 +330,7 @@ export default function PartnersPage() {
                   
                   {submitStatus === 'error' && (
                     <div className="bg-red-50 text-red-800 border border-red-200 rounded-xl p-4 mt-4">
-                      ❌ Something went wrong. Please try again or email support@getsunspire.com directly.
+                      ❌ Something went wrong. Please try again or email {SUPPORT_EMAIL} directly.
                     </div>
                   )}
 

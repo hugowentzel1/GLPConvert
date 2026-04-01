@@ -23,6 +23,10 @@ export async function POST(request: NextRequest) {
       "signup_complete",
       "report_generated",
       "lead_submitted",
+      "simulation_started",
+      "simulation_completed",
+      "simulation_lead_captured",
+      "consult_cta_clicked",
     ];
 
     if (!validTypes.includes(type)) {

@@ -385,7 +385,7 @@ function HomeContent() {
             <div className="space-y-6">
               
               <h1 className="text-6xl md:text-7xl font-black text-gray-900 leading-tight" style={{ fontSize: '3rem !important', fontWeight: '900 !important' }}>
-                Turn traffic into booked consults — with compliant, branded GLP intake.
+                Give prospects clarity first: branded GLP-1 simulation before lead capture.
               </h1>
               
               <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
@@ -396,7 +396,7 @@ function HomeContent() {
                   href={intakeHref}
                   className="inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 transition-colors"
                 >
-                  Try the GLP intake flow
+                  Try the GLP transformation simulator
                 </a>
                 <span className="block text-sm text-gray-500 mt-2">
                   Legacy address → report sample still available below for comparison.
@@ -414,8 +414,8 @@ function HomeContent() {
           <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200/30 p-8 md:p-12 max-w-3xl mx-auto section-spacing slide-up-fade">
             <div className="space-y-6">
               <div className="text-center space-y-4">
-                <h2 className="text-2xl font-bold text-gray-900">Start with location (legacy flow)</h2>
-                <p className="text-gray-600">This address step will be replaced by the GLP intake questionnaire. A licensed provider determines final eligibility.</p>
+                <h2 className="text-2xl font-bold text-gray-900">Legacy flow preview</h2>
+                <p className="text-gray-600">This address-first flow is legacy. The new default is simulator-first with educational timeline + economics before contact capture.</p>
               </div>
 
               <div className="space-y-6">

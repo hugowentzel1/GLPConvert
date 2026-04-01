@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { storeLead, storeLeadFallback, getTenantByHandle, TENANT_FIELDS } from "@/src/lib/storage";
 import { checkRateLimit } from "@/src/lib/ratelimit";
 import { ENV } from "@/src/config/env";
+import { PRODUCT_NAME } from "@/lib/product-identity";
 
 // Helper function to extract client IP
 function getClientIP(request: NextRequest): string {
@@ -26,7 +27,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    // Validate required fields
+    // Validate required fields (supports legacy solar and GLP simulation flow)
     const {
       name,
       email,
@@ -39,11 +40,26 @@ export async function POST(request: NextRequest) {
       npv25Year,
       co2OffsetPerYear,
       token,
+      vertical,
+      simulationInput,
+      simulationOutput,
+      costScenario,
+      consentTerms,
+      consentContact,
+      leadSource,
+      utmSource,
+      utmCampaign,
+      bookingStatus,
     } = body;
 
-    if (!name || !email || !address || !tenantSlug) {
+    if (!name || !email || !tenantSlug) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
+
+    const isGlp = (vertical ?? "solar") === "glp";
+    if (!isGlp && !address) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: "Missing required fields for solar lead" },
         { status: 400 },
       );
     }
@@ -53,8 +69,27 @@ export async function POST(request: NextRequest) {
       name,
       email,
       phone: body.phone || "",
-      address,
-      notes: body.notes || "",
+      address: address || "Not provided",
+      notes: (() => {
+        const glpMeta =
+          isGlp
+            ? {
+                vertical: "glp",
+                simulationInput: simulationInput || null,
+                simulationOutput: simulationOutput || null,
+                costScenario: costScenario || null,
+                consentTerms: !!consentTerms,
+                consentContact: !!consentContact,
+                leadSource: leadSource || "glp-simulator",
+                utmSource: utmSource || null,
+                utmCampaign: utmCampaign || null,
+                bookingStatus: bookingStatus || "not_booked",
+              }
+            : null;
+        const previous = body.notes ? String(body.notes) : "";
+        const packed = glpMeta ? `GLP_SIMULATION=${JSON.stringify(glpMeta)}` : "";
+        return [previous, packed].filter(Boolean).join("\n");
+      })(),
       tenantSlug,
       systemSizeKW,
       estimatedCost: netCostAfterITC, // Map new field to storage schema
@@ -63,6 +98,37 @@ export async function POST(request: NextRequest) {
       npv25Year,
       co2OffsetPerYear,
       token: token || "", // Add token for attribution
+      vertical: isGlp ? "glp" : "solar",
+      simulation_input: isGlp ? simulationInput || null : null,
+      simulation_output: isGlp ? simulationOutput || null : null,
+      simulation_version: isGlp ? "v1-simulator" : undefined,
+      recommended_path:
+        isGlp && simulationOutput && typeof simulationOutput.pathLabel === "string"
+          ? simulationOutput.pathLabel
+          : undefined,
+      estimated_timeline_weeks:
+        isGlp && simulationOutput && typeof simulationOutput.weeksToGoal === "number"
+          ? simulationOutput.weeksToGoal
+          : undefined,
+      price_range_low:
+        isGlp && costScenario && typeof costScenario.monthlyLow === "number"
+          ? costScenario.monthlyLow
+          : undefined,
+      price_range_high:
+        isGlp && costScenario && typeof costScenario.monthlyHigh === "number"
+          ? costScenario.monthlyHigh
+          : undefined,
+      budget_band:
+        isGlp && simulationInput && typeof simulationInput.budgetBand === "string"
+          ? simulationInput.budgetBand
+          : undefined,
+      consent_terms: !!consentTerms,
+      consent_contact: !!consentContact,
+      lead_capture_completed: true,
+      booking_status: bookingStatus || (isGlp ? "not_booked" : undefined),
+      lead_source: leadSource || undefined,
+      utm_source: utmSource || undefined,
+      utm_campaign: utmCampaign || undefined,
       createdAt: new Date().toISOString(),
     };
 
@@ -101,9 +167,9 @@ export async function POST(request: NextRequest) {
             body: JSON.stringify({
               from: fromEmail,
               to: [toEmail],
-              subject: `New solar lead: ${name}`,
-              html: `<p><strong>New lead from your solar tool</strong></p><p>Name: ${name}</p><p>Email: <a href="mailto:${email}">${email}</a></p><p>Address: ${address}</p><p><a href="${dashboardUrl}">View in dashboard</a></p>`,
-              text: `New lead: ${name}, ${email}, ${address}. View: ${dashboardUrl}`,
+              subject: isGlp ? `New GLP simulation lead: ${name}` : `New intake lead: ${name}`,
+              html: `<p><strong>New lead from ${PRODUCT_NAME}</strong></p><p>Name: ${name}</p><p>Email: <a href="mailto:${email}">${email}</a></p><p>Address: ${address || "Not provided"}</p><p><a href="${dashboardUrl}">View in dashboard</a></p>`,
+              text: `New lead: ${name}, ${email}, ${address || "Not provided"}. View: ${dashboardUrl}`,
             }),
           });
           if (res.ok) {

@@ -35,7 +35,7 @@ export default function MethodologyPage() {
             Methodology
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            How we calculate solar production, savings, and payback periods using industry-standard data sources.
+            How GLPConvert creates deterministic, compliance-safe recommendation outputs for educational intake and booking workflows.
           </p>
         </div>
 
@@ -45,39 +45,40 @@ export default function MethodologyPage() {
             
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Solar Production (NREL PVWatts v8)</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Deterministic Recommendation Logic</h3>
                 <p className="text-gray-600 mb-4">
-                  We use the National Renewable Energy Laboratory&apos;s PVWatts v8 calculator, the industry standard for solar production estimates. This tool accounts for:
+                  We use explicit rule definitions mapped to structured intake answers. This avoids black-box behavior and keeps recommendations auditable.
                 </p>
                 <ul className="list-disc list-inside text-gray-600 space-y-2">
-                  <li>Local weather patterns and historical irradiance data</li>
-                  <li>System orientation (tilt and azimuth angles)</li>
-                  <li>System capacity and efficiency losses</li>
-                  <li>Temperature coefficients and shading factors</li>
+                  <li>Question-by-question weighted logic with deterministic outputs</li>
+                  <li>Program recommendation, short rationale, and price signal format</li>
+                  <li>Urgency scoring for internal routing (not medical claims)</li>
+                  <li>Vertical-specific configs for GLP, TRT, and Pep modules</li>
                 </ul>
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Electricity Rates (EIA Data)</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Compliance-Safe Copy Rules</h3>
                 <p className="text-gray-600 mb-4">
-                  We source current electricity rates from the U.S. Energy Information Administration (EIA), updated monthly:
+                  The system is intentionally constrained to educational and booking language:
                 </p>
                 <ul className="list-disc list-inside text-gray-600 space-y-2">
-                  <li>State-level average residential electricity rates</li>
-                  <li>Time-of-use and tiered rate structures where applicable</li>
-                  <li>Historical rate trends and inflation adjustments</li>
+                  <li>&ldquo;Based on your answers, many patients explore programs like X&rdquo;</li>
+                  <li>&ldquo;A licensed provider will determine final eligibility&rdquo;</li>
+                  <li>&ldquo;Not medical advice&rdquo; on intake/result/footer surfaces</li>
+                  <li>No diagnosis, dosing, or guaranteed outcome language</li>
                 </ul>
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Geographic Data (Google Maps)</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Data Minimization</h3>
                 <p className="text-gray-600 mb-4">
-                  Property location and orientation data comes from Google Maps and Google Earth:
+                  v1 intake focuses on structured, non-free-text fields to reduce sensitive data exposure:
                 </p>
                 <ul className="list-disc list-inside text-gray-600 space-y-2">
-                  <li>Precise latitude and longitude coordinates</li>
-                  <li>Roof orientation and tilt angle estimation</li>
-                  <li>Local weather station proximity</li>
+                  <li>Avoid unnecessary health detail in free-text fields</li>
+                  <li>Capture only data needed for routing and booking</li>
+                  <li>Support GDPR export/delete and tenant controls</li>
                 </ul>
               </div>
             </div>
@@ -88,29 +89,28 @@ export default function MethodologyPage() {
             
             <div className="space-y-6">
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Annual Production</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Recommendation Output</h3>
                 <p className="text-gray-600">
-                  Monthly production is calculated using PVWatts v8, then summed for annual totals. We apply conservative efficiency factors and account for real-world performance degradation.
+                  The output includes recommended program, rationale, price signal (fixed / starts-at / range), and booking CTA guidance.
                 </p>
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Financial Calculations</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Pricing Signal Rules</h3>
                 <p className="text-gray-600 mb-4">
-                  All financial projections use current rates and conservative assumptions:
+                  Pricing display follows transparent rules:
                 </p>
                 <ul className="list-disc list-inside text-gray-600 space-y-2">
-                  <li>25-year system lifetime with 0.5% annual degradation</li>
-                  <li>2.5% annual electricity rate inflation</li>
-                  <li>Federal tax credit (30% for 2023-2032, then 26%)</li>
-                  <li>State and local incentives where applicable</li>
+                  <li>Use fixed only when truly fixed for that clinic/program</li>
+                  <li>Otherwise use starts-at or typical range labeling</li>
+                  <li>Always clarify that provider/clinic confirms final pricing and eligibility</li>
                 </ul>
               </div>
 
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Payback Period</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">Scope Boundaries</h3>
                 <p className="text-gray-600">
-                  Calculated as the point where cumulative savings equal initial investment, accounting for all incentives and financing options.
+                  GLPConvert is not an EMR, not telehealth infrastructure, and not prescribing software. It is a pre-consult conversion layer.
                 </p>
               </div>
             </div>
@@ -121,16 +121,16 @@ export default function MethodologyPage() {
             
             <div className="space-y-4">
               <p className="text-gray-600">
-                Our estimates are based on industry-standard models and publicly available data. Actual results may vary due to:
+                Recommendations are educational and booking-oriented. Real clinical suitability is determined only by a licensed provider.
               </p>
               <ul className="list-disc list-inside text-gray-600 space-y-2">
-                <li>Weather variations and climate change impacts</li>
-                <li>System installation quality and maintenance</li>
-                <li>Changes in electricity rates and policies</li>
-                <li>Roof condition and shading changes over time</li>
+                <li>Clinical history and medical evaluation not captured in pre-intake</li>
+                <li>Clinic-specific protocols and availability</li>
+                <li>Provider judgment and applicable regulations</li>
+                <li>Data supplied by the user during intake</li>
               </ul>
               <p className="text-gray-600 font-medium">
-                These estimates are for informational purposes only and do not constitute a binding quote or guarantee of performance.
+                This methodology is for informational software behavior only and does not constitute medical advice.
               </p>
             </div>
           </div>

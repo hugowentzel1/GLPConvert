@@ -10,6 +10,7 @@ import { Card } from '@/components/ui/Card';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
+import { SUPPORT_EMAIL } from '@/lib/product-identity';
 
 export default function SupportPage() {
   const b = useBrandTakeover();
@@ -44,7 +45,7 @@ export default function SupportPage() {
         // Fallback to mailto
         const subject = encodeURIComponent(formData.subject);
         const body = encodeURIComponent(`From: ${formData.email}\nPriority: ${formData.priority}\n\n${formData.message}`);
-        window.location.href = `mailto:support@getsunspire.com?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${subject}&body=${body}`;
         throw new Error('Failed to submit support ticket');
       }
       
@@ -72,8 +73,8 @@ export default function SupportPage() {
 
   const faqs = [
     {
-      question: "How accurate are the solar estimates?",
-      answer: "Our estimates use NREL PVWatts v8, EIA electricity rates, and local solar irradiance data. Accuracy is typically ±10-15%, comparable to professional site surveys."
+      question: "Does the platform provide medical advice?",
+      answer: "No. The platform supports educational intake and booking. A licensed provider determines final eligibility and treatment decisions."
     },
     {
       question: "How quickly can I get the tool live on my website?",
@@ -148,7 +149,7 @@ export default function SupportPage() {
                     href="mailto:support@getsunspire.com"
                     className="inline-block text-sm text-gray-500 hover:text-gray-600 font-medium"
                   >
-                    support@getsunspire.com
+                    {SUPPORT_EMAIL}
                   </a>
                 </div>
               </Card>
