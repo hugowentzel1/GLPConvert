@@ -1,10 +1,12 @@
 /**
  * GET /api/health — Single source of truth for "is everything up?"
- * Checks every API Sunspire depends on: Supabase, Stripe, NREL, EIA, Google Geocoding, Resend, Google Places (config).
- * Not checked here: Sentry (error reporting), Vercel (hosting limits). See /status page copy and TO-DO-LIST.
+ * GLPConvert (vertical glp/trt/pep): probes Supabase, Stripe (if keys), Resend (if key), optional Google Geocoding — **not** NREL/EIA (solar-only).
+ * Solar legacy vertical: also probes NREL/EIA when keys are set. Override: `HEALTH_PROBE_SOLAR=1`.
+ * Not checked here: Sentry, Vercel hosting limits.
  */
 import { NextResponse } from 'next/server';
 import { ENV } from '@/src/config/env';
+import { getDefaultVertical } from '@/lib/feature-flags';
 
 interface HealthCheck {
   service: string;
@@ -44,12 +46,26 @@ async function checkService(
 
 export async function GET() {
   const checks: HealthCheck[] = [];
-  const overallStatus: { ok: boolean; timestamp: string; version?: string; commit?: string; services: HealthCheck[] } = {
+  const vertical = getDefaultVertical();
+  const probeSolarApis =
+    process.env.HEALTH_PROBE_SOLAR === "1" || vertical === "solar_legacy";
+
+  const overallStatus: {
+    ok: boolean;
+    timestamp: string;
+    version?: string;
+    commit?: string;
+    services: HealthCheck[];
+    healthProfile?: string;
+    vertical?: string;
+  } = {
     ok: true,
     timestamp: new Date().toISOString(),
     version: process.env.npm_package_version || process.env.NEXT_PUBLIC_APP_VERSION || '0.0.0',
     commit: process.env.VERCEL_GIT_COMMIT_SHA || undefined,
     services: [],
+    healthProfile: probeSolarApis ? "full" : "glp",
+    vertical,
   };
 
   const supabaseCheck = await checkService('supabase', async () => {
@@ -73,7 +89,7 @@ export async function GET() {
     }
   }
 
-  if (ENV.NREL_API_KEY) {
+  if (probeSolarApis && ENV.NREL_API_KEY) {
     const nrelCheck = await checkService('nrel', async () => {
       const response = await fetch(
         `https://developer.nrel.gov/api/pvwatts/v8.json?api_key=${ENV.NREL_API_KEY}&lat=40.7128&lon=-74.0060&system_capacity=4&azimuth=180&tilt=20&array_type=1&module_type=0&losses=14`,
@@ -84,7 +100,7 @@ export async function GET() {
     checks.push(nrelCheck);
   }
 
-  if (ENV.EIA_API_KEY) {
+  if (probeSolarApis && ENV.EIA_API_KEY) {
     const eiaCheck = await checkService('eia', async () => {
       const response = await fetch(
         `https://api.eia.gov/v2/electricity/retail-sales/data/?api_key=${ENV.EIA_API_KEY}&frequency=monthly&data[0]=price&length=1`,

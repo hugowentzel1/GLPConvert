@@ -51,7 +51,7 @@ test.describe('Status page — synthetic monitoring display', () => {
 
     const buyerRow = section.locator('[data-testid="synthetic-buyer-row"]');
 
-    await expect(homeownerRow.locator('text=Homeowner flow')).toBeVisible();
+    await expect(homeownerRow.locator('text=Primary funnel')).toBeVisible();
     await expect(buyerRow.locator('text=Buyer checkout flow')).toBeVisible();
 
     const statusRegex = /^(PASS|FAIL|DEGRADED)$/;

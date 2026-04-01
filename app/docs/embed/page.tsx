@@ -38,7 +38,9 @@ export default function EmbedGuidePage() {
               Embed Guide
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Add to your website with one line of code
+              Point visitors to the GLP intake flow or embed it in your site (iframe). Production
+              host example: <code className="text-base">glp-convert.vercel.app</code> — use your own
+              custom domain when configured.
             </p>
           </div>
 
@@ -56,12 +58,18 @@ export default function EmbedGuidePage() {
                   </h3>
                   <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto">
                     <code>
-                      &lt;script
-                      src=&quot;https://your-domain.com/widget.js&quot;&gt;&lt;/script&gt;
+                      {`<iframe
+  title="GLP intake"
+  src="https://glp-convert.vercel.app/intake?company=YOURCLINIC&demo=1"
+  style="width:100%;min-height:720px;border:0"
+  loading="lazy"
+/>`}
                     </code>
                   </div>
                   <p className="text-sm text-gray-500 mt-2">
-                    Replace &quot;your-domain.com&quot; with your actual domain
+                    Replace host with your deployed GLPConvert URL; adjust <code>company</code> to
+                    the tenant handle. See <code>MASTER_TODO_GLPCONVERT.md</code> Phase <strong>R017</strong>{' '}
+                    for a tighter embed contract (height, postMessage).
                   </p>
                 </div>
 

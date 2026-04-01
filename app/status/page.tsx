@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { SUPPORT_EMAIL } from '@/lib/product-identity';
 
 interface HealthService {
   service: string;
@@ -144,13 +145,13 @@ export default function StatusPage() {
           <div className="rounded-xl border border-slate-200 bg-white px-6 py-4 mb-6" data-testid="synthetic-monitoring-section">
             <p className="text-lg font-semibold text-slate-900 mb-2">Synthetic monitoring</p>
             <p className="text-sm text-slate-500 mb-3">
-              Latest results from scheduled production flows (homeowner quote, buyer checkout). Updated by GitHub Actions.
+              Latest results from scheduled checks: primary GLP demo funnel (home + <code className="text-xs bg-slate-100 px-1 rounded">/intake</code>), buyer Stripe checkout. Updated by GitHub Actions.
             </p>
             {synthetic && (synthetic.homeowner || synthetic.buyer) ? (
               <div className="space-y-3">
                 {synthetic.homeowner && (
                   <div className="flex flex-wrap items-center justify-between gap-2 py-2 border-b border-slate-100 last:border-0" data-testid="synthetic-homeowner-row">
-                    <span className="text-sm font-medium text-slate-800">Homeowner flow</span>
+                    <span className="text-sm font-medium text-slate-800">Primary funnel</span>
                     <div className="flex items-center gap-2">
                       <span className={`text-sm font-semibold ${synthetic.homeowner.status === 'pass' ? 'text-emerald-600' : synthetic.homeowner.status === 'fail' ? 'text-red-600' : 'text-amber-600'}`}>
                         {synthetic.homeowner.status === 'pass' ? 'PASS' : synthetic.homeowner.status === 'fail' ? 'FAIL' : 'DEGRADED'}
@@ -361,13 +362,13 @@ export default function StatusPage() {
         <div className="rounded-xl border border-slate-200 bg-white px-6 py-4 mb-6" data-testid="synthetic-monitoring-section">
           <p className="text-lg font-semibold text-slate-900 mb-2">Synthetic monitoring</p>
           <p className="text-sm text-slate-500 mb-3">
-            Latest results from scheduled production flows (homeowner quote, buyer checkout). Updated by GitHub Actions.
+            Latest results from scheduled checks: primary GLP demo funnel (home + <code className="text-xs bg-slate-100 px-1 rounded">/intake</code>), buyer Stripe checkout. Updated by GitHub Actions.
           </p>
           {synthetic && (synthetic.homeowner || synthetic.buyer) ? (
             <div className="space-y-3">
               {synthetic.homeowner && (
                 <div className="flex flex-wrap items-center justify-between gap-2 py-2 border-b border-slate-100 last:border-0" data-testid="synthetic-homeowner-row">
-                  <span className="text-sm font-medium text-slate-800">Homeowner flow</span>
+                  <span className="text-sm font-medium text-slate-800">Primary funnel</span>
                   <div className="flex items-center gap-2">
                     <span
                       className={`text-sm font-semibold ${
@@ -448,18 +449,30 @@ export default function StatusPage() {
           )}
         </div>
 
-        {/* Streamlined: UptimeRobot, /status, Sentry — alerts to support@getsunspire.com */}
+        {/* UptimeRobot, /status, Sentry — ops alerts (see SUPPORT_EMAIL) */}
         <div className="rounded-xl border-2 border-slate-200 bg-white px-6 py-4 mb-8">
           <p className="text-sm font-semibold text-slate-800 mb-2">
-            Daily check: UptimeRobot, this page, Sentry — alerts to support@getsunspire.com
+            Daily check: UptimeRobot, this page, Sentry — alerts to {SUPPORT_EMAIL}
           </p>
           <p className="text-sm text-slate-600 mb-2">
             <code className="text-xs bg-slate-100 px-1 rounded">/api/health</code> probes every API (Supabase, Stripe, NREL, EIA, Google Geocoding/Places, Resend, Vercel KV, USGS 3DEP). See <code className="text-xs bg-slate-100 px-1 rounded">docs/API-HEALTH-COVERAGE.md</code>.
           </p>
           <ul className="text-sm text-slate-600 list-disc list-inside space-y-1">
-            <li><strong>UptimeRobot</strong> — Monitor <code className="text-xs bg-slate-100 px-1 rounded">GET /api/health</code>. When status is not 200, alert <a href="mailto:support@getsunspire.com" className="text-blue-600 hover:underline">support@getsunspire.com</a>.</li>
+            <li>
+              <strong>UptimeRobot</strong> — Monitor <code className="text-xs bg-slate-100 px-1 rounded">GET /api/health</code>. When status is not 200, alert{' '}
+              <a href={`mailto:${SUPPORT_EMAIL}`} className="text-blue-600 hover:underline">
+                {SUPPORT_EMAIL}
+              </a>
+              .
+            </li>
             <li><strong>This page</strong> — Open <code className="text-xs bg-slate-100 px-1 rounded">/status</code> to see each service and version.</li>
-            <li><strong>Sentry</strong> — Set project alerts to <a href="mailto:support@getsunspire.com" className="text-blue-600 hover:underline">support@getsunspire.com</a> (Settings → Alerts).</li>
+            <li>
+              <strong>Sentry</strong> — Set project alerts to{' '}
+              <a href={`mailto:${SUPPORT_EMAIL}`} className="text-blue-600 hover:underline">
+                {SUPPORT_EMAIL}
+              </a>{' '}
+              (Settings → Alerts).
+            </li>
           </ul>
         </div>
 

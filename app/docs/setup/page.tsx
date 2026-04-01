@@ -41,12 +41,47 @@ export default function SetupGuidePage() {
 
           <div className="prose prose-lg max-w-none">
             <p className="text-gray-600 mb-6">
-              <strong>Last updated:</strong> September 2025
+              <strong>Last updated:</strong> March 2026 · GLPConvert (GLP-1 intake / simulator)
             </p>
 
             <p className="text-gray-600 mb-6">
-              Get your branded solar quote tool up and running in 24 hours
+              White-label conversion layer: branded simulator and lead capture for med spa,
+              telehealth, and clinic sites. Your logo and colors apply; the flow stays fast and
+              mobile-first so it fits real websites and cold-email demo links.
             </p>
+
+            <section className="mb-8 rounded-2xl border border-amber-200 bg-amber-50/80 p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-3">
+                Environment variables (developers)
+              </h2>
+              <p className="text-gray-700 text-sm mb-3">
+                <strong>Never</strong> paste production secrets on this public page. Use{' '}
+                <strong>Vercel → Project → Settings → Environment Variables</strong> and a
+                local <code className="rounded bg-white px-1">.env.local</code> file (gitignored).
+                Full key list and paste order: see repo file{' '}
+                <code className="rounded bg-white px-1">docs/ENV_VERCEL_AND_LOCAL.md</code>.
+              </p>
+              <p className="text-gray-700 text-sm mb-2 font-semibold">Names you will set:</p>
+              <ul className="list-disc pl-5 text-sm text-gray-700 space-y-1">
+                <li>
+                  <code>NEXT_PUBLIC_APP_URL</code>, <code>NEXT_PUBLIC_VERTICAL</code>,{' '}
+                  <code>NEXT_PUBLIC_BRAND_NAME</code>
+                </li>
+                <li>
+                  <code>JWT_SECRET</code>, <code>ADMIN_TOKEN</code>
+                </li>
+                <li>
+                  <code>SUPABASE_URL</code>, <code>SUPABASE_SERVICE_ROLE_KEY</code>
+                </li>
+                <li>
+                  Stripe: <code>STRIPE_SECRET_KEY</code>, <code>NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY</code>,{' '}
+                  prices, <code>STRIPE_WEBHOOK_SECRET</code>
+                </li>
+                <li>
+                  Optional: <code>RESEND_API_KEY</code>, analytics pixels, Sentry DSNs
+                </li>
+              </ul>
+            </section>
 
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">

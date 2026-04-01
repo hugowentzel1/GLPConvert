@@ -1,6 +1,10 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const baseURL = process.env.SYNTHETIC_APP_URL || process.env.SYNTHETIC_BASE_URL || process.env.BASE_URL || 'https://sunspire-web-app.vercel.app';
+const baseURL =
+  process.env.SYNTHETIC_APP_URL ||
+  process.env.SYNTHETIC_BASE_URL ||
+  process.env.BASE_URL ||
+  'https://glp-convert.vercel.app';
 
 export default defineConfig({
   testDir: './tests/synthetics',

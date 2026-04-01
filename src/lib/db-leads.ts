@@ -174,27 +174,59 @@ export async function findLeadsByEmail(email: string): Promise<Lead[]> {
   return (data ?? []).map((r) => rowToLead(r as LeadRow));
 }
 
-/** List leads for a tenant by handle (for GET /api/leads). Returns shape { id, name, email, address, phone, notes, created }. */
+/** List leads for a tenant by handle (for GET /api/leads). */
 export async function listLeadsForTenant(companyHandle: string): Promise<
-  { id: string; name: string; email: string; address: string; phone: string; notes: string; created: string }[]
+  {
+    id: string;
+    name: string;
+    email: string;
+    address: string;
+    phone: string;
+    notes: string;
+    created: string;
+    bookingStatus: string;
+    recommendedPath: string;
+    budgetBand: string;
+    vertical: string;
+  }[]
 > {
   const tenant = await findTenantByHandle(companyHandle);
   if (!tenant?.id) return [];
   const { data, error } = await getSupabase()
     .from("leads")
-    .select("id, name, email, address, phone, notes, created_at")
+    .select(
+      "id, name, email, address, phone, notes, created_at, booking_status, recommended_path, budget_band, vertical",
+    )
     .eq("tenant_id", tenant.id)
     .order("created_at", { ascending: false });
   if (error) throw error;
-  return (data ?? []).map((r: { id: string; name?: string | null; email: string; address?: string | null; phone?: string | null; notes?: string | null; created_at?: string | null }) => ({
-    id: r.id,
-    name: r.name ?? "",
-    email: r.email,
-    address: r.address ?? "",
-    phone: r.phone ?? "",
-    notes: r.notes ?? "",
-    created: r.created_at ?? "",
-  }));
+  return (data ?? []).map(
+    (r: {
+      id: string;
+      name?: string | null;
+      email: string;
+      address?: string | null;
+      phone?: string | null;
+      notes?: string | null;
+      created_at?: string | null;
+      booking_status?: string | null;
+      recommended_path?: string | null;
+      budget_band?: string | null;
+      vertical?: string | null;
+    }) => ({
+      id: r.id,
+      name: r.name ?? "",
+      email: r.email,
+      address: r.address ?? "",
+      phone: r.phone ?? "",
+      notes: r.notes ?? "",
+      created: r.created_at ?? "",
+      bookingStatus: r.booking_status ?? "—",
+      recommendedPath: r.recommended_path ?? "—",
+      budgetBand: r.budget_band ?? "—",
+      vertical: r.vertical ?? "—",
+    }),
+  );
 }
 
 /** Last lead for tenant (for test/last-lead and server leads). */

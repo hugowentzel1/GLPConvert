@@ -12,6 +12,8 @@ const createTenantSchema = z.object({
   brandColors: z.string().optional(),
   logoURL: z.string().url().optional(),
   domainUrl: z.string().url().optional(),
+  /** Patient scheduling link (Calendly, etc.) — stored in CRM Keys JSON as booking_url */
+  bookingUrl: z.string().url().optional(),
 });
 
 async function handleCreateTenant(req: NextRequest): Promise<NextResponse> {
@@ -28,7 +30,7 @@ async function handleCreateTenant(req: NextRequest): Promise<NextResponse> {
     const body = await req.json();
     const validatedData = createTenantSchema.parse(body);
 
-    const { companyHandle, plan, brandColors, logoURL, domainUrl } =
+    const { companyHandle, plan, brandColors, logoURL, domainUrl, bookingUrl } =
       validatedData;
 
     logger.info("Admin tenant creation request:", {
@@ -53,6 +55,11 @@ async function handleCreateTenant(req: NextRequest): Promise<NextResponse> {
       captureUrl = `${protocol}://${host}/v1/ingest/lead`;
     }
 
+    const crmKeys =
+      bookingUrl && /^https:\/\//i.test(bookingUrl)
+        ? JSON.stringify({ booking_url: bookingUrl })
+        : undefined;
+
     // Prepare tenant data
     const tenantData = {
       "Company Handle": companyHandle,
@@ -61,6 +68,7 @@ async function handleCreateTenant(req: NextRequest): Promise<NextResponse> {
       "Logo URL": logoURL,
       "API Key": apiKey,
       "Capture URL": captureUrl,
+      ...(crmKeys ? { "CRM Keys": crmKeys } : {}),
     };
 
     // Create/update tenant

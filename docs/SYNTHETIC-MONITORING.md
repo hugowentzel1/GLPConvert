@@ -1,21 +1,19 @@
-# Synthetic monitoring
+# Synthetic monitoring (GLPConvert)
 
-Production-safe Playwright tests that run on a schedule and surface results on the Sunspire status page.
+Production-safe Playwright tests that run on a schedule and POST results to **`/api/synthetic-results`**, which **`/status`** displays (same pattern as the legacy Sunspire app, URLs and primary funnel updated for GLPConvert).
 
 ## What the two tests cover
 
-1. **Homeowner production flow** (`tests/synthetics/homeowner-production-flow.spec.ts`)
-   - Opens the configured production homeowner/demo URL.
-   - Confirms page loads and critical UI (solar/quote copy) renders.
-   - Goes to the report page with a safe test address (env-configurable).
-   - Verifies report page and core results (NREL/PVWatts, production, CTA).
-   - Asserts no fatal error state.
+1. **Primary funnel** (`tests/synthetics/homeowner-production-flow.spec.ts` — npm script still named `test:synthetic:homeowner`)
+   - Opens production **`/?company=SynthTest&demo=1`** (branded GLP demo home).
+   - Asserts GLP/simulator/branded copy loads.
+   - Opens **`/intake?company=SynthTest&demo=1`** and asserts simulator/intake copy (no legacy solar `/report` requirement).
 
 2. **Buyer production flow** (`tests/synthetics/buyer-production-flow.spec.ts`)
-   - Opens the configured production buyer/demo URL.
+   - Opens **`/?company=SynthBuyer&demo=1`**.
    - Confirms demo/buyer UI and branding.
    - Clicks the main upgrade/checkout CTA.
-   - Intercepts the create-checkout-session API and verifies it returns a Stripe checkout URL.
+   - Intercepts **`/api/stripe/create-checkout-session`** and verifies it returns a Stripe checkout URL.
    - **Does not** follow the redirect or complete a real payment.
 
 ## Where they live
@@ -27,35 +25,30 @@ Production-safe Playwright tests that run on a schedule and surface results on t
 - Status UI: `app/status/page.tsx` (Synthetic monitoring section)
 - Post script: `scripts/post-synthetic-results.mjs`
 
-## Post–Step 42 verification (main / production)
+## Post-deploy verification (production)
 
-- **Status section present:** `SYNTHETIC_APP_URL=https://sunspire-web-app.vercel.app npm run test:synthetic:status` — baseline test passes; row-level tests run when synthetic JSON has been POSTed to `/api/synthetic-results` (e.g. after GitHub Actions posts results).
-- **Full flows:** `SYNTHETIC_BASE_URL=https://sunspire-web-app.vercel.app npm run test:synthetic` (optional; longer).
+- **Status section present:** `SYNTHETIC_APP_URL=https://glp-convert.vercel.app npm run test:synthetic:status` — baseline test passes; row-level tests run when synthetic JSON has been POSTed to `/api/synthetic-results` (e.g. after GitHub Actions posts results).
+- **Full flows:** `SYNTHETIC_BASE_URL=https://glp-convert.vercel.app npm run test:synthetic` (optional; longer).
 
 ## How to run locally
 
-- **Both production flows:** `npm run test:synthetic` (runs homeowner + buyer; status-page tests skip when the app has no synthetic section, e.g. production from main).
-- **Homeowner only:** `npm run test:synthetic:homeowner`
+- **Both production flows:** `npm run test:synthetic` (primary funnel + buyer).
+- **Primary funnel only:** `npm run test:synthetic:homeowner`
 - **Buyer only:** `npm run test:synthetic:buyer`
-- **Status page display (after posting to same app):** `SYNTHETIC_APP_URL=http://localhost:3000 npm run test:synthetic:status` — verifies `/status` shows the synthetic section and, when data exists, homeowner/buyer rows with PASS/FAIL and format. Includes a visual snapshot of the section (baseline: `tests/synthetics/status-page-synthetic-display.spec.ts-snapshots/`).
+- **Status page display (after posting to same app):** `SYNTHETIC_APP_URL=http://localhost:3000 npm run test:synthetic:status` — verifies `/status` shows the synthetic section and, when data exists, **Primary funnel** + buyer rows with PASS/FAIL and format. Includes a visual snapshot of the section (baseline: `tests/synthetics/status-page-synthetic-display.spec.ts-snapshots/`).
 
-Set base URL (defaults to production):
-
-```bash
-SYNTHETIC_BASE_URL=https://sunspire-web-app.vercel.app npm run test:synthetic:homeowner
-```
-
-Optional test address for homeowner flow:
+Default production base URL in repo config is **`https://glp-convert.vercel.app`**. Override anytime:
 
 ```bash
-SYNTHETIC_TEST_ADDRESS="123 Main St, Phoenix, AZ 85004" SYNTHETIC_TEST_LAT=33.45 SYNTHETIC_TEST_LNG=-112.07 SYNTHETIC_TEST_STATE=AZ npm run test:synthetic:homeowner
+SYNTHETIC_BASE_URL=https://glp-convert.vercel.app npm run test:synthetic:homeowner
 ```
 
 ## How they run in GitHub Actions
 
 - **Schedule:** Every 30 minutes (`*/30 * * * *`).
 - **Manual:** Workflow dispatch from the Actions tab (“Synthetic monitoring”).
-- Jobs: One job runs homeowner synthetic, then buyer synthetic, then posts results to `/api/synthetic-results`.
+- **Defaults:** Tests hit and POST results to **`https://glp-convert.vercel.app`** unless you set repo variables **`SYNTHETIC_BASE_URL`** and optionally **`SYNTHETIC_APP_URL`** (when POST target should differ from the URL under test, e.g. preview).
+- Jobs: One job runs primary funnel synthetic, then buyer synthetic, then posts results to `/api/synthetic-results`.
 - On failure, artifacts (test-results/, playwright-report/) are uploaded.
 - The post step runs even when a test fails, so the status page shows FAIL and last run time.
 
@@ -71,14 +64,14 @@ SYNTHETIC_TEST_ADDRESS="123 Main St, Phoenix, AZ 85004" SYNTHETIC_TEST_LAT=33.45
 
 ## Going live
 
-- The synthetic API (`/api/synthetic-results`) and the status page’s Synthetic monitoring section live on the **supabase-migration** branch. Production (e.g. `sunspire-web-app.vercel.app`) will return 404 for that route until this branch is merged and deployed.
-- After merge and deploy: the workflow’s default `SYNTHETIC_APP_URL` (same as `SYNTHETIC_BASE_URL`) will POST to production, and `/status` will show homeowner/buyer pass/fail and last run.
+- Deploy **`/api/synthetic-results`** and **`/status`** on Vercel (GLPConvert production: **`https://glp-convert.vercel.app`**).
+- Enable the **Synthetic monitoring** workflow on the **GLPConvert** GitHub repo (not the old Sunspire repo) so scheduled runs POST into this app.
 
 ## Checking visually on live while on this branch (no merge yet)
 
 You **can** check the status page and synthetic results on live without merging to main:
 
-1. **Push this branch** (e.g. `supabase-migration`) so Vercel builds a **preview deployment** (e.g. `https://sunspire-web-app-git-supabase-migration-<team>.vercel.app` or similar; check the Vercel dashboard or the PR “Deployment” link).
+1. **Push your branch** so Vercel builds a **preview deployment** (URL shape like `https://glp-convert-git-<branch>-<team>.vercel.app`; confirm in the Vercel dashboard or the PR “Deployment” link).
 2. **Open the preview URL** in the browser and go to `/status` — you should see the full status page including the “Synthetic monitoring” section (it may show “No recent synthetic data” until the workflow has posted).
 3. **Run the synthetic workflow** (or run synthetics locally and post to the preview):
    - In GitHub Actions: trigger “Synthetic monitoring” and set the workflow variable `SYNTHETIC_BASE_URL` / `SYNTHETIC_APP_URL` to your **preview URL** (so tests hit the preview and results are posted to the preview). Then open `https://<preview-url>/status` to see PASS/FAIL and last run.

@@ -20,7 +20,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Local env files
+# Local env files (never commit secrets). Template to copy: env.local.template → .env.local
 .env*.local
 .env
 .env.development.local

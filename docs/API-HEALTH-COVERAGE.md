@@ -1,5 +1,9 @@
 # API routes and health coverage
 
+## GLPConvert / vertical `glp` (and `trt` / `pep`)
+
+`GET /api/health` uses **`healthProfile: "glp"`** when `NEXT_PUBLIC_VERTICAL` is **not** `solar_legacy`: it **does not** probe **NREL** or **EIA** (solar quote stack). Those probes run only for **`solar_legacy`** or if **`HEALTH_PROBE_SOLAR=1`**. Response JSON includes `healthProfile` and `vertical`.
+
 ## All API routes (app/api)
 
 | Route | Purpose | Probed by /api/health? |

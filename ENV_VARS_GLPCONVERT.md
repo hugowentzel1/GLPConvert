@@ -1,5 +1,10 @@
 # Environment variables — GLPConvert
 
+**Step-by-step paste guide (Vercel + `.env.local`):** `docs/ENV_VERCEL_AND_LOCAL.md`  
+**Default production URL:** `docs/VERCEL_CANONICAL_URL.md` (**`https://glp-convert.vercel.app`** for current Vercel slug)  
+**All APIs / integrations:** `docs/GLPCONVERT_APIS_AND_INTEGRATIONS.md`  
+**Local template:** `env.local.template` → copy to `.env.local`
+
 Grouped reference. **Authoritative placeholders:** `.env.example`.
 
 ## App

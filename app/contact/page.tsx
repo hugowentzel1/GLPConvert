@@ -4,7 +4,7 @@ import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import { useSearchParams } from 'next/navigation';
 import Footer from '@/components/Footer';
 import PaidFooter from '@/components/PaidFooter';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useIsDemo } from '@/src/lib/isDemo';
 
 export default function ContactPage() {
@@ -18,6 +18,12 @@ export default function ContactPage() {
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    const subject = searchParams?.get('subject');
+    if (!subject) return;
+    setFormData((f) => ({ ...f, message: decodeURIComponent(subject) }));
+  }, [searchParams]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

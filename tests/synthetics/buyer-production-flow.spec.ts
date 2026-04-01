@@ -5,14 +5,17 @@
  */
 import { test, expect } from '@playwright/test';
 
-const BASE = process.env.SYNTHETIC_BASE_URL || process.env.BASE_URL || 'https://sunspire-web-app.vercel.app';
+const BASE =
+  process.env.SYNTHETIC_BASE_URL || process.env.BASE_URL || 'https://glp-convert.vercel.app';
 
 test.describe('Buyer production flow (synthetic)', () => {
   test('buyer flow: page load → checkout CTA → session created, no payment', async ({ page }) => {
     const buyerUrl = `${BASE}/?company=SynthBuyer&demo=1`;
     await page.goto(buyerUrl, { waitUntil: 'domcontentloaded', timeout: 30000 });
     await expect(page).toHaveURL(/\?.*company=SynthBuyer|demo=1/);
-    await expect(page.locator('body')).toContainText(/solar|quote|Solar|Launch|branded|demo/i, { timeout: 15000 });
+    await expect(page.locator('body')).toContainText(/solar|quote|Solar|Launch|branded|demo|GLP|program|Convert/i, {
+      timeout: 15000,
+    });
 
     const body = await page.locator('body').innerText();
     expect(body.length).toBeGreaterThan(200);

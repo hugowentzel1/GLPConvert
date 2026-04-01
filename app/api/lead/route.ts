@@ -49,7 +49,11 @@ export async function POST(request: NextRequest) {
       leadSource,
       utmSource,
       utmCampaign,
+      utmMedium,
+      utmTerm,
+      utmContent,
       bookingStatus,
+      readiness,
     } = body;
 
     if (!name || !email || !tenantSlug) {
@@ -83,7 +87,11 @@ export async function POST(request: NextRequest) {
                 leadSource: leadSource || "glp-simulator",
                 utmSource: utmSource || null,
                 utmCampaign: utmCampaign || null,
+                utmMedium: utmMedium || null,
+                utmTerm: utmTerm || null,
+                utmContent: utmContent || null,
                 bookingStatus: bookingStatus || "not_booked",
+                readiness: readiness || null,
               }
             : null;
         const previous = body.notes ? String(body.notes) : "";

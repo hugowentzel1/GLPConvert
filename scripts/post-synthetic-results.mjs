@@ -4,7 +4,11 @@
  * Call from CI after running synthetic tests. No token required; app rate-limits POSTs.
  * Usage: SYNTHETIC_HOMEOWNER_STATUS=success SYNTHETIC_BUYER_STATUS=success SYNTHETIC_APP_URL=https://... node scripts/post-synthetic-results.mjs
  */
-const appUrl = process.env.SYNTHETIC_APP_URL || process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}` || process.env.BASE_URL || 'https://sunspire-web-app.vercel.app';
+const appUrl =
+  process.env.SYNTHETIC_APP_URL ||
+  (process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`) ||
+  process.env.BASE_URL ||
+  'https://glp-convert.vercel.app';
 const token = process.env.SYNTHETIC_REPORT_TOKEN;
 const homeownerOutcome = (process.env.SYNTHETIC_HOMEOWNER_STATUS || 'unknown').toLowerCase();
 const buyerOutcome = (process.env.SYNTHETIC_BUYER_STATUS || 'unknown').toLowerCase();
@@ -18,10 +22,15 @@ const mapStatus = (o) => (o === 'success' ? 'pass' : o === 'failure' ? 'fail' : 
 
 const payload = {
   homeowner: {
-    testName: 'Homeowner production flow',
+    testName: 'Primary funnel (demo home + intake)',
     status: mapStatus(homeownerOutcome),
     lastRun: now,
-    summary: homeownerOutcome === 'success' ? 'Quote flow passed' : homeownerOutcome === 'failure' ? 'Quote flow failed' : 'Not run or unknown',
+    summary:
+      homeownerOutcome === 'success'
+        ? 'GLP demo home + intake passed'
+        : homeownerOutcome === 'failure'
+          ? 'Primary funnel failed'
+          : 'Not run or unknown',
     failureReason: homeownerOutcome === 'failure' ? 'See workflow artifacts' : undefined,
     artifactsUrl: runUrl,
     environment: 'production',

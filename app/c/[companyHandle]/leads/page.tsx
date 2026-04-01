@@ -11,6 +11,10 @@ interface Lead {
   phone?: string;
   notes?: string;
   created: string;
+  bookingStatus?: string;
+  recommendedPath?: string;
+  budgetBand?: string;
+  vertical?: string;
 }
 
 export default function LeadsPage() {
@@ -82,10 +86,10 @@ export default function LeadsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow">
           <div className="px-6 py-4 border-b border-gray-200">
-            <h1 className="text-2xl font-bold text-gray-900">
-              Leads Dashboard
-            </h1>
-            <p className="text-gray-600 mt-1">Company: {companyHandle}</p>
+            <h1 className="text-2xl font-bold text-gray-900">Leads</h1>
+            <p className="text-gray-600 mt-1">
+              {companyHandle} — booking status & path show GLP intake quality signals.
+            </p>
           </div>
 
           <div className="px-6 py-4">
@@ -115,6 +119,15 @@ export default function LeadsPage() {
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Phone
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Booking
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Path
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Budget
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Notes
@@ -152,6 +165,15 @@ export default function LeadsPage() {
                           ) : (
                             <span className="text-gray-400">—</span>
                           )}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-700 font-medium">
+                          {lead.bookingStatus || "—"}
+                        </td>
+                        <td className="px-6 py-4 text-xs text-gray-600 max-w-[140px] truncate" title={lead.recommendedPath}>
+                          {lead.recommendedPath || "—"}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-600">
+                          {lead.budgetBand || "—"}
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-500 max-w-xs">
                           {lead.notes ? (

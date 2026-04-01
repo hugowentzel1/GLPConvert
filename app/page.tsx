@@ -39,7 +39,12 @@ const AddressAutocomplete = dynamic(() => import('@/components/AddressAutocomple
 
 function HomeContent() {
   console.log('[route] render start');
-  
+
+  const showLegacySolar =
+    process.env.NEXT_PUBLIC_VERTICAL === "solar_legacy" ||
+    process.env.NEXT_PUBLIC_VERTICAL === "solar" ||
+    process.env.NEXT_PUBLIC_ENABLE_SOLAR_ESTIMATE === "1";
+
   const [address, setAddress] = useState('');
   const [selectedPlace, setSelectedPlace] = useState<PlaceResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -385,22 +390,24 @@ function HomeContent() {
             <div className="space-y-6">
               
               <h1 className="text-6xl md:text-7xl font-black text-gray-900 leading-tight" style={{ fontSize: '3rem !important', fontWeight: '900 !important' }}>
-                Give prospects clarity first: branded GLP-1 simulation before lead capture.
+                Turn GLP traffic into booked, higher-intent consults.
               </h1>
               
               <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                {PRODUCT_NAME} is a white-label conversion layer for medical weight-loss programs: structured leads, program suggestions, and handoff to your calendar — not medical advice.
+                {PRODUCT_NAME} is a white-label <strong className="font-semibold text-gray-800">pre-consult conversion layer</strong> for telehealth, med spas, and weight-loss programs: clarity, expectations, consult readiness, then handoff to <em>your</em> booking flow — not medical advice.
               </p>
               <div className="pt-4">
                 <a
                   href={intakeHref}
                   className="inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 transition-colors"
                 >
-                  Try the GLP transformation simulator
+                  Try the branded intake experience
                 </a>
-                <span className="block text-sm text-gray-500 mt-2">
-                  Legacy address → report sample still available below for comparison.
-                </span>
+                {showLegacySolar ? (
+                  <span className="block text-sm text-gray-500 mt-2">
+                    Legacy solar address → report sample still available below for comparison.
+                  </span>
+                ) : null}
               </div>
             </div>
           </div>
@@ -410,83 +417,90 @@ function HomeContent() {
             <TrustRow />
           </div>
 
-          {/* Address Input Section - Exact match to c548b88 */}
-          <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200/30 p-8 md:p-12 max-w-3xl mx-auto section-spacing slide-up-fade">
-            <div className="space-y-6">
-              <div className="text-center space-y-4">
-                <h2 className="text-2xl font-bold text-gray-900">Legacy flow preview</h2>
-                <p className="text-gray-600">This address-first flow is legacy. The new default is simulator-first with educational timeline + economics before contact capture.</p>
-              </div>
-
+          {showLegacySolar ? (
+            <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200/30 p-8 md:p-12 max-w-3xl mx-auto section-spacing slide-up-fade">
               <div className="space-y-6">
-                {/* Address Input - Show for both demo and regular modes */}
-                <div className="w-full max-w-2xl mx-auto space-y-1.5">
-                  <AddressAutocomplete 
-                    value={address}
-                    onChange={setAddress}
-                    onSelect={handleAddressSelect}
-                    data-testid="demo-address-input"
-                    placeholder={b.city && b.city !== 'undefined' ? `Start typing an address in ${b.city}...` : "Start typing your property address..."}
-                    className="w-full"
-                  />
-                  {isDemo && (
-                    <div className="flex justify-end">
-                      <span className="text-[11px] text-gray-400">Powered by Google</span>
-                    </div>
-                  )}
+                <div className="text-center space-y-4">
+                  <h2 className="text-2xl font-bold text-gray-900">Legacy solar flow (optional)</h2>
+                  <p className="text-gray-600">
+                    Address-first sample report — only when solar legacy mode is enabled. Default GLP product is the intake simulator above.
+                  </p>
                 </div>
 
-                {/* Generate Button - Now below the search bar */}
-                <button 
-                  onClick={address?.trim() ? () => handleGenerateEstimate() : (b.enabled ? handleLaunchClick : () => handleGenerateEstimate())}
-                  disabled={!address?.trim() || isLoading} 
-                  data-cta-button
-                  className={`w-full inline-cta ${
-                    !address?.trim() || isLoading 
-                      ? 'btn-disabled' 
-                      : 'btn-cta'
-                  }`} 
-                >
-                  {isLoading ? (
-                    <div className="flex items-center justify-center space-x-4">
-                      <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span>Loading…</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-center space-x-4">
-                      <span>
-                        {b.enabled 
-                          ? `Continue to sample report`
-                          : "Continue to sample report"
-                        }
-                      </span>
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
-                    </div>
-                  )}
-                </button>
-                
-                {isDemo && (
-                  <div style={{ marginTop: '30.5px' }} className="h-12 md:h-14 flex flex-col items-center justify-end space-y-1">
-                    {remaining > 0 ? (
-                      <>
-                        <p className="text-center text-sm text-gray-500">
-                          Preview: {remaining} run{remaining===1?"":"s"} left.
-                        </p>
-                        <p className="text-center text-sm text-gray-500">
-                          Expires in {countdown.days}d {countdown.hours}h {countdown.minutes}m {countdown.seconds}s
-                        </p>
-                      </>
-                    ) : (
-                      <div className="text-center text-sm text-red-600 font-semibold space-y-1">
-                        <p>🚫 Demo limit reached.</p>
-                        <p>Launch to get full access</p>
+                <div className="space-y-6">
+                  <div className="w-full max-w-2xl mx-auto space-y-1.5">
+                    <AddressAutocomplete
+                      value={address}
+                      onChange={setAddress}
+                      onSelect={handleAddressSelect}
+                      data-testid="demo-address-input"
+                      placeholder={
+                        b.city && b.city !== "undefined"
+                          ? `Start typing an address in ${b.city}...`
+                          : "Start typing your property address..."
+                      }
+                      className="w-full"
+                    />
+                    {isDemo && (
+                      <div className="flex justify-end">
+                        <span className="text-[11px] text-gray-400">Powered by Google</span>
                       </div>
                     )}
                   </div>
-                )}
+
+                  <button
+                    onClick={
+                      address?.trim()
+                        ? () => handleGenerateEstimate()
+                        : b.enabled
+                          ? handleLaunchClick
+                          : () => handleGenerateEstimate()
+                    }
+                    disabled={!address?.trim() || isLoading}
+                    data-cta-button
+                    className={`w-full inline-cta ${!address?.trim() || isLoading ? "btn-disabled" : "btn-cta"}`}
+                  >
+                    {isLoading ? (
+                      <div className="flex items-center justify-center space-x-4">
+                        <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span>Loading…</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center space-x-4">
+                        <span>{b.enabled ? `Continue to sample report` : "Continue to sample report"}</span>
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </div>
+                    )}
+                  </button>
+
+                  {isDemo && (
+                    <div
+                      style={{ marginTop: "30.5px" }}
+                      className="h-12 md:h-14 flex flex-col items-center justify-end space-y-1"
+                    >
+                      {remaining > 0 ? (
+                        <>
+                          <p className="text-center text-sm text-gray-500">
+                            Preview: {remaining} run{remaining === 1 ? "" : "s"} left.
+                          </p>
+                          <p className="text-center text-sm text-gray-500">
+                            Expires in {countdown.days}d {countdown.hours}h {countdown.minutes}m {countdown.seconds}s
+                          </p>
+                        </>
+                      ) : (
+                        <div className="text-center text-sm text-red-600 font-semibold space-y-1">
+                          <p>🚫 Demo limit reached.</p>
+                          <p>Launch to get full access</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          ) : null}
 
           {/* Quotes - Social Proof Grid */}
           <Testimonials />

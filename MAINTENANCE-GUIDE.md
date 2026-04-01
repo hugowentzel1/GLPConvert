@@ -1,60 +1,82 @@
-🔧 Complete Maintenance Guide for Sunspire
-Production-Ready System - January 2026
+# GLPConvert — maintenance guide
+
+**Product:** GLPConvert · **Operator:** Wellspire LLC (see legal pages for registered address).  
+**Production URL (default):** `https://glp-convert.vercel.app` — when you add a custom domain, use that URL in monitors and curls below.  
+**Ops inbox:** Point **UptimeRobot**, **Sentry**, and your own reminders at an address you actually read (**`support@glpconvert.com`** is the default in app copy; forward or replace as needed).
+
+This file is the **checklist for ongoing ops**: what to verify, how often, and where to click. Synthetic monitoring details: **`docs/SYNTHETIC-MONITORING.md`**. Full health → route mapping: **`docs/API-HEALTH-COVERAGE.md`**. Failure playbooks: **`docs/RUNBOOK-FAILURES.md`**.
 
 ---
-WHAT YOU HAVE SET UP (and how it covers all APIs)
+
+## What to check (at a glance)
+
+| When | What | How |
+|------|------|-----|
+| **Always on (automated)** | Site + integrations reachable | **UptimeRobot** (or Better Stack, Pingdom, etc.): HTTP monitor on **`GET /api/health`** → alert when status ≠ **200**. |
+| **Always on (automated)** | Production errors | **Sentry** → **Alerts** → email (or Slack) on new issues / spikes. Requires **`SENTRY_DSN`** + **`NEXT_PUBLIC_SENTRY_DSN`** in Vercel. |
+| **Every 30 minutes (automated)** | Primary funnel + buyer checkout (Playwright) | **GitHub Actions** → workflow **Synthetic monitoring** on **this repo** (not the old Sunspire repo). Results appear on **`/status`** under *Synthetic monitoring*. Optional: notify on failure via GitHub **Settings → Notifications → Actions** (ignore the Sunspire repo if you do not want those emails). |
+| **Daily (~5 min)** | Human sanity pass *if nothing pinged you* | Open **`/status`**: service rows from **`/api/health`**, synthetic PASS/FAIL, config flags. Glance **Sentry** unresolved issues. |
+| **Weekly (~15 min)** | Admin, DLQ, Stripe | **`/admin/dashboard`**, DLQ replay if needed, Stripe Dashboard → **Webhooks** success rate. Confirm last synthetic run is not stuck failing. |
+| **Monthly (~30 min)** | Backups, deps, trends | Export or verify **Supabase** backups; **`npm audit`** / **`npm outdated`**; review **Sentry** trends; rotate secrets if policy requires. |
+
+**Principle:** Do **not** rely on manually opening **`/status`** every day as your *only* signal — **UptimeRobot + Sentry (+ optional GitHub email for synthetics)** should tell you when to look.
+
+---
+
+## What you have set up (and how it covers APIs)
 
 • **Health endpoint:** GET /api/health — Single source of truth. Probes every configured external API: **Supabase** (tenants/leads), **Stripe** (balance), **NREL PVWatts** (quote), **EIA** (rates), **Google Geocoding** (server geo), **Resend** (email), **Google Places** (config only; client autocomplete), **Vercel KV** (when KV_REST_API_URL + KV_REST_API_TOKEN set; DLQ, idempotency, rate limiting), **USGS 3DEP** (elevation/shading for estimates). Each check has 5s timeout (8s for USGS). Returns 200 if all ok, 503 if any down. Response includes `services` and **`config`** (which integrations have env set, no values) to catch production env drift. Only services with env vars set are checked; Stripe is omitted if the key is invalid so health can still pass.
 • **Rate limiting:** Quote/estimate (1000/hr per IP), lead submit, Stripe checkout — all protected. Webhook is idempotent (replay-safe).
 • **Error monitoring:** Sentry on frontend + API; uncaught errors and rejections captured.
 • **Canary-style checks:** Smoke + API tests (health, estimate, geo, lead, Stripe webhook) run in CI and via prod-smoke workflow against production.
 
-**Does it cover all APIs?** Yes. Health explicitly checks: Supabase, Stripe, NREL, EIA, Google Geocoding, Resend, Google Places (config), Vercel KV (when configured), USGS 3DEP. Quote engine = NREL + EIA + USGS 3DEP; Google Places is client-only — if it fails, users can still type address and server geocode works. Revenue path (quote, lead, Stripe webhook) is guarded with try/catch and clear errors. /status page shows every checked service and reminds you to use UptimeRobot + Sentry with alerts to **support@getsunspire.com**. **Most likely production bug:** env/config drift (missing or wrong var in Vercel). Use health `config` and /status daily; see **docs/INTEGRATION-FAILURE-PREVENTION.md**.
+**Does it cover all APIs?** Yes. Health explicitly checks: Supabase, Stripe, NREL, EIA, Google Geocoding, Resend, Google Places (config), Vercel KV (when configured), USGS 3DEP. Quote engine = NREL + EIA + USGS 3DEP; Google Places is client-only — if it fails, users can still type address and server geocode works. Revenue path (quote, lead, Stripe webhook) is guarded with try/catch and clear errors. /status shows every checked service and reminds you to use **UptimeRobot + Sentry** (and the **synthetic** block for journey checks). **Most likely production bug:** env/config drift (missing or wrong var in Vercel). Use health **`config`** and **`/status`** when investigating; see **docs/INTEGRATION-FAILURE-PREVENTION.md**.
 
-**How to use it to be sure they're all up:**
-1. **Single place:** Open https://sunspire-web-app.vercel.app/status — shows every service (**Supabase**, Stripe, NREL, EIA, Google Geocoding, Resend, Google Places, Vercel KV, USGS 3DEP). If all green, you're good. Auto-refreshes every 60s; or use "Refresh now." The status page has **only one header** (System Status); all other sections are subsections.
-2. **UptimeRobot:** Monitor GET https://sunspire-web-app.vercel.app/api/health. When status ≠ 200, alert **support@getsunspire.com**. Configure UptimeRobot alert contact to support@getsunspire.com.
-3. **Sentry (fully work):** Set **SENTRY_DSN** and **NEXT_PUBLIC_SENTRY_DSN** in Vercel env. In Sentry project **Settings → Alerts**, set notifications to **support@getsunspire.com** so you get email on new issues and error spikes. Double-check that all API routes that matter (estimate, lead, Stripe webhook, health) are in the same app so Sentry captures backend errors.
-4. **CLI:** `curl https://sunspire-web-app.vercel.app/api/health` — expect `"ok": true` and every service `"status": "ok"`. If 503 or any "down", use "WHEN SOMETHING BREAKS" below.
-5. **Optional:** Run smoke tests: `BASE_URL=https://sunspire-web-app.vercel.app npx playwright test tests/e2e/smoke.spec.ts tests/api/route-integration.spec.ts`. See QA_SPEC.md Section D.
+**How to use it to be sure dependencies are up:**
+1. **Single place:** Open **`https://glp-convert.vercel.app/status`** (or your custom domain). Shows **Supabase**, **Stripe**, **NREL**, **EIA**, **Google Geocoding**, **Resend**, **Google Places** (config), **Vercel KV** (if set), **USGS 3DEP**, plus **Synthetic monitoring** (last GitHub Actions run). Auto-refreshes every 60s; use **Refresh now** as needed.
+2. **UptimeRobot:** Monitor **`GET https://glp-convert.vercel.app/api/health`**. When status ≠ **200**, alert your ops inbox (**`support@glpconvert.com`** or your choice).
+3. **Sentry:** **`SENTRY_DSN`** + **`NEXT_PUBLIC_SENTRY_DSN`** in Vercel. **Settings → Alerts** → same ops inbox. Covers API routes, server, and client.
+4. **CLI:** `curl https://glp-convert.vercel.app/api/health` — expect `"ok": true` and each probed service `"status": "ok"` (or **degraded** where designed). If **503** or **down**, see **WHEN SOMETHING BREAKS** below.
+5. **Optional:** `BASE_URL=https://glp-convert.vercel.app npx playwright test tests/e2e/smoke.spec.ts tests/api/route-integration.spec.ts` — see **QA_SPEC.md** Section D.
 
 **Every API in the quote/lead/payment path is covered by /api/health.** See docs/API-HEALTH-COVERAGE.md for the full route list and which services are probed.
 
 ---
 📋 DAILY CHECKS (5 minutes)
 
-**Goal:** Look at UptimeRobot, the /status page, and Sentry daily — or have them email you when something breaks. All alerts must go to **support@getsunspire.com**. See **docs/HEALTH-ALERTS-SETUP.md** for one-page setup.
+**Goal:** Prefer **automated** alerts (UptimeRobot, Sentry, optional GitHub Actions for synthetics). Use this list when you are doing a deliberate daily pass or following up on an alert. See **docs/HEALTH-ALERTS-SETUP.md** for a short setup page.
 
-1. **UptimeRobot**
-- URL: https://dashboard.uptimerobot.com
-- **Monitor:** Add a monitor for `GET https://sunspire-web-app.vercel.app/api/health` (or your production domain). When HTTP status ≠ 200 (e.g. 503 when a dependency is down), you get alerted.
-- **Alert contact:** Set the alert email to **support@getsunspire.com** so you're notified when the check fails.
-- What to check: All monitors should be green ✅. If any are red, check Vercel deployment and "WHEN SOMETHING BREAKS" below.
-- Action if down: Check Vercel logs, /status page (which service is red), and external status pages (Supabase, Stripe, etc.); redeploy if needed.
+1. **UptimeRobot (or equivalent)**
+- **Dashboard:** https://dashboard.uptimerobot.com  
+- **Monitor:** `GET https://glp-convert.vercel.app/api/health` (or your production domain). Alert when HTTP status ≠ **200**.  
+- **Alert contact:** Your ops inbox (e.g. **`support@glpconvert.com`**).  
+- **If red:** Vercel deployment + **`/status`** (which service) + vendor status pages (Supabase, Stripe, Google, etc.).
 
 2. **Sentry**
-- URL: https://sentry.io
-- **Alerts:** In Sentry project **Settings → Alerts**, set notifications to **support@getsunspire.com** so you get email on new issues or error spikes.
-- What to check: Review new errors (most are non-critical); look for error rate spikes.
-- Action if spike: Investigate the specific error pattern in Sentry.
-- **Make it work:** Ensure `SENTRY_DSN` and `NEXT_PUBLIC_SENTRY_DSN` are set in Vercel env.
+- **Dashboard:** https://sentry.io  
+- **Alerts:** Project **Settings → Alerts** → ops inbox.  
+- **If spike:** Open the issue group, check release/environment, fix or mute false positives.
 
-3. **Quick Health Check — single place = /status**
-- **Easiest:** Open https://sunspire-web-app.vercel.app/status in a browser. That page is your **one place** to confirm all systems: it calls /api/health and shows **every** service: Supabase, Stripe, NREL PVWatts, EIA, Google Geocoding, Resend, Google Places, Vercel KV (if configured), USGS 3DEP. If everything is green, you’re good. Use “Refresh now” or wait for auto-refresh (60s).
-- **CLI:** `curl https://sunspire-web-app.vercel.app/api/health` — Expected: `{"ok": true, "timestamp": "...", "services": [...]}` with every service `"status": "ok"`. If 503 or any "down", check which service in the JSON and use "WHEN SOMETHING BREAKS" below.
-- The /status page also shows: **Daily check: UptimeRobot, this page, Sentry — alerts to support@getsunspire.com** and links to docs/API-HEALTH-COVERAGE.md.
+3. **Quick pass — `/status`**
+- **Browser:** `https://glp-convert.vercel.app/status` — health-driven service rows, **Config (env set)**, **Synthetic monitoring** (Primary funnel + Buyer checkout).  
+- **CLI:** `curl https://glp-convert.vercel.app/api/health`  
+- **Synthetic failures:** GitHub → **Actions** → **Synthetic monitoring** → open the failed run → download **synthetic-test-results** artifact if needed (`docs/SYNTHETIC-MONITORING.md`).
 
 📅 WEEKLY CHECKS (15 minutes)
 
-1. Admin Dashboard Review
-- URL: https://sunspire-web-app.vercel.app/admin/dashboard
+1. **Synthetic monitoring (GitHub)**  
+- **Repo:** GLPConvert (not Sunspire). **Actions** → **Synthetic monitoring** — confirm recent runs are green; if red, use logs + artifact, then **`/status`** to see posted FAIL state.  
+- Ensure workflow targets production (default **`https://glp-convert.vercel.app`** unless you overrode **Variables**).
+
+2. Admin Dashboard Review
+- URL: https://glp-convert.vercel.app/admin/dashboard
 - Steps:
   1. Enter admin token when prompted
   2. Check System Health - all should be green
   3. Check Circuit Breakers - should all be "CLOSED"
   4. Check DLQ Count - should be 0 or very low
 
-2. Review Failed Webhooks (DLQ)
+3. Review Failed Webhooks (DLQ)
 - If DLQ has events:
   1. Click "Show DLQ Events" button
   2. Review each failed webhook:
@@ -67,7 +89,7 @@ WHAT YOU HAVE SET UP (and how it covers all APIs)
      - Missing tenant: Create tenant first, then replay
   4. Replay a webhook:
      `bash
-     curl -X GET "https://sunspire-web-app.vercel.app/api/admin/replay-webhook?event_id=evt_xxx" \
+     curl -X GET "https://glp-convert.vercel.app/api/admin/replay-webhook?event_id=evt_xxx" \
        -H "x-admin-token: YOUR_ADMIN_TOKEN"
      `
   5. Remove from DLQ after successful replay:
@@ -138,7 +160,7 @@ Error   Cause   Fix
 
 Step 3: Replay a Webhook
 `bash
-curl -X GET "https://sunspire-web-app.vercel.app/api/admin/replay-webhook?event_id=evt_xxx" \
+curl -X GET "https://glp-convert.vercel.app/api/admin/replay-webhook?event_id=evt_xxx" \
   -H "x-admin-token: YOUR_ADMIN_TOKEN"
 `
 
@@ -146,7 +168,7 @@ Step 4: Remove from DLQ
 - After successful replay, click "Remove" in admin dashboard
 - Or use DELETE endpoint:
 `bash
-curl -X DELETE "https://sunspire-web-app.vercel.app/api/admin/dlq?eventId=evt_xxx" \
+curl -X DELETE "https://glp-convert.vercel.app/api/admin/dlq?eventId=evt_xxx" \
   -H "x-admin-token: YOUR_ADMIN_TOKEN"
 `
 
@@ -249,7 +271,7 @@ Customer accesses dashboard
 
 Add a New Tenant Manually
 `bash
-curl -X POST "https://sunspire-web-app.vercel.app/api/admin/create-tenant" \
+curl -X POST "https://glp-convert.vercel.app/api/admin/create-tenant" \
   -H "x-admin-token: YOUR_ADMIN_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -262,7 +284,7 @@ curl -X POST "https://sunspire-web-app.vercel.app/api/admin/create-tenant" \
 
 Export Customer Data (GDPR)
 `bash
-curl -X POST "https://sunspire-web-app.vercel.app/api/gdpr/export" \
+curl -X POST "https://glp-convert.vercel.app/api/gdpr/export" \
   -H "x-admin-token: YOUR_ADMIN_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"email": "customer@example.com"}'
@@ -270,7 +292,7 @@ curl -X POST "https://sunspire-web-app.vercel.app/api/gdpr/export" \
 
 Delete Customer Data (GDPR)
 `bash
-curl -X POST "https://sunspire-web-app.vercel.app/api/gdpr/delete" \
+curl -X POST "https://glp-convert.vercel.app/api/gdpr/delete" \
   -H "x-admin-token: YOUR_ADMIN_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"email": "customer@example.com", "confirm": "DELETE"}'
@@ -278,18 +300,17 @@ curl -X POST "https://sunspire-web-app.vercel.app/api/gdpr/delete" \
 
 Check System Health
 `bash
-curl https://sunspire-web-app.vercel.app/api/health
+curl https://glp-convert.vercel.app/api/health
 ``
 
 📞 SUPPORT CONTACTS
 
-Business Information:
-- Support Email: support@getsunspire.com
-- Billing Email: billing@getsunspire.com
-- Business Name: Sunspire Software LLC (used on refund page, legal, and CAN-SPAM)
-- Business Address: 1700 Northside Drive, Suite A7 #5164, Atlanta, GA 30318, United States (Anytime Mailbox)
-- Phone: 404-637-8549 (Anytime Mailbox), TextFree: (404) 770-2672
-- LLC: Georgia corporations division (hugowentzel, email: hugo@getsunspire.com)
+**GLPConvert / Wellspire (product ops)**  
+- **Support (in-app default):** support@glpconvert.com — use for UptimeRobot, Sentry, and customer-facing support as configured.  
+- **Legal entity:** Wellspire LLC — full address and policies on live **`/legal/*`** pages (update this line if the legal footer changes).  
+- **Billing / Stripe:** Use the business profile shown in **Stripe Dashboard** and on your **Terms / Refund** pages; keep them aligned with Wellspire LLC filings.
+
+**Legacy Sunspire Software LLC** (prior product) may still appear in old docs or inbox history; new GLPConvert deployments should standardize on **Wellspire LLC** + **`support@glpconvert.com`** for ops alerts.
 
 Service Support:
 - Vercel Support: https://vercel.com/support
@@ -314,8 +335,8 @@ Use this to confirm you are safe to scale. All of the below are covered in this 
 **Section 3 — Sentry + Vercel**  
 ✔ Done. Sentry in frontend + API (sentry.client/server/edge.config, next.config). Vercel: prod env vars, main deploys, rollback via redeploy — see “When something breaks” and “Production settings” in this guide. Rate limiting: quote (1000/hr per IP), lead, Stripe checkout; webhook idempotent.
 
-**Section 4 — Canary tests**  
-✔ Done. Playwright smoke + API tests (health, quote, geo, lead, webhook); prod-smoke workflow runs against production. Covers: demo/quote, lead stored, Stripe checkout/session, health. Not on 15–30 min cron; run manually or via CI. Optional: add a cron that hits health or smoke URL every 15–30 min if you want.
+**Section 4 — Canary / synthetic tests**  
+✔ Done. **CI:** Playwright smoke + API tests; **prod-smoke** workflow. **Scheduled:** **Synthetic monitoring** workflow (every **30 min**) runs primary GLP funnel + buyer checkout against production and POSTs results to **`/api/synthetic-results`** (see **`docs/SYNTHETIC-MONITORING.md`**). **UptimeRobot** on **`/api/health`** remains the fastest “is prod up?” signal.
 
 **Section 5 — Safe failure design**  
 ✔ Done. Quote fail → JSON error / “Estimates temporarily unavailable” style. Stripe: no unlock without webhook verification. Lead: retry + DLQ; no silent drop. Wrong tenant logo / default config: guarded by tenant resolution and demo params.
@@ -354,13 +375,13 @@ LEAD DELIVERY — OPTIMAL SETUP (customer-facing + how it works)
 • **Speed-to-lead:** Responding within 5 minutes can yield much higher conversion than waiting 30+ minutes (e.g. “8x higher conversion” at 5 min vs 30 min; “21x more likely to qualify” at 5 min vs 30 min). Many B2B companies still respond in 24+ hours — so instant notification is a real advantage.  
   Sources: Lead Gen Economy (“5-Minute Rule”), Rework/lead-management, GetNextPhone (“Speed to Lead”), InsideSales lead response study.
 
-• **Instant notification + CRM together:** Best practice is not “email only” or “CRM only” — it’s both: (1) **Instant notification** (email/SMS) to the sales team when a lead is captured, so they can act in under 5 minutes, and (2) **CRM as system of record** for sales pipeline (Sunspire already stores every lead in **Supabase** for the product).  
+• **Instant notification + CRM together:** Best practice is not “email only” or “CRM only” — it’s both: (1) **Instant notification** (email/SMS) to the sales team when a lead is captured, so they can act in under 5 minutes, and (2) **CRM as system of record** for sales pipeline (**GLPConvert** stores every lead in **Supabase**).  
   Sources: Twilio (instant lead alerts), n8n (instant CRM lead notifications + email), Instantly (CRM integration + two-way sync with HubSpot/Salesforce).
 
 • **Solar/installer context:** Solar CRMs are used for lead organization, scoring, and follow-up; the “10-Minute Rule” or similar fast contact is emphasized. Email alone tends to lose leads without a central place to track them; CRM + instant alert is the recommended pattern.  
   Sources: Sunbase Data (solar CRM blueprint), Fuzen (solar lead scoring), Solenery (CRM tools for solar), Simple Tree (“Call the Damn Leads”).
 
-**Recommended setup for Sunspire:**
+**Recommended setup for GLPConvert:**
 
 1. **System of record (you already have):** Store every lead in Supabase immediately (POST /api/lead → storeLead). No change needed.
 2. **Customer-facing (demo + paid):** Show a short, clear message after submit: e.g. “Lead delivered. Your team will get an instant email so you can reach out in minutes.” That sets the expectation and differentiates you.
@@ -370,14 +391,14 @@ LEAD DELIVERY — OPTIMAL SETUP (customer-facing + how it works)
 
 **Implemented:** The API now sends a “New lead” email via Resend when a lead is stored, if the tenant has a “Notification Email” column set in Supabase (Tenants table). Add that column (email or single-line text) and fill it per installer.
 
-**How it works (for sales/support):** Leads are stored in **Sunspire’s Supabase** (`leads` table), one row per lead, scoped to the tenant. The installer sees them in the dashboard (`/c/[handle]/leads`) and gets an instant email when one comes in. **Optional CRM webhook:** Configure **CRM Webhook URL** on the tenant (Supabase `tenants.crm_keys` / dashboard). When set to a valid `https` URL, the API POSTs each new lead there. Installers can forward into HubSpot, Salesforce, or any automation tool. Optional sync is an upsell/setup step.
+**How it works (for sales/support):** Leads are stored in **Supabase** (`leads`), scoped to the tenant. The buyer sees them at **`/c/[handle]/leads`** and can get email when notification email is set. **Optional CRM webhook:** tenant **CRM Webhook URL** → API POSTs each new lead there (HubSpot, Salesforce, Zapier/Make, etc.).
 
 **Summary:** Optimal = Supabase as single source of truth + instant email notification to the installer on new lead + customer-facing copy that says so. Add optional CRM sync later. This matches SaaS and solar best practice and the cited sources.
 
 **What to say on the demo and in cold email (after they buy):**  
 Use both, and say so clearly. Recommended phrasing:
 
-- **Short:** “Leads hit your inbox instantly so you can reach out in minutes—and they’re all in your Sunspire dashboard. If you use HubSpot, Salesforce, or Zapier, we sync there too so everything stays in one place.”
+- **Short:** “Leads hit your inbox quickly—and they’re in your **GLPConvert** dashboard. If you use HubSpot, Salesforce, or Zapier, we can sync there too.”
 - **Even shorter:** “Instant email when a lead comes in, plus your dashboard—and optional CRM sync if you use one.”
 - **Don’t say:** “We only email you” (they’ll ask about CRM). **Don’t say:** “We only sync to your CRM” (many installers don’t have one yet; and CRM-only = slower first response). **Do say:** Email + dashboard for everyone; CRM sync optional.
 
@@ -400,57 +421,54 @@ This guide covers **all maintenance parts** in one place:
 
 ✅ SYSTEM STATUS
 
-Last Updated: January 25, 2026
+Last updated: March 30, 2026 (GLPConvert / Wellspire ops baseline)
 
 All Systems Operational:
 - ✅ Health endpoint: Working
-- ✅ Demo URL: https://sunspire-web-app.vercel.app/?company=Metaa&demo=1
-- ✅ Paid URL: https://sunspire-web-app.vercel.app/paid?company=Meta&brandColor=%23FF0000&logo=https%3A%2F%2Flogo.clearbit.com%2Fapple.com
+- ✅ Demo home: https://glp-convert.vercel.app/?company=SynthTest&demo=1
+- ✅ Intake (GLP funnel): https://glp-convert.vercel.app/intake?company=SynthTest&demo=1
+- ✅ Paid / branded: https://glp-convert.vercel.app/paid?company=TestCo&demo=1 (adjust query params per tenant)
 - ✅ Security headers: All configured
 - ✅ DLQ system: Operational
 - ✅ Admin dashboard: Operational
 - ✅ Correlation IDs: All routes configured
 - ✅ Circuit breakers: All services protected
 
-This system is production-ready and fully optimized for January 2026.
+Treat the checklist above as authoritative; snapshot bullets below are examples only.
 
 ---
-## 🌐 UNDERSTANDING SUNSPIRE: COMPLETE PICTURE (for anyone coming back cold)
+## 🌐 Understanding GLPConvert (for anyone coming back cold)
 
-Use this section to re-orient: what Sunspire is, how it makes money, how it works for installers and homeowners, which APIs and flows matter, and where everything lives.
+**Today’s product:** B2B white-label **GLPConvert** — clinics get a branded **intake / simulation funnel** (`/intake`, `/result`) plus lead capture; **Stripe** provisions tenants and subscriptions. **Supabase** holds tenants and leads; **Resend** sends transactional mail. The codebase still includes a **legacy solar** address → **`/report`** path for migration demos; **`/api/health`** may probe NREL/EIA/USGS when keys exist.
 
-### What Sunspire is
+### What GLPConvert is (operator view)
 
-- **Product:** B2B SaaS for solar installers/EPCs. Sunspire gives each installer a **branded solar estimate tool**: homeowners enter an address, get an instant solar report (system size, savings, production), then submit contact info. That submission becomes a **lead** that goes to the installer.
-- **Revenue:** One-time setup fee per installer (Stripe). Installers pay to “activate” and unlock their branded URL, lead delivery, and optional CRM sync.
-- **Entity:** Sunspire Software LLC. Address: 1700 Northside Drive, Suite A7 #5164, Atlanta, GA 30318. Support: support@getsunspire.com.
+- **Product:** Medical weight-loss program **pre-consult conversion** — structured intake, program suggestion, handoff to calendar/contact (not medical advice).  
+- **Revenue:** Setup + recurring fees via **Stripe** (see live **Pricing** / checkout).  
+- **Entity:** **Wellspire LLC**; public-facing support default **`support@glpconvert.com`** (`lib/product-identity.ts`).
 
-### How it makes sales
+### How sales work (high level)
 
-1. **Acquisition:** Installer gets cold email or link → opens **demo** (`?company=…&demo=1`). They can run 1–2 quotes; report is then locked/blurred.
-2. **Conversion:** “Activate” / “Launch Your Branded Version” → Stripe Checkout. After payment, Stripe webhook provisions the tenant and sends onboarding email.
-3. **Activation:** Customer lands on dashboard `/c/[handle]` with “you’re live” checklist: instant URL, embed code, API key, “Connect your CRM,” refund policy and docs. Lead delivery is configured via **Notification Email** (and optional CRM Webhook URL) in Supabase or dashboard.
+1. **Acquisition:** Prospect opens **demo** (`?company=…&demo=1`) — branded home + **`/intake`** simulator path.  
+2. **Conversion:** **Launch** / checkout CTA → **Stripe Checkout** → webhook provisions **tenant** and sends onboarding email (**Resend**).  
+3. **Activation:** Buyer dashboard **`/c/[handle]`** — live URL, embed, optional CRM webhook + notification email on **`tenants`**.
 
-### How it works for clients (installers)
+### How it works for clients (clinics / buyers)
 
-- **Tenant = one installer.** Stored in Supabase (Tenants table): company handle, plan, payment status, Stripe customer ID, Notification Email, optional CRM Webhook URL, branding (logo, colors), capture URL.
-- **When a homeowner submits contact info:**  
-  1. Lead is **saved to Supabase** (source of truth).  
-  2. Homeowner sees confirmation (“You’re all set”, “You’ll hear back within 1 business day”).  
-  3. **Installer gets an email** (Resend): subject e.g. “New Sunspire Lead – 8.4kW System – Atlanta”, body = structured data (name, address, system, savings, phone, email) + “View full report → Dashboard” link (no screenshot).  
-  4. Lead appears in **installer dashboard** at `/c/[handle]/leads`.  
-  5. If CRM Webhook URL is set, the same lead is **POSTed to that URL** (e.g. Zapier/Make → HubSpot/Salesforce).  
-  Order is fixed: DB first, then confirmation UI, then email, then dashboard, then optional CRM.
-- **Estimate-only (no contact submit):** Installer is **not** contacted. Lead exists only at submit.
-- **Scheduling:** Optional after submit (e.g. “Book a time” vs “No thanks — have them reach out”). Same lead; scheduling does not create a second lead.
+- **Tenant = one customer org.** Supabase **`tenants`**: handle, plan, Stripe IDs, **notification email**, optional **CRM Webhook URL**, branding.
+- **When a prospect submits a lead:**  
+  1. Row is **saved to Supabase** (`leads`) — source of truth.  
+  2. UI shows confirmation (copy varies by funnel).  
+  3. **Clinic gets email** via **Resend** when tenant notification email + **`RESEND_API_KEY`** are set (subject/body include key fields + link to **`/c/[handle]/leads`**).  
+  4. Lead appears in **dashboard** at **`/c/[handle]/leads`**.  
+  5. If **CRM Webhook URL** is set, the API **POSTs** the payload there too.  
+  Order: DB first, then UI, then email, then optional CRM.
+- **No submit, no lead:** Browsing intake/report without submitting does not create a lead.
 
-### How it works for homeowners
+### How it works for end users (patients / prospects)
 
-1. Visit installer’s link (or demo): enter address (Google Places autocomplete or type + server geocode).
-2. **Estimate:** GET `/api/estimate` → NREL (production), EIA (rates), USGS 3DEP (shading) → report shown instantly (system size, savings, production, etc.).
-3. **CTA at bottom of report:** “Next step: get your install-ready plan” / “Request a free consult” → opens modal.
-4. **Modal:** “Next step: schedule your free consultation”; fields: name, email, phone; consent: “I agree to be contacted by [Company]…”; submit: “Send my report & next steps.”
-5. **After submit:** “You’re all set” + “You’ll hear back within 1 business day”; options: “Book a time (recommended)” or “No thanks — have them reach out.”
+1. Open clinic link or demo → **GLP:** complete **`/intake`** steps → **`/result`** (or demo sample). **Legacy solar:** address → **`/report`** if enabled.  
+2. Submit contact where the product captures leads → **POST `/api/lead`** → Supabase + optional email + optional CRM webhook.
 
 ### Lead object (what gets stored and sent)
 
@@ -460,24 +478,24 @@ Canonical shape includes: `tenant_id` (tenant handle), `homeowner_name`, `email`
 
 | API / service      | Role |
 |--------------------|------|
-| **Supabase**       | Tenants (installer config), Leads (every submission). Source of truth. |
+| **Supabase**       | Tenants (clinic config), Leads (every submission). Source of truth. |
 | **Stripe**         | Checkout, webhooks (payment → provision tenant, send onboarding email). |
 | **NREL PVWatts**   | Solar production for estimate. |
 | **EIA**            | Utility rates for estimate. |
 | **USGS 3DEP**      | Elevation/shading for estimate. |
 | **Google Geocoding** | Address → lat/lng (server). |
 | **Google Places**  | Address autocomplete (client). |
-| **Resend**         | Lead alert email to installer, onboarding email after purchase. |
+| **Resend**         | Lead alerts, onboarding / transactional mail (needs **`RESEND_API_KEY`**). |
 | **Vercel KV**      | Webhook idempotency, rate limiting (optional). |
 
-**Health:** GET `/api/health` probes every configured dependency above (Supabase, Stripe, NREL, EIA, Geocoding, Resend, Places config, KV, USGS). Only services with env vars set are checked. **Status page:** `/status` shows per-service status and reminds to use UptimeRobot + Sentry with alerts to **support@getsunspire.com**. See `docs/API-HEALTH-COVERAGE.md` and `docs/COST-CAPACITY-MATRIX.md` for routes and limits.
+**Health:** GET `/api/health` probes every configured dependency (Supabase, Stripe, NREL, EIA, Geocoding, Resend, Places, KV, USGS — only if env vars are set). **`/status`** shows the same rows plus **Synthetic monitoring**. Point **UptimeRobot** + **Sentry** at **`support@glpconvert.com`** (or your ops inbox). See **`docs/API-HEALTH-COVERAGE.md`** and **`docs/COST-CAPACITY-MATRIX.md`**.
 
 ### What happens when someone buys (post-purchase flow)
 
 1. **Stripe success** → redirect to success URL.  
 2. **Stripe webhook** → tenant created/updated in Supabase, onboarding email sent (Resend).  
 3. **Activation page** → `/c/[handle]?session_id=...` with checklist: URL, embed, API key, Connect CRM, refund/docs.  
-4. **Lead routing:** Installer sets Notification Email (and optional CRM Webhook). New leads → Supabase, then email, then dashboard, then optional CRM.  
+4. **Lead routing:** Tenant **notification email** + optional **CRM Webhook**. New leads → Supabase → email → dashboard → optional CRM.  
 Details: `docs/POST-PURCHASE-FLOW.md`.
 
 ### Where to find what
@@ -488,8 +506,8 @@ Details: `docs/POST-PURCHASE-FLOW.md`.
 - **Lead schema and delivery order:** `docs/LEAD-SCHEMA-AND-DELIVERY.md`.  
 - **Refund and chargebacks:** Refund policy at `/legal/refund`, `docs/FINANCIAL-SANITY-CHECKLIST.md`, `docs/CHARGEBACK-EVIDENCE-TEMPLATE.md`.  
 - **Estimation sources:** `docs/ESTIMATION_SOURCES.md`.  
-- **Runbooks:** `docs/RUNBOOK-FAILURES.md`, `docs/MAINTENANCE-GUIDE.md` (this file).
+- **Runbooks:** `docs/RUNBOOK-FAILURES.md`, **`MAINTENANCE-GUIDE.md`** (this file, repo root).
 
 ---
 
-**Hands-off after go-live:** For ongoing operations, treat **this file (`MAINTENANCE-GUIDE.md`)** as the single maintenance source: daily **UptimeRobot** + **`/status`** + **Sentry**, plus weekly/monthly sections above. Growth/outreach is **`TO-DO-LIST.md`** only. Quick prod click-through (recommended): **`docs/TEMPORARY-TO-DO-LIST.md`** → **Step 46** (**1–53**) + **Step 47** (**54–57**) at file start. Optional tests: **`docs/OWNER-IN-DEPTH-PROD-CHECKLIST.md`**.
+**Hands-off after go-live:** Treat **`MAINTENANCE-GUIDE.md`** as the single maintenance source: **UptimeRobot** on **`/api/health`**, **Sentry** alerts, **weekly** glance at **GitHub Actions → Synthetic monitoring**, plus **`/status`** when investigating. Use **daily / weekly / monthly** sections above. Growth/outreach: **`TO-DO-LIST.md`** / **`MASTER_TODO_GLPCONVERT.md`** as you prefer. Optional deep checklists: **`docs/TEMPORARY-TO-DO-LIST.md`**, **`docs/OWNER-IN-DEPTH-PROD-CHECKLIST.md`**.

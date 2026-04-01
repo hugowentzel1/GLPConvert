@@ -1,5 +1,6 @@
-# Synthetic monitoring: homeowner quote flow + buyer checkout flow (no real payment).
-# Runs every 30 min, on manual dispatch, and uploads results to the app for /status display.
+# Synthetic monitoring: GLP primary funnel (demo home + /intake) + buyer checkout (no real payment).
+# Runs every 30 min, on manual dispatch, and POSTs results to /api/synthetic-results for /status.
+# Override target: GitHub repo Settings → Variables → SYNTHETIC_BASE_URL (e.g. preview URL).
 name: Synthetic monitoring
 
 on:
@@ -8,8 +9,8 @@ on:
   workflow_dispatch:
 
 env:
-  SYNTHETIC_BASE_URL: ${{ vars.SYNTHETIC_BASE_URL || 'https://sunspire-web-app.vercel.app' }}
-  SYNTHETIC_APP_URL: ${{ vars.SYNTHETIC_BASE_URL || 'https://sunspire-web-app.vercel.app' }}
+  SYNTHETIC_BASE_URL: ${{ vars.SYNTHETIC_BASE_URL || 'https://glp-convert.vercel.app' }}
+  SYNTHETIC_APP_URL: ${{ vars.SYNTHETIC_APP_URL || vars.SYNTHETIC_BASE_URL || 'https://glp-convert.vercel.app' }}
 
 jobs:
   synthetic:
@@ -30,7 +31,7 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
-      - name: Run homeowner synthetic
+      - name: Run primary funnel synthetic
         id: homeowner-run
         run: npm run test:synthetic:homeowner
         env:
