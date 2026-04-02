@@ -108,7 +108,7 @@ Standardized shape (target):
 
 ---
 
-## Platform inventory — Sunspire codebase (internal + external)
+## Platform inventory — GLPConvert fork (internal + external)
 
 **Source of truth for routes:** `app/api/**/route.ts` (App Router) + `pages/api/version.ts` + `app/v1/**`.  
 **Health probes today:** `GET /api/health` (see comments in `app/api/health/route.ts`).

@@ -67,4 +67,4 @@ If `/api/health` returns 503 or a service is `down`, check that the correspondin
 - [ ] `AIRTABLE_API_KEY` + `AIRTABLE_BASE_ID` — Airtable base for Tenants/Leads/Users
 - [ ] `ADMIN_TOKEN` — random secret for admin/GDPR
 - [ ] Stripe keys (if you use checkout/webhooks)
-- [ ] `NEXT_PUBLIC_APP_URL` — your deployed URL (e.g. `https://sunspire-web-app.vercel.app`)
+- [ ] `NEXT_PUBLIC_APP_URL` — your deployed URL (e.g. `https://glp-convert.vercel.app`)
