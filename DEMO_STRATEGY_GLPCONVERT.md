@@ -19,6 +19,7 @@ The demo is the **primary sales engine** for **cold email** and **LinkedIn DMs**
 | `brand` or `primary` | Primary hex without or with `#`, e.g. `brand=0B3D91` or `brand=%230B3D91` — primary buttons + demo banner accent. |
 | `brand2` | Optional second hex — accent borders (e.g. demo banner border). |
 | `booking` / `book` / `booking_url` | **HTTPS** scheduling URL (Calendly, etc.) — overrides tenant config for that session. |
+| `transition_ms` | Optional delay (600–30000) on the “Building your plan…” step — default ~1400ms; use higher values for screenshots or Playwright visual capture. |
 | *(tenant DB)* | `tenants.crm_keys` JSON: `booking_url`, optional **`intake_monthly_low`**, **`intake_monthly_high`**, **`intake_consult_fee_note`**, **`intake_payment_note`**, **`intake_brand_name`**, **`intake_brand_color_secondary`** — merged in funnel when query params do not override. |
 
 **Example (cold email / LinkedIn demo link):**  
