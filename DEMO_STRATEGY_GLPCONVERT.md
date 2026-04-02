@@ -15,6 +15,7 @@ The demo is the **primary sales engine** for **cold email** and **LinkedIn DMs**
 | `demo=1` or `preview=1` | Enables **owner-demo** panels: preview banner, revenue-leak illustration, before/after, ROI copy, “Activate for {{clinic}}” CTA |
 | `utm_*` | Standard UTM; merged with `sessionStorage` for persistence across steps |
 | `demo_traffic` | Optional integer for illustrative monthly sessions in leak math (defaults in code) |
+| `domain` | Clinic website domain, e.g. `domain=acmemedspa.com` — auto logo via **Clearbit** (`logo.clearbit.com`) when `logo` is omitted. Bare domain in `company=` works too. |
 | `logo` | **HTTPS** URL to clinic logo image (`encodeURIComponent`). Shown on results trust header + top of flow when set. |
 | `brand` or `primary` | Primary hex without or with `#`, e.g. `brand=0B3D91` or `brand=%230B3D91` — primary buttons + demo banner accent. |
 | `brand2` | Optional second hex — accent borders (e.g. demo banner border). |
@@ -27,7 +28,7 @@ The demo is the **primary sales engine** for **cold email** and **LinkedIn DMs**
 
 **Example branded URLs (replace host + assets):**
 
-- `https://glp-convert.vercel.app/intake?demo=1&handle=glpconvert&company=Sunspire%20Weight%20Clinic&brand=059669&brand2=064e3b&logo=https%3A%2F%2Fexample.com%2Fsunspire-logo.png`
+- `https://glp-convert.vercel.app/intake?demo=1&handle=glpconvert&company=Brightline%20Medical&domain=brightlinemedical.com&brand=059669&brand2=064e3b` (logo from Clearbit when domain resolves)
 - `https://glp-convert.vercel.app/intake?demo=1&handle=demo-apex&company=Apex%20MedSpa&brand=4F46E5&demo_traffic=800`
 - Production patient: `https://glp-convert.vercel.app/intake?company=glpconvert` (booking + branding from tenant row when configured)
 

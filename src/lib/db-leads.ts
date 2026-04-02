@@ -355,10 +355,10 @@ export async function upsertLeadSuppressionByEmail(email: string, source: string
   const list = leads ?? [];
   const ts = getCurrentTimestamp();
   if (list.length === 0) {
-    const tenant = await findTenantByHandle("sunspire");
+    const tenant = await findTenantByHandle("glpconvert");
     const tenantId = tenant?.id;
     if (!tenantId) {
-      logger.warn("No sunspire tenant for suppression record");
+      logger.warn("No glpconvert tenant for suppression record");
       return;
     }
     await getSupabase().from("leads").insert({

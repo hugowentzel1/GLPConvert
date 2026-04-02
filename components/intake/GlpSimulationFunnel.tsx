@@ -6,6 +6,7 @@ import GlpDemoOwnerPanels from "@/components/intake/GlpDemoOwnerPanels";
 import { persistUtmFromSearchParams, getMergedUtm } from "@/lib/glp-attribution";
 import { resolveGlpTenantSlug } from "@/lib/glp-tenant-slug";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
+import { resolveBrandedLogoUrl } from "@/lib/logo-brand-helpers";
 
 type TenantIntakePublicJson = {
   ok?: boolean;
@@ -57,16 +58,11 @@ type ReadinessAnswers = {
 const DEFAULT_BRAND = "#0f172a";
 
 function parseDemoBranding(sp: ReturnType<typeof useSearchParams>) {
-  let logoUrl: string | null = null;
-  const rawLogo = sp?.get("logo");
-  if (rawLogo) {
-    try {
-      const u = decodeURIComponent(rawLogo.trim());
-      if (/^https:\/\//i.test(u)) logoUrl = u;
-    } catch {
-      /* ignore malformed */
-    }
-  }
+  const logoUrl = resolveBrandedLogoUrl(
+    sp?.get("logo") || null,
+    sp?.get("domain") || null,
+    sp?.get("company") || null,
+  );
   const normHex = (v: string | null | undefined) => {
     if (v == null || v === "") return null;
     let s = v.trim();

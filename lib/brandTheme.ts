@@ -20,13 +20,5 @@ export function getBrandTheme(companyHandle?: string) {
     default: "#2563EB",
   };
   const key = (companyHandle || "").toLowerCase();
-  console.log(
-    "getBrandTheme: companyHandle=",
-    companyHandle,
-    "key=",
-    key,
-    "result=",
-    map[key] || map.default,
-  );
   return map[key] || map.default;
 }

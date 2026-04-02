@@ -29,11 +29,9 @@ import TrustRow from '@/components/trust/TrustRow';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import StickyCtaBar from '@/components/StickyCtaBar';
 import DemoPreviewTopBar from '@/components/marketing/DemoPreviewTopBar';
-import { PRODUCT_NAME, STORAGE_KEYS } from '@/lib/product-identity';
+import { PRODUCT_NAME } from '@/lib/product-identity';
 
 function HomeContent() {
-  console.log('[route] render start');
-
   const [trustData, setTrustData] = useState<any>(null);
   const [showLockScreen, setShowLockScreen] = useState(false);
   const router = useRouter();
@@ -52,13 +50,6 @@ function HomeContent() {
   // Remove the loading state check - brand always has a default value
   // const [isBrandLoaded, setIsBrandLoaded] = useState(false);
   
-  // Debug logging for brand state
-  useEffect(() => {
-    console.log('Main page brand state:', b);
-    console.log('Main page localStorage:', localStorage.getItem(STORAGE_KEYS.brandTakeover));
-    console.log('Main page isDemo:', isDemo);
-  }, [b, isDemo]);
-  
   // Brand colors from URL
   useBrandColors();
   const { read, consume } = usePreviewQuota(2);
@@ -76,9 +67,8 @@ function HomeContent() {
   }, []);
 
   // Add debug markers and content shown sentinel - force redeploy
-  useEffect(() => { 
-    console.log('[route] hydrated');
-    (window as any).__CONTENT_SHOWN__ = true; 
+  useEffect(() => {
+    (window as any).__CONTENT_SHOWN__ = true;
   }, []);
 
   // Check if we should redirect to paid version - add delay to allow brand state to load
@@ -138,8 +128,9 @@ function HomeContent() {
           // Add progress indicator at top
           const progressBar = document.createElement('div');
           progressBar.id = 'checkout-progress';
-          progressBar.className = 'fixed top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 z-50';
-          progressBar.style.animation = 'progressSlide 1.5s ease-in-out infinite';
+          progressBar.className = 'fixed top-0 left-0 right-0 h-0.5 z-50';
+          progressBar.style.backgroundColor = 'var(--brand-primary, #0f172a)';
+          progressBar.style.animation = 'progressSlide 1.2s ease-in-out infinite';
           document.body.appendChild(progressBar);
           
           // Start checkout
@@ -178,7 +169,7 @@ function HomeContent() {
   // Remove the early return to show full content always
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 font-inter" data-demo={isDemo}>
+    <div className="min-h-screen bg-slate-50 font-inter antialiased" data-demo={isDemo}>
       <ReadingProgressBar />
       {isDemo && b.enabled ? (
         <DemoPreviewTopBar
@@ -203,7 +194,7 @@ function HomeContent() {
           {/* Company Branding Section - Demo only */}
           {isDemo && b.enabled && (
             <div>
-              <div className="bg-white/80 backdrop-blur-sm rounded-3xl py-6 px-8 border border-gray-200/50 shadow-lg mx-auto max-w-2xl">
+              <div className="rounded-2xl border border-slate-200/90 bg-white py-6 px-8 shadow-sm mx-auto max-w-2xl">
                 <div className="text-center" {...tid('demo-cta')}>
                   <h2 className="text-3xl font-bold text-gray-900">
                     Demo for {b.brand || 'Your Company'} — <a href="/status" className="hover:underline" style={{ color: b.primary }}>{PRODUCT_NAME}</a>
@@ -215,7 +206,7 @@ function HomeContent() {
          data-cta="primary"
          onClick={handleLaunchClick}
          data-cta-button
-         className="inline-flex items-center justify-center px-4 py-4 rounded-full text-sm font-medium text-white border border-transparent shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer button-press mt-6" 
+         className="inline-flex items-center justify-center px-5 py-3.5 rounded-xl text-sm font-semibold text-white border border-transparent shadow-sm hover:opacity-[0.97] active:scale-[0.995] transition cursor-pointer mt-6"
          style={{ backgroundColor: 'var(--brand-primary)' }}
          aria-label="Launch Your Branded Version Now"
          data-testid="primary-cta-hero"
@@ -238,9 +229,11 @@ function HomeContent() {
               <div className="w-12 h-12 bg-gray-300 rounded-lg"></div>
             </div>
           ) : !b.enabled ? (
-            <div className="w-32 h-32 mx-auto rounded-full flex items-center justify-center shadow-2xl relative overflow-hidden" style={{ background: `linear-gradient(135deg, ${b.primary}, ${b.primary}CC)` }}>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-              <span className="text-6xl relative z-10" aria-hidden>⚕️</span>
+            <div
+              className="w-28 h-28 mx-auto rounded-2xl flex items-center justify-center border border-slate-200/90 bg-white shadow-sm relative overflow-hidden"
+              aria-hidden
+            >
+              <span className="text-5xl relative z-10">⚕️</span>
             </div>
           ) : (
             <HeroBrand size="lg" />
@@ -249,17 +242,17 @@ function HomeContent() {
           <div className="space-y-6">
             <div className="space-y-6">
               
-              <h1 className="text-6xl md:text-7xl font-black text-gray-900 leading-tight" style={{ fontSize: '3rem !important', fontWeight: '900 !important' }}>
+              <h1 className="text-4xl sm:text-5xl md:text-[2.75rem] font-semibold tracking-tight text-slate-900 leading-[1.15] max-w-3xl mx-auto">
                 Turn GLP traffic into booked, higher-intent consults.
               </h1>
-              
-              <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+
+              <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
                 {PRODUCT_NAME} is a white-label <strong className="font-semibold text-gray-800">pre-consult conversion layer</strong> for telehealth, med spas, and weight-loss programs: clarity, expectations, consult readiness, then handoff to <em>your</em> booking flow — not medical advice.
               </p>
               <div className="pt-4">
                 <a
                   href={intakeHref}
-                  className="inline-flex items-center justify-center px-6 py-3 rounded-full text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 transition-colors"
+                  className="inline-flex items-center justify-center px-6 py-3 rounded-xl text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 transition-colors shadow-sm"
                 >
                   Try the branded intake experience
                 </a>
@@ -276,32 +269,23 @@ function HomeContent() {
           <Testimonials />
 
           {/* KPI Band - Single band only */}
-          <div 
+          <div
             data-testid="kpi-band"
-            className="py-16 relative"
-            style={{ 
-              background: `linear-gradient(135deg, white, white, ${b.primary})`,
-            }}
+            className="py-16 border-y border-slate-200/80 bg-white"
           >
-            <div 
-              className="absolute inset-0 opacity-100"
-              style={{
-                background: `linear-gradient(135deg, transparent, rgba(255,255,255,0.6), ${b.primary})`,
-              }}
-            ></div>
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-              <div className="grid grid-cols-3 gap-12 text-center">
-                <div className="group">
-                  <div className="text-4xl font-black text-gray-900 font-mono group-hover:text-[var(--brand-primary)] transition-colors duration-300">28,417</div>
-                  <div className="text-sm text-gray-600 font-medium mt-2">intake sessions this month (placeholder)</div>
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 text-center">
+                <div>
+                  <div className="text-3xl font-semibold tabular-nums text-slate-900">28,417</div>
+                  <div className="text-sm text-slate-600 mt-2">intake sessions this month (placeholder)</div>
                 </div>
-                <div className="group">
-                  <div className="text-4xl font-black text-gray-900 font-mono group-hover:text-[var(--brand-primary)] transition-colors duration-300">31%</div>
-                  <div className="text-sm text-gray-600 font-medium mt-2">average increase in completions</div>
+                <div>
+                  <div className="text-3xl font-semibold tabular-nums text-slate-900">31%</div>
+                  <div className="text-sm text-slate-600 mt-2">illustrative lift in completions</div>
                 </div>
-                <div className="group">
-                  <div className="text-4xl font-black text-gray-900 font-mono group-hover:text-[var(--brand-primary)] transition-colors duration-300">113+</div>
-                  <div className="text-sm text-gray-600 font-medium mt-2">clinic funnels live (placeholder)</div>
+                <div>
+                  <div className="text-3xl font-semibold tabular-nums text-slate-900">113+</div>
+                  <div className="text-sm text-slate-600 mt-2">clinic funnels live (placeholder)</div>
                 </div>
               </div>
             </div>
@@ -312,33 +296,30 @@ function HomeContent() {
           {trustData && <LogoWall logos={trustData.logos} />}
 
           {/* Features - Single row of 3 cards with company color gradient shading */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto py-8 md:py-10">
-            <div className="relative bg-gradient-to-br from-white via-white to-[var(--brand-primary)]/15 backdrop-blur-sm rounded-3xl p-8 text-center border border-gray-200/50 hover:shadow-2xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center group stagger-item hover-lift">
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/40 to-[var(--brand-primary)]/25 rounded-3xl opacity-100 transition-opacity duration-500"></div>
-              <div className="relative z-10">
-                <div className="text-2xl font-black text-gray-900 mb-3 group-hover:text-[var(--brand-primary)] transition-colors duration-300">Deterministic recommendations</div>
-                <div className="text-gray-600 font-semibold leading-relaxed">Rules-based program suggestions with compliance-safe language — provider confirms eligibility in consult.</div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto py-8 md:py-12">
+            <div className="rounded-2xl border border-slate-200/90 bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-md flex flex-col justify-center">
+              <div className="text-lg font-semibold text-slate-900 mb-3">Consult-ready education</div>
+              <div className="text-slate-600 text-sm leading-relaxed">
+                Expectations and typical ranges in plain language — a licensed provider still decides eligibility and treatment.
               </div>
             </div>
-            <div className="relative bg-gradient-to-br from-white via-white to-[var(--brand-primary)]/15 backdrop-blur-sm rounded-3xl p-8 text-center border border-gray-200/50 hover:shadow-2xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center group stagger-item hover-lift">
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/40 to-[var(--brand-primary)]/25 rounded-3xl opacity-100 transition-opacity duration-500"></div>
-              <div className="relative z-10">
-                <div className="text-2xl font-black text-gray-900 mb-3 group-hover:text-[var(--brand-primary)] transition-colors duration-300">Leads to inbox + dashboard</div>
-                <div className="text-gray-600 font-semibold leading-relaxed">Instant email when a lead comes in, plus your dashboard. Optional sync to HubSpot, Salesforce, or your CRM.</div>
+            <div className="rounded-2xl border border-slate-200/90 bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-md flex flex-col justify-center">
+              <div className="text-lg font-semibold text-slate-900 mb-3">Leads to inbox + dashboard</div>
+              <div className="text-slate-600 text-sm leading-relaxed">
+                Instant email when a lead submits, plus your dashboard. Optional handoff to HubSpot, Salesforce, or your CRM.
               </div>
             </div>
-            <div className="relative bg-gradient-to-br from-white via-white to-[var(--brand-primary)]/15 backdrop-blur-sm rounded-3xl p-8 text-center border border-gray-200/50 hover:shadow-2xl hover:scale-105 transition-all duration-500 flex flex-col items-center justify-center group stagger-item hover-lift">
-              <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/40 to-[var(--brand-primary)]/25 rounded-3xl opacity-100 transition-opacity duration-500"></div>
-              <div className="relative z-10">
-                <div className="text-2xl font-black text-gray-900 mb-3 group-hover:text-[var(--brand-primary)] transition-colors duration-300">End-to-End Encryption</div>
-                <div className="text-gray-600 font-semibold leading-relaxed">SOC 2-aligned controls and data protection</div>
+            <div className="rounded-2xl border border-slate-200/90 bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-md flex flex-col justify-center">
+              <div className="text-lg font-semibold text-slate-900 mb-3">HIPAA-ready posture</div>
+              <div className="text-slate-600 text-sm leading-relaxed">
+                Encryption in transit, access-controlled infrastructure, and tenant-scoped handling — BAAs where required.
               </div>
             </div>
           </div>
 
           {/* Final CTA Section */}
           <div className="max-w-4xl mx-auto py-8 md:py-10">
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-200/50 shadow-lg">
+            <div className="rounded-2xl border border-slate-200/90 bg-white p-8 shadow-sm">
               <div className="text-center space-y-8">
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Launch Your Branded Version Now</h2>
                 <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
@@ -350,7 +331,7 @@ function HomeContent() {
          onClick={handleLaunchClick}
          data-cta="primary"
          data-cta-button
-         className="inline-flex items-center justify-center px-8 py-4 rounded-full text-lg font-medium text-white border border-transparent shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer" 
+         className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-base font-semibold text-white border border-transparent shadow-sm hover:opacity-[0.97] transition cursor-pointer"
          style={{ backgroundColor: 'var(--brand-primary)' }}
          aria-label="Launch Your Branded Version Now"
          data-testid="primary-cta-bottom"
@@ -415,7 +396,7 @@ function HomeContent() {
           {isDemo && (
             <div className="max-w-4xl mx-auto py-8 md:py-10 px-4" {...tid('pricing-section')}>
               <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">Frequently Asked Questions</h2>
-              {/* SUNSPIRE: DEMO FAQ order */}
+              {/* Demo FAQ — order tuned for clinic buyer objections */}
               <div className="space-y-6">
                 <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Is this medical advice?</h3>

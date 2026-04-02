@@ -145,8 +145,8 @@ export default function SupportPage() {
                   <h3 className="text-lg font-semibold text-neutral-900">Email Support</h3>
                   <p className="text-sm text-gray-600">Primary support channel</p>
                   <p className="text-xs text-gray-500">&lt;24h response time</p>
-                  <a 
-                    href="mailto:support@getsunspire.com"
+                  <a
+                    href={`mailto:${SUPPORT_EMAIL}`}
                     className="inline-block text-sm text-gray-500 hover:text-gray-600 font-medium"
                   >
                     {SUPPORT_EMAIL}

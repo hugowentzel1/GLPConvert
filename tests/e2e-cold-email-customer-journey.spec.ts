@@ -28,7 +28,7 @@ test.describe('Cold-email customer journey (full simulation)', () => {
     const headerText = await page.locator('header').first().textContent().catch(() => '');
     const hasCompanyName = /SolarCorp|solarcorp/i.test(headerText ?? '');
     results.push({ step: '1. Demo link loads with company name in header', ok: hasCompanyName, detail: headerText?.slice(0, 80) });
-    expect(headerText).toMatch(/SolarCorp|Solar Intelligence/i);
+    expect(headerText).toMatch(/SolarCorp|GLPConvert/i);
 
     // ——— STEP 2: Nav — Pricing ———
     await page.getByRole('link', { name: /Pricing/i }).first().click();

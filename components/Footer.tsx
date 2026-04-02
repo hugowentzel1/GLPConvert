@@ -8,6 +8,8 @@ import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import Container from '@/components/layout/Container';
 import { useIsDemo } from '@/src/lib/isDemo';
 import { PLATFORM_DISPLAY_NAME, PRODUCT_NAME, SUPPORT_EMAIL } from '@/lib/product-identity';
+import { isGlpPrimaryProduct } from '@/lib/feature-flags';
+import { clearbitLogoUrl, sanitizeExternalLogoUrl } from '@/lib/logo-brand-helpers';
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
@@ -41,7 +43,9 @@ export default function Footer() {
     const params = searchParams?.toString();
     return params ? `${path}?${params}` : path;
   };
-  const logoUrl = b.logo || getDefaultLogo(b.brand);
+  const clearbitFallback =
+    b.domain ? sanitizeExternalLogoUrl(clearbitLogoUrl(b.domain)) : null;
+  const logoUrl = b.logo || clearbitFallback || getDefaultLogo(b.brand);
   const getProxiedLogoUrl = (url: string | null) => {
     if (!url) return null;
     try {
@@ -162,27 +166,53 @@ export default function Footer() {
           <div className="flex flex-col gap-4 text-sm text-slate-600 items-center text-center md:flex-row md:items-start md:text-left">
             {/* LEFT: PVWatts - Centered on mobile, left on desktop */}
             <div className="flex-1 flex gap-2 justify-center md:justify-start">
-              <span className="flex-shrink-0 mt-0.5">⚡</span>
+              <span className="flex-shrink-0 mt-0.5" aria-hidden>
+                {isGlpPrimaryProduct() ? "⚕️" : "⚡"}
+              </span>
               <span className="leading-relaxed">
-                Estimates generated<br />using NREL PVWatts® v8
+                {isGlpPrimaryProduct() ? (
+                  <>
+                    Pre-consult clarity layer
+                    <br />
+                    Educational — not medical advice
+                  </>
+                ) : (
+                  <>
+                    Estimates generated
+                    <br />
+                    using NREL PVWatts® v8
+                  </>
+                )}
               </span>
             </div>
 
-            {/* CENTER: Sunspire - Always centered */}
             <div className="flex-1 flex flex-col items-center justify-center text-center">
               <span>
                 Powered by{" "}
-                <span className="font-medium" style={{ color: b.primary }}>
-                  Sunspire
-                </span>
+                <span className="font-medium text-slate-800">{PRODUCT_NAME}</span>
               </span>
             </div>
 
-            {/* RIGHT: Google - Centered on mobile, right on desktop */}
             <div className="flex-1 flex gap-2 justify-center md:justify-end text-center md:text-right">
-              <span className="flex-shrink-0 mt-0.5">🗺️</span>
+              <span className="flex-shrink-0 mt-0.5" aria-hidden>
+                {isGlpPrimaryProduct() ? "🔒" : "🗺️"}
+              </span>
               <span className="leading-relaxed">
-                Mapping & location<br />data © Google
+                {isGlpPrimaryProduct() ? (
+                  <>
+                    HIPAA-ready posture
+                    <br />
+                    <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:underline">
+                      {SUPPORT_EMAIL}
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    Mapping & location
+                    <br />
+                    data © Google
+                  </>
+                )}
               </span>
             </div>
           </div>

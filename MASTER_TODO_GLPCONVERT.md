@@ -3,8 +3,8 @@
 Single source of truth. Unified roadmap for **revenue conversion layer** (GLPConvert) + white-label lease growth.
 
 **Strategy docs (11/10 positioning):** `PRODUCT_STRATEGY_GLPCONVERT.md`, `DEMO_STRATEGY_GLPCONVERT.md`, `COMPLIANCE_NOTES_GLPCONVERT.md`, **`GLPCONVERT_IMPLEMENTATION_11_SPEC.md`** (spec ↔ code matrix + execution priority).  
-**API inventory (Sunspire-derived, GLP-scoped):** `GLPCONVERT_API_CONTRACTS.md` → section *Platform inventory*.  
-**Env (local + Vercel paste guide):** **`docs/ENV_VERCEL_AND_LOCAL.md`** · URL **`docs/VERCEL_CANONICAL_URL.md`** · **`env.local.template`** / **`.env`**. **APIs:** **`docs/GLPCONVERT_APIS_AND_INTEGRATIONS.md`**. **Sentry:** **`docs/SENTRY_GLPCONVERT.md`**. **Marketing:** end of this file (**Marketing** section) + **`GLPCONVERT_COLD_EMAIL_POSITIONING.md`** + Sunspire refs **`TO-DO-LIST.md`**, **`BLINDSPOT-GUIDE.md`**. **Cold-email / embed UX (sources Mar 2026):** **`docs/GLPCONVERT_OUTREACH_UX_SOURCES_MAR2026.md`**. **White-label / multi-tenant SaaS patterns (sources):** **`docs/GLPCONVERT_WHITE_LABEL_SAAS_SOURCES.md`** — how resellers get **their** branding, bounded customization, tenant isolation; pairs with **R017–U020** and **`TenantProvider`**. **Entity / multi-brand (Wellspire LLC):** **`docs/WELLSPIRE_LLC_MULTI_BRAND_SOURCES.md`** — one LLC + GLPConvert / TRTConvert / PEPConvert; **W001+** checklist before **Marketing**.
+**API inventory (legacy platform fork, GLP-scoped):** `GLPCONVERT_API_CONTRACTS.md` → section *Platform inventory*.  
+**Env (local + Vercel paste guide):** **`docs/ENV_VERCEL_AND_LOCAL.md`** · URL **`docs/VERCEL_CANONICAL_URL.md`** · **`env.local.template`** / **`.env`**. **APIs:** **`docs/GLPCONVERT_APIS_AND_INTEGRATIONS.md`**. **Sentry:** **`docs/SENTRY_GLPCONVERT.md`**. **Marketing:** end of this file (**Marketing** section) + **`GLPCONVERT_COLD_EMAIL_POSITIONING.md`** + **`GLPCONVERT_COLD_EMAIL_PLAYBOOK.md`** (sequences + scale) + **`docs/COLD-EMAIL-BRANDING-GUIDE.md`** + **`docs/COLD-EMAIL-READINESS-AUDIT.md`**. **Cold-email / embed UX (sources Mar 2026):** **`docs/GLPCONVERT_OUTREACH_UX_SOURCES_MAR2026.md`**. **White-label / multi-tenant SaaS patterns (sources):** **`docs/GLPCONVERT_WHITE_LABEL_SAAS_SOURCES.md`** — neutral product canvas + tenant theme (CSS variables), bounded customization, tenant isolation; pairs with **R017–U020** and **`TenantProvider`**. **Entity / multi-brand (Wellspire LLC):** **`docs/WELLSPIRE_LLC_MULTI_BRAND_SOURCES.md`** — one LLC + GLPConvert / TRTConvert / PEPConvert; **W001+** checklist before **Marketing**.
 
 ### Channel split (primary GTM — lock this in)
 
@@ -19,7 +19,7 @@ Engineering must not diverge demo and paid flows structurally—only demo overla
 
 | Surface | URL pattern | Example |
 |--------|-------------|---------|
-| **Demo (cold email / buyer)** — same patient flow + preview banner + owner panels | `{ORIGIN}/intake?demo=1&company=…` + optional `logo`, `brand`, `brand2`, `booking`, `demo_traffic`, **`handle=`** when `company` is display name only | Local: `http://localhost:3000/intake?demo=1&handle=glpconvert&company=Sunspire%20Demo&brand=0B3D91` |
+| **Demo (cold email / buyer)** — same patient flow + preview banner + owner panels | `{ORIGIN}/intake?demo=1&company=…` + optional **`domain=`** (Clearbit logo), `logo`, `brand`, `brand2`, `booking`, `demo_traffic`, **`handle=`** when `company` is display name only | Local: `http://localhost:3330/intake?demo=1&handle=glpconvert&company=Acme%20Med%20Spa&domain=acme.com&brand=0B3D91` |
 | **Paid (patient-facing)** — production intake, no demo chrome | `{ORIGIN}/intake?company=<tenant_handle>` | Local: `http://localhost:3000/intake?company=glpconvert` |
 | **Buyer home (demo pricing / Stripe)** | `{ORIGIN}/?demo=1&company=…` | Local: `http://localhost:3000/?demo=1&company=Acme%20Med%20Spa` |
 | **Production host (current Vercel default)** | `https://glp-convert.vercel.app` | Demo: `https://glp-convert.vercel.app/intake?demo=1&handle=glpconvert&company=Your%20Clinic` · Paid: `https://glp-convert.vercel.app/intake?company=glpconvert` |
@@ -37,6 +37,23 @@ Engineering must not diverge demo and paid flows structurally—only demo overla
 | **R030** | **`app/legal/privacy`** + **`app/legal/terms`** — GLPConvert / white-label / HIPAA-ready posture (not legal advice) | **Done** — **HUMAN:** final counsel review **U024** |
 | **R031** | **`docs/ATTRIBUTION_PIXELS_GLPCONVERT.md`** + COMPLIANCE cross-link (UTM done; pixels behind consent) | **Done** |
 | **R032** | Playwright **`glp-branded-e2e-visual.spec.ts`** — paid patient **full** funnel (C) + buyer (B) + demo patient (A) | **Done** |
+
+### CE-2026 — Cold email → hundreds of customers (process import + GLP fit)
+
+**Playbook:** **`GLPCONVERT_COLD_EMAIL_PLAYBOOK.md`**. **Branding URL rules:** **`docs/COLD-EMAIL-BRANDING-GUIDE.md`**. **Pre-flight audit:** **`docs/COLD-EMAIL-READINESS-AUDIT.md`**.
+
+| ID | Item | Owner |
+|----|------|--------|
+| **CE-001** | **AUTO** · `domain=` + Clearbit logo + `company=` as bare domain → logo; shared **`lib/logo-brand-helpers.ts`**; **`useBrandTakeover`** + **`GlpSimulationFunnel`** | **Done** |
+| **CE-002** | **HUMAN** · ICP list + verified **domain** per row (Apollo/Clay/VA) | |
+| **CE-003** | **HUMAN** · Link-builder sheet/script: `company`, `domain`, `firstName`, UTM, optional `brand` | |
+| **CE-004** | **HUMAN** · Cold domain(s) + warm-up + sequencer (Instantly/Smartlead or equivalent) | |
+| **CE-005** | **HUMAN** · LinkedIn DM parallel track with `utm_medium=linkedin` | |
+| **CE-006** | **AUTO** · Optional: server-side enrichment API (never store secrets in repo) — scaffold only until vendor chosen | |
+| **CE-007** | **HUMAN** · Reply handling playbook (book call vs self-serve checkout) | |
+| **CE-008** | **AUTO** · Dashboard tags: demo_sent / clicked / checkout / won (wire to CRM when **U030** extended) | |
+| **CE-009** | **HUMAN** · Weekly metrics review + domain rotation + copy tests | |
+| **CE-010** | **HUMAN** · Counsel: cold email compliance + unsubscribe policy (**U024** overlap) | |
 
 Legend: `[x] DONE` | `[~] IN_PROGRESS` | `[ ] TODO`  
 Owner: `AUTO` or `HUMAN`
@@ -638,7 +655,7 @@ If your app also reads **`STRIPE_PRICE_STARTER`** / **`STRIPE_PRICE_MONTHLY`**, 
 - [x] Core docs set (migration/legal/product/spec/env/infra)
 - [x] Multiple GLP copy updates across legal/support/pricing/docs
 - [x] **Phase R (partial):** Multi-step funnel — input → transition → results (“Your GLP Path”) → consult readiness → lead → confirmation; demo mode (`demo=1` / `preview=1`); owner panels (leak illustration, before/after, ROI bullets, activate CTA); UTM session merge (`lib/glp-attribution.ts`); optional Meta/GA pixels on intake (`AttributionPixels`); readiness + extended UTM stored in lead `GLP_SIMULATION` JSON
-- [x] **Sunspire → GLP API map:** full internal route list + external providers (Supabase, Stripe, Resend, NREL, EIA, OpenEI, Google, Vercel, Meta/GA client) in `GLPCONVERT_API_CONTRACTS.md` (*Platform inventory*); follow-up tasks **R011–R016**
+- [x] **Legacy codebase → GLP API map:** full internal route list + external providers (Supabase, Stripe, Resend, NREL, EIA, OpenEI, Google, Vercel, Meta/GA client) in `GLPCONVERT_API_CONTRACTS.md` (*Platform inventory*); follow-up tasks **R011–R016**
 
 ### Partially Exists
 
@@ -670,7 +687,7 @@ Aligned with `PRODUCT_STRATEGY_GLPCONVERT.md`. Execute in parallel with human in
 - [x] **R003 · AUTO** Demo mode: `Preview for {{clinic}}`, `GlpDemoOwnerPanels` (illustrative leak, before/after, ROI copy, activate CTA), `demo_traffic` query override.
 - [x] **R004 · AUTO** Attribution: UTM persistence (`lib/glp-attribution.ts`); optional `NEXT_PUBLIC_META_PIXEL_ID` / `NEXT_PUBLIC_GA_MEASUREMENT_ID` on `/intake`.
 - [x] **R005 · AUTO** Lead API: `readiness` + `utmMedium` / `utmTerm` / `utmContent` in packed `GLP_SIMULATION` metadata.
-- [x] **R010 · AUTO** **Deep API audit:** document every **internal** App Router route + **external** provider call Sunspire uses; classify **GLP required / optional / solar-only / deprecate**; list **beneficial GLP additions** — see `GLPCONVERT_API_CONTRACTS.md` (*Platform inventory*).
+- [x] **R010 · AUTO** **Deep API audit:** document every **internal** App Router route + **external** provider call the forked stack uses; classify **GLP required / optional / solar-only / deprecate**; list **beneficial GLP additions** — see `GLPCONVERT_API_CONTRACTS.md` (*Platform inventory*).
 - [x] **R006 · AUTO** Post-lead **server webhook** to tenant **Capture URL** (`https://` only): `POST /api/lead` after successful store → JSON payload `event: lead.created` + lead fields (non-blocking; optional **`CRM_WEBHOOK_TIMEOUT_MS`**). *Admin still uses `POST /api/tenant/crm-webhook` to set URL.*
 - [ ] **R007 · AUTO** Dashboard cards: starts, completions, leads, readiness rollup (uses events + leads).
 - [ ] **R008 · AUTO** Embed / deployment docs + optional iframe snippet page (no bloated builder).
@@ -684,7 +701,7 @@ Aligned with `PRODUCT_STRATEGY_GLPCONVERT.md`. Execute in parallel with human in
 - [~] **R017 · AUTO** **Cold-email + embed + white-label fit:** **`/docs/embed`** updated (prod vs demo iframe, `handle=`); tenant **logo + colors + pricing** merge from **`GET /api/public/tenant-intake-config`** when query overrides absent; optional **`postMessage`** resize + deeper mobile polish still open.
 - [ ] **R018 · HUMAN** **ICP collateral:** 2–3 short PDFs or Notion pages (**med spa** / **telehealth** / **clinic**) for cold-email attachments—positioning only; links to live **`/intake?...&demo=1`** demos.
 - [ ] **R019 · AUTO** **`/docs/setup`:** GLPConvert (not solar), **Mar 2026** date, **Environment variables** subsection — **names only** (link repo **`docs/ENV_VERCEL_AND_LOCAL.md`**); **never** ship secret values on a public page.
-- [x] **R020 · AUTO** **Demo URL branding (Sunspire-style):** `GlpSimulationFunnel` reads **`logo`** (HTTPS URL), **`brand`** / **`primary`**, **`brand2`** (6-digit hex) — primary CTAs + readiness chips + preview banner. Documented in **`DEMO_STRATEGY_GLPCONVERT.md`**. Production parity → **U017–U020**.
+- [x] **R020 · AUTO** **Demo URL branding (white-label):** `GlpSimulationFunnel` + **`useBrandTakeover`** read **`logo`** (HTTPS URL), **`domain=`** (Clearbit logo), **`brand`** / **`primary`**, **`brand2`** (6-digit hex) — primary CTAs + readiness chips + preview banner. Documented in **`DEMO_STRATEGY_GLPCONVERT.md`**. Production parity → **U017–U020**.
 - [x] **R021 · AUTO** **Tenant booking handoff (patient-facing):** **`lib/tenant-intake-public.ts`** + **`GET /api/public/tenant-intake-config`**, funnel merges **`booking` / `book` / `booking_url`** query params; **`POST /api/admin/create-tenant`** **`bookingUrl`**; leads table shows **booking_status**, **recommended_path**, **budget_band**; marketing home **hides solar legacy** unless `NEXT_PUBLIC_VERTICAL=solar_legacy` or `NEXT_PUBLIC_ENABLE_SOLAR_ESTIMATE=1`.
 
 ### Phase 0 — Foundation already completed
@@ -834,7 +851,7 @@ Aligned with `PRODUCT_STRATEGY_GLPCONVERT.md`. Execute in parallel with human in
 
 **Order before buying cold-email domains (M001):** (1) **Wellspire / W001+** far enough for real business identity. (2) **`M000 — Resend`** so the **app** can send mail from a **verified domain** (lead notify, transactional, optional broadcasts—Resend is **not** a replacement for **Google Workspace + Instantly** for high-volume cold outbound; it powers **product** email and can complement ops). (3) **Stripe live** so production checkout matches real money **before** you drive serious traffic from cold email. (4) Then **M001+** (domains for Workspace cold send, DNS, Instantly, etc.).
 
-**When to start M001+:** After **M000** + **Stripe live** checklists below are done, demo URL works, **W001+** footer/CAN-SPAM path is real. **Cold-email copy:** **`GLPCONVERT_COLD_EMAIL_POSITIONING.md`**. **More ops detail:** **`TO-DO-LIST.md`**, **`BLINDSPOT-GUIDE.md`**.
+**When to start M001+:** After **M000** + **Stripe live** checklists below are done, demo URL works, **W001+** footer/CAN-SPAM path is real. **Cold-email copy:** **`GLPCONVERT_COLD_EMAIL_POSITIONING.md`**. **Full outbound OS:** **`GLPCONVERT_COLD_EMAIL_PLAYBOOK.md`** + **CE-2026** table above + **`docs/COLD-EMAIL-BRANDING-GUIDE.md`**. **More ops detail:** **`TO-DO-LIST.md`**, **`BLINDSPOT-GUIDE.md`** (legacy checklists — prefer GLPConvert-specific docs first).
 
 ---
 

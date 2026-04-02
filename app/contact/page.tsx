@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import PaidFooter from '@/components/PaidFooter';
 import { useEffect, useState } from 'react';
 import { useIsDemo } from '@/src/lib/isDemo';
+import { SUPPORT_EMAIL } from '@/lib/product-identity';
 
 export default function ContactPage() {
   const b = useBrandTakeover();
@@ -150,8 +151,11 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900 mb-1">Email</h3>
-                    <a href="mailto:support@getsunspire.com" className="text-gray-600 hover:text-[var(--brand-primary)]">
-                      support@getsunspire.com
+                    <a
+                      href={`mailto:${SUPPORT_EMAIL}`}
+                      className="text-gray-600 hover:text-[var(--brand-primary)]"
+                    >
+                      {SUPPORT_EMAIL}
                     </a>
                   </div>
                 </div>

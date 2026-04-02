@@ -39,8 +39,8 @@ Every API that is in the **quote → lead → payment** path is either probed or
 
 ## Daily check
 
-- **UptimeRobot:** Monitor `GET /api/health`. Alert to **support@getsunspire.com** when status ≠ 200.
-- **Sentry:** Alerts to **support@getsunspire.com** for new errors/spikes.
+- **UptimeRobot:** Monitor `GET /api/health`. Alert to **support@glpconvert.com** when status ≠ 200.
+- **Sentry:** Alerts to **support@glpconvert.com** for new errors/spikes.
 - **Status page:** Open `/status` to see per-service status and version.
 
 ## Status page ↔ health (verification)

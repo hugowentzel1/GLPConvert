@@ -32,8 +32,9 @@ export function parseCompany(
   search: URLSearchParams,
 ): CompanyInfo {
   const h = (host || "").toLowerCase();
-  const fromHost = h.endsWith(".out.sunspire.app")
-    ? h.replace(".out.sunspire.app", "")
+  /** White-label tenant subdomain pattern (GLPConvert hosted clinics) */
+  const fromHost = h.endsWith(".c.glpconvert.com")
+    ? h.replace(".c.glpconvert.com", "")
     : "";
   const fromQuery = (search.get("company") || "").toLowerCase().trim();
   const handle = fromHost || fromQuery || "your-company";
@@ -44,7 +45,7 @@ export function parseCompany(
   return {
     companyHandle: handle,
     companyName: name,
-    companyDomain: `${handle}.out.sunspire.app`,
+    companyDomain: `${handle}.c.glpconvert.com`,
   };
 }
 
@@ -56,7 +57,7 @@ export function getCompanyFromUrl(url: string): CompanyInfo {
     return {
       companyHandle: "your-company",
       companyName: "Your Company",
-      companyDomain: "your-company.out.sunspire.app",
+      companyDomain: "your-company.c.glpconvert.com",
     };
   }
 }

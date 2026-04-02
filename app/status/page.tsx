@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { SUPPORT_EMAIL } from '@/lib/product-identity';
+import { PRODUCT_NAME, SUPPORT_EMAIL } from '@/lib/product-identity';
 
 interface HealthService {
   service: string;
@@ -208,7 +208,7 @@ export default function StatusPage() {
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-slate-900 mb-2">System Status</h1>
           <p className="text-slate-600 mb-4">
-            This is the only page you need to confirm all Sunspire systems are up. If every service below is green, you’re good to go.
+            Live dependency checks for {PRODUCT_NAME}. If every row below is green, core services are responding.
           </p>
           <p className="text-sm text-slate-500">
             Last updated: {new Date(health.timestamp).toLocaleString()}
@@ -259,8 +259,8 @@ export default function StatusPage() {
                 }`}
               >
                 {allOk
-                  ? 'Every API Sunspire depends on is responding.'
-                  : 'Check the list below and TO-DO-LIST / MAINTENANCE-GUIDE if needed.'}
+                  ? `All probed dependencies that ${PRODUCT_NAME} relies on are responding.`
+                  : 'Check the list below and MAINTENANCE-GUIDE if needed.'}
               </p>
             </div>
           </div>
@@ -269,7 +269,7 @@ export default function StatusPage() {
         {/* What we check — every API and dependency; nothing hidden (single header: only "System Status" above) */}
         <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden mb-6">
           <div className="px-6 py-4 bg-slate-50 border-b border-slate-200">
-            <p className="text-lg font-semibold text-slate-900">Everything Sunspire depends on (checked live)</p>
+            <p className="text-lg font-semibold text-slate-900">Everything {PRODUCT_NAME} depends on (checked live)</p>
             <p className="text-sm text-slate-500 mt-0.5">
               Data (Supabase), payments (Stripe), quotes (NREL + EIA), address (Google Geocoding + Places), email (Resend), storage (Vercel KV), shading (USGS 3DEP). Each row is probed by <code className="text-xs bg-slate-100 px-1 rounded">/api/health</code> — only services with env vars set appear. This covers every API in the quote/lead/payment path. See <code className="text-xs bg-slate-100 px-1 rounded">docs/API-HEALTH-COVERAGE.md</code> for the full route list.
             </p>

@@ -43,7 +43,7 @@ All copy/links are derived from `companyHandle` and, in production, from tenant 
 |------|-------------------------------|----------------|
 | **Visit Site** (Instant URL) | Opens their instant URL in a new tab. The URL is `/{companyHandle}` (e.g. `/activate-test`). That route redirects to **`/paid?company={companyHandle}`**. | The **paid calculator page** with their **company name** in the header/branding and the **brand theme color** (from `getBrandTheme(companyHandle)`). Logo shows only if passed in URL (e.g. `?logo=...`) or from tenant API in production. |
 | **Copy URL** | Copies the instant URL to clipboard. | Same URL as Visit Site; when pasted and opened, same paid page with their branding. |
-| **Copy Embed Code** | Copies an iframe snippet. The iframe **src** is **`/embed/{companyHandle}?company={companyHandle}`**. | When they paste the code on their site, the iframe loads the **embed calculator** with **company name** and **theme color** in the header ("Powered by Sunspire"). Logo shows if in URL or from API. |
+| **Copy Embed Code** | Copies an iframe snippet. The iframe **src** is **`/embed/{companyHandle}?company={companyHandle}`**. | When they paste the code on their site, the iframe loads the **embed** with **company name** and **theme color** in the header ("Powered by GLPConvert" or white-label line per config). Logo shows if in URL or from API. |
 | **Setup Instructions** (Custom Domain) | Goes to `/docs/setup?company={companyHandle}`. | Setup docs with company in query for context. |
 | **Copy API Key** | Copies the API key to clipboard. | For use in API requests. |
 | **View Leads** | Goes to `/c/{companyHandle}/leads`. | Leads list for that company (from Airtable in production). |

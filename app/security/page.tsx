@@ -3,6 +3,7 @@
 import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import { useSearchParams } from 'next/navigation';
 import Footer from '@/components/Footer';
+import { PARENT_COMPANY_LEGAL_NAME, PRODUCT_NAME, SUPPORT_EMAIL } from '@/lib/product-identity';
 
 export default function SecurityPage() {
   const b = useBrandTakeover();
@@ -24,9 +25,9 @@ export default function SecurityPage() {
           </a>
         </div>
 
-        <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-200/50 shadow-lg">
-          <h1 className="text-4xl font-black text-gray-900 mb-8 text-center">
-            Security & Compliance
+        <div className="rounded-2xl border border-slate-200/90 bg-white p-8 shadow-sm">
+          <h1 className="text-3xl font-semibold tracking-tight text-slate-900 mb-6 text-center">
+            Security &amp; compliance
           </h1>
 
           <div className="prose prose-lg max-w-none">
@@ -57,28 +58,31 @@ export default function SecurityPage() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">SOC 2 Compliance</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">Trust &amp; controls</h2>
             <div className="space-y-4 text-gray-700">
-              <p>Sunspire maintains SOC 2 Type II compliance, demonstrating our commitment to:</p>
+              <p>
+                {PRODUCT_NAME} ({PARENT_COMPANY_LEGAL_NAME}) is built for clinic-facing, HIPAA-ready workflows: encryption in transit,
+                access-controlled infrastructure, and tenant-scoped data handling. We do <strong>not</strong> claim a specific third-party
+                audit (e.g. SOC 2 Type II) unless and until that is completed and published for this product—ask us for the current
+                controls summary or questionnaire responses.
+              </p>
               <ul className="space-y-2 ml-6">
                 <li className="flex items-start">
                   <span className="text-blue-500 mr-2">•</span>
-                  <span><strong>Security:</strong> Protection against unauthorized access</span>
+                  <span><strong>Security:</strong> Least-privilege access, modern auth patterns, monitored infrastructure</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-blue-500 mr-2">•</span>
-                  <span><strong>Availability:</strong> System reliability and uptime</span>
+                  <span><strong>Availability:</strong> Hosted on reliable cloud providers with health monitoring</span>
                 </li>
                 <li className="flex items-start">
                   <span className="text-blue-500 mr-2">•</span>
-                  <span><strong>Confidentiality:</strong> Protection of sensitive information</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-blue-500 mr-2">•</span>
-                  <span><strong>Privacy:</strong> Personal information protection</span>
+                  <span><strong>Confidentiality:</strong> PHI-oriented flows designed for BAA-ready deployment with clinics</span>
                 </li>
               </ul>
-              <p className="mt-4 text-sm text-gray-600">SOC 2 reports are available to customers upon request.</p>
+              <p className="mt-4 text-sm text-gray-600">
+                Final compliance posture (including BAAs) should be reviewed with your counsel for your use case.
+              </p>
             </div>
             </section>
 
@@ -175,7 +179,7 @@ export default function SecurityPage() {
               <p>For any security, privacy, or compliance questions, contact our Data Protection Officer:</p>
               <div className="bg-gray-50 rounded-lg p-6 mt-4">
                 <p className="font-semibold text-gray-900">Data Protection Officer</p>
-                <p className="text-gray-700">Email: <a href="mailto:security@sunspire.app" className="hover:underline">security@sunspire.app</a></p>
+                <p className="text-gray-700">Email: <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:underline">{SUPPORT_EMAIL}</a></p>
                 <p className="text-gray-700">Response time: Within 48 hours</p>
               </div>
             </div>

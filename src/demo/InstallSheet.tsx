@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useBrandTakeover } from "@/src/brand/useBrandTakeover";
+import { SUPPORT_EMAIL } from "@/lib/product-identity";
 import { track } from "./track";
 
 export default function InstallSheet() {
@@ -175,7 +176,7 @@ export default function InstallSheet() {
                     }`}
                     placeholder="solar.yourdomain"
                   />
-                  <span className="text-gray-500">.sunspire.app</span>
+                  <span className="text-gray-500">.c.glpconvert.com</span>
                 </div>
                 {!isSubdomainValid && subdomain && (
                   <p className="text-sm text-red-600 mt-1">
@@ -363,15 +364,13 @@ export default function InstallSheet() {
           <div className="border-t pt-6 mt-6">
             <div className="flex justify-center space-x-6 text-sm">
               <a
-                href="https://docs.sunspire.app"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/docs/setup"
                 className="text-blue-600 hover:text-blue-800 underline"
               >
                 Docs
               </a>
               <a
-                href="mailto:support@sunspire.app"
+                href={`mailto:${SUPPORT_EMAIL}`}
                 className="text-blue-600 hover:text-blue-800 underline"
               >
                 Email support
