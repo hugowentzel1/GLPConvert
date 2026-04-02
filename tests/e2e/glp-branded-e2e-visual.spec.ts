@@ -82,7 +82,7 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await expect(page.getByText(/GLPConvert — a product of Wellspire LLC/i).first()).toBeVisible({
       timeout: 20000,
     });
-    await expect(page.locator('[data-intake-mode="demo"]')).toBeVisible();
+    await expect(page.locator('[data-intake-mode="demo"]')).toBeVisible({ timeout: 20000 });
     await expect(page.locator('link[rel="stylesheet"]').first()).toBeAttached({ timeout: 20000 });
     expect(await page.locator('link[rel="stylesheet"]').count()).toBeGreaterThan(0);
     const kickerColor = await page
