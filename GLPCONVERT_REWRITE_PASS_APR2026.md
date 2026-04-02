@@ -11,6 +11,7 @@ Concise log of the **Apr 2026** product/copy/visual pass aligned with `MASTER_TO
 | **Home** | `app/page.tsx` — KPI band driven by `MetricsBar` + `trust.json`; fixed double-period microcopy; `data-testid="kpi-band"` preserved for spacing tests. |
 | **Default colors** | `components/BrandCSSInjector.tsx` — slate neutral scale when tenant branding is off (replaces consumer orange default). |
 | **Intake UX** | `lib/glp-intake-ui.ts`, `components/intake/GlpSimulationFunnel.tsx` — `grid2Form`, `formActions`, fieldset spacing, results trust header polish, trajectory timeline, branded confirmation step. |
+| **SSR mode flag** | `app/intake/page.tsx` sets **`data-intake-mode`** on `<main>` from `searchParams` so Playwright / SEO see demo vs paid without waiting on client-only `Suspense`. |
 | **Branding params** | `parseDemoBranding` honors `brandColor` before `primary` / `brand` hex. |
 | **Nav + about** | `app/about/page.tsx`; `SharedNavigation` — About (demo); paid mode Help / Privacy / About. |
 | **Install sheet** | `src/demo/InstallSheet.tsx` — GLP subdomain slug (single label), embed host `.c.glpconvert.com`, copy updates. |

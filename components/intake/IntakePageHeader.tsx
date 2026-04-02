@@ -16,10 +16,7 @@ function IntakePageHeaderInner() {
   const demo = isIntakeDemoMode(sp);
 
   return (
-    <div
-      className="mx-auto mb-12 max-w-2xl space-y-5 text-center md:mb-14"
-      data-intake-mode={demo ? "demo" : "paid"}
-    >
+    <div className="mx-auto mb-12 max-w-2xl space-y-5 text-center md:mb-14">
       <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">
         {PLATFORM_DISPLAY_NAME}
       </p>
