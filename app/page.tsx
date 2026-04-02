@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import dynamic from 'next/dynamic';
-import { PlaceResult } from '@/lib/types';
 import LegalFooter from '@/components/legal/LegalFooter';
 import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import HeroBrand from '@/src/brand/HeroBrand';
@@ -30,27 +28,12 @@ import Testimonials from '@/components/Testimonials';
 import TrustRow from '@/components/trust/TrustRow';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import StickyCtaBar from '@/components/StickyCtaBar';
+import DemoPreviewTopBar from '@/components/marketing/DemoPreviewTopBar';
 import { PRODUCT_NAME, STORAGE_KEYS } from '@/lib/product-identity';
-
-const AddressAutocomplete = dynamic(() => import('@/components/AddressAutocomplete'), { 
-  ssr: false,
-  loading: () => <div className="h-12 bg-gray-100 rounded-lg animate-pulse" />
-});
 
 function HomeContent() {
   console.log('[route] render start');
 
-  const showLegacySolar =
-    process.env.NEXT_PUBLIC_VERTICAL === "solar_legacy" ||
-    process.env.NEXT_PUBLIC_VERTICAL === "solar" ||
-    process.env.NEXT_PUBLIC_ENABLE_SOLAR_ESTIMATE === "1";
-
-  const [address, setAddress] = useState('');
-  const [selectedPlace, setSelectedPlace] = useState<PlaceResult | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isClient, setIsClient] = useState(false);
-  const [showSampleReportModal, setShowSampleReportModal] = useState(false);
-  const [sampleReportSubmitted, setSampleReportSubmitted] = useState(false);
   const [trustData, setTrustData] = useState<any>(null);
   const [showLockScreen, setShowLockScreen] = useState(false);
   const router = useRouter();
@@ -81,25 +64,6 @@ function HomeContent() {
   const { read, consume } = usePreviewQuota(2);
   const remaining = read();
   const countdown = useCountdown(b.expireDays);
-
-  // Ensure client-side rendering
-  useEffect(() => {
-    setIsClient(true);
-    
-    // Restore last typed address for continuity
-    let savedAddress = localStorage.getItem(STORAGE_KEYS.lastAddress);
-    if (!savedAddress) {
-      const legacyAddr = localStorage.getItem(STORAGE_KEYS.legacyLastAddress);
-      if (legacyAddr) {
-        savedAddress = legacyAddr;
-        localStorage.setItem(STORAGE_KEYS.lastAddress, legacyAddr);
-        localStorage.removeItem(STORAGE_KEYS.legacyLastAddress);
-      }
-    }
-    if (savedAddress && savedAddress !== 'undefined' && !address) {
-      setAddress(savedAddress);
-    }
-  }, [address]);
 
   // Load trust data
   useEffect(() => {
@@ -150,108 +114,6 @@ function HomeContent() {
   }
 
 
-
-  const handleAddressSelect = (place: { formattedAddress: string; placeId: string; lat: number; lng: number; state?: string }) => {
-    console.log('Address selected:', place.formattedAddress, 'placeId:', place.placeId, 'state:', place.state);
-    
-    // Create a mock selectedPlace object for navigation (state used for utility rate in estimate)
-    const mockPlace = {
-      formattedAddress: place.formattedAddress,
-      placeId: place.placeId,
-      lat: place.lat || 40.7128, // Use provided coordinates or default NYC
-      lng: place.lng || -74.0060,
-      state: place.state,
-      components: {
-        street_number: '',
-        route: '',
-        locality: '',
-        administrative_area_level_1: place.state || '',
-        country: '',
-        postal_code: ''
-      }
-    };
-    
-    setAddress(place.formattedAddress);
-    setSelectedPlace(mockPlace);
-    
-    // Save address for state continuity (only if valid)
-    if (address && address !== 'undefined') {
-      localStorage.setItem(STORAGE_KEYS.lastAddress, address);
-    }
-    
-    // Automatically navigate to report page when address is selected - deployment fix
-    if (address && address.trim()) {
-      console.log('Auto-navigating to report page with selected address');
-      handleGenerateEstimate(address, mockPlace);
-    }
-  };
-
-  const handleGenerateEstimate = (addressParam?: string, placeParam?: any) => {
-    const currentAddress = addressParam || address;
-    const currentPlace = placeParam || selectedPlace;
-    
-    if (!currentAddress.trim()) return;
-    
-    console.log('Generating estimate for address:', currentAddress);
-    console.log('Selected place:', currentPlace);
-    
-    // Check quota and block if 0 runs left
-    if (b.enabled) {
-      const currentQuota = read();
-      console.log('🔒 Homepage quota check - currentQuota:', currentQuota);
-      
-      // If quota is 0 or negative, show lock overlay instead of navigating
-      if (currentQuota <= 0) {
-        console.log('🚫 Demo limit reached - triggering lock overlay');
-        setShowLockScreen(true);
-        return;
-      }
-      
-      console.log('🔒 Homepage - quota available:', currentQuota);
-    }
-    
-    setIsLoading(true);
-    
-    try {
-      // Get current URL parameters to preserve company and demo
-      const company = searchParams?.get('company');
-      const demo = searchParams?.get('demo');
-      
-      if (currentPlace && currentPlace.formattedAddress) {
-        const q = new URLSearchParams({
-          address: currentPlace.formattedAddress,
-          lat: String(currentPlace.lat),
-          lng: String(currentPlace.lng),
-          placeId: currentPlace.placeId,
-        });
-        if (currentPlace.state) q.set('state', currentPlace.state);
-        
-        // Add company and demo parameters if they exist
-        if (company) q.set('company', company);
-        if (demo) q.set('demo', demo);
-        
-        console.log('Navigating to report with selected place:', q.toString());
-        router.push(`/report?${q.toString()}`);
-      } else {
-        const q = new URLSearchParams({ 
-          address: currentAddress, 
-          lat: '40.7128', 
-          lng: '-74.0060', 
-          placeId: 'demo' 
-        });
-        
-        // Add company and demo parameters if they exist
-        if (company) q.set('company', company);
-        if (demo) q.set('demo', demo);
-        
-        console.log('Navigating to report with manual address:', q.toString());
-        router.push(`/report?${q.toString()}`);
-      }
-    } catch (error) {
-      console.error('Error generating estimate:', error);
-      setIsLoading(false);
-    }
-  };
 
   const handleLaunchClick = async () => {
     if (b.enabled) {
@@ -315,18 +177,16 @@ function HomeContent() {
   // The brand takeover will update the UI when ready
   // Remove the early return to show full content always
 
-  const initials = (name: string) => {
-    return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
-      .toUpperCase()
-      .substring(0, 2);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 font-inter" data-demo={isDemo}>
       <ReadingProgressBar />
+      {isDemo && b.enabled ? (
+        <DemoPreviewTopBar
+          brandName={b.brand || "Your Company"}
+          countdown={countdown}
+          runsLeft={remaining}
+        />
+      ) : null}
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 hero">
         {/* Ensure hero text container is below header but above any background media */}
         <section className="relative z-10">
@@ -403,11 +263,6 @@ function HomeContent() {
                 >
                   Try the branded intake experience
                 </a>
-                {showLegacySolar ? (
-                  <span className="block text-sm text-gray-500 mt-2">
-                    Legacy solar address → report sample still available below for comparison.
-                  </span>
-                ) : null}
               </div>
             </div>
           </div>
@@ -416,91 +271,6 @@ function HomeContent() {
           <div data-testid="home-hero-cta">
             <TrustRow />
           </div>
-
-          {showLegacySolar ? (
-            <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-200/30 p-8 md:p-12 max-w-3xl mx-auto section-spacing slide-up-fade">
-              <div className="space-y-6">
-                <div className="text-center space-y-4">
-                  <h2 className="text-2xl font-bold text-gray-900">Legacy solar flow (optional)</h2>
-                  <p className="text-gray-600">
-                    Address-first sample report — only when solar legacy mode is enabled. Default GLP product is the intake simulator above.
-                  </p>
-                </div>
-
-                <div className="space-y-6">
-                  <div className="w-full max-w-2xl mx-auto space-y-1.5">
-                    <AddressAutocomplete
-                      value={address}
-                      onChange={setAddress}
-                      onSelect={handleAddressSelect}
-                      data-testid="demo-address-input"
-                      placeholder={
-                        b.city && b.city !== "undefined"
-                          ? `Start typing an address in ${b.city}...`
-                          : "Start typing your property address..."
-                      }
-                      className="w-full"
-                    />
-                    {isDemo && (
-                      <div className="flex justify-end">
-                        <span className="text-[11px] text-gray-400">Powered by Google</span>
-                      </div>
-                    )}
-                  </div>
-
-                  <button
-                    onClick={
-                      address?.trim()
-                        ? () => handleGenerateEstimate()
-                        : b.enabled
-                          ? handleLaunchClick
-                          : () => handleGenerateEstimate()
-                    }
-                    disabled={!address?.trim() || isLoading}
-                    data-cta-button
-                    className={`w-full inline-cta ${!address?.trim() || isLoading ? "btn-disabled" : "btn-cta"}`}
-                  >
-                    {isLoading ? (
-                      <div className="flex items-center justify-center space-x-4">
-                        <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        <span>Loading…</span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center justify-center space-x-4">
-                        <span>{b.enabled ? `Continue to sample report` : "Continue to sample report"}</span>
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                        </svg>
-                      </div>
-                    )}
-                  </button>
-
-                  {isDemo && (
-                    <div
-                      style={{ marginTop: "30.5px" }}
-                      className="h-12 md:h-14 flex flex-col items-center justify-end space-y-1"
-                    >
-                      {remaining > 0 ? (
-                        <>
-                          <p className="text-center text-sm text-gray-500">
-                            Preview: {remaining} run{remaining === 1 ? "" : "s"} left.
-                          </p>
-                          <p className="text-center text-sm text-gray-500">
-                            Expires in {countdown.days}d {countdown.hours}h {countdown.minutes}m {countdown.seconds}s
-                          </p>
-                        </>
-                      ) : (
-                        <div className="text-center text-sm text-red-600 font-semibold space-y-1">
-                          <p>🚫 Demo limit reached.</p>
-                          <p>Launch to get full access</p>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          ) : null}
 
           {/* Quotes - Social Proof Grid */}
           <Testimonials />
@@ -621,14 +391,14 @@ function HomeContent() {
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-[var(--brand-primary)] rounded-full flex items-center justify-center text-white font-semibold text-base shadow-md flex-shrink-0">
                     1
                   </div>
-                  <span className="text-base text-slate-700 max-w-[140px]">Customer requests quote</span>
+                  <span className="text-base text-slate-700 max-w-[140px]">Patient starts your intake</span>
                 </div>
                 <div className="hidden md:block text-slate-400 text-2xl flex-shrink-0 -mt-8">→</div>
                 <div className="flex flex-col items-center space-y-2 w-full md:w-auto text-center">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-[var(--brand-primary)] rounded-full flex items-center justify-center text-white font-semibold text-base shadow-md flex-shrink-0">
                     2
                   </div>
-                  <span className="text-base text-slate-700 max-w-[140px]">Instant branded report</span>
+                  <span className="text-base text-slate-700 max-w-[140px]">Education &amp; consult readiness</span>
                 </div>
                 <div className="hidden md:block text-slate-400 text-2xl flex-shrink-0 -mt-8">→</div>
                 <div className="flex flex-col items-center space-y-2 w-full md:w-auto text-center">
@@ -681,69 +451,6 @@ function HomeContent() {
         </div>
         </section>
       </main>
-
-      {/* Sample Report Modal */}
-      {showSampleReportModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full mx-4">
-            {!sampleReportSubmitted ? (
-              <div className="text-center space-y-6">
-                <h3 className="text-2xl font-bold text-gray-900">Request sample experience</h3>
-                <p className="text-gray-600">
-                  See how the intake flow, recommendation card, and booking CTA look for your brand (placeholder — wire to CRM when ready).
-                </p>
-                <form onSubmit={(e) => {
-                  e.preventDefault();
-                  setSampleReportSubmitted(true);
-                  setTimeout(() => {
-                    setShowSampleReportModal(false);
-                    setSampleReportSubmitted(false);
-                  }, 3000);
-                }} className="space-y-4">
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--brand-primary)] focus:border-transparent"
-                      placeholder="Enter your email address"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    className="w-full px-6 py-3 rounded-lg text-white font-semibold transition-colors"
-                    style={{ backgroundColor: 'var(--brand-primary)' }}
-                  >
-                    Submit Request
-                  </button>
-                </form>
-                <button
-                  onClick={() => setShowSampleReportModal(false)}
-                  className="text-gray-500 hover:text-gray-700"
-                >
-                  Cancel
-                </button>
-              </div>
-            ) : (
-              <div className="text-center space-y-6">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900">Sample Report Requested!</h3>
-                <p className="text-gray-600">
-                  Thanks for reaching out! We&apos;ll send your sample report to your email within 24 hours.
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
 
       <Footer />
       

@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const isGlp = (vertical ?? "solar") === "glp";
+    const isGlp = (vertical ?? "glp") === "glp";
     if (!isGlp && !address) {
       return NextResponse.json(
         { error: "Missing required fields for solar lead" },

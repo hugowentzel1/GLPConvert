@@ -48,7 +48,8 @@ export async function GET() {
   const checks: HealthCheck[] = [];
   const vertical = getDefaultVertical();
   const probeSolarApis =
-    process.env.HEALTH_PROBE_SOLAR === "1" || vertical === "solar_legacy";
+    process.env.HEALTH_PROBE_SOLAR === "1" ||
+    process.env.NEXT_PUBLIC_ENABLE_SOLAR_ESTIMATE === "1";
 
   const overallStatus: {
     ok: boolean;

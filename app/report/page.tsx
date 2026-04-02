@@ -58,7 +58,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { softWrapAddress } from '@/lib/text';
 import { ensureReadableBrandInk } from '@/utils/brandColor';
-import { isGlpPrimaryProduct } from '@/lib/feature-flags';
+import { isGlpPrimaryProduct, isSolarEstimateEnabled } from "@/lib/feature-flags";
 import { PRODUCT_NAME } from '@/lib/product-identity';
 
 // Helper function to get state name from coordinates
@@ -84,6 +84,20 @@ const demoAddressesByState: Record<string, {address:string, lat:number, lng:numb
   TX: { address: "901 S Mopac Expy, Austin, TX", lat: 30.2672, lng: -97.7431 },
   NV: { address: "400 Stewart Ave, Las Vegas, NV", lat: 36.1716, lng: -115.1391 }
 };
+
+function ReportRedirectToIntake() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  useEffect(() => {
+    const qs = searchParams?.toString() ?? "";
+    router.replace(qs ? `/intake?${qs}` : "/intake");
+  }, [router, searchParams]);
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 text-slate-600">
+      <p>Redirecting to intake…</p>
+    </div>
+  );
+}
 
 function ReportContent() {
   const searchParams = useSearchParams();
@@ -1233,10 +1247,17 @@ function ReportContent() {
   );
 }
 
+function ReportGate() {
+  if (!isSolarEstimateEnabled()) {
+    return <ReportRedirectToIntake />;
+  }
+  return <ReportContent />;
+}
+
 export default function ReportPage() {
   return (
     <TenantProvider>
-      <ReportContent />
+      <ReportGate />
     </TenantProvider>
   );
 }
