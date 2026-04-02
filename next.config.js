@@ -8,62 +8,55 @@ const nextConfig = {
 
   // Security headers
   async headers() {
-    return [
+    /**
+     * Do NOT send upgrade-insecure-requests or HSTS when not on Vercel.
+     * On http://localhost (next dev / next start), upgrade-insecure-requests makes the browser
+     * fetch https://localhost/_next/static/css/... — no TLS → stylesheets fail → "unstyled" UI.
+     */
+    const onVercel = process.env.VERCEL === "1";
+
+    const cspDirectives = [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://maps.googleapis.com https://js.sentry-cdn.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data: https: blob:",
+      "connect-src 'self' https: wss: https://*.sentry.io https://api.resend.com",
+      "frame-ancestors 'self'",
+      "base-uri 'self'",
+      "form-action 'self'",
+      "object-src 'none'",
+    ];
+    if (onVercel) {
+      cspDirectives.push("upgrade-insecure-requests");
+    }
+
+    const securityHeaders = [
+      { key: "X-Frame-Options", value: "SAMEORIGIN" },
+      { key: "X-Content-Type-Options", value: "nosniff" },
+      { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      { key: "X-XSS-Protection", value: "1; mode=block" },
+      { key: "X-Commit-SHA", value: process.env.NEXT_PUBLIC_COMMIT_SHA || "unknown" },
+      { key: "Content-Security-Policy", value: cspDirectives.join("; ") },
       {
-        source: "/(.*)",
-        headers: [
-          {
-            key: "X-Frame-Options",
-            value: "SAMEORIGIN",
-          },
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-          {
-            key: "Referrer-Policy",
-            value: "strict-origin-when-cross-origin",
-          },
-          {
-            key: "X-XSS-Protection",
-            value: "1; mode=block",
-          },
-          {
-            key: "Strict-Transport-Security",
-            value: "max-age=31536000; includeSubDomains",
-          },
-          {
-            key: "X-Commit-SHA",
-            value: process.env.NEXT_PUBLIC_COMMIT_SHA || 'unknown',
-          },
-          {
-            key: "Content-Security-Policy",
-            value: [
-              "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://maps.googleapis.com https://js.sentry-cdn.com",
-              "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data: https: blob:",
-              "connect-src 'self' https: wss: https://*.sentry.io https://api.resend.com",
-              "frame-ancestors 'self'",
-              "base-uri 'self'",
-              "form-action 'self'",
-              "object-src 'none'",
-              "upgrade-insecure-requests",
-            ].join("; "),
-          },
-          {
-            key: "Permissions-Policy",
-            value: [
-              "geolocation=()",
-              "microphone=()",
-              "camera=()",
-              "payment=(self)",
-            ].join(", "),
-          },
-        ],
+        key: "Permissions-Policy",
+        value: [
+          "geolocation=()",
+          "microphone=()",
+          "camera=()",
+          "payment=(self)",
+        ].join(", "),
       },
     ];
+
+    if (onVercel) {
+      securityHeaders.splice(4, 0, {
+        key: "Strict-Transport-Security",
+        value: "max-age=31536000; includeSubDomains",
+      });
+    }
+
+    return [{ source: "/(.*)", headers: securityHeaders }];
   },
 
   // Performance optimizations

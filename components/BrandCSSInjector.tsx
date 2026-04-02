@@ -66,8 +66,6 @@ export default function BrandCSSInjector() {
         .text-brand-800 { color: ${colors.brand800} !important; }
       `;
       document.head.appendChild(style);
-
-      console.log(`Brand CSS injected: ${brand} with color ${primary}`);
     } else {
       // Fallback to default brand
       root.style.setProperty("--brand", "#FF7A00");

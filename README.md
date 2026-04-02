@@ -16,6 +16,8 @@ npm run dev
 - **Intake:** [http://localhost:3000/intake](http://localhost:3000/intake)
 - **Sample result:** [http://localhost:3000/result?demo=1](http://localhost:3000/result?demo=1)
 
+**If the UI looks unstyled (Times font, no Tailwind):** open the app with an explicit port (`http://localhost:3000`, not bare `localhost`). Local dev uses HTTP; `upgrade-insecure-requests` and HSTS are applied only on Vercel so stylesheets are not forced to broken `https://localhost` URLs.
+
 ## Documentation (source of truth)
 
 | Doc | Purpose |

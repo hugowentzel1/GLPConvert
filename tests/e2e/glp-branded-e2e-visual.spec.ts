@@ -67,6 +67,27 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     });
   });
 
+  test("D — Intake loads global CSS (Tailwind + fonts; local http must not strip stylesheets)", async ({
+    page,
+  }) => {
+    await mockTenantIntakeConfig(page);
+    await page.goto("/intake?demo=1&handle=glpconvert&company=CSS%20Check&transition_ms=600", {
+      waitUntil: "domcontentloaded",
+    });
+    await expect(page.getByText(/GLPConvert — a product of Wellspire LLC/i).first()).toBeVisible({
+      timeout: 20000,
+    });
+    await expect(page.locator('link[rel="stylesheet"]').first()).toBeAttached({ timeout: 20000 });
+    expect(await page.locator('link[rel="stylesheet"]').count()).toBeGreaterThan(0);
+    const kickerColor = await page
+      .getByText(/GLPConvert — a product of Wellspire LLC/i)
+      .first()
+      .evaluate((el) => getComputedStyle(el).color);
+    expect(kickerColor).toMatch(/100,\s*116,\s*139/);
+    const bodyFont = await page.evaluate(() => getComputedStyle(document.body).fontFamily);
+    expect(bodyFont).toMatch(/Inter|ui-sans-serif|system-ui|-apple-system/i);
+  });
+
   test("A — Branded demo intake (patient) full funnel", async ({ page }, testInfo) => {
     await mockTenantIntakeConfig(page);
     await page.route("**/api/lead", async (route) => {
