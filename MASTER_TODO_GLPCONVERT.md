@@ -6,6 +6,28 @@ Single source of truth. Unified roadmap for **revenue conversion layer** (GLPCon
 **API inventory (Sunspire-derived, GLP-scoped):** `GLPCONVERT_API_CONTRACTS.md` → section *Platform inventory*.  
 **Env (local + Vercel paste guide):** **`docs/ENV_VERCEL_AND_LOCAL.md`** · URL **`docs/VERCEL_CANONICAL_URL.md`** · **`env.local.template`** / **`.env`**. **APIs:** **`docs/GLPCONVERT_APIS_AND_INTEGRATIONS.md`**. **Sentry:** **`docs/SENTRY_GLPCONVERT.md`**. **Marketing:** end of this file (**Marketing** section) + **`GLPCONVERT_COLD_EMAIL_POSITIONING.md`** + Sunspire refs **`TO-DO-LIST.md`**, **`BLINDSPOT-GUIDE.md`**. **Cold-email / embed UX (sources Mar 2026):** **`docs/GLPCONVERT_OUTREACH_UX_SOURCES_MAR2026.md`**. **White-label / multi-tenant SaaS patterns (sources):** **`docs/GLPCONVERT_WHITE_LABEL_SAAS_SOURCES.md`** — how resellers get **their** branding, bounded customization, tenant isolation; pairs with **R017–U020** and **`TenantProvider`**. **Entity / multi-brand (Wellspire LLC):** **`docs/WELLSPIRE_LLC_MULTI_BRAND_SOURCES.md`** — one LLC + GLPConvert / TRTConvert / PEPConvert; **W001+** checklist before **Marketing**.
 
+### Channel split (primary GTM — lock this in)
+
+| Surface | Who | Goal |
+|--------|-----|------|
+| **Individualized demo** | Clinic buyer (cold email, LinkedIn DM) | Same ~95% patient UX as production, plus preview banner + owner panels. **CTA → Stripe checkout → self-serve activation** (no meeting). Links: **`/intake?demo=1&company=…`** (+ optional `logo`, `brand`, `booking`, `demo_traffic`); buyer home **`/?demo=1&company=…`** → Launch / pricing. |
+| **Paid / production intake** | End patient on clinic ads, landers, site, embed | **White-label conversion layer**: consult readiness, expectations, price band, lead + booking handoff. Optimize for **booked consults and program enrollment**, not clinical decisioning. URL pattern: **`/intake?company=<tenant-handle>`** (tenant branding from DB where wired; query overrides still work for demos). |
+
+Engineering must not diverge demo and paid flows structurally—only demo overlays and activation CTAs differ.
+
+### Canonical URLs (local + production)
+
+| Surface | URL pattern | Example |
+|--------|-------------|---------|
+| **Demo (cold email / buyer)** — same patient flow + preview banner + owner panels | `{ORIGIN}/intake?demo=1&company=…` + optional `logo`, `brand`, `brand2`, `booking`, `demo_traffic`, **`handle=`** when `company` is display name only | Local: `http://localhost:3000/intake?demo=1&handle=glpconvert&company=Sunspire%20Demo&brand=0B3D91` |
+| **Paid (patient-facing)** — production intake, no demo chrome | `{ORIGIN}/intake?company=<tenant_handle>` | Local: `http://localhost:3000/intake?company=glpconvert` |
+| **Buyer home (demo pricing / Stripe)** | `{ORIGIN}/?demo=1&company=…` | Local: `http://localhost:3000/?demo=1&company=Acme%20Med%20Spa` |
+| **Production host (current Vercel default)** | `https://glp-convert.vercel.app` | Demo: `https://glp-convert.vercel.app/intake?demo=1&handle=glpconvert&company=Your%20Clinic` · Paid: `https://glp-convert.vercel.app/intake?company=glpconvert` |
+
+**`handle` query param:** resolves `GET /api/public/tenant-intake-config?handle=` when `company` is a **pretty name** (spaces, branding) that does not match the Supabase tenant slug. Without `handle`, `company` is slugified for the API (e.g. `Acme Med` → `acme-med`).
+
+**Tenant economics (U018 scaffold):** optional keys inside `tenants.crm_keys` JSON — `intake_monthly_low`, `intake_monthly_high`, `intake_consult_fee_note`, `intake_payment_note`, `intake_brand_name`, `intake_brand_color_secondary` — merged in **`GlpSimulationFunnel`** when present.
+
 Legend: `[x] DONE` | `[~] IN_PROGRESS` | `[ ] TODO`  
 Owner: `AUTO` or `HUMAN`
 
@@ -51,7 +73,7 @@ If something is blocked (no Stripe account yet, etc.), say what’s blocked inst
 ### When does the “big product build” from the master spec actually happen?
 
 - **Already largely built (in-repo, AUTO):** Phases **U001–U010** and **R001–R005**, **R010–R011** — funnel, simulator-first flow, lead API shape, demo mode, attribution, API audit, GLP health profile. That *is* the core “building the site” work; it runs **in parallel** with your **U035–U038** infra—you don’t wait for Supabase to finish coding the funnel.
-- **Still open (AUTO backlog):** **R006–R008**, **R012–R016**, **R017+**, **U011**, **U016–U020**, **U022–U033** — CRM webhooks, dashboard, embed/docs hardening, deprecations, booking signals, Playwright, etc. The agent picks these up in Cursor as **`[ ]` / `[~]`** items clear.
+- **Still open (AUTO backlog):** **R007–R008**, **R012–R016**, **R017+**, **U011**, **U016–U020**, **U022–U033** — dashboard rollup, embed/docs hardening, deprecations, inbound booking webhook, Playwright expansion, etc. The agent picks these up in Cursor as **`[ ]` / `[~]`** items clear. (**R006** post-lead CRM webhook: **done** — tenant **Capture URL** on `POST /api/lead`.)
 - **You (HUMAN) unblock:** accounts, DNS, Stripe, counsel (**U024**), paste real **booking URLs** into Supabase `crm_keys` (or `bookingUrl` on create-tenant) per clinic (**U030** — pattern shipped), smoke tests (**U034**), marketing ops (**M001+**).
 - **Cold-email + “fits their website” + white-label polish:** see **`docs/GLPCONVERT_OUTREACH_UX_SOURCES_MAR2026.md`**, **`docs/GLPCONVERT_WHITE_LABEL_SAAS_SOURCES.md`**, and **R017–R018** below (embed/setup pages, tenant branding QA, segment-aware copy, performance)—scheduled as **AUTO** where marked.
 
@@ -619,7 +641,7 @@ If your app also reads **`STRIPE_PRICE_STARTER`** / **`STRIPE_PRICE_MONTHLY`**, 
 
 - [ ] U011 — optional sex/age + confidence bands in UI/math
 - [ ] Treatment economics from **tenant settings** (not hardcoded ranges)
-- [ ] Booking/scheduling **webhook post** on lead (extend `storeLead` + `POST /api/tenant/crm-webhook` pattern)
+- [x] Booking/scheduling **outbound webhook** on lead (**R006**): `POST /api/lead` → HTTPS **Capture URL** on tenant (`lib/crm-lead-webhook.ts`, fire-and-forget)
 - [ ] Tenant dashboard: traffic, completions, leads, readiness summary
 - [ ] Playwright coverage for new steps (U033)
 - [ ] Performance pricing / network benchmark index (long-term; not started)
@@ -639,7 +661,7 @@ Aligned with `PRODUCT_STRATEGY_GLPCONVERT.md`. Execute in parallel with human in
 - [x] **R004 · AUTO** Attribution: UTM persistence (`lib/glp-attribution.ts`); optional `NEXT_PUBLIC_META_PIXEL_ID` / `NEXT_PUBLIC_GA_MEASUREMENT_ID` on `/intake`.
 - [x] **R005 · AUTO** Lead API: `readiness` + `utmMedium` / `utmTerm` / `utmContent` in packed `GLP_SIMULATION` metadata.
 - [x] **R010 · AUTO** **Deep API audit:** document every **internal** App Router route + **external** provider call Sunspire uses; classify **GLP required / optional / solar-only / deprecate**; list **beneficial GLP additions** — see `GLPCONVERT_API_CONTRACTS.md` (*Platform inventory*).
-- [ ] **R006 · AUTO** Post-lead **server webhook** to tenant-configured CRM URL (retry-safe stub ok). *Pairs with `POST /api/tenant/crm-webhook`.*
+- [x] **R006 · AUTO** Post-lead **server webhook** to tenant **Capture URL** (`https://` only): `POST /api/lead` after successful store → JSON payload `event: lead.created` + lead fields (non-blocking; optional **`CRM_WEBHOOK_TIMEOUT_MS`**). *Admin still uses `POST /api/tenant/crm-webhook` to set URL.*
 - [ ] **R007 · AUTO** Dashboard cards: starts, completions, leads, readiness rollup (uses events + leads).
 - [ ] **R008 · AUTO** Embed / deployment docs + optional iframe snippet page (no bloated builder).
 - [ ] **R009 · HUMAN** BAA + encryption review with counsel and vendors (`U024` overlap).
@@ -649,7 +671,7 @@ Aligned with `PRODUCT_STRATEGY_GLPCONVERT.md`. Execute in parallel with human in
 - [ ] **R014 · AUTO** Refresh **`app/docs/api/page.tsx`** to mirror the **GLP-relevant** route table from `GLPCONVERT_API_CONTRACTS.md` (not only 5 bullets).
 - [ ] **R015 · AUTO** (Optional) **Meta Conversions API** server route + env — complements `AttributionPixels` for attribution under ATT.
 - [ ] **R016 · AUTO** **Inbound booking webhook** (e.g. `POST /api/webhooks/booking`) — verify HMAC or shared secret; map to lead email/tenant → update `booking_status` (feeds U016 + dashboard).
-- [ ] **R017 · AUTO** **Cold-email + embed + white-label fit:** Apply **`docs/GLPCONVERT_OUTREACH_UX_SOURCES_MAR2026.md`** + **`docs/GLPCONVERT_WHITE_LABEL_SAAS_SOURCES.md`** — mobile-first / compact intake where needed; tenant **logo + colors** on light/dark parents; **iframe** embed for **`/intake`** (min-height, optional `postMessage` resize); no vendor leakage in chrome where avoidable; update **`/docs/embed`** with real host (**`glp-convert.vercel.app`**) and GLP wording (not solar/widget.js placeholder).
+- [~] **R017 · AUTO** **Cold-email + embed + white-label fit:** **`/docs/embed`** updated (prod vs demo iframe, `handle=`); tenant **logo + colors + pricing** merge from **`GET /api/public/tenant-intake-config`** when query overrides absent; optional **`postMessage`** resize + deeper mobile polish still open.
 - [ ] **R018 · HUMAN** **ICP collateral:** 2–3 short PDFs or Notion pages (**med spa** / **telehealth** / **clinic**) for cold-email attachments—positioning only; links to live **`/intake?...&demo=1`** demos.
 - [ ] **R019 · AUTO** **`/docs/setup`:** GLPConvert (not solar), **Mar 2026** date, **Environment variables** subsection — **names only** (link repo **`docs/ENV_VERCEL_AND_LOCAL.md`**); **never** ship secret values on a public page.
 - [x] **R020 · AUTO** **Demo URL branding (Sunspire-style):** `GlpSimulationFunnel` reads **`logo`** (HTTPS URL), **`brand`** / **`primary`**, **`brand2`** (6-digit hex) — primary CTAs + readiness chips + preview banner. Documented in **`DEMO_STRATEGY_GLPCONVERT.md`**. Production parity → **U017–U020**.
@@ -688,7 +710,7 @@ Aligned with `PRODUCT_STRATEGY_GLPCONVERT.md`. Execute in parallel with human in
 ### Phase 4 — White-label ownership depth (C)
 
 - [ ] **U017 · AUTO** Add clinic-configurable simulation disclaimers/footer/legal snippets.
-- [ ] **U018 · AUTO** Add clinic-specific pricing/economics ranges from tenant settings.
+- [~] **U018 · AUTO** Clinic-specific pricing from tenant: **`crm_keys`** `intake_monthly_low` / `intake_monthly_high` + optional fee/payment notes (**shipped** in public config + funnel); full admin UI / validation still open.
 - [ ] **U019 · AUTO** Add clinic-specific CTA routing (direct booking vs callback vs save only).
 - [ ] **U020 · AUTO** Ensure demo + paid modes both show clinic-owned presentation consistently.
 

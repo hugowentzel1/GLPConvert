@@ -12,15 +12,20 @@ export const metadata: Metadata = {
 
 export default function IntakePage() {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100/80 px-4 py-12 md:py-16">
-      <div className="max-w-xl mx-auto space-y-3 mb-12 text-center">
-        <p className="text-xs font-medium uppercase tracking-widest text-slate-500">{PLATFORM_DISPLAY_NAME}</p>
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
-          Pre-consult clarity → consult readiness → your booking link
+    <main className="min-h-screen bg-[radial-gradient(ellipse_90%_50%_at_50%_-8%,rgba(99,102,241,0.08),transparent)] bg-gradient-to-b from-slate-50 via-white to-slate-100 px-4 py-10 md:py-16">
+      <div className="mx-auto mb-12 max-w-2xl space-y-5 text-center md:mb-14">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">{PLATFORM_DISPLAY_NAME}</p>
+        <h1 className="text-balance text-3xl font-bold tracking-tight text-slate-900 md:text-[2.125rem] md:leading-snug">
+          Pre-consult clarity through to your booking link
         </h1>
-        <p className="text-slate-600 text-sm leading-relaxed">
-          White-label revenue layer for GLP-1 programs: expectations and typical ranges first, then save and hand off to{" "}
-          <em>your</em> scheduler — not medical advice.
+        <p className="mx-auto max-w-xl text-sm leading-relaxed text-slate-600 md:text-[15px]">
+          White-label path for GLP-1 programs: set expectations and typical ranges before contact, then hand off to{" "}
+          <span className="font-medium text-slate-800">your</span> scheduler. Educational only — not medical advice.
+        </p>
+        <p className="mx-auto max-w-xl text-xs leading-relaxed text-slate-500">
+          <strong className="font-semibold text-slate-600">Demo link</strong> (<code className="rounded bg-slate-100 px-1.5 py-0.5 text-[11px]">demo=1</code>
+          ): buyer preview with owner insights. <strong className="font-semibold text-slate-600">Paid link</strong> (no demo flag): patient-facing
+          intake for ads, site, or embed.
         </p>
       </div>
       <Suspense

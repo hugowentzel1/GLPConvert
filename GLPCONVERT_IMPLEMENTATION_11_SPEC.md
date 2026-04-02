@@ -22,10 +22,10 @@
 | UTM persistence | **Shipped** | `lib/glp-attribution.ts` |
 | Pixels (optional) | **Shipped** | `AttributionPixels` on intake layout |
 | **Demo URL logo + primary (and optional secondary) color** | **Shipped** | `/intake?logo=&brand=&brand2=` — see `DEMO_STRATEGY_GLPCONVERT.md` |
-| Tenant DB pricing / disclaimers / CTA URLs | **Partial** | **U017–U019** — booking via `crm_keys.booking_url` + **`GET /api/public/tenant-intake-config`** |
-| Post-lead CRM webhook | **Open** | **R006** |
+| Tenant DB pricing / disclaimers / CTA URLs | **Partial** | Booking + **optional** `crm_keys` intake economics + display name + secondary color via **`GET /api/public/tenant-intake-config`** + funnel merge (**U018** admin UI still open) |
+| Post-lead CRM webhook | **Shipped** | **`POST /api/lead`** → tenant **Capture URL** (`lib/crm-lead-webhook.ts`) — **R006** |
 | Clinic dashboard metrics | **Partial** | Leads table shows **booking_status**, path, budget (**`/c/{handle}/leads`**) |
-| Embed + `postMessage` polish | **Open** | **R017** |
+| Embed + `postMessage` polish | **Partial** | **`/docs/embed`** prod vs demo + `handle=`; **R017** postMessage / height automation |
 | Performance / per-lead pricing | **Open** | product/pricing model — **not** in core checkout yet |
 | Network benchmark index | **Open** | long-term moat — not started |
 | HIPAA: BAA execution, audit policy | **Human + counsel** | **R009**, **U024** |
@@ -33,13 +33,13 @@
 ## Priority order (execution)
 
 1. ~~Audit + align docs~~ (this file + `MASTER_TODO` + strategy docs).  
-2. **R006** webhook handoff after lead.  
+2. ~~**R006** webhook handoff after lead~~.  
 3. **U017–U019** tenant-configured economics + CTAs (replace hardcoded sim ranges where configured).  
 4. **R007** minimal dashboard.  
 5. **R017** embed hardening.  
 6. **R012–R014** API cleanup + docs.  
 7. **U022–U023** disclosure patterns + compounded copy guardrails.  
-8. **U033** Playwright full funnel.
+8. **U033** Playwright full funnel (includes `test:glp-visual:*` for branded demo + buyer).
 
 ## Blocked — human / third party only
 

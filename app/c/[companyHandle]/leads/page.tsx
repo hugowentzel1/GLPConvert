@@ -15,6 +15,7 @@ interface Lead {
   recommendedPath?: string;
   budgetBand?: string;
   vertical?: string;
+  readinessSummary?: string;
 }
 
 export default function LeadsPage() {
@@ -130,6 +131,9 @@ export default function LeadsPage() {
                         Budget
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Readiness
+                      </th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Notes
                       </th>
                       <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -174,6 +178,9 @@ export default function LeadsPage() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-xs text-gray-600">
                           {lead.budgetBand || "—"}
+                        </td>
+                        <td className="px-6 py-4 text-xs text-gray-600 max-w-[200px]" title={lead.readinessSummary}>
+                          {lead.readinessSummary || "—"}
                         </td>
                         <td className="px-6 py-4 text-sm text-gray-500 max-w-xs">
                           {lead.notes ? (

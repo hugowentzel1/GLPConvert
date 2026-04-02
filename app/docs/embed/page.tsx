@@ -56,20 +56,34 @@ export default function EmbedGuidePage() {
                   <h3 className="text-lg font-semibold text-gray-900 mb-3">
                     Add to your website
                   </h3>
-                  <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto">
-                    <code>
-                      {`<iframe
+                  <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto space-y-6">
+                    <div>
+                      <p className="text-gray-500 text-xs mb-2 font-sans">Patient-facing production (no demo flag):</p>
+                      <code>
+                        {`<iframe
   title="GLP intake"
-  src="https://glp-convert.vercel.app/intake?company=YOURCLINIC&demo=1"
+  src="https://glp-convert.vercel.app/intake?company=YOUR_TENANT_HANDLE"
   style="width:100%;min-height:720px;border:0"
   loading="lazy"
 />`}
-                    </code>
+                      </code>
+                    </div>
+                    <div>
+                      <p className="text-gray-500 text-xs mb-2 font-sans">Buyer demo (cold email — same UI + owner panels):</p>
+                      <code>
+                        {`<iframe
+  title="GLP intake demo"
+  src="https://glp-convert.vercel.app/intake?demo=1&handle=YOUR_TENANT_HANDLE&company=Clinic%20Display%20Name"
+  style="width:100%;min-height:880px;border:0"
+  loading="lazy"
+/>`}
+                      </code>
+                    </div>
                   </div>
                   <p className="text-sm text-gray-500 mt-2">
-                    Replace host with your deployed GLPConvert URL; adjust <code>company</code> to
-                    the tenant handle. See <code>MASTER_TODO_GLPCONVERT.md</code> Phase <strong>R017</strong>{' '}
-                    for a tighter embed contract (height, postMessage).
+                    Replace host with your deployed GLPConvert URL. Use <code>company=</code> as the tenant handle for
+                    production, or <code>handle=</code> for API lookup when <code>company</code> is a display name only.
+                    See <code>MASTER_TODO_GLPCONVERT.md</code> Phase <strong>R017</strong> for postMessage / height polish.
                   </p>
                 </div>
 

@@ -43,6 +43,9 @@
     "test:synthetic:homeowner": "playwright test tests/synthetics/homeowner-production-flow.spec.ts --config=playwright.synthetics.config.ts",
     "test:synthetic:buyer": "playwright test tests/synthetics/buyer-production-flow.spec.ts --config=playwright.synthetics.config.ts",
     "test:synthetic:status": "playwright test tests/synthetics/status-page-synthetic-display.spec.ts --config=playwright.synthetics.config.ts",
+    "test:glp-visual:local": "playwright test --config=playwright.glp-visual.config.ts",
+    "test:glp-visual:live": "cross-env BASE_URL=https://glp-convert.vercel.app playwright test --config=playwright.glp-visual.config.ts",
+    "test:glp-visual:headed": "cross-env PLAYWRIGHT_VIDEO=1 HEADED_SLOW_MO=120 playwright test --config=playwright.glp-visual.config.ts --headed",
     "prune:unused": "node scripts/prune-unused.js",
     "prune:unused:delete": "node scripts/prune-unused.js --delete"
   },

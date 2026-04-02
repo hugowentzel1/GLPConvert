@@ -331,6 +331,16 @@ export default function SetupGuidePage() {
                   <p className="text-sm text-gray-600">
                     Leads and tenants live in Supabase. Connect HubSpot, Salesforce, or a custom URL from the dashboard.
                   </p>
+                  <p className="text-xs text-gray-600 text-left max-w-xl mx-auto">
+                    Optional: in the <code className="rounded bg-gray-100 px-1">tenants.crm_keys</code> JSON, set{" "}
+                    <code className="rounded bg-gray-100 px-1">booking_url</code> plus intake overrides such as{" "}
+                    <code className="rounded bg-gray-100 px-1">intake_monthly_low</code>,{" "}
+                    <code className="rounded bg-gray-100 px-1">intake_monthly_high</code>,{" "}
+                    <code className="rounded bg-gray-100 px-1">intake_consult_fee_note</code>,{" "}
+                    <code className="rounded bg-gray-100 px-1">intake_payment_note</code>,{" "}
+                    <code className="rounded bg-gray-100 px-1">intake_brand_name</code> — exposed via{" "}
+                    <code className="rounded bg-gray-100 px-1">GET /api/public/tenant-intake-config</code>.
+                  </p>
                   <a
                     href="/docs/crm"
                     className="inline-flex items-center text-[var(--brand-primary)] hover:underline font-medium"

@@ -3,6 +3,7 @@ import { storeLead, storeLeadFallback, getTenantByHandle, TENANT_FIELDS } from "
 import { checkRateLimit } from "@/src/lib/ratelimit";
 import { ENV } from "@/src/config/env";
 import { PRODUCT_NAME } from "@/lib/product-identity";
+import { postLeadToTenantCrmWebhook } from "@/lib/crm-lead-webhook";
 
 // Helper function to extract client IP
 function getClientIP(request: NextRequest): string {
@@ -150,10 +151,47 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    let tenantForNotify: Awaited<ReturnType<typeof getTenantByHandle>> | null = null;
+    if (tenantSlug) {
+      try {
+        tenantForNotify = await getTenantByHandle(String(tenantSlug));
+      } catch {
+        tenantForNotify = null;
+      }
+    }
+
+    const crmUrlRaw =
+      tenantForNotify?.[TENANT_FIELDS.CAPTURE_URL as keyof typeof tenantForNotify];
+    const crmUrl = typeof crmUrlRaw === "string" ? crmUrlRaw.trim() : "";
+    if (crmUrl) {
+      const webhookPayload: Record<string, unknown> = {
+        event: "lead.created",
+        vertical: isGlp ? "glp" : "solar",
+        tenant_slug: tenantSlug,
+        name,
+        email,
+        phone: body.phone || null,
+        address: address || null,
+        booking_status: bookingStatus || (isGlp ? "not_booked" : null),
+        readiness: readiness || null,
+        utm_source: utmSource || null,
+        utm_campaign: utmCampaign || null,
+        utm_medium: utmMedium || null,
+        utm_term: utmTerm || null,
+        utm_content: utmContent || null,
+        lead_source: leadSource || null,
+        simulation_input: isGlp ? simulationInput || null : null,
+        simulation_output: isGlp ? simulationOutput || null : null,
+        cost_scenario: isGlp ? costScenario || null : null,
+        created_at: leadData.createdAt,
+      };
+      void postLeadToTenantCrmWebhook(crmUrl, webhookPayload);
+    }
+
     // Instant email to installer (if tenant has Notification Email and Resend is configured)
     if (ENV.RESEND_API_KEY && tenantSlug) {
       try {
-        const tenant = await getTenantByHandle(String(tenantSlug));
+        const tenant = tenantForNotify ?? (await getTenantByHandle(String(tenantSlug)));
         const notifyEmail = tenant?.[TENANT_FIELDS.NOTIFICATION_EMAIL as keyof typeof tenant] as string | undefined;
         const toEmail = typeof notifyEmail === "string" && notifyEmail.includes("@") ? notifyEmail.trim() : null;
         if (toEmail) {

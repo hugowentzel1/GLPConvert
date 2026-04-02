@@ -174,6 +174,38 @@ export async function findLeadsByEmail(email: string): Promise<Lead[]> {
   return (data ?? []).map((r) => rowToLead(r as LeadRow));
 }
 
+/** Extract consult-readiness chips from packed GLP_SIMULATION notes (best-effort). */
+export function parseReadinessSummaryFromNotes(notes: string): string {
+  const idx = notes.indexOf("GLP_SIMULATION=");
+  if (idx < 0) return "—";
+  const jsonStart = idx + "GLP_SIMULATION=".length;
+  let depth = 0;
+  let end = -1;
+  for (let i = jsonStart; i < notes.length; i++) {
+    const c = notes[i];
+    if (c === "{") depth++;
+    if (c === "}") {
+      depth--;
+      if (depth === 0) {
+        end = i + 1;
+        break;
+      }
+    }
+  }
+  if (end < 0) return "—";
+  try {
+    const j = JSON.parse(notes.slice(jsonStart, end)) as { readiness?: Record<string, string> };
+    const r = j.readiness;
+    if (!r || typeof r !== "object") return "—";
+    const parts = [r.priceComfort, r.startTimeline, r.exploreIntent].filter(
+      (x): x is string => typeof x === "string" && x.length > 0,
+    );
+    return parts.length ? parts.join(" · ") : "—";
+  } catch {
+    return "—";
+  }
+}
+
 /** List leads for a tenant by handle (for GET /api/leads). */
 export async function listLeadsForTenant(companyHandle: string): Promise<
   {
@@ -188,6 +220,7 @@ export async function listLeadsForTenant(companyHandle: string): Promise<
     recommendedPath: string;
     budgetBand: string;
     vertical: string;
+    readinessSummary: string;
   }[]
 > {
   const tenant = await findTenantByHandle(companyHandle);
@@ -213,19 +246,23 @@ export async function listLeadsForTenant(companyHandle: string): Promise<
       recommended_path?: string | null;
       budget_band?: string | null;
       vertical?: string | null;
-    }) => ({
-      id: r.id,
-      name: r.name ?? "",
-      email: r.email,
-      address: r.address ?? "",
-      phone: r.phone ?? "",
-      notes: r.notes ?? "",
-      created: r.created_at ?? "",
-      bookingStatus: r.booking_status ?? "—",
-      recommendedPath: r.recommended_path ?? "—",
-      budgetBand: r.budget_band ?? "—",
-      vertical: r.vertical ?? "—",
-    }),
+    }) => {
+      const notes = r.notes ?? "";
+      return {
+        id: r.id,
+        name: r.name ?? "",
+        email: r.email,
+        address: r.address ?? "",
+        phone: r.phone ?? "",
+        notes,
+        created: r.created_at ?? "",
+        bookingStatus: r.booking_status ?? "—",
+        recommendedPath: r.recommended_path ?? "—",
+        budgetBand: r.budget_band ?? "—",
+        vertical: r.vertical ?? "—",
+        readinessSummary: parseReadinessSummaryFromNotes(notes),
+      };
+    },
   );
 }
 

@@ -14,11 +14,19 @@ export async function GET(request: NextRequest) {
 
   try {
     const tenant = await findTenantByHandle(handle);
-    const cfg = extractPublicIntakeConfig(tenant);
+    const cfg = extractPublicIntakeConfig(tenant, handle);
     return NextResponse.json({
       ok: true,
       handle,
-      ...cfg,
+      bookingUrl: cfg.bookingUrl,
+      logoUrl: cfg.logoUrl,
+      brandColor: cfg.brandColor,
+      brandColorSecondary: cfg.brandColorSecondary,
+      displayName: cfg.displayName,
+      pricingMonthlyLow: cfg.pricingMonthlyLow,
+      pricingMonthlyHigh: cfg.pricingMonthlyHigh,
+      consultFeeNote: cfg.consultFeeNote,
+      paymentNote: cfg.paymentNote,
     });
   } catch (e) {
     console.error("tenant-intake-config:", e);

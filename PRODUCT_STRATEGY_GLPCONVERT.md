@@ -6,6 +6,11 @@ Authoritative product framing for engineering and sales. Complements `GLPCONVERT
 
 A **HIPAA-ready, white-label, pre-consult conversion layer** for GLP-1 / medical weight-loss clinics: it turns existing traffic into **more booked, higher-intent consults** with clearer expectations and measurable attribution—without acting as EMR, telehealth, prescribing, diagnosis, or clinical decision support.
 
+## Two surfaces (same core product)
+
+1. **Demo / outbound (buyer)** — Cold email and LinkedIn with a **personalized, branded link** (`demo=1`). Goal: the owner sees “this is already my front end,” then **clicks through to Stripe and activates without a sales call**. Patient UX matches production (~95%); only preview banner, owner ROI/leak panels, and activation CTAs differ.  
+2. **Paid / production (patient)** — The **same funnel** on the clinic’s ads, landing pages, site, or embed. Goal: **maximize consult bookings and downstream GLP program conversion** through clarity, trust, readiness, and clean handoff to their booking/CRM—still not clinical decisioning.
+
 ## What it is not
 
 - Quiz-for-leads gimmick, generic funnel builder, or “AI prognosis” product  
@@ -51,8 +56,8 @@ Dedicated landing page, embed/module, pre-consult funnel step, personalized demo
 
 ## Master outbound pitch (internal + email backbone)
 
-Most GLP clinics already pay for traffic — the gap is how much of it never becomes **booked, high-intent consults** because the path, expectations, and price band stay vague until too late. GLPConvert upgrades **what happens before the consult** so more sessions turn into consults that are easier to close — **your** branded layer on ads, landers, or site. It also surfaces **illustrative** “where value leaks” framing for owners (demo mode), without guaranteeing financial outcomes.  
-**CTA:** *I built a live version for {{ClinicName}} — want to see it?* (`/intake?demo=1&company=…&logo=…&brand=…`)
+Most GLP clinics already pay for traffic — the gap is how much of it never becomes **booked, high-intent consults** because the path, expectations, and price band stay vague until too late. GLPConvert upgrades **what happens before the consult** so more sessions turn into consults that are easier to close — **your** branded layer on ads, landers, or site. Demo mode surfaces **illustrative** “where value leaks” framing for owners, without guaranteeing financial outcomes.  
+**CTA:** *I built a live version for {{ClinicName}} — want to see it?* (`/intake?demo=1&company=…&logo=…&brand=…`) → owner can **Subscribe & activate** on **`/pricing`** (Stripe) with no meeting.
 
 ## Related files
 
