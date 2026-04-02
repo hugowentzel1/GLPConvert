@@ -17,6 +17,8 @@ export const glpIntakeUi = {
   stackSm: "space-y-5",
 
   grid2: "grid gap-5 md:grid-cols-2",
+  /** Form fields: more vertical rhythm than dense grids */
+  grid2Form: "grid gap-6 md:grid-cols-2 md:gap-x-8 md:gap-y-6",
 
   kicker: "text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500",
   titleLg: "text-2xl font-bold tracking-tight text-slate-900 md:text-[1.75rem] md:leading-snug",
@@ -31,14 +33,16 @@ export const glpIntakeUi = {
     "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm transition placeholder:text-slate-400 focus:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-900/[0.08]",
 
   primaryBtn:
-    "inline-flex w-full items-center justify-center rounded-xl px-4 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:opacity-[0.97] active:scale-[0.995] disabled:pointer-events-none disabled:opacity-45",
+    "inline-flex w-full items-center justify-center rounded-xl px-4 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:opacity-[0.97] active:scale-[0.995] disabled:pointer-events-none disabled:opacity-45 min-h-[48px]",
   secondaryBtn:
-    "inline-flex w-full items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50/80",
+    "inline-flex w-full items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50/80 min-h-[48px]",
 
+  /** Primary full-width CTA after a form — separated from inputs */
+  formActions: "mt-10 flex flex-col gap-4",
   chip: "rounded-full bg-slate-100 px-3.5 py-1 text-xs font-medium text-slate-700",
   sectionRule: "border-t border-slate-100 pt-8 first:border-0 first:pt-0 first:mt-0 mt-8",
 
-  choiceRow: "flex flex-wrap gap-2.5",
+  choiceRow: "flex flex-wrap gap-3",
   choiceBase:
     "rounded-xl border px-4 py-2.5 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15",
   choiceIdle: "border-slate-200 bg-white text-slate-800 hover:border-slate-300 hover:bg-slate-50/50",

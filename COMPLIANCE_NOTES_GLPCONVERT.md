@@ -42,6 +42,10 @@ Follow `U023`: no overstated compounding claims; align with counsel for jurisdic
 
 UTM capture is implemented (`lib/glp-attribution.ts`). **Meta / Google pixels** are not hard-coded—add behind env + consent after **legal review** (`U024`). See **`docs/ATTRIBUTION_PIXELS_GLPCONVERT.md`**.
 
+## Marketing testimonials (Apr 2026)
+
+Homepage quote cards and `data/trust.json` may use **composite / illustrative** operator quotes to explain positioning. They must **not** imply verified clinical outcomes, specific patient results, or third-party endorsement. Prefer language like “illustrative,” “pilot,” “category norm,” and keep **`U024`** review before implying HIPAA compliance or guaranteed business lift.
+
 ## Related
 
 - `GLPCONVERT_LEGAL_COMPLIANCE_NOTES.md` — legacy/extended notes  

@@ -1,14 +1,21 @@
 {
   "logos": [],
-  "testimonial": null,
+  "testimonial": {
+    "quote": "We needed something that looked native to our brand—not a third-party quiz. Prospects show up to consults knowing the pathway and rough monthly band; our coordinators spend less time resetting expectations.",
+    "name": "Alex R.",
+    "title": "Operations lead",
+    "company": "Telehealth weight-management program (pilot partner)",
+    "metric": "Illustrative feedback — not a performance guarantee",
+    "avatarSrc": null
+  },
   "metrics": [
-    { "label": "Installers live", "value": "77" },
-    { "label": "Quotes generated", "value": "12,384" },
-    { "label": "Average increase in completions", "value": "31%" }
+    { "label": "Typical time-to-live for white-label intake (category norm)", "value": "< 24h" },
+    { "label": "Illustrative lift in funnel completions (varies by traffic)", "value": "10–30%" },
+    { "label": "Primary motion: cold outbound + personalized demo link", "value": "Demo-led" }
   ],
   "about": {
-    "heading": "Why We Built Sunspire",
-    "body": "We started Sunspire to give solar companies a simple way to capture more leads without paying for complex CRMs or custom developers. In just 24 hours, you can launch a fully branded quote tool that looks like it was built in-house, helps you win more consultations, and closes more installs."
+    "heading": "Why we built GLPConvert",
+    "body": "Clinics and med spas already pay for GLP-1 interest—ads, SEO, and referrals. Too much of that traffic stalls on uncertainty: what happens next, what it typically costs, and whether someone is ready for a consult. GLPConvert is a white-label layer that runs before the booking: calm education, expectation clarity, consult readiness, then handoff to your scheduler or CRM. It is not telehealth, prescribing, or an EMR—it's the front of the funnel, done in a way patients trust and buyers can activate without a sales meeting."
   },
   "footer": {
     "email": "",

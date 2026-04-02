@@ -58,6 +58,12 @@ Traffic/starts, completions, leads, booking handoff where trackable, readiness s
 
 Dedicated landing page, embed/module, pre-consult funnel step, personalized demo URL (`company`, `demo=1`, optional `logo`, `brand` query params where supported).
 
+## Apr 2026 — visual + copy pass (executed)
+
+- **Neutral product canvas:** marketing shell and non-branded views default to **slate** (`BrandCSSInjector` fallbacks) so tenant color reads as *accent* on CTAs and key highlights (white-label SaaS norm per `docs/GLPCONVERT_WHITE_LABEL_SAAS_SOURCES.md`).
+- **Intake:** shared **`lib/glp-intake-ui.ts`** scale for field spacing, choice chips, and primary/secondary button stacks; results screen uses a calmer trust header + timeline-style trajectory (still educational, not prognostic).
+- **Buyer trust:** `data/trust.json`, `Testimonials`, and `/about` are **GLP-only** — legacy Sunspire/solar installer copy removed from patient/buyer surfaces in-repo.
+
 ## Master outbound pitch (internal + email backbone)
 
 Most GLP clinics already pay for traffic — the gap is how much of it never becomes **booked, high-intent consults** because the path, expectations, and price band stay vague until too late. GLPConvert upgrades **what happens before the consult** so more sessions turn into consults that are easier to close — **your** branded layer on ads, landers, or site. Demo mode surfaces **illustrative** “where value leaks” framing for owners, without guaranteeing financial outcomes.  

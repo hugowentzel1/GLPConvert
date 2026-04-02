@@ -16,12 +16,23 @@ export default function BrandProvider({
     const urlBrandColor = searchParams?.get("brandColor");
     const urlPrimary = searchParams?.get("primary");
     const urlBrand = searchParams?.get("brand");
+    const urlCompany = searchParams?.get("company");
+    const urlBrandAsHex =
+      urlCompany &&
+      urlBrand &&
+      /^#?[0-9a-fA-F]{6}$/.test(urlBrand.replace(/^#/, ""))
+        ? urlBrand.startsWith("#")
+          ? urlBrand
+          : `#${urlBrand}`
+        : null;
 
     let color = b.primary;
     if (urlBrandColor) {
       color = urlBrandColor.startsWith("#") ? urlBrandColor : `#${urlBrandColor}`;
     } else if (urlPrimary) {
       color = urlPrimary.startsWith("#") ? urlPrimary : `#${urlPrimary}`;
+    } else if (urlBrandAsHex) {
+      color = urlBrandAsHex;
     } else if (urlBrand) {
       color = b.primary;
     }

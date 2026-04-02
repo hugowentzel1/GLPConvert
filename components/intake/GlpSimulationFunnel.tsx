@@ -71,7 +71,10 @@ function parseDemoBranding(sp: ReturnType<typeof useSearchParams>) {
     return /^#[0-9A-Fa-f]{6}$/.test(s) ? s : null;
   };
   const primaryHex =
-    normHex(sp?.get("brand")) || normHex(sp?.get("primary")) || null;
+    normHex(sp?.get("brandColor")) ||
+    normHex(sp?.get("primary")) ||
+    normHex(sp?.get("brand")) ||
+    null;
   const secondaryHex = normHex(sp?.get("brand2")) || null;
   return { logoUrl, primaryHex, secondaryHex };
 }
@@ -405,13 +408,13 @@ export default function GlpSimulationFunnel() {
       <div className="mb-6 flex justify-center px-1">
         {isDemoMode ? (
           <span className="inline-flex max-w-lg items-center gap-2.5 rounded-full border border-slate-200/90 bg-white px-4 py-2.5 text-center text-xs font-semibold leading-snug text-slate-800 shadow-sm ring-1 ring-slate-900/[0.04]">
-            <span className="hidden h-2 w-2 shrink-0 rounded-full bg-slate-400 sm:block" aria-hidden />
-            Preview for {company} — same flow your patients see, plus a short owner view on results
+            <span className="hidden h-2 w-2 shrink-0 rounded-full bg-amber-500 sm:block" aria-hidden />
+            Buyer preview · {company} — same patient steps; owner-only panels on results
           </span>
         ) : (
           <span className="inline-flex max-w-lg items-center gap-2.5 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-center text-xs font-semibold leading-snug text-slate-700 shadow-sm">
             <span className="hidden h-2 w-2 shrink-0 rounded-full bg-emerald-500 sm:block" aria-hidden />
-            Secure intake · {company}
+            Patient intake · {company}
           </span>
         )}
       </div>
@@ -434,7 +437,9 @@ export default function GlpSimulationFunnel() {
               loading="lazy"
             />
           ) : null}
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/80">Preview</p>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/80">
+            Clinic preview (demo link)
+          </p>
           <p className="mt-1 text-base font-semibold tracking-tight">{company}</p>
         </div>
       )}
@@ -448,14 +453,14 @@ export default function GlpSimulationFunnel() {
       {step === 1 && (
         <section data-flow-step="1" className={`${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackSection}`}>
           {isDemoMode && (
-            <div className="flex flex-col gap-4 rounded-xl border border-slate-200 bg-slate-50/90 p-5 sm:flex-row sm:items-center sm:justify-between">
-              <p className={glpIntakeUi.body}>
+            <div className="flex flex-col gap-5 rounded-xl border border-slate-200 bg-slate-50/90 p-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+              <p className={`${glpIntakeUi.body} sm:max-w-md`}>
                 Skip ahead to the results screen with the sample values below, or edit fields first.
               </p>
               <button
                 type="button"
                 onClick={() => void skipDemoToResults()}
-                className={`${glpIntakeUi.primaryBtn} shrink-0 sm:w-auto sm:min-w-[10rem]`}
+                className={`${glpIntakeUi.primaryBtn} w-full shrink-0 sm:w-auto sm:min-w-[11rem]`}
                 style={{ backgroundColor: brandFill }}
               >
                 {demoQuick ? "Preview results now" : "Skip to sample results"}
@@ -471,8 +476,8 @@ export default function GlpSimulationFunnel() {
             </p>
           </header>
 
-          <div className={glpIntakeUi.grid2}>
-            <label>
+          <div className={glpIntakeUi.grid2Form}>
+            <label className="block min-w-0">
               <span className={glpIntakeUi.label}>Current weight (lbs)</span>
               <input
                 type="number"
@@ -490,7 +495,7 @@ export default function GlpSimulationFunnel() {
                 onChange={(e) => setInput((v) => ({ ...v, goalWeight: Number(e.target.value || 0) }))}
               />
             </label>
-            <label>
+            <label className="block min-w-0">
               <span className={glpIntakeUi.label}>Height (inches)</span>
               <input
                 type="number"
@@ -499,7 +504,7 @@ export default function GlpSimulationFunnel() {
                 onChange={(e) => setInput((v) => ({ ...v, heightIn: Number(e.target.value || 0) }))}
               />
             </label>
-            <label>
+            <label className="block min-w-0">
               <span className={glpIntakeUi.label}>Preferred path (optional)</span>
               <select
                 className={glpIntakeUi.control}
@@ -512,7 +517,7 @@ export default function GlpSimulationFunnel() {
                 <option value="oral_path">Oral-first path</option>
               </select>
             </label>
-            <label>
+            <label className="block min-w-0">
               <span className={glpIntakeUi.label}>Goal timeframe</span>
               <select
                 className={glpIntakeUi.control}
@@ -525,7 +530,7 @@ export default function GlpSimulationFunnel() {
                 <option value="exploring">Just exploring</option>
               </select>
             </label>
-            <label>
+            <label className="block min-w-0">
               <span className={glpIntakeUi.label}>Budget comfort (optional)</span>
               <select
                 className={glpIntakeUi.control}
@@ -538,7 +543,7 @@ export default function GlpSimulationFunnel() {
                 <option value="unsure">Not sure yet</option>
               </select>
             </label>
-            <label>
+            <label className="block min-w-0">
               <span className={glpIntakeUi.label}>Prior GLP-1 experience (optional)</span>
               <select
                 className={glpIntakeUi.control}
@@ -551,7 +556,7 @@ export default function GlpSimulationFunnel() {
                 <option value="prefer_not">Prefer not to say</option>
               </select>
             </label>
-            <label className="md:col-span-2">
+            <label className="block min-w-0 md:col-span-2">
               <span className={glpIntakeUi.label}>Biggest struggle (optional)</span>
               <select
                 className={glpIntakeUi.control}
@@ -569,14 +574,16 @@ export default function GlpSimulationFunnel() {
             </label>
           </div>
 
-          <button
-            type="button"
-            onClick={onContinueFromInput}
-            className={glpIntakeUi.primaryBtn}
-            style={{ backgroundColor: brandFill }}
-          >
-            Continue
-          </button>
+          <div className={glpIntakeUi.formActions}>
+            <button
+              type="button"
+              onClick={onContinueFromInput}
+              className={glpIntakeUi.primaryBtn}
+              style={{ backgroundColor: brandFill }}
+            >
+              Continue
+            </button>
+          </div>
         </section>
       )}
 
@@ -597,7 +604,12 @@ export default function GlpSimulationFunnel() {
 
       {step === 3 && (
         <section data-flow-step="3" className={`${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackSection}`}>
-          <header className={`${glpIntakeUi.stackSm} border-b border-slate-100 pb-8`}>
+          <header
+            className={`${glpIntakeUi.stackSm} rounded-2xl border border-slate-200/80 bg-gradient-to-b from-white to-slate-50/90 p-6 md:p-8`}
+            style={{
+              boxShadow: `inset 0 1px 0 rgba(255,255,255,0.85), inset 0 0 0 1px rgba(15,23,42,0.04), 0 1px 2px rgba(15,23,42,0.05)`,
+            }}
+          >
             {effectiveLogo ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -706,23 +718,40 @@ export default function GlpSimulationFunnel() {
 
           <div className={glpIntakeUi.sectionRule}>
             <p className={`${glpIntakeUi.kicker} mb-3`}>Trajectory</p>
-            <h3 className={`${glpIntakeUi.titleMd} mb-5`}>Progress snapshot</h3>
-            <div className={glpIntakeUi.stackSm}>
-              {output.projectedMonthlyRange.slice(0, 6).map((m) => (
-                <div key={m.month} className="grid grid-cols-[4.5rem_1fr_4rem] items-center gap-4">
-                  <span className="text-xs font-medium text-slate-500">Month {m.month}</span>
-                  <div className="h-2.5 overflow-hidden rounded-full bg-slate-100">
-                    <div
-                      className="h-full rounded-full transition-all"
-                      style={{
-                        width: `${Math.max(8, 100 - (m.mid / input.currentWeight) * 100)}%`,
-                        backgroundColor: brandFill,
-                      }}
-                    />
-                  </div>
-                  <span className="text-right text-xs font-medium tabular-nums text-slate-800">{m.mid} lbs</span>
-                </div>
-              ))}
+            <h3 className={`${glpIntakeUi.titleMd} mb-2`}>Progress snapshot</h3>
+            <p className={`${glpIntakeUi.bodyMuted} mb-6`}>
+              Illustrative weight trend only — not a medical forecast. Your provider sets targets and pace.
+            </p>
+            <div className="rounded-2xl border border-slate-200/90 bg-gradient-to-b from-slate-50/60 to-white p-5 md:p-6">
+              <ol className="space-y-0">
+                {output.projectedMonthlyRange.slice(0, 6).map((m, i, arr) => {
+                  const pct = Math.max(12, Math.min(100, 100 - (m.mid / input.currentWeight) * 100));
+                  return (
+                    <li key={m.month} className="flex gap-4">
+                      <div className="flex w-9 flex-col items-center pt-1">
+                        <span
+                          className="h-3 w-3 shrink-0 rounded-full ring-4 ring-white shadow-sm"
+                          style={{ backgroundColor: brandFill }}
+                          aria-hidden
+                        />
+                        {i < arr.length - 1 ? (
+                          <span className="my-1 w-px min-h-[1.25rem] flex-1 bg-slate-200" aria-hidden />
+                        ) : null}
+                      </div>
+                      <div className={`min-w-0 flex-1 ${i < arr.length - 1 ? "pb-6" : ""}`}>
+                        <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Month {m.month}</p>
+                        <p className="mt-1 text-sm font-semibold text-slate-900 tabular-nums">~{m.mid} lbs</p>
+                        <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-100">
+                          <div
+                            className="h-full rounded-full transition-all duration-500"
+                            style={{ width: `${pct}%`, backgroundColor: brandFill }}
+                          />
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ol>
             </div>
           </div>
 
@@ -756,7 +785,7 @@ export default function GlpSimulationFunnel() {
             General information only, not medical advice. Final treatment decisions are made by a licensed provider.
           </p>
 
-          <div className={`${glpIntakeUi.stackSm} border-t border-slate-100 pt-8`}>
+          <div className={`${glpIntakeUi.formActions} border-t border-slate-100 pt-8`}>
             <button
               type="button"
               onClick={() => setStep(4)}
@@ -782,9 +811,9 @@ export default function GlpSimulationFunnel() {
             </p>
           </header>
 
-          <div className={glpIntakeUi.stackMd}>
-            <fieldset className={glpIntakeUi.stackSm}>
-              <legend className={`${glpIntakeUi.label} mb-0`}>Comfort with this general price range?</legend>
+          <div className="space-y-10">
+            <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
+              <legend className={`${glpIntakeUi.label} !mb-0`}>Comfort with this general price range?</legend>
               <div className={glpIntakeUi.choiceRow}>
                 {(
                   [
@@ -805,8 +834,8 @@ export default function GlpSimulationFunnel() {
                 ))}
               </div>
             </fieldset>
-            <fieldset className={glpIntakeUi.stackSm}>
-              <legend className={`${glpIntakeUi.label} mb-0`}>When are you hoping to start?</legend>
+            <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
+              <legend className={`${glpIntakeUi.label} !mb-0`}>When are you hoping to start?</legend>
               <div className={glpIntakeUi.choiceRow}>
                 {(
                   [
@@ -827,8 +856,8 @@ export default function GlpSimulationFunnel() {
                 ))}
               </div>
             </fieldset>
-            <fieldset className={glpIntakeUi.stackSm}>
-              <legend className={`${glpIntakeUi.label} mb-0`}>Explore next steps now?</legend>
+            <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
+              <legend className={`${glpIntakeUi.label} !mb-0`}>Explore next steps now?</legend>
               <div className={glpIntakeUi.choiceRow}>
                 {(
                   [
@@ -851,15 +880,17 @@ export default function GlpSimulationFunnel() {
             </fieldset>
           </div>
 
-          <button
-            type="button"
-            disabled={!readinessComplete()}
-            onClick={() => setStep(5)}
-            className={glpIntakeUi.primaryBtn}
-            style={{ backgroundColor: brandFill }}
-          >
-            Continue to save / book
-          </button>
+          <div className={glpIntakeUi.formActions}>
+            <button
+              type="button"
+              disabled={!readinessComplete()}
+              onClick={() => setStep(5)}
+              className={glpIntakeUi.primaryBtn}
+              style={{ backgroundColor: brandFill }}
+            >
+              Continue to save / book
+            </button>
+          </div>
         </section>
       )}
 
@@ -876,8 +907,8 @@ export default function GlpSimulationFunnel() {
             </p>
           </header>
 
-          <div className={glpIntakeUi.grid2}>
-            <label>
+          <div className={glpIntakeUi.grid2Form}>
+            <label className="block min-w-0">
               <span className={glpIntakeUi.label}>Full name</span>
               <input
                 placeholder="Jane Doe"
@@ -887,7 +918,7 @@ export default function GlpSimulationFunnel() {
                 autoComplete="name"
               />
             </label>
-            <label>
+            <label className="block min-w-0">
               <span className={glpIntakeUi.label}>Email</span>
               <input
                 placeholder="you@example.com"
@@ -898,7 +929,7 @@ export default function GlpSimulationFunnel() {
                 autoComplete="email"
               />
             </label>
-            <label className="md:col-span-2">
+            <label className="block min-w-0 md:col-span-2">
               <span className={glpIntakeUi.label}>Phone (optional)</span>
               <input
                 placeholder="(555) 000-0000"
@@ -911,9 +942,9 @@ export default function GlpSimulationFunnel() {
             </label>
           </div>
 
-          <fieldset className={glpIntakeUi.stackSm}>
-            <legend className={glpIntakeUi.label}>Preferred next step</legend>
-            <div className="grid gap-3 sm:grid-cols-3">
+          <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
+            <legend className={`${glpIntakeUi.label} !mb-0`}>Preferred next step</legend>
+            <div className="grid gap-4 sm:grid-cols-3">
               <label
                 className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition ${
                   nextStep === "book" ? "border-slate-900 bg-slate-50" : "border-slate-200 bg-white hover:border-slate-300"
@@ -963,7 +994,7 @@ export default function GlpSimulationFunnel() {
             </div>
           </fieldset>
 
-          <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-slate-200 bg-slate-50/50 p-4 text-sm leading-relaxed text-slate-600">
+          <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-slate-200 bg-slate-50/50 p-5 text-sm leading-relaxed text-slate-600">
             <input
               type="checkbox"
               className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 accent-slate-900"
@@ -976,7 +1007,7 @@ export default function GlpSimulationFunnel() {
             </span>
           </label>
 
-          <div className={`${glpIntakeUi.stackSm} pt-2`}>
+          <div className={`${glpIntakeUi.formActions} pt-2`}>
             <button
               type="button"
               onClick={onSaveLead}
@@ -1008,9 +1039,14 @@ export default function GlpSimulationFunnel() {
       {step === 6 && (
         <section
           data-flow-step="6"
-          className={`${glpIntakeUi.card} border-emerald-200/90 bg-gradient-to-b from-emerald-50/95 to-white ${glpIntakeUi.cardPad} text-center ${glpIntakeUi.stackMd} shadow-[0_12px_40px_rgba(16,185,129,0.08)]`}
+          className={`${glpIntakeUi.card} ${glpIntakeUi.cardPad} text-center ${glpIntakeUi.stackMd} border-slate-200/90 bg-gradient-to-b from-slate-50/90 to-white shadow-[0_12px_40px_rgba(15,23,42,0.06)]`}
+          style={{ borderColor: `${brandFill}33` }}
         >
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100 text-2xl" aria-hidden>
+          <div
+            className="mx-auto flex h-14 w-14 items-center justify-center rounded-full text-2xl text-white shadow-md"
+            style={{ backgroundColor: brandFill }}
+            aria-hidden
+          >
             ✓
           </div>
           <div className={glpIntakeUi.stackSm}>

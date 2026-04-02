@@ -20,6 +20,13 @@ function hex(h: string | null, fallback = "#2563EB") {
   return /^#[0-9a-fA-F]{6}$/.test(x) ? x.toUpperCase() : fallback;
 }
 
+/** 6-digit hex (with optional #) — used so `brand=059669` can mean color when `company` is set. */
+function isLikelyHex6(s: string | null | undefined): boolean {
+  if (!s) return false;
+  const t = s.trim().replace(/^#/, "");
+  return /^[0-9a-fA-F]{6}$/.test(t);
+}
+
 export type BrandState = {
   enabled: boolean;
   brand: string;
@@ -73,8 +80,17 @@ export function useBrandTakeover(): BrandState {
       const urlEnabled = isDemo || hasCompany;
 
       if (urlEnabled) {
-        const companyName = clean(sp?.get("company") || sp?.get("brand") || null) || "Your Company";
-        const customColor = sp?.get("primary") || sp?.get("brandColor");
+        const companyRaw = sp?.get("company");
+        const brandRaw = sp?.get("brand");
+        const companyName =
+          clean(
+            companyRaw ||
+              (brandRaw && !isLikelyHex6(brandRaw) ? brandRaw : null) ||
+              null,
+          ) || "Your Company";
+        const brandParamAsColor = brandRaw && isLikelyHex6(brandRaw) ? brandRaw : null;
+        const customColor =
+          sp?.get("primary") || sp?.get("brandColor") || brandParamAsColor;
         const domainExplicit = sp?.get("domain")?.trim() || null;
 
         let themeColor: string;

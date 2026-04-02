@@ -67,22 +67,20 @@ export default function BrandCSSInjector() {
       `;
       document.head.appendChild(style);
     } else {
-      // Fallback to default brand
-      root.style.setProperty("--brand", "#FF7A00");
-      root.style.setProperty("--brand-2", "#FF3D81");
-      root.style.setProperty("--brand-primary", "#FFA63D");
-      
-      // Set default brand range
-      root.style.setProperty("--brand-50", "#fff7ed");
-      root.style.setProperty("--brand-100", "#ffedd5");
-      root.style.setProperty("--brand-200", "#fed7aa");
-      root.style.setProperty("--brand-300", "#fdba74");
-      root.style.setProperty("--brand-400", "#fb923c");
-      root.style.setProperty("--brand-500", "#f97316");
-      root.style.setProperty("--brand-600", "#ea580c");
-      root.style.setProperty("--brand-700", "#c2410c");
-      root.style.setProperty("--brand-800", "#9a3412");
-      root.style.setProperty("--brand-900", "#7c2d12");
+      // Neutral GLPConvert shell: slate scale until tenant branding loads (white-label SaaS norm).
+      root.style.setProperty("--brand", "#0f172a");
+      root.style.setProperty("--brand-2", "#334155");
+      root.style.setProperty("--brand-primary", "#0f172a");
+      root.style.setProperty("--brand-50", "#f8fafc");
+      root.style.setProperty("--brand-100", "#f1f5f9");
+      root.style.setProperty("--brand-200", "#e2e8f0");
+      root.style.setProperty("--brand-300", "#cbd5e1");
+      root.style.setProperty("--brand-400", "#94a3b8");
+      root.style.setProperty("--brand-500", "#64748b");
+      root.style.setProperty("--brand-600", "#475569");
+      root.style.setProperty("--brand-700", "#334155");
+      root.style.setProperty("--brand-800", "#1e293b");
+      root.style.setProperty("--brand-900", "#0f172a");
     }
   }, [enabled, primary, brand]);
 

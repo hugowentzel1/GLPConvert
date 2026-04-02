@@ -215,7 +215,7 @@ function HomeContent() {
          <span>Launch Your Branded Version Now</span>
        </button>
        <p className="text-sm text-gray-600 mt-6" data-testid="microcopy-hero">
-         $99/mo + $399 setup • Live in 24 hours — or your setup fee is refunded..
+         $99/mo + $399 setup • Live in 24 hours — or your setup fee is refunded.
        </p>
                 </div>
               </div>
@@ -268,28 +268,11 @@ function HomeContent() {
           {/* Quotes - Social Proof Grid */}
           <Testimonials />
 
-          {/* KPI Band - Single band only */}
-          <div
-            data-testid="kpi-band"
-            className="py-16 border-y border-slate-200/80 bg-white"
-          >
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 text-center">
-                <div>
-                  <div className="text-3xl font-semibold tabular-nums text-slate-900">28,417</div>
-                  <div className="text-sm text-slate-600 mt-2">intake sessions this month (placeholder)</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-semibold tabular-nums text-slate-900">31%</div>
-                  <div className="text-sm text-slate-600 mt-2">illustrative lift in completions</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-semibold tabular-nums text-slate-900">113+</div>
-                  <div className="text-sm text-slate-600 mt-2">clinic funnels live (placeholder)</div>
-                </div>
-              </div>
+          {trustData?.metrics?.length ? (
+            <div data-testid="kpi-band">
+              <MetricsBar items={trustData.metrics} className="border-t border-slate-200/80" />
             </div>
-          </div>
+          ) : null}
 
 
           {/* Trust Signals - Logo Wall */}
@@ -340,7 +323,7 @@ function HomeContent() {
          <span>Launch Your Branded Version Now</span>
        </button>
        <p className="text-sm text-slate-500 mt-2" data-testid="microcopy-bottom">
-         $99/mo + $399 setup • Live in 24 hours — or your setup fee is refunded..
+         $99/mo + $399 setup • Live in 24 hours — or your setup fee is refunded.
        </p>
               </div>
             </div>

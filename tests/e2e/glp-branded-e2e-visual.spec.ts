@@ -69,14 +69,20 @@ test.describe("GLPConvert branded E2E (visual)", () => {
 
   test("D — Intake loads global CSS (Tailwind + fonts; local http must not strip stylesheets)", async ({
     page,
-  }) => {
+  }, testInfo) => {
     await mockTenantIntakeConfig(page);
-    await page.goto("/intake?demo=1&handle=glpconvert&company=CSS%20Check&transition_ms=600", {
+    const response = await page.goto("/intake?demo=1&handle=glpconvert&company=CSS%20Check&transition_ms=600", {
       waitUntil: "domcontentloaded",
     });
+    const baseURL = testInfo.project.use.baseURL ?? "";
+    if (/localhost|127\.0\.0\.1/.test(baseURL)) {
+      const csp = response?.headers()?.["content-security-policy"] ?? "";
+      expect(csp).not.toContain("upgrade-insecure-requests");
+    }
     await expect(page.getByText(/GLPConvert — a product of Wellspire LLC/i).first()).toBeVisible({
       timeout: 20000,
     });
+    await expect(page.locator('[data-intake-mode="demo"]')).toBeVisible();
     await expect(page.locator('link[rel="stylesheet"]').first()).toBeAttached({ timeout: 20000 });
     expect(await page.locator('link[rel="stylesheet"]').count()).toBeGreaterThan(0);
     const kickerColor = await page
@@ -189,7 +195,8 @@ test.describe("GLPConvert branded E2E (visual)", () => {
       "/intake?handle=glpconvert&company=glpconvert&transition_ms=4500&booking=" +
       encodeURIComponent("https://example.com/schedule");
     await page.goto(paidUrl, { waitUntil: "domcontentloaded" });
-    await expect(page.getByText(/Secure intake/i)).toBeVisible({ timeout: 20000 });
+    await expect(page.locator('[data-intake-mode="paid"]')).toBeVisible({ timeout: 20000 });
+    await expect(page.getByText("Patient intake", { exact: true })).toBeVisible();
     await expect(
       page.locator('[data-flow-step="1"]').getByRole("heading", { name: /your glp path/i }),
     ).toBeVisible();

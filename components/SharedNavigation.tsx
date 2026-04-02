@@ -7,6 +7,7 @@ import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import { useCompany } from './CompanyContext';
 import { useIsDemo } from '@/src/lib/isDemo';
 import { PRODUCT_NAME } from '@/lib/product-identity';
+import { companyLabelFromSearchParams } from '@/lib/company';
 
 export default function SharedNavigation() {
   const pathname = usePathname();
@@ -169,6 +170,11 @@ export default function SharedNavigation() {
     }
   };
 
+  const queryBrandLabel = companyLabelFromSearchParams(searchParams);
+  const navTitle = b.enabled
+    ? b.brand
+    : (queryBrandLabel ?? company.companyName);
+
   return (
     <header className="bg-white border-b border-gray-200/30 shadow-sm" data-testid="main-site-nav">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -201,7 +207,7 @@ export default function SharedNavigation() {
             )}
             <div>
               <h1 className="text-2xl font-black text-[var(--brand-primary)]">
-                {b.enabled ? b.brand : 'Your Company'}
+                {navTitle}
               </h1>
               <p className="text-xs font-semibold text-gray-500 tracking-widest uppercase">
                 {b.enabled ? 'Branded intake' : PRODUCT_NAME}
@@ -219,6 +225,9 @@ export default function SharedNavigation() {
                 <Link href={createUrlWithParams("/pricing")} className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">Pricing</Link>
                 <Link href={createUrlWithParams("/partners")} className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">Partners</Link>
                 <Link href={createUrlWithParams("/support")} className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">Support</Link>
+                <Link href={createUrlWithParams("/about")} className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">
+                  About
+                </Link>
                 <button 
                   onClick={handleLaunchClick}
                   className="btn-primary ml-12 inline-flex items-center justify-center"
@@ -228,9 +237,16 @@ export default function SharedNavigation() {
                 </button>
               </>
             ) : (
-              // Paid mode: No installer-facing links or activation CTA
-              <div className="text-sm text-gray-600">
-                {/* Minimal paid navigation - can add report/support later if needed */}
+              <div className="flex items-center gap-8 text-sm">
+                <Link href="/support" className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">
+                  Help
+                </Link>
+                <Link href="/privacy" className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">
+                  Privacy
+                </Link>
+                <Link href="/about" className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">
+                  About
+                </Link>
               </div>
             )}
           </nav>
@@ -242,7 +258,7 @@ export default function SharedNavigation() {
         <div className="border-t border-gray-100 bg-gray-50/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
             <p className="text-xs text-gray-500 text-center">
-              Private demo for {b.brand || 'Your Company'}. Not affiliated.
+              Private demo for {b.brand || queryBrandLabel || company.companyName}. Not affiliated.
             </p>
           </div>
         </div>

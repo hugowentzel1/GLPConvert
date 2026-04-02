@@ -9,11 +9,12 @@ const nextConfig = {
   // Security headers
   async headers() {
     /**
-     * Do NOT send upgrade-insecure-requests or HSTS when not on Vercel.
-     * On http://localhost (next dev / next start), upgrade-insecure-requests makes the browser
-     * fetch https://localhost/_next/static/css/... — no TLS → stylesheets fail → "unstyled" UI.
+     * upgrade-insecure-requests + HSTS only on Vercel production builds.
+     * Local / preview dev must not upgrade http://localhost CSS URLs or the UI renders unstyled.
      */
-    const onVercel = process.env.VERCEL === "1";
+    /** Only upgrade on real Vercel deploys (production build). Avoids https://localhost CSS breaks with `vercel dev`. */
+    const useCspUpgrade =
+      process.env.VERCEL === "1" && process.env.NODE_ENV === "production";
 
     const cspDirectives = [
       "default-src 'self'",
@@ -27,7 +28,7 @@ const nextConfig = {
       "form-action 'self'",
       "object-src 'none'",
     ];
-    if (onVercel) {
+    if (useCspUpgrade) {
       cspDirectives.push("upgrade-insecure-requests");
     }
 
@@ -49,7 +50,7 @@ const nextConfig = {
       },
     ];
 
-    if (onVercel) {
+    if (useCspUpgrade) {
       securityHeaders.splice(4, 0, {
         key: "Strict-Transport-Security",
         value: "max-age=31536000; includeSubDomains",

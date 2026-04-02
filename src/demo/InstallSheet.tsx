@@ -31,12 +31,18 @@ export default function InstallSheet() {
     if (b.enabled && b.pilot) setOpen(true);
   }, [b.enabled, b.pilot]);
 
-  // Set default subdomain
+  // Single-label tenant slug before `.c.glpconvert.com` (no dots in this segment).
   useEffect(() => {
     if (b.domain) {
-      setSubdomain(`solar.${b.domain}`);
+      const base = (b.domain.split(".")[0] || "clinic").toLowerCase().replace(/[^a-z0-9-]/g, "");
+      setSubdomain(base.slice(0, 63) || "clinic");
     } else if (b.brand) {
-      setSubdomain(`solar.${b.brand.toLowerCase().replace(/\s+/g, "")}`);
+      const s = b.brand
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9-]/g, "")
+        .slice(0, 63);
+      setSubdomain(s || "clinic");
     }
   }, [b.domain, b.brand]);
 
@@ -174,7 +180,7 @@ export default function InstallSheet() {
                     className={`flex-1 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent ${
                       isSubdomainValid ? "border-gray-300" : "border-red-300"
                     }`}
-                    placeholder="solar.yourdomain"
+                    placeholder="your-clinic"
                   />
                   <span className="text-gray-500">.c.glpconvert.com</span>
                 </div>
@@ -227,7 +233,7 @@ export default function InstallSheet() {
                 <ul className="space-y-2 text-sm text-gray-700">
                   <li className="flex items-center">
                     <span className="text-green-500 mr-2">✓</span>
-                    Structured intake + recommendation output
+                    Branded GLP intake + expectation clarity
                   </li>
                   <li className="flex items-center">
                     <span className="text-green-500 mr-2">✓</span>
@@ -275,15 +281,15 @@ export default function InstallSheet() {
                 </h3>
                 <div className="bg-gray-900 rounded-lg p-4">
                   <code className="text-green-400 text-sm">
-                    &lt;script src="https://{subdomain || "solar.yourdomain"}
-                    .glpconvert.com/embed.js"&gt;&lt;/script&gt;
+                    &lt;script src="https://{subdomain || "your-clinic"}
+                    .c.glpconvert.com/embed.js"&gt;&lt;/script&gt;
                   </code>
                 </div>
                 <div className="mt-3">
                   <button
                     onClick={() =>
                       navigator.clipboard.writeText(
-                        `<script src="https://${subdomain || "solar.yourdomain"}.glpconvert.com/embed.js"></script>`,
+                        `<script src="https://${subdomain || "your-clinic"}.c.glpconvert.com/embed.js"></script>`,
                       )
                     }
                     className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm"
@@ -322,7 +328,7 @@ export default function InstallSheet() {
                   <ul className="space-y-2 text-sm text-gray-700">
                     <li className="flex items-center">
                       <span className="text-green-500 mr-2">✓</span>
-                      Structured intake + recommendation output
+                      Branded GLP intake + expectation clarity
                     </li>
                     <li className="flex items-center">
                       <span className="text-green-500 mr-2">✓</span>

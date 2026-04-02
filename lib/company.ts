@@ -49,6 +49,22 @@ export function parseCompany(
   };
 }
 
+/** Display label for nav/hero when `company` is present in the query string (SSR-safe). */
+export function companyLabelFromSearchParams(
+  search: URLSearchParams | null | undefined,
+): string | null {
+  if (!search) return null;
+  const raw = search.get("company")?.trim();
+  if (!raw) return null;
+  const named = search.get("name")?.trim();
+  if (named) return sanitizeCompany(named) || null;
+  const handle = raw.toLowerCase();
+  const titleCased = handle
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (m) => m.toUpperCase());
+  return titleCased.slice(0, 64) || null;
+}
+
 export function getCompanyFromUrl(url: string): CompanyInfo {
   try {
     const urlObj = new URL(url);
