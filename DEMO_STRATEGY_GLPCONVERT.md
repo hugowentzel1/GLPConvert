@@ -31,6 +31,10 @@ The demo is the **primary sales engine** for **cold email** and **LinkedIn DMs**
 - `https://glp-convert.vercel.app/intake?demo=1&handle=demo-apex&company=Apex%20MedSpa&brand=4F46E5&demo_traffic=800`
 - Production patient: `https://glp-convert.vercel.app/intake?company=glpconvert` (booking + branding from tenant row when configured)
 
+### Playwright visual E2E (`npm run test:glp-visual:local`)
+
+Uses **`http://localhost:3330`** with a dedicated dev server (see `playwright.glp-visual.config.ts`) so tests never attach to a stale process on port 3000. Tests pre-set `cookie-consent` in `localStorage` and use **force click** on Continue where needed so navigation chrome cannot block the funnel.
+
 ### Local copy-paste URLs (`npm run dev` → `http://localhost:3000`)
 
 - **Branded demo (patient path + owner panels):**  

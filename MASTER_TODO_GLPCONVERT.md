@@ -28,6 +28,16 @@ Engineering must not diverge demo and paid flows structurally—only demo overla
 
 **Tenant economics (U018 scaffold):** optional keys inside `tenants.crm_keys` JSON — `intake_monthly_low`, `intake_monthly_high`, `intake_consult_fee_note`, `intake_payment_note`, `intake_brand_name`, `intake_brand_color_secondary` — merged in **`GlpSimulationFunnel`** when present.
 
+### R-Mar-2026 — demo≈paid polish + legal + E2E (AUTO pass)
+
+| ID | Item | Status |
+|----|------|--------|
+| **R028** | Intake: demo banner “Preview for {clinic}”; paid “Secure intake · {clinic}”; results CTA **Review my next step**; optional **starts at** from tenant monthly low | **Done** |
+| **R029** | Owner-only panels: conservative revenue-leak copy, before/after layout, activation CTAs | **Done** |
+| **R030** | **`app/legal/privacy`** + **`app/legal/terms`** — GLPConvert / white-label / HIPAA-ready posture (not legal advice) | **Done** — **HUMAN:** final counsel review **U024** |
+| **R031** | **`docs/ATTRIBUTION_PIXELS_GLPCONVERT.md`** + COMPLIANCE cross-link (UTM done; pixels behind consent) | **Done** |
+| **R032** | Playwright **`glp-branded-e2e-visual.spec.ts`** — paid patient **full** funnel (C) + buyer (B) + demo patient (A) | **Done** |
+
 Legend: `[x] DONE` | `[~] IN_PROGRESS` | `[ ] TODO`  
 Owner: `AUTO` or `HUMAN`
 

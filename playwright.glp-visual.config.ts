@@ -3,7 +3,7 @@ import { defineConfig, devices } from "@playwright/test";
 const baseURL =
   process.env.BASE_URL?.trim() ||
   process.env.PLAYWRIGHT_BASE_URL?.trim() ||
-  "http://localhost:3000";
+  "http://localhost:3330";
 /** Remote prod/preview — no local webServer */
 const isLive =
   !baseURL.includes("localhost") && !baseURL.includes("127.0.0.1");
@@ -43,9 +43,10 @@ export default defineConfig({
   webServer: isLive
     ? undefined
     : {
-        command: "npm run dev",
-        url: "http://localhost:3000",
-        reuseExistingServer: true,
+        /** Dedicated port so we never attach to a stale `3000` from another dev instance. */
+        command: "npx next dev -p 3330",
+        url: "http://localhost:3330",
+        reuseExistingServer: !!process.env.PW_REUSE_DEV,
         timeout: 180000,
       },
 });

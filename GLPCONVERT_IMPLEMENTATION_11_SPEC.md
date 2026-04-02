@@ -16,8 +16,12 @@
 | Area | Status | Where |
 |------|--------|--------|
 | Flow: input → transition → results → readiness → lead → confirm | **Shipped** | `components/intake/GlpSimulationFunnel.tsx` |
-| Trust chips + “Your GLP Path” + process + expectations + price range + FAQ + footer | **Shipped** | Step 3 |
-| Demo banner + owner leak + before/after + ROI bullets + activate CTA | **Shipped** | `GlpDemoOwnerPanels.tsx`, `demo=1` |
+| Trust chips + “Your GLP path” + process + expectations + price range (+ optional **starts at** from tenant low) + FAQ + footer | **Shipped** | Step 3 `GlpSimulationFunnel.tsx` |
+| Demo ≈ paid: preview banner (“Preview for {clinic}”) vs paid strip (“Secure intake · {clinic}”) | **Shipped** | Same funnel; **R028** |
+| Results primary CTA **Review my next step** → readiness | **Shipped** | Step 3 |
+| Demo owner: leak + before/after + impact + activate CTAs | **Shipped** | `GlpDemoOwnerPanels.tsx`, `demo=1` — **R029** |
+| Privacy / Terms (GLPConvert, white-label, HIPAA-ready posture) | **Shipped** — **counsel review** | `app/legal/privacy`, `app/legal/terms` |
+| Attribution doc (pixels behind consent) | **Shipped** | `docs/ATTRIBUTION_PIXELS_GLPCONVERT.md` |
 | Readiness → lead JSON | **Shipped** | `POST /api/lead` |
 | UTM persistence | **Shipped** | `lib/glp-attribution.ts` |
 | Pixels (optional) | **Shipped** | `AttributionPixels` on intake layout |
@@ -39,7 +43,7 @@
 5. **R017** embed hardening.  
 6. **R012–R014** API cleanup + docs.  
 7. **U022–U023** disclosure patterns + compounded copy guardrails.  
-8. **U033** Playwright full funnel (includes `test:glp-visual:*` for branded demo + buyer).
+8. **U033** Playwright full funnel — **`npm run test:glp-visual:local`** — demo patient (A), buyer checkout mock (B), **paid patient full funnel (C)**.
 
 ## Blocked — human / third party only
 

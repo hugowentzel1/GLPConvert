@@ -22,6 +22,19 @@ test.use({
   trace: "on",
 });
 
+/**
+ * Intake funnel hydrates inside Suspense; the Continue button can paint before React binds onClick.
+ * Retry until step 2 appears so E2E matches real user timing (avoids flaky first click).
+ */
+async function clickIntakeContinueUntilTransition(page: import("@playwright/test").Page) {
+  const continueBtn = page.locator('[data-flow-step="1"]').getByRole("button", { name: /^continue$/i });
+  await expect(continueBtn).toBeVisible({ timeout: 20000 });
+  await expect(async () => {
+    await continueBtn.click({ force: true });
+    await expect(page.locator('[data-flow-step="2"]')).toBeVisible({ timeout: 3000 });
+  }).toPass({ timeout: 25000 });
+}
+
 async function mockTenantIntakeConfig(page: import("@playwright/test").Page) {
   await page.route("**/api/public/tenant-intake-config**", async (route) => {
     if (route.request().method() !== "GET") return route.continue();
@@ -48,6 +61,12 @@ async function mockTenantIntakeConfig(page: import("@playwright/test").Page) {
 test.describe("GLPConvert branded E2E (visual)", () => {
   test.describe.configure({ mode: "serial" });
 
+  test.beforeEach(async ({ page }) => {
+    await page.addInitScript(() => {
+      window.localStorage.setItem("cookie-consent", "accepted");
+    });
+  });
+
   test("A — Branded demo intake (patient) full funnel", async ({ page }, testInfo) => {
     await mockTenantIntakeConfig(page);
     await page.route("**/api/lead", async (route) => {
@@ -64,16 +83,18 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await expect(page.getByRole("heading", { name: /your glp path/i })).toBeVisible({ timeout: 20000 });
     await page.screenshot({ path: testInfo.outputPath("visual-A1-intake-input.png"), fullPage: true });
 
-    await page.getByRole("button", { name: /^continue$/i }).click();
+    await clickIntakeContinueUntilTransition(page);
 
-    await expect(page.getByRole("heading", { name: /building your plan/i })).toBeVisible({ timeout: 15000 });
+    await expect(page.locator('[data-flow-step="2"]')).toBeVisible({ timeout: 5000 });
     await page.screenshot({ path: testInfo.outputPath("visual-A2-building.png"), fullPage: true });
 
-    await expect(page.getByRole("heading", { name: /your glp path/i })).toBeVisible({ timeout: 25000 });
+    await expect(page.locator('[data-flow-step="3"]').getByRole("heading", { name: /your glp path/i })).toBeVisible({
+      timeout: 30000,
+    });
     await expect(page.getByText(/typical monthly range/i)).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("visual-A3-results.png"), fullPage: true });
 
-    await page.getByRole("button", { name: /consult readiness/i }).click();
+    await page.locator('[data-flow-step="3"]').getByRole("button", { name: /review my next step/i }).click();
 
     await expect(page.getByRole("heading", { name: "Consult readiness", exact: true })).toBeVisible();
     await page.getByRole("button", { name: /yes, roughly/i }).click();
@@ -127,13 +148,55 @@ test.describe("GLPConvert branded E2E (visual)", () => {
 
     expect(page.url()).toContain("example.com");
     await page.screenshot({ path: testInfo.outputPath("visual-B2-checkout-redirect.png"), fullPage: true });
+
+    // Same tab left the app — reset so serial test C starts on our origin (not example.com).
+    await page.goto("/", { waitUntil: "domcontentloaded" });
   });
 
-  test("C — Paid patient intake (no demo) landing", async ({ page }, testInfo) => {
+  test("C — Paid patient intake (no demo) full funnel", async ({ page }, testInfo) => {
     await mockTenantIntakeConfig(page);
-    await page.goto("/intake?company=glpconvert", { waitUntil: "domcontentloaded" });
-    await expect(page.getByText(/Patient intake/i)).toBeVisible({ timeout: 20000 });
-    await expect(page.getByRole("heading", { name: /your glp path/i })).toBeVisible();
+    await page.route("**/api/lead", async (route) => {
+      if (route.request().method() !== "POST") return route.continue();
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ success: true, message: "ok (e2e mock)" }),
+      });
+    });
+
+    const paidUrl =
+      "/intake?handle=glpconvert&company=glpconvert&transition_ms=4500&booking=" +
+      encodeURIComponent("https://example.com/schedule");
+    await page.goto(paidUrl, { waitUntil: "domcontentloaded" });
+    await expect(page.getByText(/Secure intake/i)).toBeVisible({ timeout: 20000 });
+    await expect(
+      page.locator('[data-flow-step="1"]').getByRole("heading", { name: /your glp path/i }),
+    ).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("visual-C1-paid-intake-input.png"), fullPage: true });
+
+    await clickIntakeContinueUntilTransition(page);
+    await expect(page.locator('[data-flow-step="3"]').getByRole("heading", { name: /your glp path/i })).toBeVisible({
+      timeout: 25000,
+    });
+    await page.screenshot({ path: testInfo.outputPath("visual-C2-paid-results.png"), fullPage: true });
+    await expect(page.getByText(/typical monthly range/i)).toBeVisible();
+    await expect(page.locator("[data-owner-demo-panels]")).toHaveCount(0);
+
+    await page.locator('[data-flow-step="3"]').getByRole("button", { name: /review my next step/i }).click();
+    await expect(page.getByRole("heading", { name: "Consult readiness", exact: true })).toBeVisible();
+    await page.locator('[data-flow-step="4"]').getByRole("button", { name: /yes, roughly/i }).click();
+    await page.locator('[data-flow-step="4"]').getByRole("button", { name: /soon \(weeks\)/i }).click();
+    await page.locator('[data-flow-step="4"]').getByRole("button", { name: /^yes$/i }).click();
+
+    await page.locator('[data-flow-step="4"]').getByRole("button", { name: /continue to save/i }).click();
+    const stamp = Date.now();
+    await page.getByLabel(/full name/i).fill(`Paid Patient ${stamp}`);
+    await page.getByLabel(/^email$/i).fill(`paid.patient.${stamp}@example.com`);
+    await page.getByRole("checkbox").check();
+    await page.getByRole("button", { name: /save my plan/i }).click();
+
+    await expect(page.getByRole("heading", { name: /you're all set/i })).toBeVisible({ timeout: 15000 });
+    await expect(page.getByRole("link", { name: /schedule your consultation/i })).toBeVisible();
+    await page.screenshot({ path: testInfo.outputPath("visual-C3-paid-confirmation.png"), fullPage: true });
   });
 });

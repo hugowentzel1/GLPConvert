@@ -20,6 +20,8 @@ export const glpIntakeUi = {
 
   kicker: "text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500",
   titleLg: "text-2xl font-bold tracking-tight text-slate-900 md:text-[1.75rem] md:leading-snug",
+  /** Results hero — editorial weight without shouting */
+  titleResults: "text-3xl font-bold tracking-tight text-slate-900 md:text-[2rem] md:leading-[1.2]",
   titleMd: "text-lg font-semibold tracking-tight text-slate-900",
   body: "text-sm leading-relaxed text-slate-600",
   bodyMuted: "text-sm leading-relaxed text-slate-500",

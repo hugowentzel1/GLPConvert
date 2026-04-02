@@ -38,7 +38,11 @@ When storing **PHI/PII** tied to health-related intake:
 
 Follow `U023`: no overstated compounding claims; align with counsel for jurisdiction-specific rules.
 
+## Attribution / pixels
+
+UTM capture is implemented (`lib/glp-attribution.ts`). **Meta / Google pixels** are not hard-coded—add behind env + consent after **legal review** (`U024`). See **`docs/ATTRIBUTION_PIXELS_GLPCONVERT.md`**.
+
 ## Related
 
 - `GLPCONVERT_LEGAL_COMPLIANCE_NOTES.md` — legacy/extended notes  
-- `app/terms`, `app/privacy` — human review before production claims  
+- `app/legal/terms`, `app/legal/privacy` — **human review before production claims** (`U024`)  

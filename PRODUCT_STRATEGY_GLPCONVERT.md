@@ -31,6 +31,10 @@ A **HIPAA-ready, white-label, pre-consult conversion layer** for GLP-1 / medical
 - **Every feature** must map to conversion, consult quality, trust, attribution, or activation.  
 - **Copy** is commercially strong, not hype; no “you qualify / approved / guaranteed outcomes.”  
 
+## Design & UX discipline (white-label, any clinic)
+
+UX patterns follow **reduced cognitive load**, **clear hierarchy**, **progressive disclosure**, and **trust-first** forms—aligned with widely cited guidance (e.g. **Nielsen Norman Group**, **Baymard Institute** checkout/form research, **CXL** conversion heuristics). Implementation notes and outbound context: **`docs/GLPCONVERT_OUTREACH_UX_SOURCES_MAR2026.md`**, **`docs/GLPCONVERT_WHITE_LABEL_SAAS_SOURCES.md`**. Visual execution: calm neutrals, one dynamic accent (brand), generous spacing—no neon gradients or template-y clutter.  
+
 ## Core visitor flow (locked)
 
 1. Fast input (weight, goal, height, timeframe, optional path/struggle/budget—no contact first).  

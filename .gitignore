@@ -37,4 +37,5 @@ secrets/
 next-env.d.ts
 .env.local.backup
 playwright-report/
+playwright-report-glp-visual/
 test-results/

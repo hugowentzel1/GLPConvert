@@ -1,34 +1,38 @@
-'use client';
+"use client";
 
-import Footer from '@/components/Footer';
-import PaidFooter from '@/components/PaidFooter';
-import { useIsDemo } from '@/src/lib/isDemo';
-import { useSearchParams } from 'next/navigation';
+import Footer from "@/components/Footer";
+import PaidFooter from "@/components/PaidFooter";
+import { SUPPORT_EMAIL, PRODUCT_NAME } from "@/lib/product-identity";
+import { useIsDemo } from "@/src/lib/isDemo";
+import { useSearchParams } from "next/navigation";
 
 export default function AccessibilityPage() {
   const isDemo = useIsDemo();
   const searchParams = useSearchParams();
-  
+
   return (
-    <div className="min-h-screen flex flex-col">
-      <main className="flex-1 py-16 px-4">
-        <div className="max-w-4xl mx-auto">
-          {/* Back to Home Button */}
+    <div className="flex min-h-screen flex-col bg-slate-50/80">
+      <main className="flex-1 px-4 py-16">
+        <div className="mx-auto max-w-3xl">
           <div className="mb-8">
             <a
-              href={searchParams?.get('demo') ? `/?${searchParams?.toString()}` : `/paid?${searchParams?.toString()}`}
-              className="inline-flex items-center text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium"
+              href={searchParams?.get("demo") ? `/?${searchParams?.toString()}` : `/paid?${searchParams?.toString()}`}
+              className="inline-flex items-center text-sm font-medium text-slate-600 transition-colors hover:text-slate-900"
             >
-              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
-              Back to Home
+              Back
             </a>
           </div>
-          <h1 className="text-4xl font-bold mb-6 text-center md:text-left">Accessibility</h1>
-          <div className="prose prose-gray max-w-none">
-            <p className="text-lg text-gray-600 mb-6">
-              We are committed to ensuring our website and services are accessible to everyone, including people with disabilities.
+          <h1 className="mb-3 text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">Accessibility</h1>
+          <p className="mb-10 text-sm text-slate-500">
+            {PRODUCT_NAME} — last updated: {new Date().toLocaleDateString("en-US", { dateStyle: "long" })}
+          </p>
+          <div className="prose prose-slate max-w-none prose-p:text-slate-600 prose-li:text-slate-600">
+            <p className="lead text-lg text-slate-700">
+              We work to make {PRODUCT_NAME} usable by people with a wide range of abilities. This page describes our
+              intent and how to report issues.
             </p>
             
             <h2 className="text-2xl font-semibold mt-8 mb-4">Accessibility Standards</h2>
@@ -57,14 +61,15 @@ export default function AccessibilityPage() {
               <li>Magnification software</li>
             </ul>
 
-            <h2 className="text-2xl font-semibold mt-8 mb-4">Reporting Accessibility Issues</h2>
+            <h2 className="text-2xl font-semibold mt-8 mb-4">Reporting accessibility issues</h2>
             <p className="mb-4">
-              If you encounter any accessibility barriers or have suggestions for improvement, please contact us:
+              If you hit a barrier using our marketing site or a clinic-branded intake experience, email{" "}
+              <a href={`mailto:${SUPPORT_EMAIL}`} className="text-slate-900 underline decoration-slate-300">
+                {SUPPORT_EMAIL}
+              </a>{" "}
+              with the page URL and what you were trying to do. We route clinic-specific issues to the subscribing
+              practice when appropriate.
             </p>
-            <ul className="list-disc pl-6 mb-6">
-              <li>Email: <a href="mailto:accessibility@getsunspire.com" className="text-blue-600 hover:underline">accessibility@getsunspire.com</a></li>
-              <li>Phone: <a href="tel:+14041234567" className="text-blue-600 hover:underline">+1 (404) 123-4567</a></li>
-            </ul>
 
             <h2 className="text-2xl font-semibold mt-8 mb-4">Ongoing Commitment</h2>
             <p className="mb-4">
@@ -77,9 +82,6 @@ export default function AccessibilityPage() {
               If you need information from our website in an alternative format, please contact us and we will work to provide it in a format that meets your needs.
             </p>
 
-            <p className="text-sm text-gray-500 mt-8">
-              Last updated: {new Date().toLocaleDateString()}
-            </p>
           </div>
         </div>
       </main>
