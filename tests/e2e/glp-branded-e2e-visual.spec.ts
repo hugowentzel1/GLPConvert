@@ -71,9 +71,12 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     page,
   }, testInfo) => {
     await mockTenantIntakeConfig(page);
-    const response = await page.goto("/intake?demo=1&handle=glpconvert&company=CSS%20Check&transition_ms=600", {
-      waitUntil: "domcontentloaded",
-    });
+    const response = await page.goto(
+      "/intake?demo=1&handle=glpconvert&company=CSS%20Check&brand=059669&transition_ms=600",
+      {
+        waitUntil: "domcontentloaded",
+      },
+    );
     const baseURL = testInfo.project.use.baseURL ?? "";
     if (/localhost|127\.0\.0\.1/.test(baseURL)) {
       const csp = response?.headers()?.["content-security-policy"] ?? "";
@@ -82,7 +85,9 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await expect(page.locator("[data-intake-attribution]").first()).toBeVisible({
       timeout: 20000,
     });
-    await expect(page.getByText(/Demo preview/i).first()).toBeVisible();
+    await expect(page.locator("[data-intake-demo-badge]")).toBeVisible();
+    await expect(page.locator("[data-intake-trust]")).toBeVisible();
+    await expect(page.locator("[data-intake-footer]")).toBeVisible();
     await expect(page.locator('[data-intake-mode="demo"]')).toBeVisible({ timeout: 20000 });
     await expect(page.locator('link[rel="stylesheet"]').first()).toBeAttached({ timeout: 20000 });
     expect(await page.locator('link[rel="stylesheet"]').count()).toBeGreaterThan(0);

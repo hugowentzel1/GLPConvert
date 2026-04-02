@@ -8,19 +8,19 @@ export const glpIntakeUi = {
 
   /** Primary surface — calm elevation + hover lift (white-label SaaS norm) */
   card:
-    "rounded-2xl border border-slate-200/90 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04),0_12px_32px_rgba(15,23,42,0.06)] transition-shadow duration-200 hover:shadow-[0_4px_6px_rgba(15,23,42,0.04),0_20px_40px_rgba(15,23,42,0.08)]",
+    "rounded-2xl border border-slate-200/90 bg-white shadow-[0_2px_4px_rgba(15,23,42,0.04),0_16px_40px_rgba(15,23,42,0.07)] transition-shadow duration-300 hover:shadow-[0_8px_16px_rgba(15,23,42,0.05),0_28px_48px_rgba(15,23,42,0.1)]",
   cardPad: "p-8 md:p-10",
   cardPadSm: "p-6 md:p-8",
 
   stackSection: "space-y-8",
   /** Step 1: even rhythm between intro copy, field grid, actions (8pt grid) */
-  stackStepForm: "space-y-7",
+  stackStepForm: "space-y-6",
   stackMd: "space-y-6",
   stackSm: "space-y-5",
 
   grid2: "grid gap-5 md:grid-cols-2",
   /** Form fields: uniform 28px row rhythm (7 × 4px grid) */
-  grid2Form: "grid grid-cols-1 gap-y-7 gap-x-8 md:grid-cols-2 md:items-start",
+  grid2Form: "grid grid-cols-1 gap-y-6 gap-x-6 md:grid-cols-2 md:items-start md:gap-x-8",
 
   kicker: "text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500",
   titleLg: "text-2xl font-bold tracking-tight text-slate-900 md:text-[1.75rem] md:leading-snug",
@@ -32,7 +32,7 @@ export const glpIntakeUi = {
 
   label: "mb-2 block text-sm font-medium text-slate-700",
   control:
-    "min-h-[48px] w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm transition placeholder:text-slate-400 focus:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-900/[0.08]",
+    "min-h-[48px] w-full rounded-xl border border-slate-200/95 bg-white px-4 py-3 text-sm text-slate-900 shadow-[0_1px_2px_rgba(15,23,42,0.03)] transition placeholder:text-slate-400",
 
   /** Wizard back — always visible affordance (NNG: users fear dead-ends) */
   backBtn:
@@ -46,7 +46,10 @@ export const glpIntakeUi = {
   /** Primary + optional secondary stack; pair with back row */
   formActions: "flex min-w-0 flex-1 flex-col gap-3 sm:max-w-md sm:ml-auto sm:items-stretch",
   /** Row: Previous (left) + actions (right on sm+) */
-  formNavRow: "mt-10 flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
+  formNavRow:
+    "mt-8 flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
+  /** Wizard actions after body copy — top rule separates from content */
+  formNavRowRule: "mt-8 flex flex-col gap-3 border-t border-slate-100 pt-8 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
   chip: "rounded-full bg-slate-100 px-3.5 py-1 text-xs font-medium text-slate-700",
   sectionRule: "border-t border-slate-100 pt-8 first:border-0 first:pt-0 first:mt-0 mt-8",
 

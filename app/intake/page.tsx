@@ -1,7 +1,9 @@
 import { Suspense } from "react";
 import GlpSimulationFunnel from "@/components/intake/GlpSimulationFunnel";
 import AttributionPixels from "@/components/attribution/AttributionPixels";
+import IntakePageFrame from "@/components/intake/IntakePageFrame";
 import IntakePageHeader from "@/components/intake/IntakePageHeader";
+import IntakeTrustRibbon from "@/components/intake/IntakeTrustRibbon";
 import { PRODUCT_NAME } from "@/lib/product-identity";
 import type { Metadata } from "next";
 
@@ -35,20 +37,19 @@ export default function IntakePage({
   searchParams?: Record<string, string | string[] | undefined>;
 }) {
   const demo = isDemoFromSearchParams(searchParams);
+
   return (
-    <main
-      className="min-h-screen bg-[radial-gradient(ellipse_95%_55%_at_50%_-10%,rgba(99,102,241,0.07),transparent_55%)] bg-gradient-to-b from-slate-50 via-white to-slate-100/95 px-4 py-10 md:py-16"
-      data-intake-mode={demo ? "demo" : "paid"}
-    >
+    <IntakePageFrame demoServerHint={demo}>
       <IntakePageHeader />
+      <IntakeTrustRibbon />
       <Suspense
         fallback={
-          <div className="max-w-lg mx-auto text-center text-slate-500 text-sm">Loading intake…</div>
+          <div className="mx-auto max-w-lg text-center text-sm text-slate-500">Loading intake…</div>
         }
       >
         <AttributionPixels />
         <GlpSimulationFunnel />
       </Suspense>
-    </main>
+    </IntakePageFrame>
   );
 }

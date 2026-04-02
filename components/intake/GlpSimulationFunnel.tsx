@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useSearchParams } from "next/navigation";
 import GlpDemoOwnerPanels from "@/components/intake/GlpDemoOwnerPanels";
 import { persistUtmFromSearchParams, getMergedUtm } from "@/lib/glp-attribution";
@@ -158,10 +158,11 @@ function runSimulation(input: SimInput): SimOutput {
 
 function IntakeStepper({ step, brandFill }: { step: FlowStep; brandFill: string }) {
   const labels = ["Details", "Personalizing", "Results", "Readiness", "Contact", "Done"] as const;
-  /** Segments: step 1 → 0%, step 6 → 100% (clearer than step/6 while on first screen) */
-  const pct = Math.min(100, Math.max(0, ((step - 1) / 5) * 100));
+  /** One segment per screen: step 1 ≈ 17%, …, step 6 = 100% (bar advances every step, no empty start). */
+  const pct = Math.min(100, Math.max(0, (step / 6) * 100));
+  const short = ["1", "2", "3", "4", "5", "6"] as const;
   return (
-    <div className={`${glpIntakeUi.column} mb-8`}>
+    <div className={`${glpIntakeUi.column} mb-8`} data-intake-stepper>
       <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
         <p className={glpIntakeUi.kicker}>Progress</p>
         <p className="text-xs font-medium text-slate-600">
@@ -169,7 +170,7 @@ function IntakeStepper({ step, brandFill }: { step: FlowStep; brandFill: string 
         </p>
       </div>
       <div
-        className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100 ring-1 ring-slate-900/[0.05]"
+        className="mt-3 h-2.5 overflow-hidden rounded-full bg-slate-100 ring-1 ring-slate-900/[0.06]"
         role="progressbar"
         aria-valuenow={step}
         aria-valuemin={1}
@@ -177,9 +178,26 @@ function IntakeStepper({ step, brandFill }: { step: FlowStep; brandFill: string 
         aria-valuetext={`Step ${step} of 6, ${labels[step - 1]}`}
       >
         <div
-          className="h-full rounded-full transition-[width] duration-700 ease-out"
+          className="h-full rounded-full transition-[width] duration-500 ease-out"
           style={{ width: `${pct}%`, backgroundColor: brandFill }}
         />
+      </div>
+      <div className="mt-3 flex justify-between gap-0.5 px-0.5" aria-hidden>
+        {short.map((n, i) => {
+          const s = (i + 1) as FlowStep;
+          const on = step >= s;
+          return (
+            <div key={n} className="flex min-w-0 flex-1 flex-col items-center gap-1">
+              <span
+                className={`h-2 w-2 shrink-0 rounded-full transition-colors duration-300 ${
+                  on ? "ring-2 ring-white" : "bg-slate-200"
+                }`}
+                style={on ? { backgroundColor: brandFill } : undefined}
+              />
+              <span className={`text-[9px] font-semibold ${on ? "text-slate-800" : "text-slate-400"}`}>{n}</span>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -409,7 +427,10 @@ export default function GlpSimulationFunnel() {
       : `${glpIntakeUi.choiceBase} ${glpIntakeUi.choiceIdle}`;
 
   return (
-    <div className={`${glpIntakeUi.column} pb-16`}>
+    <div
+      className={`glp-intake-funnel ${glpIntakeUi.column} pb-6`}
+      style={{ "--glp-brand-fill": brandFill } as CSSProperties}
+    >
       {!isDemoMode ? (
         <div className="mb-6 flex justify-center px-1">
           <span className="inline-flex max-w-lg items-center gap-2.5 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-center text-xs font-semibold leading-snug text-slate-700 shadow-sm ring-1 ring-slate-900/[0.04]">
@@ -426,9 +447,16 @@ export default function GlpSimulationFunnel() {
       </p>
 
       {step === 1 && (
-        <section data-flow-step="1" className={`${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackStepForm}`}>
+        <section
+          data-flow-step="1"
+          className={`${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackStepForm} border-l-[3px]`}
+          style={{ borderLeftColor: brandFill }}
+        >
           {isDemoMode && (
-            <div className="flex flex-col gap-5 rounded-xl border border-slate-200 bg-slate-50/90 p-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+            <div
+              className="flex flex-col gap-5 rounded-xl border bg-slate-50/90 p-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8"
+              style={{ borderColor: `${brandFill}2a` }}
+            >
               <p className={`${glpIntakeUi.body} sm:max-w-md`}>
                 Skip ahead to the results screen with the sample values below, or edit fields first.
               </p>
@@ -549,7 +577,7 @@ export default function GlpSimulationFunnel() {
             </label>
           </div>
 
-          <div className="mt-10 w-full">
+          <div className="mt-8 w-full border-t border-slate-100 pt-8">
             <button
               type="button"
               onClick={onContinueFromInput}
@@ -824,11 +852,11 @@ export default function GlpSimulationFunnel() {
             </dl>
           </details>
 
-          <p className={`${glpIntakeUi.bodyMuted} border-t border-slate-100 pt-6`}>
+          <p className={`${glpIntakeUi.bodyMuted} pt-2`}>
             General information only, not medical advice. Final treatment decisions are made by a licensed provider.
           </p>
 
-          <div className={`${glpIntakeUi.formNavRow} border-t border-slate-100 pt-8`}>
+          <div className={glpIntakeUi.formNavRowRule}>
             <button type="button" className={glpIntakeUi.backBtn} onClick={goBack}>
               Previous
             </button>
@@ -928,7 +956,7 @@ export default function GlpSimulationFunnel() {
             </fieldset>
           </div>
 
-          <div className={glpIntakeUi.formNavRow}>
+          <div className={glpIntakeUi.formNavRowRule}>
             <button type="button" className={glpIntakeUi.backBtn} onClick={goBack}>
               Previous
             </button>
@@ -1064,7 +1092,7 @@ export default function GlpSimulationFunnel() {
             </span>
           </label>
 
-          <div className={`${glpIntakeUi.formNavRow} pt-2`}>
+          <div className={glpIntakeUi.formNavRowRule}>
             <button type="button" className={glpIntakeUi.backBtn} onClick={goBack}>
               Previous
             </button>

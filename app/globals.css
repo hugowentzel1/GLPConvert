@@ -1611,3 +1611,14 @@ div[data-demo="true"] div.locked-blur div.locked-blur__content::after {
   position: absolute !important;
   z-index: 20 !important;
 }
+
+/* GLP intake — brand-tinted focus (set --glp-brand-fill on .glp-intake-funnel) */
+.glp-intake-funnel {
+  --glp-brand-fill: #0f172a;
+}
+.glp-intake-funnel input:focus,
+.glp-intake-funnel select:focus {
+  outline: none;
+  border-color: color-mix(in srgb, var(--glp-brand-fill) 40%, #cbd5e1);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--glp-brand-fill) 16%, transparent);
+}

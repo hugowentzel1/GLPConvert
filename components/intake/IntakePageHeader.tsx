@@ -26,6 +26,18 @@ function safeCompanyLabel(raw: string | null): string {
   }
 }
 
+function clinicMonogramLetters(name: string): string {
+  const clean = name.replace(/\s+/g, " ").trim();
+  const parts = clean.split(/\s+/).filter(Boolean);
+  if (parts.length >= 2) {
+    const a = parts[0][0] ?? "";
+    const b = parts[1][0] ?? "";
+    return (a + b).toUpperCase() || "?";
+  }
+  const slice = clean.slice(0, 2).toUpperCase();
+  return slice || "?";
+}
+
 function IntakePageHeaderInner() {
   const sp = useSearchParams();
   const demo = isIntakeDemoMode(sp);
@@ -39,40 +51,49 @@ function IntakePageHeaderInner() {
 
   if (demo) {
     return (
-      <div className="mx-auto mb-10 max-w-2xl md:mb-12">
+      <div className="mx-auto mb-8 max-w-2xl md:mb-10">
         <div
-          className="relative overflow-hidden rounded-3xl border bg-white px-6 py-8 text-center shadow-[0_1px_2px_rgba(15,23,42,0.04),0_22px_48px_rgba(15,23,42,0.09)] ring-1 ring-slate-900/[0.04] md:px-10 md:py-10"
+          className="relative overflow-hidden rounded-3xl border bg-white px-5 py-7 text-center shadow-[0_2px_6px_rgba(15,23,42,0.04),0_20px_44px_rgba(15,23,42,0.08)] ring-1 ring-slate-900/[0.04] md:px-9 md:py-9"
           style={{
-            borderColor: `${accent}33`,
-            boxShadow: `0 1px 2px rgba(15,23,42,0.04), 0 22px 48px rgba(15,23,42,0.09), 0 0 0 1px ${accent}14`,
+            borderColor: `${accent}40`,
+            boxShadow: `0 2px 6px rgba(15,23,42,0.04), 0 20px 44px rgba(15,23,42,0.08), 0 0 0 1px ${accent}18`,
           }}
         >
           <div
-            className="pointer-events-none absolute -left-24 -top-24 h-56 w-56 rounded-full opacity-[0.14] blur-3xl"
+            className="absolute inset-x-0 top-0 h-1 rounded-t-3xl"
+            style={{
+              background: `linear-gradient(90deg, ${accent} 0%, ${accent2} 55%, ${accent} 100%)`,
+            }}
+            aria-hidden
+          />
+
+          <div
+            className="pointer-events-none absolute -left-20 -top-20 h-48 w-48 rounded-full opacity-[0.09] blur-3xl"
             style={{ backgroundColor: accent }}
             aria-hidden
           />
           <div
-            className="pointer-events-none absolute -bottom-16 -right-16 h-48 w-48 rounded-full opacity-[0.1] blur-3xl"
+            className="pointer-events-none absolute -bottom-14 -right-14 h-40 w-40 rounded-full opacity-[0.07] blur-3xl"
             style={{ backgroundColor: accent2 }}
             aria-hidden
           />
 
           <div className="relative">
             <p
-              className="inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em]"
+              data-intake-demo-badge
+              className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.14em]"
               style={{
-                borderColor: `${accent}55`,
+                borderColor: `${accent}4d`,
                 color: accent,
-                backgroundColor: `${accent}0d`,
+                backgroundColor: `${accent}0f`,
               }}
             >
               <span
-                className="h-2 w-2 shrink-0 rounded-full"
+                className="h-1 w-1 shrink-0 rounded-full"
                 style={{ backgroundColor: accent }}
                 aria-hidden
               />
-              Demo preview
+              Demo
             </p>
 
             {logoUrl ? (
@@ -80,30 +101,35 @@ function IntakePageHeaderInner() {
               <img
                 src={logoUrl}
                 alt=""
-                className="mx-auto mt-6 h-12 w-auto max-w-[220px] object-contain md:h-14"
+                className="mx-auto mt-5 h-11 w-auto max-w-[200px] object-contain md:h-[52px]"
                 loading="eager"
               />
-            ) : null}
+            ) : (
+              <div
+                className="mx-auto mt-5 flex h-[52px] w-[52px] items-center justify-center rounded-2xl text-sm font-bold tracking-tight text-white shadow-md ring-2 ring-white"
+                style={{ backgroundColor: accent }}
+                aria-hidden
+              >
+                {clinicMonogramLetters(companyLabel)}
+              </div>
+            )}
 
-            <h1 className="mt-5 text-balance text-3xl font-bold tracking-tight text-slate-900 md:text-[2rem] md:leading-tight">
+            <h1 className="mt-4 text-balance text-2xl font-bold tracking-tight text-slate-900 md:text-[1.85rem] md:leading-tight">
               {companyLabel}
             </h1>
-            <p className="mt-2 text-sm font-medium text-slate-600">Branded patient intake</p>
+            <p className="mt-1.5 text-sm font-medium text-slate-600">Branded patient intake</p>
 
-            <div className="mx-auto mt-6 max-w-lg space-y-4 text-left text-sm leading-relaxed text-slate-600 md:text-[15px]">
+            <div className="mx-auto mt-5 max-w-lg space-y-3.5 text-left text-sm leading-relaxed text-slate-600 md:text-[15px]">
               <p>
-                This preview uses your{" "}
-                <span className="font-medium text-slate-800">logo and colors</span> on the same steps patients see:
-                a few inputs, a short &ldquo;building&rdquo; moment, an educational overview, light readiness
-                questions, then contact—not medical advice.
+                Same steps patients see on your live link: inputs, a brief build screen, an educational overview,
+                light readiness questions, then contact. Not medical advice.
               </p>
               <p>
-                <span className="font-medium text-slate-800">Only on demo links</span>, after the overview we add a
-                short <span className="font-medium text-slate-800">clinic-owner section</span> (positioning and how to
-                activate). Real patients never see that block.
+                <span className="font-medium text-slate-800">Demo only:</span> after the overview we show a short
+                clinic-owner section. Patients on production never see it.
               </p>
-              <p className="rounded-xl border border-slate-200/90 bg-slate-50/90 px-4 py-3 text-[13px] text-slate-700">
-                <span className="font-semibold text-slate-800">Live traffic:</span> use{" "}
+              <p className="rounded-xl border border-slate-200/90 bg-slate-50/90 px-3.5 py-2.5 text-[13px] text-slate-700">
+                <span className="font-semibold text-slate-800">Go live:</span>{" "}
                 <code className="rounded-md bg-white px-1.5 py-0.5 font-mono text-[11px] text-slate-800 ring-1 ring-slate-200/80">
                   /intake
                 </code>{" "}
@@ -111,13 +137,13 @@ function IntakePageHeaderInner() {
                 <code className="rounded-md bg-white px-1.5 py-0.5 font-mono text-[11px] text-slate-800 ring-1 ring-slate-200/80">
                   demo=1
                 </code>
-                — same patient flow, no owner-only panels.
+                .
               </p>
             </div>
 
             <p
               data-intake-attribution
-              className="relative mt-8 border-t border-slate-200/80 pt-6 text-center text-[11px] font-medium text-slate-500"
+              className="relative mt-6 border-t border-slate-200/80 pt-5 text-center text-[11px] font-medium text-slate-500"
             >
               {PRODUCT_NAME} — a product of {PARENT_COMPANY_LEGAL_NAME}
             </p>
@@ -128,7 +154,7 @@ function IntakePageHeaderInner() {
   }
 
   return (
-    <div className="mx-auto mb-12 max-w-2xl space-y-5 text-center md:mb-14">
+    <div className="mx-auto mb-10 max-w-2xl space-y-4 text-center md:mb-12">
       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-emerald-900/80">Patient intake</p>
       <h1 className="text-balance text-3xl font-bold tracking-tight text-slate-900 md:text-[2.125rem] md:leading-snug">
         Pre-consult clarity through to your booking link
