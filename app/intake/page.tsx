@@ -37,7 +37,7 @@ export default function IntakePage({
   const demo = isDemoFromSearchParams(searchParams);
   return (
     <main
-      className="min-h-screen bg-[radial-gradient(ellipse_90%_50%_at_50%_-8%,rgba(99,102,241,0.08),transparent)] bg-gradient-to-b from-slate-50 via-white to-slate-100 px-4 py-10 md:py-16"
+      className="min-h-screen bg-[radial-gradient(ellipse_95%_55%_at_50%_-10%,rgba(99,102,241,0.07),transparent_55%)] bg-gradient-to-b from-slate-50 via-white to-slate-100/95 px-4 py-10 md:py-16"
       data-intake-mode={demo ? "demo" : "paid"}
     >
       <IntakePageHeader />

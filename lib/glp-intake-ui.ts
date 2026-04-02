@@ -6,19 +6,21 @@ export const glpIntakeUi = {
   /** Main column width — readable on desktop, full on mobile */
   column: "mx-auto w-full max-w-2xl",
 
-  /** Primary surface */
+  /** Primary surface — calm elevation + hover lift (white-label SaaS norm) */
   card:
-    "rounded-2xl border border-slate-200/90 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04),0_12px_32px_rgba(15,23,42,0.06)]",
+    "rounded-2xl border border-slate-200/90 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04),0_12px_32px_rgba(15,23,42,0.06)] transition-shadow duration-200 hover:shadow-[0_4px_6px_rgba(15,23,42,0.04),0_20px_40px_rgba(15,23,42,0.08)]",
   cardPad: "p-8 md:p-10",
   cardPadSm: "p-6 md:p-8",
 
   stackSection: "space-y-8",
+  /** Step 1: even rhythm between intro copy, field grid, actions (8pt grid) */
+  stackStepForm: "space-y-7",
   stackMd: "space-y-6",
   stackSm: "space-y-5",
 
   grid2: "grid gap-5 md:grid-cols-2",
-  /** Form fields: more vertical rhythm than dense grids */
-  grid2Form: "grid gap-6 md:grid-cols-2 md:gap-x-8 md:gap-y-6",
+  /** Form fields: uniform 28px row rhythm (7 × 4px grid) */
+  grid2Form: "grid grid-cols-1 gap-y-7 gap-x-8 md:grid-cols-2 md:items-start",
 
   kicker: "text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500",
   titleLg: "text-2xl font-bold tracking-tight text-slate-900 md:text-[1.75rem] md:leading-snug",
@@ -30,20 +32,27 @@ export const glpIntakeUi = {
 
   label: "mb-2 block text-sm font-medium text-slate-700",
   control:
-    "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm transition placeholder:text-slate-400 focus:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-900/[0.08]",
+    "min-h-[48px] w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 shadow-sm transition placeholder:text-slate-400 focus:border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-900/[0.08]",
+
+  /** Wizard back — always visible affordance (NNG: users fear dead-ends) */
+  backBtn:
+    "inline-flex w-full shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 min-h-[48px] sm:w-auto sm:min-w-[8.5rem]",
 
   primaryBtn:
-    "inline-flex w-full items-center justify-center rounded-xl px-4 py-3.5 text-sm font-semibold text-white shadow-sm transition hover:opacity-[0.97] active:scale-[0.995] disabled:pointer-events-none disabled:opacity-45 min-h-[48px]",
+    "glp-intake-primary-btn inline-flex w-full items-center justify-center rounded-xl px-4 py-3.5 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.03] active:scale-[0.995] disabled:pointer-events-none disabled:opacity-45 disabled:hover:shadow-md min-h-[48px]",
   secondaryBtn:
-    "inline-flex w-full items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50/80 min-h-[48px]",
+    "inline-flex w-full items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50/80 hover:shadow-md min-h-[48px]",
 
-  /** Primary full-width CTA after a form — separated from inputs */
-  formActions: "mt-10 flex flex-col gap-4",
+  /** Primary + optional secondary stack; pair with back row */
+  formActions: "flex min-w-0 flex-1 flex-col gap-3 sm:max-w-md sm:ml-auto sm:items-stretch",
+  /** Row: Previous (left) + actions (right on sm+) */
+  formNavRow: "mt-10 flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
   chip: "rounded-full bg-slate-100 px-3.5 py-1 text-xs font-medium text-slate-700",
   sectionRule: "border-t border-slate-100 pt-8 first:border-0 first:pt-0 first:mt-0 mt-8",
 
   choiceRow: "flex flex-wrap gap-3",
   choiceBase:
     "rounded-xl border px-4 py-2.5 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15",
-  choiceIdle: "border-slate-200 bg-white text-slate-800 hover:border-slate-300 hover:bg-slate-50/50",
+  choiceIdle:
+    "border-slate-200 bg-white text-slate-800 shadow-sm hover:border-slate-300 hover:bg-slate-50/50 hover:shadow-md",
 } as const;

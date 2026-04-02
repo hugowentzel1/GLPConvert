@@ -2,6 +2,8 @@
 
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
 
+const DEFAULT_BRAND = "#0f172a";
+
 /** Illustrative only — not a financial guarantee. Conservative uplift assumptions for owner conversations. */
 export function estimateIllustrativeLeakMonthly(monthlySessions: number): { low: number; high: number } {
   const traffic = Math.max(50, monthlySessions);
@@ -16,11 +18,16 @@ export function estimateIllustrativeLeakMonthly(monthlySessions: number): { low:
 export default function GlpDemoOwnerPanels({
   companyName,
   monthlySessions,
+  brandPrimary = DEFAULT_BRAND,
+  brandSecondary = null,
 }: {
   companyName: string;
   monthlySessions: number;
+  brandPrimary?: string;
+  brandSecondary?: string | null;
 }) {
   const { low, high } = estimateIllustrativeLeakMonthly(monthlySessions);
+  const secondary = brandSecondary || brandPrimary;
 
   return (
     <div className={`${glpIntakeUi.stackSection}`} data-owner-demo-panels>
@@ -120,20 +127,26 @@ export default function GlpDemoOwnerPanels({
         </ul>
       </div>
 
-      <div className="rounded-2xl border border-slate-900/[0.08] bg-slate-900 px-6 py-8 text-center text-white shadow-lg md:px-10">
+      <div
+        className="rounded-2xl border border-white/10 px-6 py-8 text-center text-white shadow-[0_12px_40px_rgba(15,23,42,0.18)] md:px-10"
+        style={{
+          background: `linear-gradient(145deg, ${brandPrimary} 0%, ${secondary} 50%, #0f172a 100%)`,
+        }}
+      >
         <p className="text-sm font-medium leading-relaxed text-white/95">
           Patients see the same steps above. Activate to run this on your domain, embed, or landing pages.
         </p>
         <div className="mt-6 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center sm:justify-center">
           <a
             href={`/pricing?company=${encodeURIComponent(companyName)}`}
-            className="inline-flex justify-center rounded-xl bg-white px-5 py-3.5 text-sm font-semibold text-slate-900 shadow-md transition hover:bg-slate-50"
+            className="inline-flex justify-center rounded-xl bg-white px-5 py-3.5 text-sm font-semibold shadow-md transition hover:bg-white/95 hover:shadow-lg"
+            style={{ color: brandPrimary }}
           >
             View plans &amp; activate
           </a>
           <a
             href={`/contact?subject=${encodeURIComponent(`GLPConvert — ${companyName}`)}`}
-            className="inline-flex justify-center rounded-xl border border-white/25 px-5 py-3.5 text-sm font-medium text-white transition hover:bg-white/10"
+            className="inline-flex justify-center rounded-xl border border-white/35 bg-white/5 px-5 py-3.5 text-sm font-medium text-white backdrop-blur-[2px] transition hover:bg-white/15"
           >
             Question before checkout
           </a>

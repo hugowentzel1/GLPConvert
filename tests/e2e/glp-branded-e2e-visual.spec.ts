@@ -79,14 +79,15 @@ test.describe("GLPConvert branded E2E (visual)", () => {
       const csp = response?.headers()?.["content-security-policy"] ?? "";
       expect(csp).not.toContain("upgrade-insecure-requests");
     }
-    await expect(page.getByText(/GLPConvert — a product of Wellspire LLC/i).first()).toBeVisible({
+    await expect(page.locator("[data-intake-attribution]").first()).toBeVisible({
       timeout: 20000,
     });
+    await expect(page.getByText(/Demo preview/i).first()).toBeVisible();
     await expect(page.locator('[data-intake-mode="demo"]')).toBeVisible({ timeout: 20000 });
     await expect(page.locator('link[rel="stylesheet"]').first()).toBeAttached({ timeout: 20000 });
     expect(await page.locator('link[rel="stylesheet"]').count()).toBeGreaterThan(0);
     const kickerColor = await page
-      .getByText(/GLPConvert — a product of Wellspire LLC/i)
+      .locator("[data-intake-attribution]")
       .first()
       .evaluate((el) => getComputedStyle(el).color);
     expect(kickerColor).toMatch(/100,\s*116,\s*139/);
@@ -113,6 +114,7 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await clickIntakeContinueUntilTransition(page);
 
     await expect(page.locator('[data-flow-step="2"]')).toBeVisible({ timeout: 5000 });
+    await expect(page.getByText(/Step 2 of 6/i)).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("visual-A2-building.png"), fullPage: true });
 
     await expect(page.locator('[data-flow-step="3"]').getByRole("heading", { name: /your glp path/i })).toBeVisible({
@@ -203,6 +205,7 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await page.screenshot({ path: testInfo.outputPath("visual-C1-paid-intake-input.png"), fullPage: true });
 
     await clickIntakeContinueUntilTransition(page);
+    await expect(page.getByText(/Step 2 of 6/i)).toBeVisible({ timeout: 8000 });
     await expect(page.locator('[data-flow-step="3"]').getByRole("heading", { name: /your glp path/i })).toBeVisible({
       timeout: 25000,
     });
@@ -226,5 +229,22 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await expect(page.getByRole("heading", { name: /you're all set/i })).toBeVisible({ timeout: 15000 });
     await expect(page.getByRole("link", { name: /schedule your consultation/i })).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("visual-C3-paid-confirmation.png"), fullPage: true });
+  });
+
+  test("E — Previous from readiness returns to results", async ({ page }) => {
+    await mockTenantIntakeConfig(page);
+    const url =
+      "/intake?handle=glpconvert&company=glpconvert&transition_ms=2000&booking=" +
+      encodeURIComponent("https://example.com/schedule");
+    await page.goto(url, { waitUntil: "domcontentloaded" });
+    await expect(page.locator('[data-intake-mode="paid"]')).toBeVisible({ timeout: 20000 });
+    await clickIntakeContinueUntilTransition(page);
+    await expect(page.locator('[data-flow-step="3"]')).toBeVisible({ timeout: 25000 });
+    await page.locator('[data-flow-step="3"]').getByRole("button", { name: /review my next step/i }).click();
+    await expect(page.locator('[data-flow-step="4"]')).toBeVisible();
+    await page.locator('[data-flow-step="4"]').getByRole("button", { name: /^previous$/i }).click();
+    await expect(page.locator('[data-flow-step="3"]').getByRole("heading", { name: /your glp path/i })).toBeVisible({
+      timeout: 10000,
+    });
   });
 });

@@ -51,6 +51,31 @@ button[data-cta-button]:hover:not(:disabled) {
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
 }
 
+/* GLP intake primary — same shine pattern, scoped to funnel CTAs */
+button.glp-intake-primary-btn {
+  position: relative;
+  overflow: hidden;
+}
+button.glp-intake-primary-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.55s ease;
+  pointer-events: none;
+}
+button.glp-intake-primary-btn:hover:not(:disabled)::before {
+  left: 100%;
+}
+
 /* Fast Check: Disable transitions/animations for stability */
 [data-testid="footer"] * { 
   transition: none !important; 

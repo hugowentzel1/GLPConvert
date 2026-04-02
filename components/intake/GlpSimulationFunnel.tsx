@@ -1,12 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import GlpDemoOwnerPanels from "@/components/intake/GlpDemoOwnerPanels";
 import { persistUtmFromSearchParams, getMergedUtm } from "@/lib/glp-attribution";
 import { resolveGlpTenantSlug } from "@/lib/glp-tenant-slug";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
-import { resolveBrandedLogoUrl } from "@/lib/logo-brand-helpers";
+import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 
 type TenantIntakePublicJson = {
   ok?: boolean;
@@ -56,28 +56,6 @@ type ReadinessAnswers = {
 };
 
 const DEFAULT_BRAND = "#0f172a";
-
-function parseDemoBranding(sp: ReturnType<typeof useSearchParams>) {
-  const logoUrl = resolveBrandedLogoUrl(
-    sp?.get("logo") || null,
-    sp?.get("domain") || null,
-    sp?.get("company") || null,
-  );
-  const normHex = (v: string | null | undefined) => {
-    if (v == null || v === "") return null;
-    let s = v.trim();
-    if (!s) return null;
-    if (!s.startsWith("#")) s = `#${s}`;
-    return /^#[0-9A-Fa-f]{6}$/.test(s) ? s : null;
-  };
-  const primaryHex =
-    normHex(sp?.get("brandColor")) ||
-    normHex(sp?.get("primary")) ||
-    normHex(sp?.get("brand")) ||
-    null;
-  const secondaryHex = normHex(sp?.get("brand2")) || null;
-  return { logoUrl, primaryHex, secondaryHex };
-}
 
 function clamp(n: number, min: number, max: number): number {
   return Math.max(min, Math.min(max, n));
@@ -179,8 +157,9 @@ function runSimulation(input: SimInput): SimOutput {
 }
 
 function IntakeStepper({ step, brandFill }: { step: FlowStep; brandFill: string }) {
-  const labels = ["Details", "Plan", "Results", "Readiness", "Contact", "Done"] as const;
-  const pct = (step / 6) * 100;
+  const labels = ["Details", "Personalizing", "Results", "Readiness", "Contact", "Done"] as const;
+  /** Segments: step 1 → 0%, step 6 → 100% (clearer than step/6 while on first screen) */
+  const pct = Math.min(100, Math.max(0, ((step - 1) / 5) * 100));
   return (
     <div className={`${glpIntakeUi.column} mb-8`}>
       <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
@@ -189,9 +168,16 @@ function IntakeStepper({ step, brandFill }: { step: FlowStep; brandFill: string 
           Step {step} of 6 · <span className="text-slate-900">{labels[step - 1]}</span>
         </p>
       </div>
-      <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100" role="progressbar" aria-valuenow={step} aria-valuemin={1} aria-valuemax={6}>
+      <div
+        className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100 ring-1 ring-slate-900/[0.05]"
+        role="progressbar"
+        aria-valuenow={step}
+        aria-valuemin={1}
+        aria-valuemax={6}
+        aria-valuetext={`Step ${step} of 6, ${labels[step - 1]}`}
+      >
         <div
-          className="h-full rounded-full transition-[width] duration-500 ease-out"
+          className="h-full rounded-full transition-[width] duration-700 ease-out"
           style={{ width: `${pct}%`, backgroundColor: brandFill }}
         />
       </div>
@@ -211,7 +197,7 @@ export default function GlpSimulationFunnel() {
     sp?.get("demo_quick") === "1" || sp?.get("fast") === "1" || sp?.get("quick") === "1";
   const demoTraffic = Math.min(50_000, Math.max(50, Number(sp?.get("demo_traffic") || 400) || 400));
   const { logoUrl: logoFromQuery, primaryHex, secondaryHex: secondaryFromQuery } = useMemo(
-    () => parseDemoBranding(sp),
+    () => parseGlpIntakeQueryBranding(sp),
     [sp],
   );
   const effectiveLogo = logoFromQuery || publicCfg?.logoUrl || null;
@@ -242,6 +228,7 @@ export default function GlpSimulationFunnel() {
   const [saveMsg, setSaveMsg] = useState<string | null>(null);
   const [nextStep, setNextStep] = useState<"book" | "callback" | "save_only">("book");
   const [resolvedBookingUrl, setResolvedBookingUrl] = useState<string | null>(null);
+  const transitionTimerRef = useRef<number | null>(null);
 
   const output = useMemo(() => {
     const base = runSimulation(input);
@@ -293,15 +280,24 @@ export default function GlpSimulationFunnel() {
     };
   }, [tenantSlug, bookingUrlParam]);
 
+  /** Min ~1.6s so “Personalizing” reads as its own step (avoids jumping to Results too fast). */
   const transitionMs = Math.min(
     30_000,
-    Math.max(600, Number(sp?.get("transition_ms")) || 1400) || 1400,
+    Math.max(1600, Number(sp?.get("transition_ms")) || 1400) || 1600,
   );
 
   useEffect(() => {
     if (step !== 2) return;
-    const t = window.setTimeout(() => setStep(3), transitionMs);
-    return () => window.clearTimeout(t);
+    transitionTimerRef.current = window.setTimeout(() => {
+      transitionTimerRef.current = null;
+      setStep(3);
+    }, transitionMs);
+    return () => {
+      if (transitionTimerRef.current != null) {
+        window.clearTimeout(transitionTimerRef.current);
+        transitionTimerRef.current = null;
+      }
+    };
   }, [step, transitionMs]);
 
   const logEvent = useCallback(async (type: string, metadata: Record<string, unknown>) => {
@@ -321,6 +317,15 @@ export default function GlpSimulationFunnel() {
     await logEvent("simulation_completed", { input, output, demo: isDemoMode, demo_skip: true });
     setStep(3);
   }, [input, output, isDemoMode, logEvent]);
+
+  const goBack = useCallback(() => {
+    setStep((s) => {
+      if (s === 2 || s === 3) return 1;
+      if (s === 4) return 3;
+      if (s === 5) return 4;
+      return s;
+    });
+  }, []);
 
   function onContinueFromInput() {
     void logEvent("simulation_started", { input, demo: isDemoMode });
@@ -405,44 +410,14 @@ export default function GlpSimulationFunnel() {
 
   return (
     <div className={`${glpIntakeUi.column} pb-16`}>
-      <div className="mb-6 flex justify-center px-1">
-        {isDemoMode ? (
-          <span className="inline-flex max-w-lg items-center gap-2.5 rounded-full border border-slate-200/90 bg-white px-4 py-2.5 text-center text-xs font-semibold leading-snug text-slate-800 shadow-sm ring-1 ring-slate-900/[0.04]">
-            <span className="hidden h-2 w-2 shrink-0 rounded-full bg-amber-500 sm:block" aria-hidden />
-            Buyer preview · {company} — same patient steps; owner-only panels on results
-          </span>
-        ) : (
-          <span className="inline-flex max-w-lg items-center gap-2.5 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-center text-xs font-semibold leading-snug text-slate-700 shadow-sm">
+      {!isDemoMode ? (
+        <div className="mb-6 flex justify-center px-1">
+          <span className="inline-flex max-w-lg items-center gap-2.5 rounded-full border border-slate-200 bg-white px-4 py-2.5 text-center text-xs font-semibold leading-snug text-slate-700 shadow-sm ring-1 ring-slate-900/[0.04]">
             <span className="hidden h-2 w-2 shrink-0 rounded-full bg-emerald-500 sm:block" aria-hidden />
             Patient intake · {company}
           </span>
-        )}
-      </div>
-
-      {isDemoMode && (
-        <div
-          className="mb-8 rounded-2xl border px-6 py-5 text-center shadow-lg"
-          style={{
-            borderColor: effectiveSecondary || primaryHex || "rgb(51 65 85)",
-            backgroundColor: brandFill !== DEFAULT_BRAND ? `${brandFill}f0` : "rgb(15 23 42)",
-            color: "#fff",
-          }}
-        >
-          {effectiveLogo ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={effectiveLogo}
-              alt=""
-              className="mx-auto mb-3 h-11 w-auto max-w-[200px] object-contain drop-shadow-md"
-              loading="lazy"
-            />
-          ) : null}
-          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/80">
-            Clinic preview (demo link)
-          </p>
-          <p className="mt-1 text-base font-semibold tracking-tight">{company}</p>
         </div>
-      )}
+      ) : null}
 
       <IntakeStepper step={step} brandFill={brandFill} />
 
@@ -451,7 +426,7 @@ export default function GlpSimulationFunnel() {
       </p>
 
       {step === 1 && (
-        <section data-flow-step="1" className={`${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackSection}`}>
+        <section data-flow-step="1" className={`${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackStepForm}`}>
           {isDemoMode && (
             <div className="flex flex-col gap-5 rounded-xl border border-slate-200 bg-slate-50/90 p-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
               <p className={`${glpIntakeUi.body} sm:max-w-md`}>
@@ -486,7 +461,7 @@ export default function GlpSimulationFunnel() {
                 onChange={(e) => setInput((v) => ({ ...v, currentWeight: Number(e.target.value || 0) }))}
               />
             </label>
-            <label>
+            <label className="block min-w-0">
               <span className={glpIntakeUi.label}>Goal weight (lbs)</span>
               <input
                 type="number"
@@ -574,11 +549,11 @@ export default function GlpSimulationFunnel() {
             </label>
           </div>
 
-          <div className={glpIntakeUi.formActions}>
+          <div className="mt-10 w-full">
             <button
               type="button"
               onClick={onContinueFromInput}
-              className={glpIntakeUi.primaryBtn}
+              className={`${glpIntakeUi.primaryBtn} w-full`}
               style={{ backgroundColor: brandFill }}
             >
               Continue
@@ -599,47 +574,78 @@ export default function GlpSimulationFunnel() {
             <h2 className={glpIntakeUi.titleMd}>Building your plan…</h2>
             <p className={glpIntakeUi.body}>Personalizing your educational overview for {company}.</p>
           </div>
+          <div className="mt-8 flex justify-center sm:justify-start">
+            <button type="button" className={glpIntakeUi.backBtn} onClick={goBack}>
+              Previous
+            </button>
+          </div>
         </section>
       )}
 
       {step === 3 && (
         <section data-flow-step="3" className={`${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackSection}`}>
           <header
-            className={`${glpIntakeUi.stackSm} rounded-2xl border border-slate-200/80 bg-gradient-to-b from-white to-slate-50/90 p-6 md:p-8`}
+            className={`relative overflow-hidden rounded-3xl border p-6 md:p-9 ${glpIntakeUi.stackSm}`}
             style={{
-              boxShadow: `inset 0 1px 0 rgba(255,255,255,0.85), inset 0 0 0 1px rgba(15,23,42,0.04), 0 1px 2px rgba(15,23,42,0.05)`,
+              borderColor: `${brandFill}2e`,
+              background: `linear-gradient(165deg, white 0%, rgba(248,250,252,0.97) 45%, rgba(241,245,249,0.5) 100%)`,
+              boxShadow: `inset 0 1px 0 rgba(255,255,255,0.9), 0 18px 40px -12px rgba(15,23,42,0.1), 0 0 0 1px rgba(15,23,42,0.04)`,
             }}
           >
-            {effectiveLogo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={effectiveLogo}
-                alt=""
-                className="h-12 w-auto max-w-[220px] object-contain"
-                loading="lazy"
-              />
-            ) : null}
-            <div className="flex flex-wrap gap-2">
-              {trustChips.map((c) => (
-                <span key={c} className={glpIntakeUi.chip}>
-                  {c}
-                </span>
-              ))}
-            </div>
-            <p className={glpIntakeUi.kicker}>{company}</p>
-            <h2 className={glpIntakeUi.titleResults}>Your GLP path</h2>
-            <div className={`${glpIntakeUi.stackSm} pt-1`}>
-              <p className="text-sm leading-relaxed text-slate-700">
-                Estimated timeline toward your goal:{" "}
-                <span className="font-semibold tabular-nums">{output.weeksToGoal} weeks</span> (
-                {Math.ceil(output.weeksToGoal / 4)} months). Individual results vary.
-              </p>
-              <p className="text-sm leading-relaxed text-slate-700">
-                Likely discussion path: <span className="font-semibold">{output.pathLabel}</span>
-              </p>
-              <p className={glpIntakeUi.bodyMuted}>
-                Confidence profile: {output.confidenceBand}. Response, side effects, and dose changes vary by person.
-              </p>
+            <div
+              className="pointer-events-none absolute -left-16 -top-20 h-48 w-48 rounded-full opacity-[0.12] blur-3xl"
+              style={{ backgroundColor: brandFill }}
+              aria-hidden
+            />
+            <div
+              className="pointer-events-none absolute -bottom-12 -right-10 h-40 w-40 rounded-full opacity-[0.08] blur-3xl"
+              style={{ backgroundColor: effectiveSecondary || brandFill }}
+              aria-hidden
+            />
+            <div
+              className="pointer-events-none absolute left-0 top-0 h-full w-1 rounded-l-3xl"
+              style={{
+                background: `linear-gradient(180deg, ${brandFill} 0%, ${effectiveSecondary || brandFill} 100%)`,
+                opacity: 0.85,
+              }}
+              aria-hidden
+            />
+            <div className="relative pl-1 sm:pl-2">
+              {effectiveLogo ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={effectiveLogo}
+                  alt=""
+                  className="h-12 w-auto max-w-[220px] object-contain drop-shadow-sm md:h-14"
+                  loading="lazy"
+                />
+              ) : null}
+              <div className="flex flex-wrap gap-2">
+                {trustChips.map((c) => (
+                  <span
+                    key={c}
+                    className={`${glpIntakeUi.chip} border border-slate-200/80 bg-white/90 shadow-sm`}
+                  >
+                    {c}
+                  </span>
+                ))}
+              </div>
+              <p className={glpIntakeUi.kicker}>{company}</p>
+              <h2 className={glpIntakeUi.titleResults}>Your GLP path</h2>
+              <div className={`${glpIntakeUi.stackSm} pt-1`}>
+                <p className="text-sm leading-relaxed text-slate-700">
+                  Estimated timeline toward your goal:{" "}
+                  <span className="font-semibold tabular-nums text-slate-900">{output.weeksToGoal} weeks</span> (
+                  {Math.ceil(output.weeksToGoal / 4)} months). Individual results vary.
+                </p>
+                <p className="text-sm leading-relaxed text-slate-700">
+                  Likely discussion path:{" "}
+                  <span className="font-semibold text-slate-900">{output.pathLabel}</span>
+                </p>
+                <p className={glpIntakeUi.bodyMuted}>
+                  Confidence profile: {output.confidenceBand}. Response, side effects, and dose changes vary by person.
+                </p>
+              </div>
             </div>
           </header>
 
@@ -647,10 +653,19 @@ export default function GlpSimulationFunnel() {
             <p className={`${glpIntakeUi.kicker} mb-3`}>Journey</p>
             <h3 className={`${glpIntakeUi.titleMd} mb-5`}>What the path often looks like</h3>
             <div className="grid gap-4 md:grid-cols-3">
-              {output.phasePlan.map((p) => (
+              {output.phasePlan.map((p, idx) => (
                 <div
                   key={p.phase}
-                  className="flex flex-col rounded-xl border border-slate-200/90 bg-slate-50/80 p-5 shadow-sm"
+                  className={`flex flex-col rounded-2xl border bg-white/90 p-5 shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)] ${
+                    idx === 1 ? "ring-1 ring-slate-900/[0.06] md:scale-[1.02]" : ""
+                  }`}
+                  style={{
+                    borderColor: idx === 0 ? `${brandFill}40` : "rgba(226,232,240,0.95)",
+                    boxShadow:
+                      idx === 0
+                        ? `0 2px 8px rgba(15,23,42,0.04), inset 0 1px 0 rgba(255,255,255,0.8)`
+                        : undefined,
+                  }}
                 >
                   <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{p.weeks}</p>
                   <p className="mt-2 text-sm font-semibold text-slate-900">{p.phase}</p>
@@ -682,7 +697,19 @@ export default function GlpSimulationFunnel() {
           <div className={glpIntakeUi.sectionRule}>
             <p className={`${glpIntakeUi.kicker} mb-3`}>Investment</p>
             <h3 className={`${glpIntakeUi.titleMd} mb-5`}>Price clarity (typical range)</h3>
-            <div className="rounded-xl border border-slate-200 bg-slate-50/90 p-6">
+            <div
+              className="relative overflow-hidden rounded-2xl border bg-gradient-to-br from-white via-slate-50/80 to-slate-100/40 p-6 shadow-inner"
+              style={{
+                borderColor: `${brandFill}30`,
+                boxShadow: `inset 0 1px 0 rgba(255,255,255,0.75), 0 8px 24px -8px rgba(15,23,42,0.08)`,
+              }}
+            >
+              <div
+                className="pointer-events-none absolute -right-8 top-0 h-24 w-24 rounded-full opacity-[0.07] blur-2xl"
+                style={{ backgroundColor: brandFill }}
+                aria-hidden
+              />
+              <div className="relative z-[1]">
               {typeof publicCfg?.pricingMonthlyLow === "number" && publicCfg.pricingMonthlyLow > 0 ? (
                 <p className="text-sm font-medium text-slate-800">
                   Programs often start around{" "}
@@ -713,6 +740,7 @@ export default function GlpSimulationFunnel() {
                 </p>
               ) : null}
               {publicCfg?.paymentNote ? <p className={`${glpIntakeUi.body} mt-3`}>{publicCfg.paymentNote}</p> : null}
+              </div>
             </div>
           </div>
 
@@ -722,15 +750,23 @@ export default function GlpSimulationFunnel() {
             <p className={`${glpIntakeUi.bodyMuted} mb-6`}>
               Illustrative weight trend only — not a medical forecast. Your provider sets targets and pace.
             </p>
-            <div className="rounded-2xl border border-slate-200/90 bg-gradient-to-b from-slate-50/60 to-white p-5 md:p-6">
-              <ol className="space-y-0">
+            <div
+              className="relative overflow-hidden rounded-2xl border border-slate-200/90 border-t-[3px] bg-gradient-to-b from-white via-slate-50/50 to-slate-50/90 p-5 shadow-[0_10px_40px_-12px_rgba(15,23,42,0.12)] ring-1 ring-slate-900/[0.04] md:p-6"
+              style={{ borderTopColor: brandFill }}
+            >
+              <div
+                className="pointer-events-none absolute left-1/2 top-0 h-32 w-[120%] -translate-x-1/2 opacity-[0.06] blur-3xl"
+                style={{ background: `linear-gradient(90deg, transparent, ${brandFill}, transparent)` }}
+                aria-hidden
+              />
+              <ol className="relative space-y-0">
                 {output.projectedMonthlyRange.slice(0, 6).map((m, i, arr) => {
                   const pct = Math.max(12, Math.min(100, 100 - (m.mid / input.currentWeight) * 100));
                   return (
                     <li key={m.month} className="flex gap-4">
                       <div className="flex w-9 flex-col items-center pt-1">
                         <span
-                          className="h-3 w-3 shrink-0 rounded-full ring-4 ring-white shadow-sm"
+                          className="h-3.5 w-3.5 shrink-0 rounded-full shadow-[0_0_0_4px_rgba(255,255,255,0.95),0_2px_8px_rgba(15,23,42,0.12)]"
                           style={{ backgroundColor: brandFill }}
                           aria-hidden
                         />
@@ -757,12 +793,19 @@ export default function GlpSimulationFunnel() {
 
           {isDemoMode ? (
             <div className="border-t border-slate-100 pt-8 mt-8">
-              <GlpDemoOwnerPanels companyName={company} monthlySessions={demoTraffic} />
+              <GlpDemoOwnerPanels
+                companyName={company}
+                monthlySessions={demoTraffic}
+                brandPrimary={brandFill}
+                brandSecondary={effectiveSecondary}
+              />
             </div>
           ) : null}
 
-          <details className="rounded-xl border border-slate-200 bg-slate-50/80 px-5 py-4">
-            <summary className="cursor-pointer text-sm font-semibold text-slate-800">Quick questions</summary>
+          <details className="rounded-xl border border-slate-200 bg-slate-50/80 px-5 py-4 shadow-sm transition-shadow open:shadow-md">
+            <summary className="cursor-pointer list-none text-sm font-semibold text-slate-800 [&::-webkit-details-marker]:hidden">
+              Quick questions
+            </summary>
             <dl className={`${glpIntakeUi.stackMd} mt-5 text-sm`}>
               <div>
                 <dt className="font-semibold text-slate-900">Is this medical advice?</dt>
@@ -785,18 +828,23 @@ export default function GlpSimulationFunnel() {
             General information only, not medical advice. Final treatment decisions are made by a licensed provider.
           </p>
 
-          <div className={`${glpIntakeUi.formActions} border-t border-slate-100 pt-8`}>
-            <button
-              type="button"
-              onClick={() => setStep(4)}
-              className={glpIntakeUi.primaryBtn}
-              style={{ backgroundColor: brandFill }}
-            >
-              Review my next step
+          <div className={`${glpIntakeUi.formNavRow} border-t border-slate-100 pt-8`}>
+            <button type="button" className={glpIntakeUi.backBtn} onClick={goBack}>
+              Previous
             </button>
-            <p className="text-center text-xs text-slate-500">
-              Short consult-readiness questions next — not a medical assessment.
-            </p>
+            <div className={glpIntakeUi.formActions}>
+              <button
+                type="button"
+                onClick={() => setStep(4)}
+                className={glpIntakeUi.primaryBtn}
+                style={{ backgroundColor: brandFill }}
+              >
+                Review my next step
+              </button>
+              <p className="text-center text-xs text-slate-500 sm:text-right">
+                Short consult-readiness questions next — not a medical assessment.
+              </p>
+            </div>
           </div>
         </section>
       )}
@@ -880,16 +928,21 @@ export default function GlpSimulationFunnel() {
             </fieldset>
           </div>
 
-          <div className={glpIntakeUi.formActions}>
-            <button
-              type="button"
-              disabled={!readinessComplete()}
-              onClick={() => setStep(5)}
-              className={glpIntakeUi.primaryBtn}
-              style={{ backgroundColor: brandFill }}
-            >
-              Continue to save / book
+          <div className={glpIntakeUi.formNavRow}>
+            <button type="button" className={glpIntakeUi.backBtn} onClick={goBack}>
+              Previous
             </button>
+            <div className={glpIntakeUi.formActions}>
+              <button
+                type="button"
+                disabled={!readinessComplete()}
+                onClick={() => setStep(5)}
+                className={glpIntakeUi.primaryBtn}
+                style={{ backgroundColor: brandFill }}
+              >
+                Continue to save / book
+              </button>
+            </div>
           </div>
         </section>
       )}
@@ -953,7 +1006,8 @@ export default function GlpSimulationFunnel() {
                 <input
                   type="radio"
                   name="nextStep"
-                  className="h-4 w-4 accent-slate-900"
+                  className="h-4 w-4"
+                  style={{ accentColor: brandFill }}
                   checked={nextStep === "book"}
                   onChange={() => setNextStep("book")}
                 />
@@ -969,7 +1023,8 @@ export default function GlpSimulationFunnel() {
                 <input
                   type="radio"
                   name="nextStep"
-                  className="h-4 w-4 accent-slate-900"
+                  className="h-4 w-4"
+                  style={{ accentColor: brandFill }}
                   checked={nextStep === "callback"}
                   onChange={() => setNextStep("callback")}
                 />
@@ -985,7 +1040,8 @@ export default function GlpSimulationFunnel() {
                 <input
                   type="radio"
                   name="nextStep"
-                  className="h-4 w-4 accent-slate-900"
+                  className="h-4 w-4"
+                  style={{ accentColor: brandFill }}
                   checked={nextStep === "save_only"}
                   onChange={() => setNextStep("save_only")}
                 />
@@ -997,7 +1053,8 @@ export default function GlpSimulationFunnel() {
           <label className="flex cursor-pointer items-start gap-3 rounded-xl border border-slate-200 bg-slate-50/50 p-5 text-sm leading-relaxed text-slate-600">
             <input
               type="checkbox"
-              className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300 accent-slate-900"
+              className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300"
+              style={{ accentColor: brandFill }}
               checked={consent}
               onChange={(e) => setConsent(e.target.checked)}
             />
@@ -1007,30 +1064,35 @@ export default function GlpSimulationFunnel() {
             </span>
           </label>
 
-          <div className={`${glpIntakeUi.formActions} pt-2`}>
-            <button
-              type="button"
-              onClick={onSaveLead}
-              disabled={saving}
-              className={glpIntakeUi.primaryBtn}
-              style={{ backgroundColor: brandFill }}
-            >
-              {saving ? "Saving…" : "Save my plan"}
+          <div className={`${glpIntakeUi.formNavRow} pt-2`}>
+            <button type="button" className={glpIntakeUi.backBtn} onClick={goBack}>
+              Previous
             </button>
-            <a
-              href={bookHref}
-              target={effectiveBookingUrl && nextStep === "book" ? "_blank" : undefined}
-              rel={effectiveBookingUrl && nextStep === "book" ? "noopener noreferrer" : undefined}
-              className={glpIntakeUi.secondaryBtn}
-            >
-              {nextStep === "book"
-                ? effectiveBookingUrl
-                  ? "Open scheduling"
-                  : "Book consult"
-                : nextStep === "callback"
-                  ? "Request callback"
-                  : "Preview saved plan"}
-            </a>
+            <div className={glpIntakeUi.formActions}>
+              <button
+                type="button"
+                onClick={onSaveLead}
+                disabled={saving}
+                className={glpIntakeUi.primaryBtn}
+                style={{ backgroundColor: brandFill }}
+              >
+                {saving ? "Saving…" : "Save my plan"}
+              </button>
+              <a
+                href={bookHref}
+                target={effectiveBookingUrl && nextStep === "book" ? "_blank" : undefined}
+                rel={effectiveBookingUrl && nextStep === "book" ? "noopener noreferrer" : undefined}
+                className={glpIntakeUi.secondaryBtn}
+              >
+                {nextStep === "book"
+                  ? effectiveBookingUrl
+                    ? "Open scheduling"
+                    : "Book consult"
+                  : nextStep === "callback"
+                    ? "Request callback"
+                    : "Preview saved plan"}
+              </a>
+            </div>
           </div>
           {saveMsg ? <p className="text-sm font-medium text-red-600">{saveMsg}</p> : null}
         </section>
@@ -1061,7 +1123,7 @@ export default function GlpSimulationFunnel() {
               href={effectiveBookingUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${glpIntakeUi.primaryBtn} mx-auto block w-full max-w-sm`}
+              className={`${glpIntakeUi.primaryBtn} mx-auto block w-full max-w-sm text-center`}
               style={{ backgroundColor: brandFill }}
             >
               Schedule your consultation
