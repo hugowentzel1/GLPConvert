@@ -13,10 +13,18 @@ Goals: cold-email / DM demos should feel **clinic-owned**, minimize vendor chrom
 - **Owner panels (demo only):** shorter impact + before/after + **Activate this intake** CTA.
 - **Tests:** `glp-branded-e2e-visual.spec.ts` — assert no `main-site-nav` on intake; **F** mobile screenshots; selectors updated for new CTA/headings.
 
+## Simulation / results (Apr 2026 follow-on)
+
+- **Trust strip** (`data-results-trust-strip`) above the hero: logo + chips only.
+- **Hero** focuses on pre-visit topics; timeline/path softened; no duplicate chips in hero.
+- **Order:** Path → Expectations (3 cards) → **Price clarity** (Starts around + typical range) → **Trajectory** in `<details>` with compact chart (supporting only).
+- **`runSimulation`:** Less clinical `pathLabel` + phase copy oriented to “what happens next.”
+- **Playwright:** Asserts `data-results-*` regions on results step.
+
 ## Follow-ups (human / product)
 
 - **R041** Legal review of footer + funnel disclaimers after copy reduction.
-- Optional: **`UI_COPY_REWRITE.md`** / **`UI_POLISH_CHECKLIST.md`** if you want line-by-line copy inventory beyond this file.
+- **`UI_COPY_REWRITE.md`** and **`UI_POLISH_CHECKLIST.md`** added as living checklists.
 
 ## Compliance note
 

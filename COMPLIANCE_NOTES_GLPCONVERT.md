@@ -16,6 +16,10 @@ Educational, pre-consult **conversion and expectation** layer. All treatment dec
 
 Avoid long legal walls; repeat only where needed (results, pricing, ROI illustration).
 
+### Intake results layout (Apr 2026)
+
+Trust chips frame outputs as **educational estimates** (not diagnoses). The **illustrative trajectory** is optional, collapsed by default, and labeled as **not a forecast**. **Path / pricing** copy avoids medication promises and fixed outcomes; **“Starts around”** uses tenant-configured low or illustrative floor from inputs — still not a guaranteed quote.
+
 ## HIPAA-ready posture (engineering + ops)
 
 When storing **PHI/PII** tied to health-related intake:

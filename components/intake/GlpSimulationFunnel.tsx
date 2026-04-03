@@ -132,18 +132,30 @@ function runSimulation(input: SimInput): SimOutput {
   });
   const pathLabel =
     input.medPath === "tirzepatide"
-      ? "Provider-led GLP-1/GIP pathway"
+      ? "Discussion often starts around a dual-action injectable path — your provider decides"
       : input.medPath === "semaglutide"
-        ? "Provider-led GLP-1 pathway"
+        ? "Discussion often starts around a GLP-1 injectable path — your provider decides"
         : input.medPath === "oral_path"
-          ? "Oral-first weight management pathway"
-          : "Best-fit provider pathway (to be confirmed in consult)";
+          ? "Discussion may start with an oral-first plan — your provider decides"
+          : "Direction you selected — details confirmed in consult";
   const confidenceBand: SimOutput["confidenceBand"] =
     input.priorGlp === "active" ? "conservative" : input.urgency === "asap" ? "accelerated" : "typical";
   const phasePlan = [
-    { phase: "Starter phase", weeks: "Weeks 1–4", focus: "Tolerability, appetite changes, habit setup" },
-    { phase: "Active phase", weeks: "Weeks 5–16", focus: "Dose progression and monthly trend checks" },
-    { phase: "Continuation phase", weeks: "Month 5+", focus: "Sustained progress and maintenance planning" },
+    {
+      phase: "Getting oriented",
+      weeks: "Weeks 1–4",
+      focus: "Comfort with the plan, routine, and how check-ins work",
+    },
+    {
+      phase: "Building momentum",
+      weeks: "Weeks 5–16",
+      focus: "Regular follow-ups; your provider adjusts based on how you respond",
+    },
+    {
+      phase: "Staying consistent",
+      weeks: "Month 5+",
+      focus: "Long-term habits and what “steady state” looks like for you",
+    },
   ];
 
   return {
@@ -667,72 +679,90 @@ export default function GlpSimulationFunnel() {
 
       {step === 2 && (
         <section data-flow-step="2" className={`${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackSection}`}>
+          <div
+            data-results-trust-strip
+            className="flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200/90 bg-white/95 px-4 py-3 shadow-sm ring-1 ring-slate-900/[0.03]"
+          >
+            {effectiveLogo ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={effectiveLogo}
+                alt=""
+                className="h-9 w-auto max-w-[150px] object-contain md:h-10 md:max-w-[180px]"
+                loading="lazy"
+              />
+            ) : (
+              <div
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-xs font-bold text-white shadow-sm"
+                style={{ backgroundColor: brandFill }}
+                aria-hidden
+              >
+                {company
+                  .split(/\s+/)
+                  .filter(Boolean)
+                  .map((w) => w[0])
+                  .join("")
+                  .slice(0, 2)
+                  .toUpperCase() || "?"}
+              </div>
+            )}
+            <div className="flex min-w-0 flex-1 flex-wrap gap-2">
+              {trustChips.map((c) => (
+                <span
+                  key={c}
+                  className={`${glpIntakeUi.chip} border border-slate-200/80 bg-slate-50/90 text-[11px] shadow-none`}
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
+          </div>
+
           <header
-            className={`relative overflow-hidden rounded-3xl border p-6 md:p-8 space-y-4`}
+            className={`relative mt-5 overflow-hidden rounded-3xl border p-6 md:p-8`}
             style={{
               borderColor: `${brandFill}2e`,
-              background: `linear-gradient(165deg, white 0%, rgba(248,250,252,0.97) 45%, rgba(241,245,249,0.5) 100%)`,
-              boxShadow: `inset 0 1px 0 rgba(255,255,255,0.9), 0 18px 40px -12px rgba(15,23,42,0.1), 0 0 0 1px rgba(15,23,42,0.04)`,
+              background: `linear-gradient(165deg, white 0%, rgba(248,250,252,0.97) 48%, rgba(241,245,249,0.45) 100%)`,
+              boxShadow: `inset 0 1px 0 rgba(255,255,255,0.92), 0 20px 44px -14px rgba(15,23,42,0.09)`,
             }}
           >
             <div
-              className="pointer-events-none absolute -left-16 -top-20 h-48 w-48 rounded-full opacity-[0.12] blur-3xl"
+              className="pointer-events-none absolute -left-16 -top-20 h-44 w-44 rounded-full opacity-[0.1] blur-3xl"
               style={{ backgroundColor: brandFill }}
-              aria-hidden
-            />
-            <div
-              className="pointer-events-none absolute -bottom-12 -right-10 h-40 w-40 rounded-full opacity-[0.08] blur-3xl"
-              style={{ backgroundColor: effectiveSecondary || brandFill }}
               aria-hidden
             />
             <div
               className="pointer-events-none absolute left-0 top-0 h-full w-1 rounded-l-3xl"
               style={{
                 background: `linear-gradient(180deg, ${brandFill} 0%, ${effectiveSecondary || brandFill} 100%)`,
-                opacity: 0.85,
+                opacity: 0.88,
               }}
               aria-hidden
             />
             <div className="relative pl-1 sm:pl-2">
-              {effectiveLogo ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={effectiveLogo}
-                  alt=""
-                  className="h-12 w-auto max-w-[220px] object-contain drop-shadow-sm md:h-14"
-                  loading="lazy"
-                />
-              ) : null}
-              <div className="flex flex-wrap gap-2">
-                {trustChips.map((c) => (
-                  <span
-                    key={c}
-                    className={`${glpIntakeUi.chip} border border-slate-200/80 bg-white/90 shadow-sm`}
-                  >
-                    {c}
-                  </span>
-                ))}
-              </div>
               <p className={glpIntakeUi.kicker}>{company}</p>
               <h2 className={glpIntakeUi.titleResults}>Your GLP path</h2>
-              <div className={glpIntakeUi.stackSm}>
-                <p className="text-sm leading-relaxed text-slate-700">
-                  Rough timeline to your goal:{" "}
-                  <span className="font-semibold tabular-nums text-slate-900">{output.weeksToGoal} weeks</span> (
-                  {Math.ceil(output.weeksToGoal / 4)} mo). Individual results vary.
+              <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-600">
+                Topics many patients review before a provider visit — not a diagnosis, guarantee, or medical advice.
+              </p>
+              <div className="mt-6 space-y-2.5 border-t border-slate-200/80 pt-6 text-sm text-slate-700">
+                <p>
+                  <span className="text-slate-500">Discussed timeline (illustrative): </span>
+                  <span className="font-semibold tabular-nums text-slate-900">{output.weeksToGoal} weeks</span>
+                  <span className="text-slate-500"> · individual results vary.</span>
                 </p>
-                <p className="text-sm leading-relaxed text-slate-700">
-                  Typical discussion focus:{" "}
-                  <span className="font-semibold text-slate-900">{output.pathLabel}</span>
+                <p>
+                  <span className="text-slate-500">Conversation often includes: </span>
+                  <span className="text-slate-800">{output.pathLabel}</span>
                 </p>
-                <p className={glpIntakeUi.bodyMuted}>
-                  Pace profile: {output.confidenceBand}. Everyone responds differently — your provider sets the plan.
+                <p className={`${glpIntakeUi.bodyMuted} !mt-1`}>
+                  Framing: {output.confidenceBand} pace — your provider sets what&apos;s appropriate for you.
                 </p>
               </div>
             </div>
           </header>
 
-          <div className={glpIntakeUi.sectionRule}>
+          <div className={glpIntakeUi.sectionRule} data-results-path>
             <p className={`${glpIntakeUi.kicker} mb-2`}>Path</p>
             <h3 className={`${glpIntakeUi.titleMd} mb-4`}>What usually happens next</h3>
             <div className="grid gap-4 md:grid-cols-3">
@@ -758,100 +788,137 @@ export default function GlpSimulationFunnel() {
             </div>
           </div>
 
-          <div className={glpIntakeUi.sectionRule}>
-            <p className={`${glpIntakeUi.kicker} mb-2`}>Rhythm</p>
+          <div className={glpIntakeUi.sectionRule} data-results-expectations>
+            <p className={`${glpIntakeUi.kicker} mb-2`}>Expectations</p>
             <h3 className={`${glpIntakeUi.titleMd} mb-4`}>What many people notice</h3>
-            <ul className={`${glpIntakeUi.stackMd} text-sm leading-relaxed text-slate-700`}>
-              <li className="flex gap-3 border-l-2 border-slate-200 pl-4">
-                <span className="font-semibold text-slate-900">Early</span>
-                <span>Appetite and food noise often shift first; your provider sets the pace.</span>
-              </li>
-              <li className="flex gap-3 border-l-2 border-slate-200 pl-4">
-                <span className="font-semibold text-slate-900">Middle</span>
-                <span>Steadier monthly trends; dose and plan adjustments are common.</span>
-              </li>
-              <li className="flex gap-3 border-l-2 border-slate-200 pl-4">
-                <span className="font-semibold text-slate-900">Ongoing</span>
-                <span>Maintenance and habits matter — support is part of long-term success.</span>
-              </li>
-            </ul>
-          </div>
-
-          <div className={glpIntakeUi.sectionRule}>
-            <p className={`${glpIntakeUi.kicker} mb-2`}>Trajectory</p>
-            <h3 className={`${glpIntakeUi.titleMd} mb-1`}>Weight trend (illustrative)</h3>
-            <p className={`${glpIntakeUi.bodyMuted} mb-5`}>
-              Not a forecast — your provider sets pace and targets.
-            </p>
-            {weightChartPoints.length >= 2 ? (
-              <GlpWeightTrajectoryChart
-                points={weightChartPoints}
-                brandFill={brandFill}
-                goalWeight={input.goalWeight}
-              />
-            ) : null}
-            <div className="mt-4 flex flex-wrap gap-2">
-              {output.projectedMonthlyRange.slice(0, 6).map((m) => (
-                <span
-                  key={m.month}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200/90 bg-white px-2.5 py-1 text-[11px] font-medium text-slate-700 shadow-sm"
+            <div className="grid gap-4 md:grid-cols-3">
+              {(
+                [
+                  {
+                    t: "Early",
+                    d: "Routine and appetite often shift first; your provider sets how fast things move.",
+                  },
+                  {
+                    t: "Middle",
+                    d: "Check-ins continue; plans adjust — this is normal, not a setback.",
+                  },
+                  {
+                    t: "Ongoing",
+                    d: "Habits and follow-through matter; support is part of the long game.",
+                  },
+                ] as const
+              ).map(({ t, d }) => (
+                <div
+                  key={t}
+                  className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-[0_1px_3px_rgba(15,23,42,0.04)]"
                 >
-                  <span className="text-slate-500">M{m.month}</span>
-                  <span className="tabular-nums text-slate-900">{m.mid} lb</span>
-                </span>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{t}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-700">{d}</p>
+                </div>
               ))}
             </div>
           </div>
 
-          <div className={glpIntakeUi.sectionRule}>
+          <div className={glpIntakeUi.sectionRule} data-results-pricing>
             <p className={`${glpIntakeUi.kicker} mb-2`}>Investment</p>
-            <h3 className={`${glpIntakeUi.titleMd} mb-4`}>Typical monthly range</h3>
+            <h3 className={`${glpIntakeUi.titleMd} mb-4`}>Price clarity</h3>
             <div
-              className="relative overflow-hidden rounded-2xl border bg-gradient-to-br from-white via-slate-50/80 to-slate-100/40 p-6 shadow-inner"
+              className="relative overflow-hidden rounded-2xl border bg-gradient-to-br from-white via-slate-50/90 to-slate-100/50 p-6 md:p-7 shadow-inner"
               style={{
-                borderColor: `${brandFill}30`,
-                boxShadow: `inset 0 1px 0 rgba(255,255,255,0.75), 0 8px 24px -8px rgba(15,23,42,0.08)`,
+                borderColor: `${brandFill}35`,
+                boxShadow: `inset 0 1px 0 rgba(255,255,255,0.8), 0 10px 28px -10px rgba(15,23,42,0.1)`,
               }}
             >
               <div
-                className="pointer-events-none absolute -right-8 top-0 h-24 w-24 rounded-full opacity-[0.07] blur-2xl"
+                className="pointer-events-none absolute -right-8 top-0 h-28 w-28 rounded-full opacity-[0.08] blur-2xl"
                 style={{ backgroundColor: brandFill }}
                 aria-hidden
               />
-              <div className="relative z-[1]">
-              {typeof publicCfg?.pricingMonthlyLow === "number" && publicCfg.pricingMonthlyLow > 0 ? (
-                <p className="text-sm font-medium text-slate-800">
-                  Many programs start around{" "}
-                  <span className="tabular-nums text-slate-900">${publicCfg.pricingMonthlyLow}</span>
-                  /mo before add-ons — your provider confirms.
+              <div className="relative z-[1] space-y-4">
+                <div>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">Starts around</p>
+                  <p className="mt-1 text-3xl font-bold tracking-tight text-slate-900 tabular-nums md:text-[2rem]">
+                    $
+                    {typeof publicCfg?.pricingMonthlyLow === "number" && publicCfg.pricingMonthlyLow > 0
+                      ? publicCfg.pricingMonthlyLow
+                      : output.monthlyCostLow}
+                    <span className="text-lg font-semibold text-slate-500">/mo</span>
+                  </p>
+                  <p className="mt-1 text-xs text-slate-500">
+                    {typeof publicCfg?.pricingMonthlyLow === "number" && publicCfg.pricingMonthlyLow > 0
+                      ? "From your program notes — final quote from your provider."
+                      : "Illustrative floor from your inputs — not a quote."}
+                  </p>
+                </div>
+                <div className="border-t border-slate-200/80 pt-4">
+                  <p className="text-sm font-medium text-slate-800">Typical monthly range (educational)</p>
+                  <p className="mt-1 text-xl font-semibold tabular-nums text-slate-900">
+                    ${output.monthlyCostLow}–${output.monthlyCostHigh}
+                    <span className="text-sm font-normal text-slate-500"> /mo</span>
+                  </p>
+                </div>
+                <p className="text-sm text-slate-600">
+                  Illustrative cost per lb (educational):{" "}
+                  <span className="font-semibold tabular-nums text-slate-800">
+                    ${output.costPerLbLow}–${output.costPerLbHigh}
+                  </span>
                 </p>
-              ) : null}
-              <p className={`text-sm text-slate-700 ${publicCfg?.pricingMonthlyLow ? "mt-3" : ""}`}>
-                Educational range:{" "}
-                <span className="text-lg font-semibold tabular-nums text-slate-900">
-                  ${output.monthlyCostLow}–${output.monthlyCostHigh}
-                </span>
-                <span className="text-slate-500"> /mo</span>
-              </p>
-              <p className="mt-3 text-sm text-slate-700">
-                Illustrative cost per lb (educational):{" "}
-                <span className="font-semibold tabular-nums">
-                  ${output.costPerLbLow}–${output.costPerLbHigh}
-                </span>
-              </p>
-              <p className={`${glpIntakeUi.bodyMuted} mt-4`}>
-                Actual pricing depends on your provider, program, insurance, and medication path.
-              </p>
-              {publicCfg?.consultFeeNote ? (
-                <p className="mt-4 rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">
-                  <span className="font-semibold text-slate-900">Consult / entry: </span>
-                  {publicCfg.consultFeeNote}
+                <p className={`${glpIntakeUi.bodyMuted} text-xs`}>
+                  Actual pricing may vary based on provider evaluation and program selection. Insurance, cash pay, and
+                  medication path change totals.
                 </p>
-              ) : null}
-              {publicCfg?.paymentNote ? <p className={`${glpIntakeUi.body} mt-3`}>{publicCfg.paymentNote}</p> : null}
+                {publicCfg?.consultFeeNote ? (
+                  <p className="rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">
+                    <span className="font-semibold text-slate-900">Consult / entry: </span>
+                    {publicCfg.consultFeeNote}
+                  </p>
+                ) : null}
+                {publicCfg?.paymentNote ? <p className={glpIntakeUi.body}>{publicCfg.paymentNote}</p> : null}
               </div>
             </div>
           </div>
+
+          <details
+            data-results-trajectory
+            className="group rounded-2xl border border-slate-200/90 bg-slate-50/40 px-4 py-3 shadow-sm open:bg-white open:shadow-md"
+          >
+            <summary className="cursor-pointer list-none text-sm font-semibold text-slate-700 transition hover:text-slate-900 [&::-webkit-details-marker]:hidden">
+              <span className="inline-flex items-center gap-2">
+                <span
+                  className="text-slate-400 transition group-open:rotate-90"
+                  style={{ color: brandFill }}
+                  aria-hidden
+                >
+                  ▸
+                </span>
+                Optional: illustrative weight trend (not a forecast)
+              </span>
+            </summary>
+            <div className="mt-4 space-y-4 pb-2">
+              <p className="text-xs leading-relaxed text-slate-500">
+                Supporting context only — your provider sets targets. Not medical advice.
+              </p>
+              {weightChartPoints.length >= 2 ? (
+                <GlpWeightTrajectoryChart
+                  points={weightChartPoints}
+                  brandFill={brandFill}
+                  goalWeight={input.goalWeight}
+                  variant="compact"
+                />
+              ) : null}
+              <div className="flex flex-wrap gap-2">
+                {output.projectedMonthlyRange.slice(0, 6).map((m) => (
+                  <span
+                    key={m.month}
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200/90 bg-white px-2.5 py-1 text-[11px] font-medium text-slate-700"
+                  >
+                    <span className="text-slate-500">M{m.month}</span>
+                    <span className="tabular-nums text-slate-900">{m.mid} lb</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          </details>
 
           {isDemoMode ? (
             <div className="border-t border-slate-100 pt-8 mt-8">
@@ -923,7 +990,7 @@ export default function GlpSimulationFunnel() {
 
           <div className={glpIntakeUi.readinessStack}>
             <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
-              <legend className={`${glpIntakeUi.label} !mb-0`}>Comfortable with the range above?</legend>
+              <legend className={`${glpIntakeUi.label} !mb-0`}>Comfortable with this general monthly range?</legend>
               <div className={glpIntakeUi.choiceRow}>
                 {(
                   [
@@ -945,7 +1012,7 @@ export default function GlpSimulationFunnel() {
               </div>
             </fieldset>
             <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
-              <legend className={`${glpIntakeUi.label} !mb-0`}>When are you hoping to start?</legend>
+              <legend className={`${glpIntakeUi.label} !mb-0`}>Hoping to start soon?</legend>
               <div className={glpIntakeUi.choiceRow}>
                 {(
                   [
@@ -967,7 +1034,7 @@ export default function GlpSimulationFunnel() {
               </div>
             </fieldset>
             <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
-              <legend className={`${glpIntakeUi.label} !mb-0`}>Explore next steps now?</legend>
+              <legend className={`${glpIntakeUi.label} !mb-0`}>Want to review your next step now?</legend>
               <div className={glpIntakeUi.choiceRow}>
                 {(
                   [

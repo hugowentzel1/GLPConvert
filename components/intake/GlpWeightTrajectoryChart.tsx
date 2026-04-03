@@ -18,10 +18,12 @@ export default function GlpWeightTrajectoryChart({
   points,
   brandFill,
   goalWeight,
+  variant = "default",
 }: {
   points: WeightChartPoint[];
   brandFill: string;
   goalWeight: number;
+  variant?: "default" | "compact";
 }) {
   const gid = useId().replace(/:/g, "");
   const gradId = `glpWtGrad-${gid}`;
@@ -36,15 +38,25 @@ export default function GlpWeightTrajectoryChart({
 
   if (points.length < 2) return null;
 
+  const compact = variant === "compact";
+
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-b from-white to-slate-50/80 px-2 pb-2 pt-4 shadow-[0_12px_40px_-16px_rgba(15,23,42,0.12)] ring-1 ring-slate-900/[0.04] sm:px-4 sm:pt-5">
-      <p className="mb-1 px-2 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
-        Illustrative weight trend
-      </p>
-      <p className="mb-3 px-2 text-center text-xs text-slate-500">
-        Not a medical forecast — your provider sets pace and targets.
-      </p>
-      <div className="h-[260px] w-full sm:h-[300px]">
+    <div
+      className={`relative w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-b from-white to-slate-50/80 ring-1 ring-slate-900/[0.04] ${
+        compact ? "px-2 pb-2 pt-3 shadow-sm sm:px-3" : "px-2 pb-2 pt-4 shadow-[0_12px_40px_-16px_rgba(15,23,42,0.12)] sm:px-4 sm:pt-5"
+      }`}
+    >
+      {!compact ? (
+        <>
+          <p className="mb-1 px-2 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+            Illustrative weight trend
+          </p>
+          <p className="mb-3 px-2 text-center text-xs text-slate-500">
+            Not a medical forecast — your provider sets pace and targets.
+          </p>
+        </>
+      ) : null}
+      <div className={compact ? "h-[200px] w-full sm:h-[220px]" : "h-[260px] w-full sm:h-[300px]"}>
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={points} margin={{ top: 8, right: 8, left: -12, bottom: 4 }}>
             <defs>

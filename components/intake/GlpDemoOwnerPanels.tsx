@@ -48,6 +48,10 @@ export default function GlpDemoOwnerPanels({
         <p className={`${glpIntakeUi.bodyMuted} mt-3 text-[11px]`}>
           For discussion with {companyName} only. Not medical, legal, or financial advice.
         </p>
+        <p className={`${glpIntakeUi.body} mt-4 text-sm`}>
+          <span className="font-semibold text-slate-800">Setup:</span> point your domain, logo, and booking link — most
+          teams ship the live intake in a single sitting.
+        </p>
       </div>
 
       <div className="grid gap-3 md:grid-cols-2">

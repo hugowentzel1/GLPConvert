@@ -144,6 +144,12 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await expect(page.getByText(/Step 2 of 5/i)).toBeVisible();
     await expect(page.locator('[data-flow-step="2"]').getByRole("heading", { name: /your glp path/i })).toBeVisible();
     await expect(page.getByText(/typical monthly range/i)).toBeVisible();
+    await expect(page.locator("[data-results-trust-strip]")).toBeVisible();
+    await expect(page.locator("[data-results-path]")).toBeVisible();
+    await expect(page.locator("[data-results-expectations]")).toBeVisible();
+    await expect(page.locator("[data-results-pricing]")).toBeVisible();
+    await expect(page.locator("[data-results-trajectory]")).toBeVisible();
+    await expect(page.getByText(/starts around/i)).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("visual-A3-results.png"), fullPage: true });
 
     await page.locator('[data-flow-step="2"]').getByRole("button", { name: /^next step$/i }).click();
@@ -234,6 +240,8 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     });
     await page.screenshot({ path: testInfo.outputPath("visual-C2-paid-results.png"), fullPage: true });
     await expect(page.getByText(/typical monthly range/i)).toBeVisible();
+    await expect(page.locator("[data-results-trust-strip]")).toBeVisible();
+    await expect(page.locator("[data-results-pricing]")).toBeVisible();
     await expect(page.locator("[data-owner-demo-panels]")).toHaveCount(0);
 
     await page.locator('[data-flow-step="2"]').getByRole("button", { name: /^next step$/i }).click();
@@ -269,6 +277,16 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await expect(page.locator('[data-flow-step="2"]').getByRole("heading", { name: /your glp path/i })).toBeVisible({
       timeout: 10000,
     });
+  });
+
+  test("G — Step 1 labeled controls (a11y smoke)", async ({ page }) => {
+    await mockTenantIntakeConfig(page);
+    await page.goto("/intake?demo=1&handle=glpconvert&company=A11y%20Clinic&brand=166534&transition_ms=600", {
+      waitUntil: "domcontentloaded",
+    });
+    await expect(page.getByRole("spinbutton", { name: /current weight/i })).toBeVisible({ timeout: 20000 });
+    await expect(page.getByRole("spinbutton", { name: /goal weight/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /^continue$/i })).toBeVisible();
   });
 
   test("F — Intake: no global nav; mobile demo + paid screenshots", async ({ page }, testInfo) => {

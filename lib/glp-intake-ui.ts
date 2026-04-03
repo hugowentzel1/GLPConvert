@@ -33,16 +33,16 @@ export const glpIntakeUi = {
 
   label: "mb-2 block text-sm font-medium text-slate-700",
   control:
-    "min-h-[48px] w-full rounded-xl border border-slate-200/95 bg-white px-4 py-3 text-sm text-slate-900 shadow-[0_1px_2px_rgba(15,23,42,0.03)] transition placeholder:text-slate-400",
+    "min-h-[48px] w-full rounded-xl border border-slate-200/95 bg-white px-4 py-3 text-sm text-slate-900 shadow-[0_1px_2px_rgba(15,23,42,0.03)] transition placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15 focus-visible:ring-offset-2",
 
   /** Wizard back — same min height as primary for aligned rows (WCAG touch target ≥44px) */
   backBtn:
-    "inline-flex w-full shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white px-5 py-[0.875rem] text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 sm:w-[8.75rem] sm:min-w-[8.75rem] min-h-[52px]",
+    "inline-flex w-full shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white px-5 py-[0.875rem] text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15 focus-visible:ring-offset-2 sm:w-[8.75rem] sm:min-w-[8.75rem] min-h-[52px]",
 
   primaryBtn:
-    "glp-intake-primary-btn inline-flex w-full items-center justify-center rounded-xl px-5 py-[0.875rem] text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.03] active:scale-[0.995] disabled:pointer-events-none disabled:opacity-45 disabled:hover:shadow-md min-h-[52px]",
+    "glp-intake-primary-btn inline-flex w-full items-center justify-center rounded-xl px-5 py-[0.875rem] text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.03] active:scale-[0.995] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/25 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-45 disabled:hover:shadow-md min-h-[52px]",
   secondaryBtn:
-    "inline-flex w-full items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-5 py-[0.875rem] text-sm font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50/80 hover:shadow-md min-h-[52px]",
+    "inline-flex w-full items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-5 py-[0.875rem] text-sm font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50/80 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15 focus-visible:ring-offset-2 min-h-[52px]",
 
   /** Primary + optional secondary stack; pair with back row */
   formActions: "flex min-w-0 flex-1 flex-col gap-3 sm:max-w-md sm:ml-auto sm:items-stretch",
@@ -59,7 +59,7 @@ export const glpIntakeUi = {
   readinessStack: "space-y-8",
   choiceRow: "flex flex-wrap gap-3",
   choiceBase:
-    "rounded-xl border px-4 py-2.5 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15",
+    "rounded-xl border px-4 py-2.5 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/20 focus-visible:ring-offset-2",
   choiceIdle:
     "border-slate-200 bg-white text-slate-800 shadow-sm hover:border-slate-300 hover:bg-slate-50/50 hover:shadow-md",
 } as const;

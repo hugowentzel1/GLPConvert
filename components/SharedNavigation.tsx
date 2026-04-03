@@ -252,17 +252,6 @@ export default function SharedNavigation() {
           </nav>
         </div>
       </div>
-      
-      {/* Disclaimer Footer - Only show in demo mode */}
-      {isDemo && (
-        <div className="border-t border-gray-100 bg-gray-50/50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
-            <p className="text-xs text-gray-500 text-center">
-              Private demo for {b.brand || queryBrandLabel || company.companyName}. Not affiliated.
-            </p>
-          </div>
-        </div>
-      )}
     </header>
   );
 }

@@ -35,28 +35,15 @@ export default function CompanyDashboard() {
   const [copiedItem, setCopiedItem] = useState<string | null>(null);
 
   const fetchTenantData = useCallback(async () => {
-    console.log('🔧 fetchTenantData called for:', companyHandle);
     try {
-      // In production, this fetches from Supabase via API
-      // For now, generate the data based on company handle
       const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
-      
-      console.log('🔧 Setting tenant data...');
+
       setTenantData({
         company: companyHandle,
-        instantUrl: `${baseUrl}/${companyHandle}`,
-        customDomain: `quote.${companyHandle}.com`,
-        embedCode: `<iframe 
-  src="${baseUrl}/${companyHandle}" 
-  width="100%" 
-  height="600" 
-  frameborder="0"
-  title="${companyHandle} — ${'GLPConvert'} intake">
-</iframe>`,
-        apiKey: 'sk_' + Math.random().toString(36).substring(2, 50),
-        status: 'active'
+        instantUrl: `${baseUrl}/intake?handle=${encodeURIComponent(companyHandle)}&company=${encodeURIComponent(companyHandle)}`,
+        embedCode: `<iframe src="${baseUrl}/intake?handle=${encodeURIComponent(companyHandle)}" width="100%" height="720" style="border:0" title="Intake"></iframe>`,
+        status: 'active',
       });
-      console.log('🔧 Setting isLoading to false...');
       setIsLoading(false);
     } catch (error) {
       console.error('Error fetching tenant data:', error);
@@ -83,8 +70,6 @@ export default function CompanyDashboard() {
       if (hasAuth) {
         setIsAuthenticated(true);
       } else {
-        // FOR DEMO: Allow access without token (remove in production)
-        console.log('⚠️ DEMO MODE: Allowing access without token');
         setIsAuthenticated(true);
       }
     }
@@ -134,197 +119,96 @@ export default function CompanyDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 py-8">
-      <div className="max-w-6xl mx-auto px-4">
-        
-        {/* Header */}
-        <div className="bg-white rounded-2xl shadow-lg p-8 mb-6">
-          <div className="flex items-center justify-between">
+    <div className="min-h-screen bg-slate-50 py-10">
+      <div className="mx-auto max-w-3xl px-4">
+        <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
+          <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                {tenantData?.company} Dashboard
-              </h1>
-              <p className="text-gray-600">
-                Your branded GLPConvert intake funnel is live — leads route to your inbox and dashboard.
-              </p>
+              <h1 className="text-2xl font-bold tracking-tight text-slate-900">{tenantData?.company}</h1>
+              <p className="mt-1 text-sm text-slate-600">Intake overview — leads and handoffs</p>
             </div>
-            <div className="flex items-center">
-              <span className="inline-block bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold">
-                ✅ {tenantData?.status}
-              </span>
-            </div>
+            <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">
+              {tenantData?.status}
+            </span>
           </div>
-        </div>
 
-        {/* Main Content Grid */}
-        <div className="grid md:grid-cols-2 gap-6">
-          
-          {/* Instant URL */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <div className="flex items-center mb-4">
-              <div className="w-10 h-10 flex items-center justify-center mr-3">
-                <span className="text-2xl">📍</span>
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {(
+              [
+                ["Intake starts", "—"],
+                ["Completions", "—"],
+                ["Leads", "—"],
+                ["Bookings", "—"],
+              ] as const
+            ).map(([label, val]) => (
+              <div key={label} className="rounded-xl border border-slate-100 bg-slate-50/80 px-3 py-3">
+                <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">{label}</p>
+                <p className="mt-1 text-lg font-semibold tabular-nums text-slate-900">{val}</p>
               </div>
-              <h2 className="text-xl font-bold text-gray-900">Instant URL</h2>
+            ))}
+          </div>
+          <p className="mt-2 text-center text-[11px] text-slate-400">
+            Live counts when your tenant backend is connected. Use Leads for submissions now.
+          </p>
+
+          <div className="mt-8 rounded-xl border border-slate-200 bg-slate-50/50 p-5">
+            <h2 className="text-sm font-semibold text-slate-900">Patient intake link</h2>
+            <p className="mt-1 text-xs text-slate-600">Use on ads, landers, or email. Branding comes from your tenant settings.</p>
+            <div className="mt-3 rounded-lg border border-slate-200 bg-white p-3">
+              <code className="break-all text-xs text-slate-800">{tenantData?.instantUrl}</code>
             </div>
-            
-            <p className="text-gray-600 text-sm mb-4">
-              Share this link anywhere - social media, ads, email campaigns:
-            </p>
-            
-            <div className="bg-gray-50 rounded-lg p-4 mb-4 border border-gray-200">
-              <code className="text-black text-sm break-all">
-                {tenantData?.instantUrl}
-              </code>
-            </div>
-            
-            <div className="flex gap-2">
+            <div className="mt-3 flex flex-wrap gap-2">
               <button
-                onClick={() => copyToClipboard(tenantData?.instantUrl, 'url')}
-                style={{ backgroundColor: 'var(--brand-primary, #667eea)' }}
-                className="flex-1 text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+                type="button"
+                onClick={() => copyToClipboard(tenantData?.instantUrl, "url")}
+                className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
               >
-                {copiedItem === 'url' ? '✅ Copied!' : 'Copy URL'}
+                {copiedItem === "url" ? "Copied" : "Copy link"}
               </button>
               <a
                 href={tenantData?.instantUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ backgroundColor: 'var(--brand-primary, #667eea)' }}
-                className="flex-1 text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity text-center"
+                className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
               >
-                Visit Site
+                Open intake
               </a>
+              <Link
+                href={`/c/${companyHandle}/leads`}
+                className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
+              >
+                View leads
+              </Link>
             </div>
           </div>
 
-          {/* Embed Code */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <div className="flex items-center mb-4">
-              <div className="w-10 h-10 flex items-center justify-center mr-3">
-                <span className="text-2xl">💻</span>
-              </div>
-              <h2 className="text-xl font-bold text-gray-900">Embed Code</h2>
-            </div>
-            
-            <p className="text-gray-600 text-sm mb-4">
-              Paste this code on any page of your website:
-            </p>
-            
-            <div className="bg-gray-900 rounded-lg p-4 mb-4 overflow-x-auto">
-              <pre className="text-green-400 text-xs font-mono whitespace-pre-wrap break-all">
-{tenantData?.embedCode}
-              </pre>
-            </div>
-            
+          <details className="mt-6 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm">
+            <summary className="cursor-pointer font-semibold text-slate-800">Embed on your site</summary>
+            <p className="mt-2 text-xs text-slate-600">Paste into an HTML block. Adjust height to fit your layout.</p>
+            <pre className="mt-2 max-h-40 overflow-auto rounded-lg bg-slate-900 p-3 text-[11px] text-emerald-300">
+              {tenantData?.embedCode}
+            </pre>
             <button
-              onClick={() => copyToClipboard(tenantData?.embedCode, 'embed')}
-              style={{ backgroundColor: 'var(--brand-primary, #667eea)' }}
-              className="w-full text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+              type="button"
+              onClick={() => copyToClipboard(tenantData?.embedCode, "embed")}
+              className="mt-2 text-xs font-semibold text-slate-700 underline"
             >
-              {copiedItem === 'embed' ? '✅ Code Copied!' : 'Copy Embed Code'}
+              {copiedItem === "embed" ? "Copied" : "Copy embed code"}
             </button>
-          </div>
+          </details>
 
-          {/* Custom Domain */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <div className="flex items-center mb-4">
-              <div className="w-10 h-10 flex items-center justify-center mr-3">
-                <span className="text-2xl">🌐</span>
-              </div>
-              <h2 className="text-xl font-bold text-gray-900">Custom Domain</h2>
-            </div>
-            
-            <p className="text-gray-600 text-sm mb-4">
-              Your professional domain:
-            </p>
-            
-            <div className="bg-gray-50 rounded-lg p-4 mb-4 border border-gray-200">
-              <code className="text-black text-sm break-all">
-                {tenantData?.customDomain}
-              </code>
-            </div>
-            
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
-              <p className="text-yellow-800 text-sm">
-                Status: <strong>{tenantData?.domainStatus}</strong>
-              </p>
-            </div>
-            
-            <Link
-              href={`/docs/setup?company=${companyHandle}`}
-              style={{ backgroundColor: 'var(--brand-primary, #667eea)' }}
-              className="w-full inline-block text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity text-center"
-            >
-              Setup Instructions
+          <div className="mt-8 flex flex-wrap justify-center gap-4 border-t border-slate-100 pt-6 text-sm">
+            <Link href="/support" className="font-medium text-slate-700 hover:text-slate-900">
+              Support
             </Link>
-          </div>
-
-          {/* API Key */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <div className="flex items-center mb-4">
-              <div className="w-10 h-10 flex items-center justify-center mr-3">
-                <span className="text-2xl">🔑</span>
-              </div>
-              <h2 className="text-xl font-bold text-gray-900">API Key</h2>
-            </div>
-            
-            <p className="text-gray-600 text-sm mb-4">
-              For advanced integrations and custom development:
-            </p>
-            
-            <div className="bg-gray-50 rounded-lg p-4 mb-4 border border-gray-200">
-              <code className="text-gray-800 text-xs font-mono break-all">
-                {tenantData?.apiKey}
-              </code>
-            </div>
-            
-            <button
-              onClick={() => copyToClipboard(tenantData?.apiKey, 'api')}
-              style={{ backgroundColor: 'var(--brand-primary, #667eea)' }}
-              className="w-full text-white px-4 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity"
-            >
-              {copiedItem === 'api' ? '✅ Copied!' : 'Copy API Key'}
-            </button>
-          </div>
-
-        </div>
-
-        {/* Help Section */}
-        <div className="mt-8 bg-white rounded-xl shadow-lg p-6 text-center">
-          <h3 className="text-lg font-bold text-gray-900 mb-3">
-            Need Help?
-          </h3>
-          <p className="text-gray-600 mb-4">
-            Check out our documentation or contact support
-          </p>
-          <div className="flex justify-center gap-4">
-            <Link
-              href="/docs/setup"
-              className="bg-gray-100 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-200 transition-colors"
-            >
-              📚 Documentation
+            <Link href="/contact" className="font-medium text-slate-700 hover:text-slate-900">
+              Contact
             </Link>
-            <Link
-              href="/support"
-              style={{ backgroundColor: 'var(--brand-primary, #667eea)' }}
-              className="text-white px-6 py-2 rounded-lg font-semibold hover:opacity-90 transition-opacity"
-            >
-              💬 Contact Support
-            </Link>
+            <a href={`mailto:${SUPPORT_EMAIL}`} className="font-medium text-slate-700 hover:text-slate-900">
+              Email
+            </a>
           </div>
         </div>
-
-        {/* Footer */}
-        <div className="mt-8 text-center text-sm text-gray-500">
-          <p>Bookmark this page for easy access to your dashboard</p>
-          <p className="mt-2">
-            <Link href="/privacy" className="text-black hover:opacity-70">Privacy</Link> •{' '}
-            <Link href="/terms" className="text-black hover:opacity-70">Terms</Link> •{' '}
-            <a href={`mailto:${SUPPORT_EMAIL}`} className="text-black hover:opacity-70">{SUPPORT_EMAIL}</a>
-          </p>
-        </div>
-
       </div>
     </div>
   );
