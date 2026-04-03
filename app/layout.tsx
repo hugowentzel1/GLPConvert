@@ -17,7 +17,7 @@ import AppErrorBoundary from '@/components/AppErrorBoundary'
 import BrandProvider from '@/src/brand/BrandProvider'
 import BrandCSSInjector from '@/components/BrandCSSInjector'
 import BootProbe from './BootProbe'
-import SharedNavigation from '@/components/SharedNavigation'
+import ConditionalSharedNav from '@/components/ConditionalSharedNav'
 import { CompanyProvider } from '@/components/CompanyContext'
 import CookieConsent from '@/components/CookieConsent'
 import ConditionalDemoBanner from '@/components/ConditionalDemoBanner'
@@ -54,7 +54,7 @@ export default function RootLayout({
               <CookieOffsetProvider />
               {/* DemoRibbon removed */}
               <ConditionalDemoBanner />
-              <SharedNavigation />
+              <ConditionalSharedNav />
               {children}
             </CompanyProvider>
           </BrandProvider>

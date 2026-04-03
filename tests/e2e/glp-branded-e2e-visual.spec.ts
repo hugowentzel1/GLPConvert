@@ -26,13 +26,17 @@ test.use({
  * Intake funnel hydrates inside Suspense; the Continue button can paint before React binds onClick.
  * Retry until step 2 appears so E2E matches real user timing (avoids flaky first click).
  */
+/**
+ * Continue can paint before React binds onClick (Suspense/hydration). Retry click until step 2 appears;
+ * inner timeout must cover max `transition_ms` used in tests (e.g. 10s demo + building overlay).
+ */
 async function clickIntakeContinueUntilTransition(page: import("@playwright/test").Page) {
   const continueBtn = page.locator('[data-flow-step="1"]').getByRole("button", { name: /^continue$/i });
   await expect(continueBtn).toBeVisible({ timeout: 20000 });
   await expect(async () => {
     await continueBtn.click({ force: true });
-    await expect(page.locator('[data-flow-step="2"]')).toBeVisible({ timeout: 3000 });
-  }).toPass({ timeout: 25000 });
+    await expect(page.locator('[data-flow-step="2"]')).toBeVisible({ timeout: 15000 });
+  }).toPass({ timeout: 45000 });
 }
 
 async function mockTenantIntakeConfig(page: import("@playwright/test").Page) {
@@ -101,6 +105,7 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await expect(page.locator("[data-intake-demo-badge]")).toBeVisible({ timeout: 15000 });
     await expect(page.locator("[data-intake-trust]")).toBeVisible();
     await expect(page.locator("[data-intake-footer]")).toBeVisible();
+    await expect(page.locator('[data-testid="main-site-nav"]')).toHaveCount(0);
     await expect(page.locator('link[rel="stylesheet"]').first()).toBeAttached({ timeout: 20000 });
     expect(await page.locator('link[rel="stylesheet"]').count()).toBeGreaterThan(0);
     const kickerColor = await page
@@ -128,21 +133,22 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await expect(page.getByRole("heading", { name: /your glp path/i })).toBeVisible({ timeout: 20000 });
     await page.screenshot({ path: testInfo.outputPath("visual-A1-intake-input.png"), fullPage: true });
 
-    await clickIntakeContinueUntilTransition(page);
-
-    await expect(page.locator('[data-flow-step="2"]')).toBeVisible({ timeout: 5000 });
-    await expect(page.getByText(/Step 2 of 6/i)).toBeVisible();
+    const continueBtn = page.locator('[data-flow-step="1"]').getByRole("button", { name: /^continue$/i });
+    await expect(continueBtn).toBeVisible({ timeout: 20000 });
+    await expect(async () => {
+      await continueBtn.click({ force: true });
+      await expect(page.locator("[data-building-overlay]")).toBeVisible({ timeout: 10000 });
+    }).toPass({ timeout: 30000 });
     await page.screenshot({ path: testInfo.outputPath("visual-A2-building.png"), fullPage: true });
-
-    await expect(page.locator('[data-flow-step="3"]').getByRole("heading", { name: /your glp path/i })).toBeVisible({
-      timeout: 30000,
-    });
+    await expect(page.locator('[data-flow-step="2"]')).toBeVisible({ timeout: 35000 });
+    await expect(page.getByText(/Step 2 of 5/i)).toBeVisible();
+    await expect(page.locator('[data-flow-step="2"]').getByRole("heading", { name: /your glp path/i })).toBeVisible();
     await expect(page.getByText(/typical monthly range/i)).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("visual-A3-results.png"), fullPage: true });
 
-    await page.locator('[data-flow-step="3"]').getByRole("button", { name: /review my next step/i }).click();
+    await page.locator('[data-flow-step="2"]').getByRole("button", { name: /^next step$/i }).click();
 
-    await expect(page.getByRole("heading", { name: "Consult readiness", exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /almost there/i })).toBeVisible();
     await page.getByRole("button", { name: /yes, roughly/i }).click();
     await page.getByRole("button", { name: /soon \(weeks\)/i }).click();
     await page.getByRole("button", { name: /^yes$/i }).first().click();
@@ -215,28 +221,28 @@ test.describe("GLPConvert branded E2E (visual)", () => {
       encodeURIComponent("https://example.com/schedule");
     await page.goto(paidUrl, { waitUntil: "domcontentloaded" });
     await expect(page.locator('[data-intake-mode="paid"]')).toBeVisible({ timeout: 20000 });
-    await expect(page.getByText("Patient intake", { exact: true })).toBeVisible();
+    await expect(page.locator('[data-intake-clinic-bar="paid"]')).toBeVisible();
     await expect(
       page.locator('[data-flow-step="1"]').getByRole("heading", { name: /your glp path/i }),
     ).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("visual-C1-paid-intake-input.png"), fullPage: true });
 
     await clickIntakeContinueUntilTransition(page);
-    await expect(page.getByText(/Step 2 of 6/i)).toBeVisible({ timeout: 8000 });
-    await expect(page.locator('[data-flow-step="3"]').getByRole("heading", { name: /your glp path/i })).toBeVisible({
+    await expect(page.getByText(/Step 2 of 5/i)).toBeVisible({ timeout: 8000 });
+    await expect(page.locator('[data-flow-step="2"]').getByRole("heading", { name: /your glp path/i })).toBeVisible({
       timeout: 25000,
     });
     await page.screenshot({ path: testInfo.outputPath("visual-C2-paid-results.png"), fullPage: true });
     await expect(page.getByText(/typical monthly range/i)).toBeVisible();
     await expect(page.locator("[data-owner-demo-panels]")).toHaveCount(0);
 
-    await page.locator('[data-flow-step="3"]').getByRole("button", { name: /review my next step/i }).click();
-    await expect(page.getByRole("heading", { name: "Consult readiness", exact: true })).toBeVisible();
-    await page.locator('[data-flow-step="4"]').getByRole("button", { name: /yes, roughly/i }).click();
-    await page.locator('[data-flow-step="4"]').getByRole("button", { name: /soon \(weeks\)/i }).click();
-    await page.locator('[data-flow-step="4"]').getByRole("button", { name: /^yes$/i }).click();
+    await page.locator('[data-flow-step="2"]').getByRole("button", { name: /^next step$/i }).click();
+    await expect(page.getByRole("heading", { name: /almost there/i })).toBeVisible();
+    await page.locator('[data-flow-step="3"]').getByRole("button", { name: /yes, roughly/i }).click();
+    await page.locator('[data-flow-step="3"]').getByRole("button", { name: /soon \(weeks\)/i }).click();
+    await page.locator('[data-flow-step="3"]').getByRole("button", { name: /^yes$/i }).click();
 
-    await page.locator('[data-flow-step="4"]').getByRole("button", { name: /continue to save/i }).click();
+    await page.locator('[data-flow-step="3"]').getByRole("button", { name: /continue to save/i }).click();
     const stamp = Date.now();
     await page.getByLabel(/full name/i).fill(`Paid Patient ${stamp}`);
     await page.getByLabel(/^email$/i).fill(`paid.patient.${stamp}@example.com`);
@@ -256,12 +262,35 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await page.goto(url, { waitUntil: "domcontentloaded" });
     await expect(page.locator('[data-intake-mode="paid"]')).toBeVisible({ timeout: 20000 });
     await clickIntakeContinueUntilTransition(page);
-    await expect(page.locator('[data-flow-step="3"]')).toBeVisible({ timeout: 25000 });
-    await page.locator('[data-flow-step="3"]').getByRole("button", { name: /review my next step/i }).click();
-    await expect(page.locator('[data-flow-step="4"]')).toBeVisible();
-    await page.locator('[data-flow-step="4"]').getByRole("button", { name: /^previous$/i }).click();
-    await expect(page.locator('[data-flow-step="3"]').getByRole("heading", { name: /your glp path/i })).toBeVisible({
+    await expect(page.locator('[data-flow-step="2"]')).toBeVisible({ timeout: 25000 });
+    await page.locator('[data-flow-step="2"]').getByRole("button", { name: /^next step$/i }).click();
+    await expect(page.locator('[data-flow-step="3"]')).toBeVisible();
+    await page.locator('[data-flow-step="3"]').getByRole("button", { name: /^previous$/i }).click();
+    await expect(page.locator('[data-flow-step="2"]').getByRole("heading", { name: /your glp path/i })).toBeVisible({
       timeout: 10000,
     });
+  });
+
+  test("F — Intake: no global nav; mobile demo + paid screenshots", async ({ page }, testInfo) => {
+    await mockTenantIntakeConfig(page);
+    await page.goto("/intake?demo=1&handle=glpconvert&company=Mobile%20Demo&brand=166534&transition_ms=800", {
+      waitUntil: "domcontentloaded",
+    });
+    await expect(page.locator('[data-testid="main-site-nav"]')).toHaveCount(0);
+    await expect(page.locator('[data-intake-clinic-bar="demo"]')).toBeVisible({ timeout: 20000 });
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.screenshot({ path: testInfo.outputPath("visual-F1-demo-mobile.png"), fullPage: true });
+
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto(
+      "/intake?handle=glpconvert&company=Mobile%20Paid&transition_ms=800&booking=" +
+        encodeURIComponent("https://example.com/schedule"),
+      { waitUntil: "domcontentloaded" },
+    );
+    await expect(page.locator('[data-intake-clinic-bar="paid"]')).toBeVisible({ timeout: 20000 });
+    await expect(page.locator("[data-intake-demo-badge]")).toHaveCount(0);
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.screenshot({ path: testInfo.outputPath("visual-F2-paid-mobile.png"), fullPage: true });
   });
 });

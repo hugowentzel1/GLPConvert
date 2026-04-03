@@ -10,7 +10,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: `Intake — ${PRODUCT_NAME}`,
   description:
-    "White-label pre-consult path: clarity, expectations, and consult readiness before you share contact details.",
+    "Branded pre-consult path: clarity, typical ranges, then your scheduling link. General information only.",
 };
 
 function isDemoFromSearchParams(

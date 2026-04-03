@@ -12,15 +12,16 @@ export const glpIntakeUi = {
   cardPad: "p-8 md:p-10",
   cardPadSm: "p-6 md:p-8",
 
-  stackSection: "space-y-8",
-  /** Step 1: even rhythm between intro copy, field grid, actions (8pt grid) */
-  stackStepForm: "space-y-6",
+  /** Major sections inside one card (results, readiness) */
+  stackSection: "space-y-7",
+  /** Step 1: even rhythm between intro copy, field grid, actions */
+  stackStepForm: "space-y-5",
   stackMd: "space-y-6",
   stackSm: "space-y-5",
 
   grid2: "grid gap-5 md:grid-cols-2",
   /** Form fields: uniform 28px row rhythm (7 × 4px grid) */
-  grid2Form: "grid grid-cols-1 gap-y-6 gap-x-6 md:grid-cols-2 md:items-start md:gap-x-8",
+  grid2Form: "grid grid-cols-1 gap-y-5 gap-x-5 md:grid-cols-2 md:items-start md:gap-x-7 md:gap-y-5",
 
   kicker: "text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500",
   titleLg: "text-2xl font-bold tracking-tight text-slate-900 md:text-[1.75rem] md:leading-snug",
@@ -34,14 +35,14 @@ export const glpIntakeUi = {
   control:
     "min-h-[48px] w-full rounded-xl border border-slate-200/95 bg-white px-4 py-3 text-sm text-slate-900 shadow-[0_1px_2px_rgba(15,23,42,0.03)] transition placeholder:text-slate-400",
 
-  /** Wizard back — always visible affordance (NNG: users fear dead-ends) */
+  /** Wizard back — same min height as primary for aligned rows (WCAG touch target ≥44px) */
   backBtn:
-    "inline-flex w-full shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 min-h-[48px] sm:w-auto sm:min-w-[8.5rem]",
+    "inline-flex w-full shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white px-5 py-[0.875rem] text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 sm:w-[8.75rem] sm:min-w-[8.75rem] min-h-[52px]",
 
   primaryBtn:
-    "glp-intake-primary-btn inline-flex w-full items-center justify-center rounded-xl px-4 py-3.5 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.03] active:scale-[0.995] disabled:pointer-events-none disabled:opacity-45 disabled:hover:shadow-md min-h-[48px]",
+    "glp-intake-primary-btn inline-flex w-full items-center justify-center rounded-xl px-5 py-[0.875rem] text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.03] active:scale-[0.995] disabled:pointer-events-none disabled:opacity-45 disabled:hover:shadow-md min-h-[52px]",
   secondaryBtn:
-    "inline-flex w-full items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50/80 hover:shadow-md min-h-[48px]",
+    "inline-flex w-full items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-5 py-[0.875rem] text-sm font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50/80 hover:shadow-md min-h-[52px]",
 
   /** Primary + optional secondary stack; pair with back row */
   formActions: "flex min-w-0 flex-1 flex-col gap-3 sm:max-w-md sm:ml-auto sm:items-stretch",
@@ -49,10 +50,13 @@ export const glpIntakeUi = {
   formNavRow:
     "mt-8 flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
   /** Wizard actions after body copy — top rule separates from content */
-  formNavRowRule: "mt-8 flex flex-col gap-3 border-t border-slate-100 pt-8 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
+  formNavRowRule:
+    "mt-8 flex flex-col gap-3 border-t border-slate-100 pt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-4",
   chip: "rounded-full bg-slate-100 px-3.5 py-1 text-xs font-medium text-slate-700",
-  sectionRule: "border-t border-slate-100 pt-8 first:border-0 first:pt-0 first:mt-0 mt-8",
+  sectionRule: "border-t border-slate-100 pt-7 first:border-0 first:pt-0 first:mt-0 mt-7",
 
+  /** Readiness fieldsets — uniform 32px between questions */
+  readinessStack: "space-y-8",
   choiceRow: "flex flex-wrap gap-3",
   choiceBase:
     "rounded-xl border px-4 py-2.5 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15",

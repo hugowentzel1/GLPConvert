@@ -32,11 +32,19 @@ Engineering must not diverge demo and paid flows structurally—only demo overla
 
 | ID | Item | Status |
 |----|------|--------|
-| **R028** | Intake: demo banner “Preview for {clinic}”; paid “Secure intake · {clinic}”; results CTA **Review my next step**; optional **starts at** from tenant monthly low | **Done** |
+| **R028** | Intake: clinic bar + preview/paid parity; results CTA **Next step** → readiness; optional **starts at** from tenant monthly low | **Done** (superseded by **R040**) |
 | **R029** | Owner-only panels: conservative revenue-leak copy, before/after layout, activation CTAs | **Done** |
 | **R030** | **`app/legal/privacy`** + **`app/legal/terms`** — GLPConvert / white-label / HIPAA-ready posture (not legal advice) | **Done** — **HUMAN:** final counsel review **U024** |
 | **R031** | **`docs/ATTRIBUTION_PIXELS_GLPCONVERT.md`** + COMPLIANCE cross-link (UTM done; pixels behind consent) | **Done** |
 | **R032** | Playwright **`glp-branded-e2e-visual.spec.ts`** — paid patient **full** funnel (C) + buyer (B) + demo patient (A) | **Done** |
+
+### R-Apr-2026b — Demo-led conversion + white-label intake (no global nav on `/intake`)
+
+| ID | Item | Status |
+|----|------|--------|
+| **R040** | **`/intake`**: hide **`SharedNavigation`** (dedicated lander); slim trust line; footer holds vendor line + minimal legal; demo/paid shared **clinic bar** (`data-intake-clinic-bar`); hero copy sharpened; funnel copy + section order (trajectory → price); owner panels tightened; Playwright **F** (mobile + no nav) | **Done** — see **`DEMO_REDESIGN_PASS.md`** |
+| **R041** | **HUMAN:** Counsel pass on shortened footer disclaimer; confirm FDA-safe wording on funnel | Open |
+| **R042** | Dashboard `/c/*` simplification (metrics clutter) if still noisy | Backlog |
 
 ### R-Apr-2026 — Site-wide GLP copy, trust data, intake visual rhythm (AUTO)
 
