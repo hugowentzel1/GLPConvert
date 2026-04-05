@@ -35,7 +35,7 @@ function IntakePageFrameInner({
 
   return (
     <main
-      className="min-h-screen px-4 py-8 sm:px-6 md:px-8 md:py-10"
+      className={`min-h-screen px-4 pb-8 sm:px-6 md:px-8 md:pb-10 ${demo ? "pt-1 sm:pt-2" : "py-8 md:py-10"}`}
       style={backgroundStyle}
       data-intake-mode={demo ? "demo" : "paid"}
     >

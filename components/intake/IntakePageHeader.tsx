@@ -4,6 +4,7 @@ import { Suspense, useMemo, useState, useCallback } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
+import { isIntakeDemoMode } from "@/lib/glp-intake-demo-mode";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
 
 const DEFAULT_DEMO_ACCENT = "#0f172a";
@@ -25,13 +26,6 @@ function useMarketingHover(reduceMotion: boolean) {
       transition: { type: "spring" as const, stiffness: 480, damping: 32 },
     },
   } as const;
-}
-
-function isIntakeDemoMode(sp: URLSearchParams | null): boolean {
-  if (!sp) return false;
-  return (
-    sp.get("demo") === "1" || sp.get("preview") === "1" || sp.get("mode") === "demo"
-  );
 }
 
 function safeCompanyLabel(raw: string | null): string {
@@ -119,23 +113,36 @@ function DemoHeaderActions({
       </span>
       <motion.a
         href={`/pricing?company=${encodeURIComponent(companyLabel)}`}
-        className="flex min-h-[52px] w-full flex-col items-center justify-center gap-1 rounded-full px-5 py-3.5 text-center text-white shadow-md outline-none ring-offset-2 ring-offset-white transition-shadow duration-200 hover:shadow-xl focus-visible:ring-2 focus-visible:ring-slate-900/25"
+        className={`${glpIntakeUi.primaryBtn} relative w-full !rounded-full !shadow-md ring-offset-white`}
         style={{ backgroundColor: accent }}
         data-demo-activate-intake
+        data-intake-hero-activate
         aria-label={`Activate GLPConvert for ${companyLabel}`}
         {...hover.primary}
       >
-        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/90">Activate</span>
-        <span className="line-clamp-2 max-w-[16rem] text-sm font-semibold leading-snug">{companyLabel}</span>
+        <span className="relative z-10 flex w-full flex-col items-center justify-center gap-1 px-2 py-1 text-center">
+          <span className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-white/95">
+            <span className="text-base leading-none" aria-hidden>
+              ⚡
+            </span>
+            Activate
+          </span>
+          <span className="line-clamp-2 max-w-[16rem] text-sm font-semibold leading-snug tracking-tight">
+            {companyLabel}
+          </span>
+        </span>
       </motion.a>
 
       <motion.button
         type="button"
         onClick={() => void onCopy()}
-        className="inline-flex min-h-[48px] w-full items-center justify-center rounded-full border border-slate-200/95 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-shadow duration-200 hover:border-slate-300 hover:shadow-md"
+        className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full border border-slate-200/95 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-shadow duration-200 hover:border-slate-300 hover:shadow-md"
         data-demo-copy-link
         {...hover.secondary}
       >
+        <span className="text-base leading-none" aria-hidden>
+          ⚡
+        </span>
         {copied ? "Copied" : "Copy link to this preview"}
       </motion.button>
     </div>
@@ -161,12 +168,14 @@ function IntakePageHeaderInner() {
   return (
     <div className="w-full">
       {demo ? (
-        <p
-          className="mb-4 text-center text-[11px] leading-relaxed text-slate-500 sm:mb-5 sm:text-xs"
+        <div
+          className="-mx-4 mb-5 border-y border-slate-200/90 bg-slate-50/60 px-4 py-2.5 text-center sm:-mx-6 sm:px-6 md:-mx-8 md:px-8"
           data-intake-private-demo-disclaimer
         >
-          Private demo for <span className="font-medium text-slate-600">{companyLabel}</span>. Not affiliated.
-        </p>
+          <p className="text-[11px] leading-relaxed text-slate-600 sm:text-xs">
+            Private demo for <span className="font-medium text-slate-800">{companyLabel}</span>. Not affiliated.
+          </p>
+        </div>
       ) : null}
 
       <motion.div
@@ -176,38 +185,47 @@ function IntakePageHeaderInner() {
         data-intake-hero
         {...heroMotion}
       >
-        <div className="relative mx-auto flex min-h-0 max-w-[min(100%,26rem)] flex-col items-center justify-center">
-          <div className="mb-4 flex justify-center sm:mb-5">
-            <BrandMark logoUrl={logoUrl} companyLabel={companyLabel} accent={accent} size="lg" />
-          </div>
-
-          <p className="text-pretty text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">{companyLabel}</p>
-          <p className="mt-2 max-w-md text-sm leading-relaxed text-slate-500 sm:mt-3 sm:text-[15px]">
-            {demo ? "Branded patient preview — embed on your site or ad funnel" : "Your next step before the consult"}
-          </p>
-
+        <div className="relative mx-auto w-full max-w-[min(100%,36rem)]">
           {demo ? (
             <>
-              <div className="mt-6 w-full sm:mt-7">
+              <div className="flex flex-col items-center gap-3 text-center sm:gap-3.5">
+                <BrandMark logoUrl={logoUrl} companyLabel={companyLabel} accent={accent} size="md" />
+                <p className="text-pretty text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">{companyLabel}</p>
+              </div>
+
+              <p className="mx-auto mt-5 max-w-md text-pretty text-sm leading-relaxed text-slate-500 sm:mt-6 sm:text-[15px]">
+                Branded patient preview — embed on your site or ad funnel
+              </p>
+              <div className="mt-5 flex w-full justify-center sm:mt-6">
                 <DemoHeaderActions companyLabel={companyLabel} accent={accent} reduceMotion={reduceMotion} />
               </div>
-              <div className="mt-7 w-full border-t border-slate-100 pt-7 sm:mt-8 sm:pt-8">
+
+              <div className="mt-6 w-full border-t border-slate-100 pt-6 text-center sm:mt-7 sm:pt-7">
                 <h1 className="text-pretty text-[1.35rem] font-bold leading-snug tracking-tight text-slate-900 sm:text-2xl">
                   The patient-facing path, under your brand
                 </h1>
-                <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 sm:mt-4">
+                <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 sm:mt-3.5">
                   Clarity on timing, typical ranges, and next steps — then your scheduling link.
                 </p>
               </div>
             </>
           ) : (
-            <div className="mt-7 w-full sm:mt-8">
-              <h1 className="text-pretty text-[1.35rem] font-bold leading-snug tracking-tight text-slate-900 sm:text-2xl">
-                Before you book
-              </h1>
-              <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 sm:mt-4">
-                See what to expect, typical ranges, and a clear next step — general information only.
+            <div className="flex flex-col items-center text-center">
+              <div className="mb-4 flex justify-center sm:mb-5">
+                <BrandMark logoUrl={logoUrl} companyLabel={companyLabel} accent={accent} size="lg" />
+              </div>
+              <p className="text-pretty text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">{companyLabel}</p>
+              <p className="mt-2 max-w-md text-sm leading-relaxed text-slate-500 sm:mt-3 sm:text-[15px]">
+                Your next step before the consult
               </p>
+              <div className="mt-7 w-full sm:mt-8">
+                <h1 className="text-pretty text-[1.35rem] font-bold leading-snug tracking-tight text-slate-900 sm:text-2xl">
+                  Before you book
+                </h1>
+                <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 sm:mt-4">
+                  See what to expect, typical ranges, and a clear next step — general information only.
+                </p>
+              </div>
             </div>
           )}
         </div>

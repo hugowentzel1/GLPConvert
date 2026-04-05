@@ -753,7 +753,7 @@ export default function GlpSimulationFunnel() {
         >
           <div
             data-results-trust-strip
-            className="flex flex-col items-center gap-3 rounded-xl border border-slate-200/90 bg-slate-50/60 px-4 py-3 text-center shadow-sm sm:flex-row sm:justify-center sm:gap-4 sm:py-3.5"
+            className="flex flex-col items-center gap-3.5 rounded-xl border border-slate-200/90 bg-slate-50/60 px-5 py-4 text-center shadow-sm sm:flex-row sm:justify-center sm:gap-5 sm:py-4"
           >
             {effectiveLogo ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -788,10 +788,10 @@ export default function GlpSimulationFunnel() {
               className="absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-slate-300/70 to-transparent"
               aria-hidden
             />
-            <div className="relative px-5 py-5 sm:px-7 sm:py-6">
+            <div className="relative px-5 py-6 sm:px-8 sm:py-7">
               <p className={glpIntakeUi.kicker}>{company}</p>
-              <h2 className={`${glpIntakeUi.titleLg} mt-2 md:text-[1.65rem]`}>Your path preview</h2>
-              <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 sm:mx-0 md:text-[15px]">
+              <h2 className={`${glpIntakeUi.titleLg} mt-2.5 md:text-[1.65rem]`}>Your path preview</h2>
+              <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:mx-0 md:text-[15px] md:leading-relaxed">
                 What many people review before a visit — not a diagnosis, guarantee, or medical advice.
               </p>
             </div>
@@ -806,36 +806,41 @@ export default function GlpSimulationFunnel() {
           ) : null}
 
           <div
-            className="grid w-full gap-4 md:grid-cols-3 md:gap-5"
+            className="grid w-full gap-5 md:grid-cols-3 md:gap-6"
             data-results-summary
           >
-            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 shadow-[0_2px_12px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.03] md:p-6">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">Expected path</p>
-              <p className="mt-2 text-sm font-medium leading-snug text-slate-900">{output.pathLabel}</p>
+            <div className="flex flex-col rounded-2xl border border-slate-200/90 bg-white/95 p-6 shadow-[0_2px_12px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.03]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">Expected path</p>
+              <p className="mt-2 text-lg font-semibold leading-snug text-slate-900">{output.pathLabel}</p>
+              <p className="mt-2 text-xs leading-relaxed text-slate-500 sm:min-h-[2.5rem]">
+                Framing only — your provider sets the plan.
+              </p>
             </div>
-            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 shadow-[0_2px_12px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.03]">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">Illustrative timeline</p>
-              <p className="mt-2 text-2xl font-bold tabular-nums text-slate-900">{output.weeksToGoal}</p>
-              <p className="text-xs text-slate-500">weeks discussed · individual results vary</p>
+            <div className="flex flex-col rounded-2xl border border-slate-200/90 bg-white/95 p-6 shadow-[0_2px_12px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.03]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">Illustrative timeline</p>
+              <p className="mt-2 text-lg font-semibold tabular-nums leading-snug text-slate-900">{output.weeksToGoal}</p>
+              <p className="mt-2 text-xs leading-relaxed text-slate-500 sm:min-h-[2.5rem]">
+                weeks discussed · individual results vary
+              </p>
             </div>
-            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 shadow-[0_2px_12px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.03]">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">Monthly cost band</p>
-              <p className="mt-2 text-xl font-semibold tabular-nums text-slate-900">
+            <div className="flex flex-col rounded-2xl border border-slate-200/90 bg-white/95 p-6 shadow-[0_2px_12px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.03]">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">Monthly cost band</p>
+              <p className="mt-2 text-lg font-semibold tabular-nums leading-snug text-slate-900">
                 ${output.monthlyCostLow}–${output.monthlyCostHigh}
                 <span className="text-sm font-normal text-slate-500"> /mo</span>
               </p>
-              <p className="text-xs text-slate-500">Educational — not a quote</p>
+              <p className="mt-2 text-xs leading-relaxed text-slate-500 sm:min-h-[2.5rem]">Educational — not a quote</p>
             </div>
           </div>
 
           <div className={glpIntakeUi.resultsSectionRule} data-results-path>
             <p className={`${glpIntakeUi.kicker} mb-2`}>Path</p>
-            <h3 className={`${glpIntakeUi.titleMd} mb-5`}>What usually happens next</h3>
-            <div className="grid gap-5 md:grid-cols-3 md:gap-6">
+            <h3 className={`${glpIntakeUi.titleMd} mb-6`}>What usually happens next</h3>
+            <div className="grid gap-6 md:grid-cols-3 md:gap-7">
               {output.phasePlan.map((p, idx) => (
                 <div
                   key={p.phase}
-                  className={`flex flex-col rounded-2xl border border-slate-200/90 bg-white/90 p-5 shadow-[0_2px_8px_rgba(15,23,42,0.04)] ring-1 ring-slate-900/[0.03] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)] ${
+                  className={`flex flex-col rounded-2xl border border-slate-200/90 bg-white/90 p-6 shadow-[0_2px_8px_rgba(15,23,42,0.04)] ring-1 ring-slate-900/[0.03] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)] ${
                     idx === 1 ? "ring-1 ring-slate-900/[0.07] md:scale-[1.02]" : ""
                   }`}
                 >
@@ -849,8 +854,8 @@ export default function GlpSimulationFunnel() {
 
           <div className={glpIntakeUi.resultsSectionRule} data-results-expectations>
             <p className={`${glpIntakeUi.kicker} mb-2`}>Expectations</p>
-            <h3 className={`${glpIntakeUi.titleMd} mb-5`}>What many people notice</h3>
-            <div className="grid gap-5 md:grid-cols-3 md:gap-6">
+            <h3 className={`${glpIntakeUi.titleMd} mb-6`}>What many people notice</h3>
+            <div className="grid gap-6 md:grid-cols-3 md:gap-7">
               {(
                 [
                   {
@@ -869,7 +874,7 @@ export default function GlpSimulationFunnel() {
               ).map(({ t, d }) => (
                 <div
                   key={t}
-                  className="rounded-2xl border border-slate-200/90 bg-white p-4 shadow-[0_1px_3px_rgba(15,23,42,0.04)]"
+                  className="rounded-2xl border border-slate-200/90 bg-white p-5 shadow-[0_1px_3px_rgba(15,23,42,0.04)] sm:p-6"
                 >
                   <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{t}</p>
                   <p className="mt-2 text-sm leading-relaxed text-slate-700">{d}</p>

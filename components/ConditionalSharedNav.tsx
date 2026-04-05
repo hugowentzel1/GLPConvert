@@ -1,6 +1,8 @@
 'use client';
 
+import { Suspense } from 'react';
 import { usePathname } from 'next/navigation';
+import IntakeDemoSiteHeader from '@/components/intake/IntakeDemoSiteHeader';
 import SharedNavigation from './SharedNavigation';
 
 /**
@@ -13,8 +15,14 @@ export default function ConditionalSharedNav() {
   // No nav on status (unbranded), report, demo-result, or customer dashboard. Require pathname so we never flash nav on /status.
   if (!pathname || pathname === '/status') return null;
   if (pathname === '/report' || pathname === '/demo-result') return null;
-  // Dedicated intake: clinic-branded landing (no Pricing / Partners / site chrome)
-  if (pathname === '/intake') return null;
+  // Dedicated intake: slim site header (logo + optional demo activate) — not full SharedNavigation
+  if (pathname === '/intake') {
+    return (
+      <Suspense fallback={null}>
+        <IntakeDemoSiteHeader />
+      </Suspense>
+    );
+  }
   // Post-pay activation/dashboard: no main site header (Activate, Pricing, Support, etc.)
   if (pathname === '/c' || pathname?.startsWith('/c/')) return null;
   return <SharedNavigation />;

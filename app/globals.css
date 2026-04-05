@@ -76,6 +76,35 @@ button.glp-intake-primary-btn:hover:not(:disabled)::before {
   left: 100%;
 }
 
+/* Intake hero / nav: anchor CTAs use the same sweep + optional glimmer */
+a.glp-intake-primary-btn,
+a.intake-nav-activate {
+  position: relative;
+  overflow: hidden;
+}
+a.glp-intake-primary-btn::before,
+a.intake-nav-activate::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.22),
+    transparent
+  );
+  transition: left 0.55s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+a.glp-intake-primary-btn:hover::before,
+a.intake-nav-activate:hover::before {
+  left: 100%;
+}
+
 /* Fast Check: Disable transitions/animations for stability */
 [data-testid="footer"] * { 
   transition: none !important; 

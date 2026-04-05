@@ -63,18 +63,18 @@ export default function GlpJourneyProgressChart({
       />
 
       {!compact ? (
-        <div className="mb-5 space-y-2 px-1 text-center sm:mb-6 sm:px-2">
+        <div className="mb-6 space-y-2.5 px-2 text-center sm:mb-7 sm:px-3">
           <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
             Momentum snapshot (illustrative)
           </p>
           <p className="text-base font-semibold leading-snug text-slate-900 sm:text-lg">
             How progress toward your stated goal can build over time
           </p>
-          <p className="mx-auto max-w-lg text-xs leading-relaxed text-slate-500 sm:text-sm">
-            Each point is a modeled checkpoint — not a promise. The curve shows share of your goal reached (vertical)
-            across months from start (horizontal). Your provider sets the real pace.
+          <p className="mx-auto max-w-lg text-xs leading-relaxed text-slate-500 sm:text-sm sm:leading-relaxed">
+            Each point is a modeled checkpoint — not a promise. Vertical axis: share of your goal; horizontal: months
+            from start. Your provider sets the real pace.
           </p>
-          <div className="mx-auto mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[11px] text-slate-600">
+          <div className="mx-auto mt-4 flex max-w-md flex-col items-center gap-2.5 text-[11px] leading-relaxed text-slate-600 sm:mt-5 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-6 sm:gap-y-2">
             <span className="inline-flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-slate-300" aria-hidden />
               Start · {first?.label ?? "Month 0"}
@@ -90,7 +90,7 @@ export default function GlpJourneyProgressChart({
           </div>
         </div>
       ) : null}
-      <div className={compact ? "h-[200px] w-full sm:h-[220px]" : "h-[260px] w-full sm:h-[280px]"}>
+      <div className={compact ? "h-[200px] w-full sm:h-[220px]" : "h-[240px] w-full sm:h-[260px]"}>
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={points} margin={{ top: 8, right: 8, left: 0, bottom: 8 }}>
             <defs>

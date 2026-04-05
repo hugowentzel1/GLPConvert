@@ -43,8 +43,8 @@ export const glpIntakeUi = {
   cardPadSm: "p-6 md:p-7",
   cardPadLoose: "p-7 sm:p-9 md:p-10 lg:p-12",
 
-  /** Marketing header: generous inset like hero CTAs (reference: centered demo cards) */
-  intakeHeaderPad: "px-6 py-8 sm:px-10 sm:py-10 md:px-12 md:py-11",
+  /** Marketing header: balanced inset (tighter than before to reduce dead space in demo hero) */
+  intakeHeaderPad: "px-5 py-6 sm:px-8 sm:py-8 md:px-10 md:py-9",
 
   stackSection: "space-y-9 md:space-y-10",
   /** 32px between intro, field clusters, footer — less cramped than 24px-only stacks */
@@ -82,10 +82,10 @@ export const glpIntakeUi = {
   secondaryBtn:
     "inline-flex w-full min-w-0 flex-1 items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-5 py-[0.875rem] text-sm font-semibold text-slate-800 shadow-sm transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:border-slate-300 hover:bg-slate-50/80 hover:shadow-md active:scale-[0.99] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15 focus-visible:ring-offset-2 min-h-[52px] sm:max-w-md sm:min-w-[10rem]",
 
-  /** Step 2 results: extra air between dense blocks (chart, grids, sections) */
-  resultsStack: "space-y-10 md:space-y-12",
+  /** Step 2 results: generous vertical rhythm (M3-style section spacing) */
+  resultsStack: "space-y-12 md:space-y-14",
   resultsSectionRule:
-    "border-t border-slate-100 pt-10 mt-10 first:mt-0 first:border-0 first:pt-0 md:pt-11 md:mt-11",
+    "border-t border-slate-100 pt-11 mt-11 first:mt-0 first:border-0 first:pt-0 md:pt-12 md:mt-12",
 
   formActions: "flex w-full min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-end sm:gap-3",
   formNavRow: "mt-8 flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
