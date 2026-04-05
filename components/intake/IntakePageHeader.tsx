@@ -8,7 +8,7 @@ import { glpIntakeUi } from "@/lib/glp-intake-ui";
 
 const DEFAULT_DEMO_ACCENT = "#0f172a";
 
-/** Primary CTA hover: subtle lift + scale (Apple HIG “playful” feedback; respects reduced motion). */
+/** Primary CTA hover: subtle lift + scale (Framer); respects reduced motion. */
 function useMarketingHover(reduceMotion: boolean) {
   if (reduceMotion) {
     return { primary: {}, secondary: {} } as const;
@@ -113,11 +113,10 @@ function DemoHeaderActions({
   const hover = useMarketingHover(reduceMotion);
 
   return (
-    <div className="mx-auto w-full max-w-sm space-y-4">
+    <div className="mx-auto w-full max-w-sm space-y-3">
       <span className="sr-only" aria-live="polite">
         {copied ? "Demo link copied to clipboard" : ""}
       </span>
-      {/* Centered stacked label + clinic (no horizontal “activate | name” split — matches hero CTA patterns) */}
       <motion.a
         href={`/pricing?company=${encodeURIComponent(companyLabel)}`}
         className="flex min-h-[52px] w-full flex-col items-center justify-center gap-1 rounded-full px-5 py-3.5 text-center text-white shadow-md outline-none ring-offset-2 ring-offset-white transition-shadow duration-200 hover:shadow-xl focus-visible:ring-2 focus-visible:ring-slate-900/25"
@@ -130,29 +129,15 @@ function DemoHeaderActions({
         <span className="line-clamp-2 max-w-[16rem] text-sm font-semibold leading-snug">{companyLabel}</span>
       </motion.a>
 
-      <div className="grid grid-cols-2 gap-3">
-        <motion.button
-          type="button"
-          onClick={() => void onCopy()}
-          className="inline-flex min-h-[46px] w-full min-w-0 items-center justify-center rounded-full border border-slate-200/95 bg-white px-2 py-2.5 text-center text-[11px] font-semibold leading-snug text-slate-700 shadow-sm transition-shadow duration-200 hover:border-slate-300 hover:shadow-md sm:text-xs"
-          data-demo-copy-link
-          {...hover.secondary}
-        >
-          {copied ? "Copied" : "Copy link to this preview"}
-        </motion.button>
-        <motion.div
-          className="inline-flex min-h-[46px] w-full min-w-0 items-center justify-center rounded-full border px-2 py-2.5 text-center text-[10px] font-bold uppercase leading-tight tracking-[0.1em] shadow-sm transition-shadow duration-200 hover:shadow-md"
-          style={{
-            borderColor: `${accent}44`,
-            color: accent,
-            backgroundColor: `${accent}0f`,
-          }}
-          data-intake-demo-badge
-          {...hover.secondary}
-        >
-          Demo preview
-        </motion.div>
-      </div>
+      <motion.button
+        type="button"
+        onClick={() => void onCopy()}
+        className="inline-flex min-h-[48px] w-full items-center justify-center rounded-full border border-slate-200/95 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-shadow duration-200 hover:border-slate-300 hover:shadow-md"
+        data-demo-copy-link
+        {...hover.secondary}
+      >
+        {copied ? "Copied" : "Copy link to this preview"}
+      </motion.button>
     </div>
   );
 }
@@ -175,6 +160,15 @@ function IntakePageHeaderInner() {
 
   return (
     <div className="w-full">
+      {demo ? (
+        <p
+          className="mb-4 text-center text-[11px] leading-relaxed text-slate-500 sm:mb-5 sm:text-xs"
+          data-intake-private-demo-disclaimer
+        >
+          Private demo for <span className="font-medium text-slate-600">{companyLabel}</span>. Not affiliated.
+        </p>
+      ) : null}
+
       <motion.div
         className={`relative overflow-hidden rounded-[1.75rem] border border-slate-200/90 bg-white text-center shadow-[0_4px_24px_-4px_rgba(15,23,42,0.08),0_12px_40px_-12px_rgba(15,23,42,0.1)] ring-1 ring-slate-900/[0.04] ${glpIntakeUi.intakeHeaderPad}`}
         data-intake-clinic-bar={demo ? "demo" : "paid"}
@@ -182,36 +176,36 @@ function IntakePageHeaderInner() {
         data-intake-hero
         {...heroMotion}
       >
-        <div className="relative mx-auto flex max-w-[min(100%,26rem)] flex-col items-center">
-          <div className="mb-5 flex justify-center sm:mb-6">
+        <div className="relative mx-auto flex min-h-0 max-w-[min(100%,26rem)] flex-col items-center justify-center">
+          <div className="mb-4 flex justify-center sm:mb-5">
             <BrandMark logoUrl={logoUrl} companyLabel={companyLabel} accent={accent} size="lg" />
           </div>
 
           <p className="text-pretty text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">{companyLabel}</p>
-          <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-500 sm:text-[15px]">
+          <p className="mt-2 max-w-md text-sm leading-relaxed text-slate-500 sm:mt-3 sm:text-[15px]">
             {demo ? "Branded patient preview — embed on your site or ad funnel" : "Your next step before the consult"}
           </p>
 
           {demo ? (
             <>
-              <div className="mt-8 w-full sm:mt-9">
+              <div className="mt-6 w-full sm:mt-7">
                 <DemoHeaderActions companyLabel={companyLabel} accent={accent} reduceMotion={reduceMotion} />
               </div>
-              <div className="mt-8 w-full border-t border-slate-100 pt-8 sm:mt-9 sm:pt-9">
+              <div className="mt-7 w-full border-t border-slate-100 pt-7 sm:mt-8 sm:pt-8">
                 <h1 className="text-pretty text-[1.35rem] font-bold leading-snug tracking-tight text-slate-900 sm:text-2xl">
                   The patient-facing path, under your brand
                 </h1>
-                <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-slate-600">
+                <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 sm:mt-4">
                   Clarity on timing, typical ranges, and next steps — then your scheduling link.
                 </p>
               </div>
             </>
           ) : (
-            <div className="mt-8 w-full sm:mt-9">
+            <div className="mt-7 w-full sm:mt-8">
               <h1 className="text-pretty text-[1.35rem] font-bold leading-snug tracking-tight text-slate-900 sm:text-2xl">
                 Before you book
               </h1>
-              <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-slate-600">
+              <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 sm:mt-4">
                 See what to expect, typical ranges, and a clear next step — general information only.
               </p>
             </div>

@@ -102,7 +102,8 @@ test.describe("GLPConvert branded E2E (visual)", () => {
       }
     }
 
-    await expect(page.locator("[data-intake-demo-badge]")).toBeVisible({ timeout: 15000 });
+    await expect(page.locator("[data-intake-private-demo-disclaimer]")).toBeVisible({ timeout: 15000 });
+    await expect(page.locator("[data-intake-private-demo-disclaimer]")).toContainText(/Private demo for/i);
     await expect(page.locator("[data-intake-trust]")).toBeVisible();
     await expect(page.locator("[data-intake-footer]")).toBeVisible();
     await expect(page.locator('[data-testid="main-site-nav"]')).toHaveCount(0);

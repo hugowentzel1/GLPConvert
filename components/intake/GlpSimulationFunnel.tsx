@@ -748,24 +748,24 @@ export default function GlpSimulationFunnel() {
       {step === 2 && (
         <motion.section
           data-flow-step="2"
-          className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} ${glpIntakeUi.stackSection}`}
+          className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} ${glpIntakeUi.resultsStack}`}
           {...stepMotion}
         >
           <div
             data-results-trust-strip
-            className="flex flex-wrap items-center gap-4 rounded-2xl border border-slate-200/90 bg-slate-50/70 px-5 py-4 shadow-[0_1px_3px_rgba(15,23,42,0.04)] ring-1 ring-slate-900/[0.03] sm:gap-5 sm:px-6 sm:py-4"
+            className="flex flex-col items-center gap-3 rounded-xl border border-slate-200/90 bg-slate-50/60 px-4 py-3 text-center shadow-sm sm:flex-row sm:justify-center sm:gap-4 sm:py-3.5"
           >
             {effectiveLogo ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={effectiveLogo}
                 alt=""
-                className="h-8 w-auto max-w-[120px] object-contain sm:h-9 sm:max-w-[150px]"
+                className="h-7 w-auto max-w-[100px] shrink-0 object-contain sm:h-8 sm:max-w-[120px]"
                 loading="lazy"
               />
             ) : (
               <div
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-xs font-bold text-white shadow-sm"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-[11px] font-bold text-white shadow-sm"
                 style={{ backgroundColor: brandFill }}
                 aria-hidden
               >
@@ -778,20 +778,20 @@ export default function GlpSimulationFunnel() {
                   .toUpperCase() || "?"}
               </div>
             )}
-            <p className="min-w-0 flex-1 text-[11px] leading-snug text-slate-500">
+            <p className="max-w-xl text-xs leading-relaxed text-slate-500 sm:text-left sm:text-[13px]">
               {trustChips.join(" · ")}
             </p>
           </div>
 
-          <header className={`${glpIntakeUi.panelInCard} text-left`}>
+          <header className={`${glpIntakeUi.panelInCard} text-center sm:text-left`}>
             <div
               className="absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-slate-300/70 to-transparent"
               aria-hidden
             />
-            <div className="relative px-5 py-6 sm:px-8 sm:py-8">
+            <div className="relative px-5 py-5 sm:px-7 sm:py-6">
               <p className={glpIntakeUi.kicker}>{company}</p>
-              <h2 className={glpIntakeUi.titleResults}>Your path preview</h2>
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 md:text-[15px]">
+              <h2 className={`${glpIntakeUi.titleLg} mt-2 md:text-[1.65rem]`}>Your path preview</h2>
+              <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 sm:mx-0 md:text-[15px]">
                 What many people review before a visit — not a diagnosis, guarantee, or medical advice.
               </p>
             </div>
@@ -806,7 +806,7 @@ export default function GlpSimulationFunnel() {
           ) : null}
 
           <div
-            className="mt-2 grid w-full gap-4 md:grid-cols-3 md:gap-5"
+            className="grid w-full gap-4 md:grid-cols-3 md:gap-5"
             data-results-summary
           >
             <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 shadow-[0_2px_12px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.03] md:p-6">
@@ -828,10 +828,10 @@ export default function GlpSimulationFunnel() {
             </div>
           </div>
 
-          <div className={glpIntakeUi.sectionRule} data-results-path>
+          <div className={glpIntakeUi.resultsSectionRule} data-results-path>
             <p className={`${glpIntakeUi.kicker} mb-2`}>Path</p>
-            <h3 className={`${glpIntakeUi.titleMd} mb-4`}>What usually happens next</h3>
-            <div className="grid gap-4 md:grid-cols-3">
+            <h3 className={`${glpIntakeUi.titleMd} mb-5`}>What usually happens next</h3>
+            <div className="grid gap-5 md:grid-cols-3 md:gap-6">
               {output.phasePlan.map((p, idx) => (
                 <div
                   key={p.phase}
@@ -847,10 +847,10 @@ export default function GlpSimulationFunnel() {
             </div>
           </div>
 
-          <div className={glpIntakeUi.sectionRule} data-results-expectations>
+          <div className={glpIntakeUi.resultsSectionRule} data-results-expectations>
             <p className={`${glpIntakeUi.kicker} mb-2`}>Expectations</p>
-            <h3 className={`${glpIntakeUi.titleMd} mb-4`}>What many people notice</h3>
-            <div className="grid gap-4 md:grid-cols-3">
+            <h3 className={`${glpIntakeUi.titleMd} mb-5`}>What many people notice</h3>
+            <div className="grid gap-5 md:grid-cols-3 md:gap-6">
               {(
                 [
                   {
@@ -878,9 +878,9 @@ export default function GlpSimulationFunnel() {
             </div>
           </div>
 
-          <div className={glpIntakeUi.sectionRule} data-results-pricing>
+          <div className={glpIntakeUi.resultsSectionRule} data-results-pricing>
             <p className={`${glpIntakeUi.kicker} mb-2`}>Investment</p>
-            <h3 className={`${glpIntakeUi.titleMd} mb-4`}>Price clarity</h3>
+            <h3 className={`${glpIntakeUi.titleMd} mb-5`}>Price clarity</h3>
             <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-br from-white via-slate-50/90 to-slate-100/50 p-6 shadow-inner ring-1 ring-slate-900/[0.04] md:p-7">
               <div
                 className="pointer-events-none absolute -right-8 top-0 h-28 w-28 rounded-full opacity-[0.08] blur-2xl"

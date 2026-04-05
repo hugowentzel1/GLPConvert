@@ -36,6 +36,9 @@ export default function ConditionalDemoBanner() {
   // Customer dashboard / activation (post-pay): no "Activate on your domain" etc.
   if (pathname === '/c' || pathname?.startsWith('/c/')) return null;
 
+  // GLP intake uses its own demo disclaimer + header (avoid duplicate chrome)
+  if (pathname === '/intake' || pathname?.startsWith('/intake/')) return null;
+
   // Don't show banner on legal/regulatory pages
   if (noBannerPages.some(page => pathname?.startsWith(page))) {
     return null;
