@@ -62,42 +62,23 @@ export default function IntakeDemoSiteHeader() {
       data-intake-site-header
     >
       {demo && b.enabled ? (
-        <div
-          className="border-b border-[#e5e7eb]"
-          style={{
-            background: "linear-gradient(180deg, #ffffff 0%, #fafbfc 100%)",
-            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
-          }}
-        >
-          <div
-            className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-5 py-3.5"
-            style={{ gap: 16 }}
-          >
-            <div className="flex min-w-0 flex-1 flex-wrap items-center gap-3" style={{ gap: 12 }}>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                  padding: "8px 14px",
-                  background: `color-mix(in srgb, ${accent} 8%, white)`,
-                  borderRadius: 8,
-                  border: `1px solid color-mix(in srgb, ${accent} 20%, white)`,
-                }}
-              >
-                <strong
-                  className="min-w-0 truncate text-[15px] font-semibold leading-snug tabular-nums"
-                  style={{ color: accent }}
-                >
-                  Exclusive preview for {b.brand} — expires in {countdown.days}d{" "}
-                  {countdown.hours.toString().padStart(2, "0")}:{countdown.minutes.toString().padStart(2, "0")}:
-                  {countdown.seconds.toString().padStart(2, "0")}
-                </strong>
-              </div>
-              <span className="whitespace-nowrap text-[15px] font-medium text-[#6B7280]">
-                {remaining} {remaining === 1 ? "run" : "runs"} left
+        <div className="border-b border-slate-100 bg-slate-50/90">
+          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-2 px-4 py-2 sm:justify-between">
+            <span
+              className="inline-flex max-w-full items-center rounded-full border px-3 py-1 text-xs font-semibold text-slate-700"
+              style={{
+                borderColor: `${accent}33`,
+                backgroundColor: `${accent}0f`,
+              }}
+            >
+              <span className="truncate">
+                Exclusive preview for {b.brand} — expires in {countdown.days}d {countdown.hours.toString().padStart(2, "0")}:
+                {countdown.minutes.toString().padStart(2, "0")}:{countdown.seconds.toString().padStart(2, "0")}
               </span>
-            </div>
+            </span>
+            <span className="text-xs font-medium tabular-nums text-slate-500">
+              {remaining} {remaining === 1 ? "run" : "runs"} left
+            </span>
           </div>
         </div>
       ) : null}

@@ -809,27 +809,31 @@ export default function GlpSimulationFunnel() {
             className="grid w-full gap-5 md:grid-cols-3 md:gap-6"
             data-results-summary
           >
-            <div className="flex flex-col rounded-2xl border border-slate-200/90 bg-white/95 p-6 shadow-[0_2px_12px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.03]">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">Expected path</p>
-              <p className="mt-2 text-lg font-semibold leading-snug text-slate-900">{output.pathLabel}</p>
-              <p className="mt-2 text-xs leading-relaxed text-slate-500 sm:min-h-[2.5rem]">
+            <div className="flex flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_2px_16px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/[0.04] sm:p-6">
+              <p className={glpIntakeUi.resultsSummaryCardTitle}>Expected path</p>
+              <p className={`${glpIntakeUi.resultsSummaryBody} mt-3`}>{output.pathLabel}</p>
+              <p className={`${glpIntakeUi.resultsSummaryMeta} mt-3`}>
                 Framing only — your provider sets the plan.
               </p>
             </div>
-            <div className="flex flex-col rounded-2xl border border-slate-200/90 bg-white/95 p-6 shadow-[0_2px_12px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.03]">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">Illustrative timeline</p>
-              <p className="mt-2 text-lg font-semibold tabular-nums leading-snug text-slate-900">{output.weeksToGoal}</p>
-              <p className="mt-2 text-xs leading-relaxed text-slate-500 sm:min-h-[2.5rem]">
+            <div className="flex flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_2px_16px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/[0.04] sm:p-6">
+              <p className={glpIntakeUi.resultsSummaryCardTitle}>Illustrative timeline</p>
+              <p className={`${glpIntakeUi.resultsSummaryBody} mt-3`}>
+                <span className={`${glpIntakeUi.resultsSummaryEmphasis} tabular-nums`}>{output.weeksToGoal}</span>
+              </p>
+              <p className={`${glpIntakeUi.resultsSummaryMeta} mt-2`}>
                 weeks discussed · individual results vary
               </p>
             </div>
-            <div className="flex flex-col rounded-2xl border border-slate-200/90 bg-white/95 p-6 shadow-[0_2px_12px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.03]">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">Monthly cost band</p>
-              <p className="mt-2 text-lg font-semibold tabular-nums leading-snug text-slate-900">
-                ${output.monthlyCostLow}–${output.monthlyCostHigh}
+            <div className="flex flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_2px_16px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/[0.04] sm:p-6">
+              <p className={glpIntakeUi.resultsSummaryCardTitle}>Monthly cost band</p>
+              <p className={`${glpIntakeUi.resultsSummaryBody} mt-3 tabular-nums`}>
+                <span className={glpIntakeUi.resultsSummaryEmphasis}>
+                  ${output.monthlyCostLow}–${output.monthlyCostHigh}
+                </span>
                 <span className="text-sm font-normal text-slate-500"> /mo</span>
               </p>
-              <p className="mt-2 text-xs leading-relaxed text-slate-500 sm:min-h-[2.5rem]">Educational — not a quote</p>
+              <p className={`${glpIntakeUi.resultsSummaryMeta} mt-3`}>Educational — not a quote</p>
             </div>
           </div>
 

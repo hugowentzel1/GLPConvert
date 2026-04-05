@@ -82,6 +82,12 @@ export const glpIntakeUi = {
   secondaryBtn:
     "inline-flex w-full min-w-0 flex-1 items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-5 py-[0.875rem] text-sm font-semibold text-slate-800 shadow-sm transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:border-slate-300 hover:bg-slate-50/80 hover:shadow-md active:scale-[0.99] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15 focus-visible:ring-offset-2 min-h-[52px] sm:max-w-md sm:min-w-[10rem]",
 
+  /** Step 2 summary cards: title vs body hierarchy */
+  resultsSummaryCardTitle: "text-sm font-bold tracking-tight text-slate-900 sm:text-[15px]",
+  resultsSummaryBody: "text-sm font-normal leading-relaxed text-slate-600",
+  resultsSummaryEmphasis: "text-base font-normal tabular-nums text-slate-800 sm:text-lg",
+  resultsSummaryMeta: "text-xs font-normal leading-relaxed text-slate-500",
+
   /** Step 2 results: generous vertical rhythm (M3-style section spacing) */
   resultsStack: "space-y-12 md:space-y-14",
   resultsSectionRule:

@@ -113,21 +113,19 @@ function DemoHeaderActions({
       </span>
       <motion.a
         href={`/pricing?company=${encodeURIComponent(companyLabel)}`}
-        className={`${glpIntakeUi.primaryBtn} relative w-full !rounded-full !shadow-md ring-offset-white`}
+        className={`${glpIntakeUi.primaryBtn} relative w-full !min-h-[56px] !flex-row !items-center !justify-start !gap-3 !rounded-full !py-3 !pl-4 !pr-5 !shadow-md ring-offset-white`}
         style={{ backgroundColor: accent }}
         data-demo-activate-intake
         data-intake-hero-activate
         aria-label={`Activate GLPConvert for ${companyLabel}`}
         {...hover.primary}
       >
-        <span className="relative z-10 flex w-full flex-col items-center justify-center gap-1 px-2 py-1 text-center">
-          <span className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-white/95">
-            <span className="text-base leading-none" aria-hidden>
-              ⚡
-            </span>
-            Activate
-          </span>
-          <span className="line-clamp-2 max-w-[16rem] text-sm font-semibold leading-snug tracking-tight">
+        <span className="relative z-10 shrink-0 text-[22px] leading-none" aria-hidden>
+          ⚡
+        </span>
+        <span className="relative z-10 flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 text-center">
+          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/95">Activate</span>
+          <span className="line-clamp-2 max-w-[16rem] text-sm font-semibold leading-snug tracking-tight text-white">
             {companyLabel}
           </span>
         </span>
@@ -136,13 +134,10 @@ function DemoHeaderActions({
       <motion.button
         type="button"
         onClick={() => void onCopy()}
-        className="inline-flex min-h-[48px] w-full items-center justify-center gap-2 rounded-full border border-slate-200/95 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-shadow duration-200 hover:border-slate-300 hover:shadow-md"
+        className="inline-flex min-h-[48px] w-full items-center justify-center rounded-full border border-slate-200/95 bg-white px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition-shadow duration-200 hover:border-slate-300 hover:shadow-md"
         data-demo-copy-link
         {...hover.secondary}
       >
-        <span className="text-base leading-none" aria-hidden>
-          ⚡
-        </span>
         {copied ? "Copied" : "Copy link to this preview"}
       </motion.button>
     </div>
@@ -169,8 +164,14 @@ function IntakePageHeaderInner() {
     <div className="w-full">
       {demo ? (
         <div
-          className="-mx-4 mb-5 border-y border-slate-200/90 bg-slate-50/60 px-4 py-2.5 text-center sm:-mx-6 sm:px-6 md:-mx-8 md:px-8"
+          className="-mx-4 mb-5 px-4 py-2.5 text-center sm:-mx-6 sm:px-6 md:-mx-8 md:px-8"
           data-intake-private-demo-disclaimer
+          style={{
+            borderTop: "1px solid #e5e7eb",
+            borderBottom: "1px solid #e5e7eb",
+            background: "linear-gradient(180deg, #ffffff 0%, #fafbfc 100%)",
+            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
+          }}
         >
           <p className="text-[11px] leading-relaxed text-slate-600 sm:text-xs">
             Private demo for <span className="font-medium text-slate-800">{companyLabel}</span>. Not affiliated.
