@@ -1,7 +1,8 @@
 /**
- * GLP intake — spacing system aligned to an 8px grid (Material Design density, WCAG 2.2 touch targets).
- * Section rhythm follows Stripe / Linear-style product flows: 16–24px within groups, 32–40px between sections.
- * Use these tokens sitewide in the funnel so rhythm stays predictable (not ad-hoc margins).
+ * GLP intake — spacing aligned to an 8px grid (Material Design layout guidelines; IBM Carbon density tokens).
+ * Section rhythm: 16–24px within groups, 32–40px between sections (Stripe Dashboard / Linear app patterns).
+ * Touch targets ≥44×44px (Apple HIG; WCAG 2.2 target size).
+ * Use these tokens sitewide so rhythm stays predictable.
  */
 export const glpIntakeUi = {
   /** Main column — max readable width; outer frame supplies horizontal padding */
@@ -22,8 +23,12 @@ export const glpIntakeUi = {
     major: "gap-8", // 32
   } as const,
 
+  /** Neutral chrome only — brand color lives in CTAs/progress, not card outlines (Notion/Stripe-style surfaces). */
   card:
-    "rounded-2xl border border-slate-200/90 bg-white shadow-[0_2px_6px_rgba(15,23,42,0.04),0_20px_48px_-8px_rgba(15,23,42,0.1)] transition-all duration-300 hover:border-slate-200 hover:shadow-[0_8px_24px_rgba(15,23,42,0.08),0_28px_56px_-12px_rgba(15,23,42,0.12)]",
+    "rounded-2xl border border-slate-200/90 bg-white shadow-[0_2px_6px_rgba(15,23,42,0.04),0_20px_48px_-8px_rgba(15,23,42,0.1)] ring-1 ring-slate-900/[0.04] transition-all duration-300 hover:border-slate-200 hover:shadow-[0_8px_24px_rgba(15,23,42,0.08),0_28px_56px_-12px_rgba(15,23,42,0.12)]",
+  /** In-flow panels (results headers, chart shells) — same elevation language as `card`. */
+  panelInCard:
+    "relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-[0_2px_12px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/[0.04]",
   /** Card interior — generous rhythm so step 2+ never feels cramped */
   cardPad: "p-6 sm:p-8 md:p-10",
   cardPadSm: "p-5 md:p-6",

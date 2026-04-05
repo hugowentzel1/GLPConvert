@@ -10,7 +10,6 @@ import { persistUtmFromSearchParams, getMergedUtm } from "@/lib/glp-attribution"
 import { resolveGlpTenantSlug } from "@/lib/glp-tenant-slug";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
-import { hexToRgba } from "@/lib/intake-color-helpers";
 
 type TenantIntakePublicJson = {
   ok?: boolean;
@@ -555,11 +554,7 @@ export default function GlpSimulationFunnel() {
       {step === 1 && (
         <motion.section
           data-flow-step="1"
-          className={`relative ${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackStepForm} border-2`}
-          style={{
-            borderColor: hexToRgba(brandFill, 0.4),
-            boxShadow: `0 2px 6px rgba(15,23,42,0.04), 0 0 0 1px ${hexToRgba(brandFill, 0.12)}`,
-          }}
+          className={`relative ${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackStepForm}`}
           {...stepMotion}
         >
           {building ? (
@@ -758,7 +753,7 @@ export default function GlpSimulationFunnel() {
         >
           <div
             data-results-trust-strip
-            className="flex flex-wrap items-center gap-4 rounded-xl border border-slate-200/85 bg-slate-50/60 px-4 py-4 sm:px-5 sm:py-4"
+            className="flex flex-wrap items-center gap-4 rounded-2xl border border-slate-200/90 bg-slate-50/70 px-5 py-4 shadow-[0_1px_3px_rgba(15,23,42,0.04)] ring-1 ring-slate-900/[0.03] sm:gap-5 sm:px-6 sm:py-4"
           >
             {effectiveLogo ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -788,16 +783,12 @@ export default function GlpSimulationFunnel() {
             </p>
           </div>
 
-          <header className="relative mt-2 rounded-2xl border border-slate-200/90 bg-white px-5 py-6 text-left shadow-sm sm:px-8 sm:py-8">
+          <header className={`${glpIntakeUi.panelInCard} text-left`}>
             <div
-              className="pointer-events-none absolute left-0 top-0 h-full w-1 rounded-l-2xl"
-              style={{
-                background: `linear-gradient(180deg, ${brandFill} 0%, ${effectiveSecondary || brandFill} 100%)`,
-                opacity: 0.85,
-              }}
+              className="absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-slate-300/70 to-transparent"
               aria-hidden
             />
-            <div className="relative pl-4 sm:pl-5">
+            <div className="relative px-5 py-6 sm:px-8 sm:py-8">
               <p className={glpIntakeUi.kicker}>{company}</p>
               <h2 className={glpIntakeUi.titleResults}>Your path preview</h2>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 md:text-[15px]">
@@ -809,28 +800,25 @@ export default function GlpSimulationFunnel() {
           <GlpPathMilestonePreview items={milestoneItems} brandFill={brandFill} />
 
           {journeyProgressPoints.length >= 2 ? (
-            <div className="mt-4 md:mt-6">
+            <div className="w-full">
               <GlpJourneyProgressChart points={journeyProgressPoints} brandFill={brandFill} variant="default" />
             </div>
           ) : null}
 
           <div
-            className="mt-8 grid gap-4 md:grid-cols-3 md:gap-5"
+            className="mt-2 grid w-full gap-4 md:grid-cols-3 md:gap-5"
             data-results-summary
           >
-            <div
-              className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 shadow-[0_2px_12px_rgba(15,23,42,0.05)] md:p-6"
-              style={{ borderColor: `${brandFill}28` }}
-            >
+            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 shadow-[0_2px_12px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.03] md:p-6">
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">Expected path</p>
               <p className="mt-2 text-sm font-medium leading-snug text-slate-900">{output.pathLabel}</p>
             </div>
-            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 shadow-[0_2px_12px_rgba(15,23,42,0.05)]">
+            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 shadow-[0_2px_12px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.03]">
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">Illustrative timeline</p>
               <p className="mt-2 text-2xl font-bold tabular-nums text-slate-900">{output.weeksToGoal}</p>
               <p className="text-xs text-slate-500">weeks discussed · individual results vary</p>
             </div>
-            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 shadow-[0_2px_12px_rgba(15,23,42,0.05)]">
+            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 shadow-[0_2px_12px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.03]">
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">Monthly cost band</p>
               <p className="mt-2 text-xl font-semibold tabular-nums text-slate-900">
                 ${output.monthlyCostLow}–${output.monthlyCostHigh}
@@ -847,16 +835,9 @@ export default function GlpSimulationFunnel() {
               {output.phasePlan.map((p, idx) => (
                 <div
                   key={p.phase}
-                  className={`flex flex-col rounded-2xl border bg-white/90 p-5 shadow-[0_2px_8px_rgba(15,23,42,0.04)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)] ${
-                    idx === 1 ? "ring-1 ring-slate-900/[0.06] md:scale-[1.02]" : ""
+                  className={`flex flex-col rounded-2xl border border-slate-200/90 bg-white/90 p-5 shadow-[0_2px_8px_rgba(15,23,42,0.04)] ring-1 ring-slate-900/[0.03] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)] ${
+                    idx === 1 ? "ring-1 ring-slate-900/[0.07] md:scale-[1.02]" : ""
                   }`}
-                  style={{
-                    borderColor: idx === 0 ? `${brandFill}40` : "rgba(226,232,240,0.95)",
-                    boxShadow:
-                      idx === 0
-                        ? `0 2px 8px rgba(15,23,42,0.04), inset 0 1px 0 rgba(255,255,255,0.8)`
-                        : undefined,
-                  }}
                 >
                   <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{p.weeks}</p>
                   <p className="mt-2 text-sm font-semibold text-slate-900">{p.phase}</p>
@@ -900,13 +881,7 @@ export default function GlpSimulationFunnel() {
           <div className={glpIntakeUi.sectionRule} data-results-pricing>
             <p className={`${glpIntakeUi.kicker} mb-2`}>Investment</p>
             <h3 className={`${glpIntakeUi.titleMd} mb-4`}>Price clarity</h3>
-            <div
-              className="relative overflow-hidden rounded-2xl border bg-gradient-to-br from-white via-slate-50/90 to-slate-100/50 p-6 md:p-7 shadow-inner"
-              style={{
-                borderColor: `${brandFill}35`,
-                boxShadow: `inset 0 1px 0 rgba(255,255,255,0.8), 0 10px 28px -10px rgba(15,23,42,0.1)`,
-              }}
-            >
+            <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-br from-white via-slate-50/90 to-slate-100/50 p-6 shadow-inner ring-1 ring-slate-900/[0.04] md:p-7">
               <div
                 className="pointer-events-none absolute -right-8 top-0 h-28 w-28 rounded-full opacity-[0.08] blur-2xl"
                 style={{ backgroundColor: brandFill }}
@@ -1305,8 +1280,7 @@ export default function GlpSimulationFunnel() {
       {step === 5 && (
         <motion.section
           data-flow-step="5"
-          className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} text-center ${glpIntakeUi.stackMd} border-slate-200/90 bg-gradient-to-b from-slate-50/90 to-white shadow-[0_12px_40px_rgba(15,23,42,0.06)]`}
-          style={{ borderColor: `${brandFill}33` }}
+          className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} text-center ${glpIntakeUi.stackMd} bg-gradient-to-b from-slate-50/90 to-white`}
           {...stepMotion}
         >
           <div

@@ -89,37 +89,41 @@ function DemoClinicBarActions({
   }, []);
 
   return (
-    <div className="flex w-full flex-wrap items-center justify-end gap-2 sm:gap-3">
+    <div className="mx-auto flex w-full max-w-xl flex-col items-stretch gap-3 sm:max-w-2xl">
       <span className="sr-only" aria-live="polite">
         {copied ? "Demo link copied to clipboard" : ""}
       </span>
       <a
         href={`/pricing?company=${encodeURIComponent(companyLabel)}`}
-        className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-xl px-4 py-2.5 text-center text-xs font-semibold text-white shadow-sm transition hover:opacity-95 sm:flex-initial sm:min-w-[12rem]"
+        className="inline-flex min-h-[48px] w-full flex-col items-center justify-center gap-0.5 rounded-xl px-4 py-3 text-center shadow-sm transition hover:opacity-[0.97] active:scale-[0.998]"
         style={{ backgroundColor: accent }}
         data-demo-activate-intake
+        aria-label={`Activate GLPConvert for ${companyLabel}`}
       >
-        Activate for {companyLabel}
+        <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/90">Activate</span>
+        <span className="line-clamp-2 text-sm font-semibold leading-snug text-white">{companyLabel}</span>
       </a>
-      <button
-        type="button"
-        onClick={() => void onCopy()}
-        className="inline-flex min-h-[44px] min-w-[8.5rem] items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
-        data-demo-copy-link
-      >
-        {copied ? "Copied" : "Copy demo link"}
-      </button>
-      <p
-        data-intake-demo-badge
-        className="inline-flex min-h-[44px] min-w-[4rem] shrink-0 items-center justify-center rounded-full border px-3 py-1.5 text-center text-[9px] font-bold uppercase tracking-[0.12em]"
-        style={{
-          borderColor: `${accent}55`,
-          color: accent,
-          backgroundColor: `${accent}0f`,
-        }}
-      >
-        Demo
-      </p>
+      <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+        <button
+          type="button"
+          onClick={() => void onCopy()}
+          className="inline-flex min-h-[44px] min-w-[10rem] flex-1 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 sm:flex-initial"
+          data-demo-copy-link
+        >
+          {copied ? "Copied" : "Copy link to this preview"}
+        </button>
+        <p
+          data-intake-demo-badge
+          className="inline-flex min-h-[44px] shrink-0 items-center justify-center rounded-full border px-4 py-2 text-center text-[10px] font-bold uppercase tracking-[0.14em]"
+          style={{
+            borderColor: `${accent}44`,
+            color: accent,
+            backgroundColor: `${accent}0f`,
+          }}
+        >
+          Demo preview
+        </p>
+      </div>
     </div>
   );
 }
@@ -145,17 +149,17 @@ function ClinicTopBar({
       data-intake-clinic-bar={demo ? "demo" : "paid"}
       {...(demo ? { "data-intake-demo-strip": "1" } : {})}
     >
-      <div className="flex items-start gap-3 px-4 py-4 sm:gap-4 sm:px-5 sm:py-4">
+      <div className="flex items-start gap-3 px-4 py-4 sm:gap-4 sm:px-6 sm:py-5">
         <BrandMark logoUrl={logoUrl} companyLabel={companyLabel} accent={accent} size="sm" />
         <div className="min-w-0 flex-1 text-left">
           <p className="text-base font-semibold leading-snug tracking-tight text-slate-900">{companyLabel}</p>
           <p className="mt-1.5 text-sm leading-relaxed text-slate-500">
-            {demo ? "Private branded preview — ready to place on your site or funnel" : "Your next step before the consult"}
+            {demo ? "Branded patient preview — embed on your site or ad funnel" : "Your next step before the consult"}
           </p>
         </div>
       </div>
       {demo ? (
-        <div className="border-t border-slate-100 bg-slate-50/40 px-4 py-3 sm:px-5 sm:py-3.5">
+        <div className="border-t border-slate-100 bg-slate-50/50 px-4 py-4 sm:px-6 sm:py-5">
           <DemoClinicBarActions companyLabel={companyLabel} accent={accent} />
         </div>
       ) : null}
@@ -203,14 +207,12 @@ function IntakePageHeaderInner() {
           aria-hidden
         />
 
-        {!demo ? (
-          <div className="relative flex justify-center">
-            <BrandMark logoUrl={logoUrl} companyLabel={companyLabel} accent={accent} size="lg" />
-          </div>
-        ) : null}
+        <div className="relative flex justify-center">
+          <BrandMark logoUrl={logoUrl} companyLabel={companyLabel} accent={accent} size="lg" />
+        </div>
 
         <h1
-          className={`text-balance text-xl font-bold tracking-tight text-slate-900 md:text-2xl ${demo ? "relative pt-1" : "mt-5"}`}
+          className="text-balance pt-5 text-xl font-bold tracking-tight text-slate-900 md:pt-6 md:text-2xl"
         >
           {demo ? "The patient-facing path, under your brand" : "Before you book"}
         </h1>
@@ -226,13 +228,26 @@ function IntakePageHeaderInner() {
             data-intake-local-urls
           >
             <summary className="cursor-pointer list-none text-[11px] font-semibold text-slate-600 [&::-webkit-details-marker]:hidden">
-              Local URLs (dev)
+              Embedding reference (localhost only)
             </summary>
             <p className="mt-3 text-[11px] leading-relaxed text-slate-500">
-              Demo adds <code className="rounded bg-white px-1 font-mono text-[10px]">demo=1</code>. Production omits it.
-              Use <code className="rounded bg-white px-1 font-mono text-[10px]">logo=</code> or{" "}
-              <code className="rounded bg-white px-1 font-mono text-[10px]">domain=</code> for logo.
+              This panel only appears when you run the app on your machine. Use query parameters to preview how a
+              clinic-branded intake URL will look before you add it to your site — same idea as Stripe test-mode keys
+              or Vercel preview URLs: safe to experiment, not shown to patients in production.
             </p>
+            <ul className="mt-2 list-inside list-disc space-y-1 text-[11px] text-slate-500">
+              <li>
+                <code className="rounded bg-white px-1 font-mono text-[10px]">demo=1</code> — buyer preview mode
+              </li>
+              <li>
+                <code className="rounded bg-white px-1 font-mono text-[10px]">company=</code>,{" "}
+                <code className="rounded bg-white px-1 font-mono text-[10px]">brand=</code> — label and accent
+              </li>
+              <li>
+                <code className="rounded bg-white px-1 font-mono text-[10px]">logo=</code> or{" "}
+                <code className="rounded bg-white px-1 font-mono text-[10px]">domain=</code> — logo resolution
+              </li>
+            </ul>
           </details>
         ) : null}
       </motion.div>
