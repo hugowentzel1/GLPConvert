@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useMemo } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import {
   Area,
   AreaChart,
@@ -25,6 +25,15 @@ export default function GlpWeightTrajectoryChart({
   goalWeight: number;
   variant?: "default" | "compact";
 }) {
+  const [animate, setAnimate] = useState(true);
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => setAnimate(!mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
   const gid = useId().replace(/:/g, "");
   const gradId = `glpWtGrad-${gid}`;
 
@@ -42,6 +51,7 @@ export default function GlpWeightTrajectoryChart({
 
   return (
     <div
+      data-results-chart
       className={`relative w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-b from-white to-slate-50/80 ring-1 ring-slate-900/[0.04] ${
         compact ? "px-2 pb-2 pt-3 shadow-sm sm:px-3" : "px-2 pb-2 pt-4 shadow-[0_12px_40px_-16px_rgba(15,23,42,0.12)] sm:px-4 sm:pt-5"
       }`}
@@ -49,10 +59,10 @@ export default function GlpWeightTrajectoryChart({
       {!compact ? (
         <>
           <p className="mb-1 px-2 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
-            Illustrative weight trend
+            Illustrative path preview
           </p>
           <p className="mb-3 px-2 text-center text-xs text-slate-500">
-            Not a medical forecast — your provider sets pace and targets.
+            Illustrative preview — not a forecast. Your provider sets pace and targets.
           </p>
         </>
       ) : null}
@@ -99,6 +109,9 @@ export default function GlpWeightTrajectoryChart({
               stroke={brandFill}
               strokeWidth={2.5}
               fill={`url(#${gradId})`}
+              isAnimationActive={animate}
+              animationDuration={animate ? 900 : 0}
+              animationEasing="ease-out"
               activeDot={{ r: 6, strokeWidth: 2, stroke: "#fff" }}
               dot={{ r: 3.5, strokeWidth: 2, stroke: "#fff", fill: brandFill }}
             />

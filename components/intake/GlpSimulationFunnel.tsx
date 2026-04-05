@@ -192,7 +192,7 @@ function IntakeStepper({
         <p className="text-xs font-medium text-slate-600">
           {building ? (
             <>
-              Framing your overview… <span className="text-slate-500">(not a step)</span>
+              Preparing preview… <span className="text-slate-500">(not a step)</span>
             </>
           ) : (
             <>
@@ -210,7 +210,7 @@ function IntakeStepper({
         aria-valuemax={TOTAL_FLOW_STEPS}
         aria-valuetext={
           building
-            ? "Preparing overview"
+            ? "Preparing plan preview"
             : `Step ${step} of ${TOTAL_FLOW_STEPS}, ${STEP_LABELS[labelIdx]}`
         }
       >
@@ -535,10 +535,10 @@ export default function GlpSimulationFunnel() {
                 />
               </div>
               <div className="max-w-xs text-center">
-                <p className={glpIntakeUi.kicker}>Preparing overview</p>
-                <h2 className={`${glpIntakeUi.titleMd} mt-2 tracking-tight`}>Personalizing your snapshot</h2>
+                <p className={glpIntakeUi.kicker}>Preparing your plan preview</p>
+                <h2 className={`${glpIntakeUi.titleMd} mt-2 tracking-tight`}>Path, range, and next step</h2>
                 <p className={`${glpIntakeUi.bodyMuted} mt-2 text-xs`}>
-                  Framing typical timelines and ranges for {company} — not a medical assessment.
+                  Framing typical timelines for {company} — general information only, not medical advice.
                 </p>
               </div>
               <button type="button" className={glpIntakeUi.backBtn} onClick={goBack}>
@@ -567,9 +567,13 @@ export default function GlpSimulationFunnel() {
           ) : null}
           <header className={glpIntakeUi.stackSm}>
             <p className={glpIntakeUi.kicker}>Step 1</p>
-            <h2 className={glpIntakeUi.titleLg}>Your GLP path</h2>
+            <h2 className={glpIntakeUi.titleLg}>Start your plan preview</h2>
             <p className={glpIntakeUi.body}>
-              A few basics — no contact yet. Only a licensed provider can decide if treatment is appropriate for you.
+              Answer a few basics to preview the path, typical range, and what many patients want clarified before
+              booking.
+            </p>
+            <p className={`${glpIntakeUi.bodyMuted} text-xs`}>
+              General information only — final treatment decisions are made by a licensed provider.
             </p>
           </header>
 
@@ -602,19 +606,6 @@ export default function GlpSimulationFunnel() {
               />
             </label>
             <label className="block min-w-0">
-              <span className={glpIntakeUi.label}>Preferred path (optional)</span>
-              <select
-                className={glpIntakeUi.control}
-                value={input.medPath || "unsure"}
-                onChange={(e) => setInput((v) => ({ ...v, medPath: e.target.value as SimInput["medPath"] }))}
-              >
-                <option value="unsure">Not sure yet</option>
-                <option value="semaglutide">Semaglutide path</option>
-                <option value="tirzepatide">Tirzepatide path</option>
-                <option value="oral_path">Oral-first path</option>
-              </select>
-            </label>
-            <label className="block min-w-0">
               <span className={glpIntakeUi.label}>Goal timeframe</span>
               <select
                 className={glpIntakeUi.control}
@@ -627,34 +618,8 @@ export default function GlpSimulationFunnel() {
                 <option value="exploring">Just exploring</option>
               </select>
             </label>
-            <label className="block min-w-0">
-              <span className={glpIntakeUi.label}>Budget comfort (optional)</span>
-              <select
-                className={glpIntakeUi.control}
-                value={input.budgetBand}
-                onChange={(e) => setInput((v) => ({ ...v, budgetBand: e.target.value as SimInput["budgetBand"] }))}
-              >
-                <option value="under_200">Under $200 / month</option>
-                <option value="200_400">$200–$400 / month</option>
-                <option value="400_700">$400–$700 / month</option>
-                <option value="unsure">Not sure yet</option>
-              </select>
-            </label>
-            <label className="block min-w-0">
-              <span className={glpIntakeUi.label}>Prior GLP-1 experience (optional)</span>
-              <select
-                className={glpIntakeUi.control}
-                value={input.priorGlp}
-                onChange={(e) => setInput((v) => ({ ...v, priorGlp: e.target.value as SimInput["priorGlp"] }))}
-              >
-                <option value="none">None yet</option>
-                <option value="stopped">Tried before and stopped</option>
-                <option value="active">Currently on a plan</option>
-                <option value="prefer_not">Prefer not to say</option>
-              </select>
-            </label>
             <label className="block min-w-0 md:col-span-2">
-              <span className={glpIntakeUi.label}>Biggest struggle (optional)</span>
+              <span className={glpIntakeUi.label}>Biggest struggle right now</span>
               <select
                 className={glpIntakeUi.control}
                 value={input.biggestStruggle}
@@ -670,6 +635,53 @@ export default function GlpSimulationFunnel() {
               </select>
             </label>
           </div>
+
+          <details className="mt-6 rounded-2xl border border-slate-200/90 bg-slate-50/60 px-4 py-3 open:bg-white open:shadow-sm">
+            <summary className="cursor-pointer list-none text-sm font-semibold text-slate-700 [&::-webkit-details-marker]:hidden">
+              Additional preferences <span className="font-normal text-slate-500">(optional)</span>
+            </summary>
+            <div className={`${glpIntakeUi.grid2Form} mt-4`}>
+              <label className="block min-w-0 md:col-span-2">
+                <span className={glpIntakeUi.label}>Preferred discussion path</span>
+                <select
+                  className={glpIntakeUi.control}
+                  value={input.medPath || "unsure"}
+                  onChange={(e) => setInput((v) => ({ ...v, medPath: e.target.value as SimInput["medPath"] }))}
+                >
+                  <option value="unsure">Not sure yet</option>
+                  <option value="semaglutide">Semaglutide path</option>
+                  <option value="tirzepatide">Tirzepatide path</option>
+                  <option value="oral_path">Oral-first path</option>
+                </select>
+              </label>
+              <label className="block min-w-0">
+                <span className={glpIntakeUi.label}>Budget comfort</span>
+                <select
+                  className={glpIntakeUi.control}
+                  value={input.budgetBand}
+                  onChange={(e) => setInput((v) => ({ ...v, budgetBand: e.target.value as SimInput["budgetBand"] }))}
+                >
+                  <option value="under_200">Under $200 / month</option>
+                  <option value="200_400">$200–$400 / month</option>
+                  <option value="400_700">$400–$700 / month</option>
+                  <option value="unsure">Not sure yet</option>
+                </select>
+              </label>
+              <label className="block min-w-0">
+                <span className={glpIntakeUi.label}>Prior GLP-1 experience</span>
+                <select
+                  className={glpIntakeUi.control}
+                  value={input.priorGlp}
+                  onChange={(e) => setInput((v) => ({ ...v, priorGlp: e.target.value as SimInput["priorGlp"] }))}
+                >
+                  <option value="none">None yet</option>
+                  <option value="stopped">Tried before and stopped</option>
+                  <option value="active">Currently on a plan</option>
+                  <option value="prefer_not">Prefer not to say</option>
+                </select>
+              </label>
+            </div>
+          </details>
 
           <div className="mt-8 w-full border-t border-slate-100 pt-8">
             <button
@@ -726,7 +738,7 @@ export default function GlpSimulationFunnel() {
           </div>
 
           <header
-            className={`relative mt-5 overflow-hidden rounded-3xl border p-6 md:p-8`}
+            className={`relative mt-5 overflow-hidden rounded-3xl border p-5 md:p-7`}
             style={{
               borderColor: `${brandFill}2e`,
               background: `linear-gradient(165deg, white 0%, rgba(248,250,252,0.97) 48%, rgba(241,245,249,0.45) 100%)`,
@@ -752,22 +764,45 @@ export default function GlpSimulationFunnel() {
               <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-600">
                 Topics many patients review before a provider visit — not a diagnosis, guarantee, or medical advice.
               </p>
-              <div className="mt-6 space-y-2.5 border-t border-slate-200/80 pt-6 text-sm text-slate-700">
-                <p>
-                  <span className="text-slate-500">Discussed timeline (illustrative): </span>
-                  <span className="font-semibold tabular-nums text-slate-900">{output.weeksToGoal} weeks</span>
-                  <span className="text-slate-500"> · individual results vary.</span>
-                </p>
-                <p>
-                  <span className="text-slate-500">Conversation often includes: </span>
-                  <span className="text-slate-800">{output.pathLabel}</span>
-                </p>
-                <p className={`${glpIntakeUi.bodyMuted} !mt-1`}>
-                  Framing: {output.confidenceBand} pace — your provider sets what&apos;s appropriate for you.
-                </p>
-              </div>
             </div>
           </header>
+
+          {weightChartPoints.length >= 2 ? (
+            <div className="mt-6">
+              <GlpWeightTrajectoryChart
+                points={weightChartPoints}
+                brandFill={brandFill}
+                goalWeight={input.goalWeight}
+                variant="default"
+              />
+            </div>
+          ) : null}
+
+          <div
+            className="mt-6 grid gap-3 md:grid-cols-3"
+            data-results-summary
+          >
+            <div
+              className="rounded-2xl border border-slate-200/90 bg-white/95 p-4 shadow-[0_2px_12px_rgba(15,23,42,0.05)]"
+              style={{ borderColor: `${brandFill}28` }}
+            >
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">Expected path</p>
+              <p className="mt-2 text-sm font-medium leading-snug text-slate-900">{output.pathLabel}</p>
+            </div>
+            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-4 shadow-[0_2px_12px_rgba(15,23,42,0.05)]">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">Illustrative timeline</p>
+              <p className="mt-2 text-2xl font-bold tabular-nums text-slate-900">{output.weeksToGoal}</p>
+              <p className="text-xs text-slate-500">weeks discussed · individual results vary</p>
+            </div>
+            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-4 shadow-[0_2px_12px_rgba(15,23,42,0.05)]">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">Monthly cost band</p>
+              <p className="mt-2 text-xl font-semibold tabular-nums text-slate-900">
+                ${output.monthlyCostLow}–${output.monthlyCostHigh}
+                <span className="text-sm font-normal text-slate-500"> /mo</span>
+              </p>
+              <p className="text-xs text-slate-500">Educational — not a quote</p>
+            </div>
+          </div>
 
           <div className={glpIntakeUi.sectionRule} data-results-path>
             <p className={`${glpIntakeUi.kicker} mb-2`}>Path</p>
@@ -898,21 +933,13 @@ export default function GlpSimulationFunnel() {
                 >
                   ▸
                 </span>
-                Optional: illustrative weight trend (not a forecast)
+                Monthly estimate checkpoints
               </span>
             </summary>
-            <div className="mt-4 space-y-4 pb-2">
+            <div className="mt-4 space-y-3 pb-2">
               <p className="text-xs leading-relaxed text-slate-500">
-                Supporting context only — your provider sets targets. Not medical advice.
+                Same numbers as the chart above — shown as checkpoints. Your provider sets targets.
               </p>
-              {weightChartPoints.length >= 2 ? (
-                <GlpWeightTrajectoryChart
-                  points={weightChartPoints}
-                  brandFill={brandFill}
-                  goalWeight={input.goalWeight}
-                  variant="compact"
-                />
-              ) : null}
               <div className="flex flex-wrap gap-2">
                 {output.projectedMonthlyRange.slice(0, 6).map((m) => (
                   <span
@@ -975,10 +1002,10 @@ export default function GlpSimulationFunnel() {
                 className={glpIntakeUi.primaryBtn}
                 style={{ backgroundColor: brandFill }}
               >
-                Next step
+                Continue to readiness
               </button>
               <p className="text-center text-xs text-slate-500 sm:text-right">
-                Three quick preference questions — then save or book.
+                Three quick preferences — then save or book.
               </p>
             </div>
           </div>
@@ -1069,6 +1096,11 @@ export default function GlpSimulationFunnel() {
               Previous
             </button>
             <div className={glpIntakeUi.formActions}>
+              {!readinessComplete() ? (
+                <p className="text-center text-xs text-slate-500 sm:text-right">
+                  Choose one option in each row to continue.
+                </p>
+              ) : null}
               <button
                 type="button"
                 disabled={!readinessComplete()}
@@ -1076,7 +1108,7 @@ export default function GlpSimulationFunnel() {
                 className={glpIntakeUi.primaryBtn}
                 style={{ backgroundColor: brandFill }}
               >
-                Continue to save / book
+                Continue to save
               </button>
             </div>
           </div>
@@ -1087,7 +1119,7 @@ export default function GlpSimulationFunnel() {
         <section data-flow-step="4" className={`${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackSection}`}>
           <header className={glpIntakeUi.stackSm}>
             <p className={glpIntakeUi.kicker}>Step 4</p>
-            <h3 className={glpIntakeUi.titleLg}>Save your plan & next step</h3>
+            <h3 className={glpIntakeUi.titleLg}>Save and continue</h3>
             <p className={glpIntakeUi.body}>
               {company} will follow up based on your choice
               {effectiveBookingUrl && nextStep === "book"
@@ -1212,7 +1244,7 @@ export default function GlpSimulationFunnel() {
                 className={glpIntakeUi.primaryBtn}
                 style={{ backgroundColor: brandFill }}
               >
-                {saving ? "Saving…" : "Save my plan"}
+                {saving ? "Saving…" : "Save and continue"}
               </button>
               <a
                 href={bookHref}
@@ -1249,10 +1281,15 @@ export default function GlpSimulationFunnel() {
           </div>
           <div className={glpIntakeUi.stackSm}>
             <p className={glpIntakeUi.kicker}>Step 5</p>
-            <h2 className={glpIntakeUi.titleLg}>You&apos;re all set</h2>
+            <h2 className={glpIntakeUi.titleLg}>Your next step is ready</h2>
             <p className={`${glpIntakeUi.body} mx-auto max-w-md text-slate-700`}>
               {company} can review your plan and follow up based on the option you selected.
             </p>
+            {isDemoMode ? (
+              <p className={`${glpIntakeUi.bodyMuted} mx-auto max-w-md text-xs`}>
+                Preview: this is how the completed step appears in your branded flow.
+              </p>
+            ) : null}
           </div>
           {effectiveBookingUrl && nextStep === "book" ? (
             <a
@@ -1262,7 +1299,7 @@ export default function GlpSimulationFunnel() {
               className={`${glpIntakeUi.primaryBtn} mx-auto block w-full max-w-sm text-center`}
               style={{ backgroundColor: brandFill }}
             >
-              Schedule your consultation
+              Open scheduling
             </a>
           ) : null}
           <p className={`${glpIntakeUi.bodyMuted} mx-auto max-w-md`}>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useMemo } from "react";
+import { Suspense, useMemo, useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 
@@ -69,6 +69,60 @@ function BrandMark({
   );
 }
 
+function DemoClinicBarActions({
+  companyLabel,
+  accent,
+}: {
+  companyLabel: string;
+  accent: string;
+}) {
+  const [copied, setCopied] = useState(false);
+  const onCopy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  return (
+    <div className="flex w-full min-w-0 flex-col gap-2 sm:w-auto sm:max-w-[min(100%,22rem)] sm:flex-row sm:items-center sm:justify-end">
+      <span className="sr-only" aria-live="polite">
+        {copied ? "Demo link copied to clipboard" : ""}
+      </span>
+      <a
+        href={`/pricing?company=${encodeURIComponent(companyLabel)}`}
+        className="inline-flex min-h-[40px] items-center justify-center rounded-xl px-3.5 py-2 text-center text-xs font-semibold text-white shadow-sm transition hover:opacity-95"
+        style={{ backgroundColor: accent }}
+        data-demo-activate-intake
+      >
+        Activate for {companyLabel}
+      </a>
+      <button
+        type="button"
+        onClick={() => void onCopy()}
+        className="inline-flex min-h-[40px] items-center justify-center rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+        data-demo-copy-link
+      >
+        {copied ? "Copied" : "Copy demo link"}
+      </button>
+      <p
+        data-intake-demo-badge
+        className="inline-flex shrink-0 items-center justify-center rounded-full border px-2.5 py-1 text-center text-[9px] font-bold uppercase tracking-[0.12em]"
+        style={{
+          borderColor: `${accent}55`,
+          color: accent,
+          backgroundColor: `${accent}0f`,
+        }}
+      >
+        Demo
+      </p>
+    </div>
+  );
+}
+
 function ClinicTopBar({
   demo,
   companyLabel,
@@ -82,7 +136,7 @@ function ClinicTopBar({
 }) {
   return (
     <div
-      className="mb-5 flex items-center justify-between gap-3 rounded-2xl border bg-white/95 px-4 py-3 shadow-[0_1px_0_rgba(15,23,42,0.04)] ring-1 ring-slate-900/[0.04] backdrop-blur-sm sm:px-5"
+      className="mb-5 flex flex-col gap-4 rounded-2xl border bg-white/95 px-4 py-3 shadow-[0_1px_0_rgba(15,23,42,0.04)] ring-1 ring-slate-900/[0.04] backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:px-5"
       style={{ borderColor: `${accent}30` }}
       data-intake-clinic-bar={demo ? "demo" : "paid"}
     >
@@ -94,6 +148,9 @@ function ClinicTopBar({
             {demo ? (
               <>
                 Preview for <span className="font-semibold text-slate-600">{companyLabel}</span>
+                <span className="mt-0.5 block font-normal normal-case tracking-normal text-slate-500">
+                  Activation-ready for your site
+                </span>
               </>
             ) : (
               "Your next step — before the consult"
@@ -101,19 +158,7 @@ function ClinicTopBar({
           </p>
         </div>
       </div>
-      {demo ? (
-        <p
-          data-intake-demo-badge
-          className="shrink-0 rounded-full border px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.12em]"
-          style={{
-            borderColor: `${accent}55`,
-            color: accent,
-            backgroundColor: `${accent}0f`,
-          }}
-        >
-          Demo
-        </p>
-      ) : null}
+      {demo ? <DemoClinicBarActions companyLabel={companyLabel} accent={accent} /> : null}
     </div>
   );
 }

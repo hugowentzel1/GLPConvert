@@ -130,7 +130,9 @@ test.describe("GLPConvert branded E2E (visual)", () => {
 
     const intakeUrl = `/intake?demo=1&handle=glpconvert&company=E2E%20Med%20Spa&demo_traffic=400&logo=${LOGO}&brand=${BRAND}&brand2=0f172a&booking=${BOOKING}&transition_ms=10000`;
     await page.goto(intakeUrl, { waitUntil: "domcontentloaded" });
-    await expect(page.getByRole("heading", { name: /your glp path/i })).toBeVisible({ timeout: 20000 });
+    await expect(
+      page.locator('[data-flow-step="1"]').getByRole("heading", { name: /start your plan preview/i }),
+    ).toBeVisible({ timeout: 20000 });
     await page.screenshot({ path: testInfo.outputPath("visual-A1-intake-input.png"), fullPage: true });
 
     const continueBtn = page.locator('[data-flow-step="1"]').getByRole("button", { name: /^continue$/i });
@@ -149,10 +151,12 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await expect(page.locator("[data-results-expectations]")).toBeVisible();
     await expect(page.locator("[data-results-pricing]")).toBeVisible();
     await expect(page.locator("[data-results-trajectory]")).toBeVisible();
+    await expect(page.locator("[data-results-chart]")).toBeVisible();
+    await expect(page.locator("[data-results-summary]")).toBeVisible();
     await expect(page.getByText(/starts around/i)).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("visual-A3-results.png"), fullPage: true });
 
-    await page.locator('[data-flow-step="2"]').getByRole("button", { name: /^next step$/i }).click();
+    await page.locator('[data-flow-step="2"]').getByRole("button", { name: /continue to readiness/i }).click();
 
     await expect(page.getByRole("heading", { name: /almost there/i })).toBeVisible();
     await page.getByRole("button", { name: /yes, roughly/i }).click();
@@ -160,7 +164,7 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await page.getByRole("button", { name: /^yes$/i }).first().click();
     await page.screenshot({ path: testInfo.outputPath("visual-A4-readiness.png"), fullPage: true });
 
-    await page.getByRole("button", { name: /save \/ book/i }).click();
+    await page.getByRole("button", { name: /continue to save/i }).click();
 
     await expect(page.getByLabel(/full name/i)).toBeVisible();
     const stamp = Date.now();
@@ -169,10 +173,10 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await page.getByRole("checkbox").check();
     await page.screenshot({ path: testInfo.outputPath("visual-A5-lead-form.png"), fullPage: true });
 
-    await page.getByRole("button", { name: /save my plan/i }).click();
+    await page.getByRole("button", { name: /save and continue/i }).click();
 
-    await expect(page.getByRole("heading", { name: /you're all set/i })).toBeVisible({ timeout: 15000 });
-    await expect(page.getByRole("link", { name: /schedule your consultation/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /your next step is ready/i })).toBeVisible({ timeout: 15000 });
+    await expect(page.getByRole("link", { name: /open scheduling/i })).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("visual-A6-confirmation.png"), fullPage: true });
   });
 
@@ -229,7 +233,7 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await expect(page.locator('[data-intake-mode="paid"]')).toBeVisible({ timeout: 20000 });
     await expect(page.locator('[data-intake-clinic-bar="paid"]')).toBeVisible();
     await expect(
-      page.locator('[data-flow-step="1"]').getByRole("heading", { name: /your glp path/i }),
+      page.locator('[data-flow-step="1"]').getByRole("heading", { name: /start your plan preview/i }),
     ).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("visual-C1-paid-intake-input.png"), fullPage: true });
 
@@ -244,7 +248,7 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await expect(page.locator("[data-results-pricing]")).toBeVisible();
     await expect(page.locator("[data-owner-demo-panels]")).toHaveCount(0);
 
-    await page.locator('[data-flow-step="2"]').getByRole("button", { name: /^next step$/i }).click();
+    await page.locator('[data-flow-step="2"]').getByRole("button", { name: /continue to readiness/i }).click();
     await expect(page.getByRole("heading", { name: /almost there/i })).toBeVisible();
     await page.locator('[data-flow-step="3"]').getByRole("button", { name: /yes, roughly/i }).click();
     await page.locator('[data-flow-step="3"]').getByRole("button", { name: /soon \(weeks\)/i }).click();
@@ -255,10 +259,10 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await page.getByLabel(/full name/i).fill(`Paid Patient ${stamp}`);
     await page.getByLabel(/^email$/i).fill(`paid.patient.${stamp}@example.com`);
     await page.getByRole("checkbox").check();
-    await page.getByRole("button", { name: /save my plan/i }).click();
+    await page.getByRole("button", { name: /save and continue/i }).click();
 
-    await expect(page.getByRole("heading", { name: /you're all set/i })).toBeVisible({ timeout: 15000 });
-    await expect(page.getByRole("link", { name: /schedule your consultation/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /your next step is ready/i })).toBeVisible({ timeout: 15000 });
+    await expect(page.getByRole("link", { name: /open scheduling/i })).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("visual-C3-paid-confirmation.png"), fullPage: true });
   });
 
@@ -271,7 +275,7 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await expect(page.locator('[data-intake-mode="paid"]')).toBeVisible({ timeout: 20000 });
     await clickIntakeContinueUntilTransition(page);
     await expect(page.locator('[data-flow-step="2"]')).toBeVisible({ timeout: 25000 });
-    await page.locator('[data-flow-step="2"]').getByRole("button", { name: /^next step$/i }).click();
+    await page.locator('[data-flow-step="2"]').getByRole("button", { name: /continue to readiness/i }).click();
     await expect(page.locator('[data-flow-step="3"]')).toBeVisible();
     await page.locator('[data-flow-step="3"]').getByRole("button", { name: /^previous$/i }).click();
     await expect(page.locator('[data-flow-step="2"]').getByRole("heading", { name: /your glp path/i })).toBeVisible({

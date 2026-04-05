@@ -34,23 +34,23 @@ export default function GlpDemoOwnerPanels({
       <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white p-5 shadow-sm md:p-6">
         <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-slate-100/80 blur-3xl" aria-hidden />
         <p className={glpIntakeUi.kicker}>Owner-only · illustrative</p>
-        <h3 className={`${glpIntakeUi.titleMd} mt-1`}>Traffic clarity usually lifts consult intent</h3>
+        <h3 className={`${glpIntakeUi.titleMd} mt-1`}>Clearer expectations → stronger consult intent</h3>
         <p className={`${glpIntakeUi.body} mt-3`}>
-          Using{" "}
+          Rough example using{" "}
           <span className="font-semibold tabular-nums text-slate-900">{monthlySessions.toLocaleString()}</span>{" "}
-          sessions/mo as a <span className="font-semibold">rough example</span>, a conservative model (~2.2% more
-          bookings if expectations were clearer first) suggests on the order of{" "}
+          sessions/mo: if even a small share of visitors books sooner when cost and timing are clearer first, modeled
+          upside is on the order of{" "}
           <span className="font-semibold tabular-nums text-slate-900">
             ${low.toLocaleString()}–${high.toLocaleString()}/mo
           </span>{" "}
-          in consult value at stake — not a promise; depends on offer and ops.
+          in consult value — not a guarantee; depends on offer and ops.
         </p>
         <p className={`${glpIntakeUi.bodyMuted} mt-3 text-[11px]`}>
           For discussion with {companyName} only. Not medical, legal, or financial advice.
         </p>
         <p className={`${glpIntakeUi.body} mt-4 text-sm`}>
-          <span className="font-semibold text-slate-800">Setup:</span> point your domain, logo, and booking link — most
-          teams ship the live intake in a single sitting.
+          <span className="font-semibold text-slate-800">Setup:</span> your domain, logo, and booking link — most teams
+          ship live in one sitting.
         </p>
       </div>
 
@@ -91,8 +91,7 @@ export default function GlpDemoOwnerPanels({
             style={{ color: brandPrimary }}
             data-demo-owner-cta
           >
-            <span aria-hidden>⚡</span>
-            <span>Activate this intake</span>
+            <span>Activate for {companyName}</span>
           </a>
           <a
             href={`/contact?subject=${encodeURIComponent(`GLPConvert — ${companyName}`)}`}
