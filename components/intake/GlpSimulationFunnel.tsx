@@ -546,7 +546,7 @@ export default function GlpSimulationFunnel() {
 
       <p
         data-intake-trust
-        className={`${glpIntakeUi.column} mb-8 text-center text-[10px] font-medium tracking-wide text-slate-400`}
+        className={`${glpIntakeUi.column} mb-10 text-center text-[10px] font-medium tracking-wide text-slate-400`}
       >
         Secure · Routed to your clinic · General information only
       </p>
@@ -683,7 +683,7 @@ export default function GlpSimulationFunnel() {
           </div>
 
           <div className="mt-8 border-t border-slate-100 pt-8">
-            <p className="mb-4 block text-sm font-medium text-slate-700">Additional preferences (optional)</p>
+            <p className="mb-5 block text-sm font-medium text-slate-700">Additional preferences (optional)</p>
             <details className="rounded-2xl border border-slate-200/90 bg-slate-50/60 px-4 py-4 open:bg-white open:shadow-sm">
             <summary className="cursor-pointer list-none text-sm font-semibold text-slate-800 [&::-webkit-details-marker]:hidden">
               Show optional details

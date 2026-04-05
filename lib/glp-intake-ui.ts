@@ -12,7 +12,8 @@
  * | space-10     | 40px | Rare: long-step section breaks |
  *
  * References: Material Design 3 layout (8dp grid); GOV.UK “spacing between form elements”;
- * USWDS 2.14+ form field spacing; Stripe Checkout field stack rhythm.
+ * USWDS 2.14+ form field spacing; Stripe Checkout field stack rhythm;
+ * Nielsen Norman Group: group related fields with consistent vertical spacing to reduce perceived density.
  */
 export const glpIntakeUi = {
   column: "mx-auto w-full max-w-2xl",
@@ -37,30 +38,28 @@ export const glpIntakeUi = {
     "rounded-2xl border border-slate-200/90 bg-white shadow-[0_2px_6px_rgba(15,23,42,0.04),0_20px_48px_-8px_rgba(15,23,42,0.1)] ring-1 ring-slate-900/[0.04] transition-all duration-300 hover:border-slate-200 hover:shadow-[0_8px_24px_rgba(15,23,42,0.08),0_28px_56px_-12px_rgba(15,23,42,0.12)]",
   panelInCard:
     "relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-[0_2px_12px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/[0.04]",
-  cardPad: "p-6 sm:p-8 md:p-10",
-  cardPadSm: "p-5 md:p-6",
-  cardPadLoose: "p-6 sm:p-8 md:p-10 lg:p-12",
+  /** Step cards: airier padding (product forms: Stripe / Linear use ~32–40px horizontal at md) */
+  cardPad: "p-7 sm:p-9 md:p-10",
+  cardPadSm: "p-6 md:p-7",
+  cardPadLoose: "p-7 sm:p-9 md:p-10 lg:p-12",
 
-  /** Header card: 24px y / 20px x mobile → 32px tablet (no excessive vertical dead space) */
-  intakeHeaderPad: "px-5 py-6 sm:px-8 sm:py-7 md:px-10 md:py-8",
+  /** Marketing header: generous inset like hero CTAs (reference: centered demo cards) */
+  intakeHeaderPad: "px-6 py-8 sm:px-10 sm:py-10 md:px-12 md:py-11",
 
-  /** 32px between major blocks inside a step */
-  stackSection: "space-y-8 md:space-y-8",
-  /** 24px between intro, field groups, footer actions */
-  stackStepForm: "space-y-6 md:space-y-6",
-  stackMd: "space-y-6 md:space-y-6",
-  stackSm: "space-y-4 md:space-y-4",
+  stackSection: "space-y-9 md:space-y-10",
+  /** 32px between intro, field clusters, footer — less cramped than 24px-only stacks */
+  stackStepForm: "space-y-8 md:space-y-9",
+  stackMd: "space-y-7 md:space-y-8",
+  stackSm: "space-y-5 md:space-y-5",
 
-  fieldGroup: "space-y-4",
+  fieldGroup: "space-y-5",
 
   grid2: "grid gap-5 md:grid-cols-2",
-  /** 24px row gap = between logical rows of fields */
-  grid2Form: "grid grid-cols-1 gap-x-5 gap-y-6 md:grid-cols-2 md:items-start md:gap-x-8 md:gap-y-6",
+  grid2Form: "grid grid-cols-1 gap-x-6 gap-y-7 md:grid-cols-2 md:items-start md:gap-x-10 md:gap-y-8",
 
-  /** 12px between segment cells */
-  segmentGrid4: "grid grid-cols-2 gap-3 sm:gap-3",
-  segmentGrid5: "grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-3",
-  segmentGrid3: "grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-3",
+  segmentGrid4: "grid grid-cols-2 gap-3.5 sm:gap-4",
+  segmentGrid5: "grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-4",
+  segmentGrid3: "grid grid-cols-1 gap-3.5 sm:grid-cols-3 sm:gap-4",
 
   kicker: "text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500",
   titleLg: "text-2xl font-bold tracking-tight text-slate-900 md:text-[1.75rem] md:leading-snug",
@@ -69,10 +68,9 @@ export const glpIntakeUi = {
   body: "text-sm leading-relaxed text-slate-600",
   bodyMuted: "text-sm leading-relaxed text-slate-500",
 
-  /** 16px below label before input / segment grid */
-  label: "mb-4 block text-sm font-medium text-slate-800",
-  /** 20px below legend before option row */
-  legendLabel: "mb-5 block text-sm font-medium text-slate-800",
+  /** 20px below label before control — clearer separation from options */
+  label: "mb-5 block text-sm font-medium text-slate-800",
+  legendLabel: "mb-6 block text-sm font-medium text-slate-800",
   control:
     "min-h-[48px] w-full rounded-xl border border-slate-200/95 bg-white px-4 py-3 text-sm text-slate-900 shadow-[0_1px_2px_rgba(15,23,42,0.03)] transition placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15 focus-visible:ring-offset-2",
 
@@ -93,8 +91,7 @@ export const glpIntakeUi = {
   sectionRule:
     "border-t border-slate-100 pt-8 mt-8 first:border-0 first:pt-0 first:mt-0 md:pt-10 md:mt-10",
 
-  /** 40px between readiness questions */
-  readinessStack: "space-y-10 md:space-y-10",
+  readinessStack: "space-y-11 md:space-y-12",
   choiceRow: "flex flex-wrap gap-3",
   choiceBase:
     "rounded-xl border px-4 py-2.5 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/20 focus-visible:ring-offset-2",
