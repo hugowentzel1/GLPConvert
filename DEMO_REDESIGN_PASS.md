@@ -4,12 +4,13 @@ Goals: cold-email / DM demos should feel **clinic-owned**, minimize vendor chrom
 
 ## Shipped in this pass
 
-- **No site header on `/intake`:** `ConditionalSharedNav` + `app/layout.tsx` use `ConditionalSharedNav`; `/intake` excluded so Pricing / Partners / Launch strip does not appear above the funnel.
+- **No site header on `/intake`:** `ConditionalSharedNav` excludes `/intake` so marketing nav never appears above the funnel.
+- **Marketing home `/?demo=1`:** header keeps **Intake demo** + **More** (Pricing / Partners / Support / About) + **Activate your intake**; vendor subtitle shows **Branded preview** instead of the product name. Non-demo pages use a **Legal & help** menu instead of three top-level links.
 - **Clinic bar (demo + paid):** logo/monogram, clinic name, `Preview for {clinic}` (demo) vs `Your next step — before the consult` (paid). `data-intake-clinic-bar="demo"|"paid"` for tests.
 - **Hero:** short value headline; demo production URL hints in `<details>`.
-- **Trust:** replaced large “Trust & operations” grid with one muted line (`IntakeTrustRibbon`).
+- **Trust:** one muted microline inside the funnel column (`data-intake-trust` in `GlpSimulationFunnel`), directly under the stepper — not a separate ribbon above the form.
 - **Footer:** shorter disclosure; `data-intake-attribution` on vendor line; fewer links.
-- **Funnel:** tighter step-1 and results copy; trajectory before price; results primary CTA **Next step**; readiness title **Almost there**; demo skip in collapsed `<details>`; building overlay refined.
+- **Funnel:** tighter step-1 and results copy; path → expectations → price → trajectory in `<details>`; results primary CTA **Next step**; readiness title **Almost there**; demo skip in collapsed `<details>`; building overlay refined.
 - **Owner panels (demo only):** shorter impact + before/after + **Activate this intake** CTA.
 - **Tests:** `glp-branded-e2e-visual.spec.ts` — assert no `main-site-nav` on intake; **F** mobile screenshots; selectors updated for new CTA/headings.
 

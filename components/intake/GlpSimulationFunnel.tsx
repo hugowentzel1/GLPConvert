@@ -502,8 +502,15 @@ export default function GlpSimulationFunnel() {
     >
       <IntakeStepper step={step} brandFill={brandFill} building={building} />
 
+      <p
+        data-intake-trust
+        className={`${glpIntakeUi.column} mb-2 text-center text-[10px] font-medium uppercase tracking-[0.14em] text-slate-400`}
+      >
+        TLS · Routed to your clinic · General information only
+      </p>
+
       <p className={`${glpIntakeUi.column} ${glpIntakeUi.bodyMuted} mb-7 text-center text-xs md:text-sm`}>
-        Overview → light preferences → save or book. General information only.
+        Overview → preferences → save or book.
       </p>
 
       {step === 1 && (

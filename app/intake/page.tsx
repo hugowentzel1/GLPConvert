@@ -3,7 +3,6 @@ import GlpSimulationFunnel from "@/components/intake/GlpSimulationFunnel";
 import AttributionPixels from "@/components/attribution/AttributionPixels";
 import IntakePageFrame from "@/components/intake/IntakePageFrame";
 import IntakePageHeader from "@/components/intake/IntakePageHeader";
-import IntakeTrustRibbon from "@/components/intake/IntakeTrustRibbon";
 import { PRODUCT_NAME } from "@/lib/product-identity";
 import type { Metadata } from "next";
 
@@ -41,7 +40,6 @@ export default function IntakePage({
   return (
     <IntakePageFrame demoServerHint={demo}>
       <IntakePageHeader />
-      <IntakeTrustRibbon />
       <Suspense
         fallback={
           <div className="mx-auto max-w-lg text-center text-sm text-slate-500">Loading intake…</div>

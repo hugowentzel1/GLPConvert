@@ -210,44 +210,89 @@ export default function SharedNavigation() {
                 {navTitle}
               </h1>
               <p className="text-xs font-semibold text-gray-500 tracking-widest uppercase">
-                {b.enabled ? 'Branded intake' : PRODUCT_NAME}
+                {b.enabled ? "Branded intake" : isDemo ? "Branded preview" : PRODUCT_NAME}
               </p>
             </div>
           </Link>
           
-          <nav className="hidden md:flex items-center space-x-12">
-            {/* Demo mode: Show Pricing/Partners/Support + Activation CTA */}
+          <nav
+            className="hidden md:flex items-center gap-6 text-sm"
+            aria-label={isDemo ? "Demo navigation" : "Site links"}
+          >
             {isDemo ? (
               <>
-                <Link href={createUrlWithParams("/intake")} className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">
+                <Link
+                  href={createUrlWithParams("/intake")}
+                  className="font-medium text-gray-600 transition-colors hover:text-[var(--brand-primary)]"
+                >
                   Intake demo
                 </Link>
-                <Link href={createUrlWithParams("/pricing")} className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">Pricing</Link>
-                <Link href={createUrlWithParams("/partners")} className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">Partners</Link>
-                <Link href={createUrlWithParams("/support")} className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">Support</Link>
-                <Link href={createUrlWithParams("/about")} className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">
-                  About
-                </Link>
-                <button 
+                <details className="group relative" data-nav-demo-more>
+                  <summary className="cursor-pointer list-none rounded-lg px-2 py-1.5 font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)] [&::-webkit-details-marker]:hidden">
+                    More
+                  </summary>
+                  <div className="absolute right-0 top-full z-50 mt-2 flex min-w-[200px] flex-col gap-0.5 rounded-xl border border-gray-200 bg-white py-2 shadow-lg">
+                    <Link
+                      href={createUrlWithParams("/pricing")}
+                      className="px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)]"
+                    >
+                      Pricing
+                    </Link>
+                    <Link
+                      href={createUrlWithParams("/partners")}
+                      className="px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)]"
+                    >
+                      Partners
+                    </Link>
+                    <Link
+                      href={createUrlWithParams("/support")}
+                      className="px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)]"
+                    >
+                      Support
+                    </Link>
+                    <Link
+                      href={createUrlWithParams("/about")}
+                      className="px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)]"
+                    >
+                      About
+                    </Link>
+                  </div>
+                </details>
+                <button
+                  type="button"
                   onClick={handleLaunchClick}
-                  className="btn-primary ml-12 inline-flex items-center justify-center"
+                  className="btn-primary ml-2 inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold"
+                  data-demo-nav-activate
                 >
-                  <span className="mr-3">⚡</span>
-                  <span>Launch Your Branded Version Now</span>
+                  Activate your intake
                 </button>
               </>
             ) : (
-              <div className="flex items-center gap-8 text-sm">
-                <Link href="/support" className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">
-                  Help
-                </Link>
-                <Link href="/privacy" className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">
-                  Privacy
-                </Link>
-                <Link href="/about" className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium">
-                  About
-                </Link>
-              </div>
+              <details className="group relative">
+                <summary className="cursor-pointer list-none rounded-lg px-2 py-1.5 font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)] [&::-webkit-details-marker]:hidden">
+                  Legal & help
+                </summary>
+                <div className="absolute right-0 top-full z-50 mt-2 flex min-w-[180px] flex-col gap-0.5 rounded-xl border border-gray-200 bg-white py-2 shadow-lg">
+                  <Link
+                    href="/support"
+                    className="px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)]"
+                  >
+                    Help
+                  </Link>
+                  <Link
+                    href="/privacy"
+                    className="px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)]"
+                  >
+                    Privacy
+                  </Link>
+                  <Link
+                    href="/about"
+                    className="px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)]"
+                  >
+                    About
+                  </Link>
+                </div>
+              </details>
             )}
           </nav>
         </div>

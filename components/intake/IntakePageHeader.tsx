@@ -158,14 +158,12 @@ function IntakePageHeaderInner() {
         </div>
 
         <h1 className="mt-5 text-balance text-xl font-bold tracking-tight text-slate-900 md:text-2xl">
-          {demo
-            ? "This is how your traffic converts before the consult"
-            : "Clarity before you book"}
+          {demo ? "How traffic converts before the consult" : "Before you book"}
         </h1>
         <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-slate-600">
           {demo
-            ? "Same flow as your live link — your brand, your booking handoff. Patients see process, typical ranges, and a calm next step."
-            : "A short, branded path: what to expect, typical ranges, then your team’s scheduling link — general information only."}
+            ? "Your brand and booking link — patients see the path, typical ranges, and a clear next step."
+            : "What to expect, typical ranges, then your scheduling link — general information only."}
         </p>
 
         {demo ? (

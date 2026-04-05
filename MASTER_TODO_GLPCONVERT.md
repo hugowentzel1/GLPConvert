@@ -44,6 +44,7 @@ Engineering must not diverge demo and paid flows structurally—only demo overla
 |----|------|--------|
 | **R040** | **`/intake`**: hide **`SharedNavigation`** (dedicated lander); slim trust line; footer holds vendor line + minimal legal; demo/paid shared **clinic bar** (`data-intake-clinic-bar`); hero copy sharpened; funnel copy + section order; owner panels tightened; Playwright **F** (mobile + no nav) | **Done** — see **`DEMO_REDESIGN_PASS.md`** |
 | **R043** | **Results / simulation:** trust strip + hero split; path → expectations cards → **price** (Starts around + range) → trajectory in **`<details>`** (compact chart); softer `pathLabel` / phases; focus-visible on intake controls; marketing nav demo disclaimer removed; dashboard `/c/[handle]` simplified to metrics + intake link + leads; docs **`UI_COPY_REWRITE.md`**, **`UI_POLISH_CHECKLIST.md`**; Playwright `data-results-*` | **Done** |
+| **R044** | **Marketing nav + intake trust placement:** `/?demo=1` header slimmed (Intake demo + **More** dropdown + **Activate your intake**); paid marketing utility links in **Legal & help** `<details>`; nav subtitle **Branded preview** in demo; trust microline moved into **`GlpSimulationFunnel`** (removed `IntakeTrustRibbon`); hero lines shortened again | **Done** |
 | **R041** | **HUMAN:** Counsel pass on shortened footer disclaimer; confirm FDA-safe wording on funnel | Open |
 | **R042** | Dashboard `/c/*` simplification (metrics clutter) if still noisy | Backlog |
 

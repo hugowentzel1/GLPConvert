@@ -4,7 +4,7 @@ Living index of **patient-facing** and **demo-owner** strings. Prefer short, cal
 
 | Surface | Location | Notes |
 |--------|----------|--------|
-| Intake frame / trust line | `IntakeTrustRibbon.tsx` | TLS + routing + not medical advice |
+| Intake trust microline | `GlpSimulationFunnel.tsx` (`data-intake-trust`) | TLS + routing + general information (under stepper) |
 | Intake header / hero | `IntakePageHeader.tsx` | Clinic bar; demo vs paid sublines |
 | Stepper | `GlpSimulationFunnel.tsx` → `IntakeStepper` | Progress labels; building = not a step |
 | Step 1 form | `GlpSimulationFunnel.tsx` | Field labels; Continue |
