@@ -39,7 +39,7 @@ function IntakePageFrameInner({
       style={backgroundStyle}
       data-intake-mode={demo ? "demo" : "paid"}
     >
-      <div className="mx-auto w-full max-w-2xl space-y-10 md:space-y-12">{children}</div>
+      <div className="mx-auto w-full max-w-2xl space-y-8 md:space-y-10">{children}</div>
       <IntakePageFooter />
     </main>
   );
@@ -59,7 +59,7 @@ export default function IntakePageFrame({
           className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100 px-4 py-8 sm:px-6 md:px-8 md:py-10"
           data-intake-mode={demoServerHint ? "demo" : "paid"}
         >
-          <div className="mx-auto w-full max-w-2xl space-y-10 md:space-y-12">{children}</div>
+          <div className="mx-auto w-full max-w-2xl space-y-8 md:space-y-10">{children}</div>
         </main>
       }
     >
