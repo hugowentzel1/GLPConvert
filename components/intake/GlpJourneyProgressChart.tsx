@@ -5,24 +5,25 @@ import {
   Area,
   AreaChart,
   CartesianGrid,
-  ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
 
-export type WeightChartPoint = { label: string; weight: number; month: number };
+export type JourneyProgressPoint = { label: string; progress: number; month: number };
 
-export default function GlpWeightTrajectoryChart({
+/**
+ * Upward “journey momentum” curve: % of illustrative progress toward the stated goal over time.
+ * Psychologically optimistic vs. a falling weight line — still educational, not a guarantee.
+ */
+export default function GlpJourneyProgressChart({
   points,
   brandFill,
-  goalWeight,
   variant = "default",
 }: {
-  points: WeightChartPoint[];
+  points: JourneyProgressPoint[];
   brandFill: string;
-  goalWeight: number;
   variant?: "default" | "compact";
 }) {
   const [animate, setAnimate] = useState(true);
@@ -35,15 +36,9 @@ export default function GlpWeightTrajectoryChart({
   }, []);
 
   const gid = useId().replace(/:/g, "");
-  const gradId = `glpWtGrad-${gid}`;
+  const gradId = `glpJourneyGrad-${gid}`;
 
-  const domain = useMemo(() => {
-    const weights = points.map((p) => p.weight);
-    const min = Math.min(goalWeight, ...weights);
-    const max = Math.max(...weights);
-    const pad = Math.max(4, Math.round((max - min) * 0.08));
-    return [Math.floor(min - pad), Math.ceil(max + pad)] as [number, number];
-  }, [points, goalWeight]);
+  const domain = useMemo((): [number, number] => [0, 100], []);
 
   if (points.length < 2) return null;
 
@@ -59,21 +54,21 @@ export default function GlpWeightTrajectoryChart({
       {!compact ? (
         <>
           <p className="mb-1 px-2 text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
-            Illustrative path preview
+            Journey momentum (illustrative)
           </p>
           <p className="mb-3 px-2 text-center text-xs text-slate-500">
-            Illustrative preview — not a forecast. Your provider sets pace and targets.
+            Progress toward your stated goal over time — not a guarantee. Your provider sets pace and targets.
           </p>
         </>
       ) : null}
       <div className={compact ? "h-[200px] w-full sm:h-[220px]" : "h-[260px] w-full sm:h-[300px]"}>
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={points} margin={{ top: 8, right: 8, left: -12, bottom: 4 }}>
+          <AreaChart data={points} margin={{ top: 8, right: 8, left: -8, bottom: 4 }}>
             <defs>
               <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={brandFill} stopOpacity={0.45} />
-                <stop offset="55%" stopColor={brandFill} stopOpacity={0.12} />
-                <stop offset="100%" stopColor={brandFill} stopOpacity={0.02} />
+                <stop offset="0%" stopColor={brandFill} stopOpacity={0.5} />
+                <stop offset="50%" stopColor={brandFill} stopOpacity={0.15} />
+                <stop offset="100%" stopColor={brandFill} stopOpacity={0.03} />
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="4 6" vertical={false} stroke="#e2e8f0" />
@@ -89,8 +84,8 @@ export default function GlpWeightTrajectoryChart({
               tick={{ fontSize: 10, fill: "#64748b" }}
               axisLine={false}
               tickLine={false}
-              tickFormatter={(v) => `${v}`}
-              width={36}
+              tickFormatter={(v) => `${v}%`}
+              width={40}
             />
             <Tooltip
               contentStyle={{
@@ -99,13 +94,12 @@ export default function GlpWeightTrajectoryChart({
                 fontSize: 12,
                 boxShadow: "0 8px 24px rgba(15,23,42,0.08)",
               }}
-              formatter={(value: number) => [`${value} lbs`, "Est. weight"]}
+              formatter={(value: number) => [`${value}%`, "Illustrative progress"]}
               labelFormatter={(label) => label}
             />
-            <ReferenceLine y={goalWeight} stroke="#94a3b8" strokeDasharray="5 5" />
             <Area
               type="monotone"
-              dataKey="weight"
+              dataKey="progress"
               stroke={brandFill}
               strokeWidth={2.5}
               fill={`url(#${gradId})`}

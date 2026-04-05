@@ -145,13 +145,16 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await expect(page.locator('[data-flow-step="2"]')).toBeVisible({ timeout: 35000 });
     await expect(page.getByText(/Step 2 of 5/i)).toBeVisible();
     await expect(page.locator('[data-flow-step="2"]').getByRole("heading", { name: /your glp path/i })).toBeVisible();
-    await expect(page.getByText(/typical monthly range/i)).toBeVisible();
+    await expect(
+      page.locator("[data-results-pricing]").getByText(/typical monthly range/i),
+    ).toBeVisible();
     await expect(page.locator("[data-results-trust-strip]")).toBeVisible();
     await expect(page.locator("[data-results-path]")).toBeVisible();
     await expect(page.locator("[data-results-expectations]")).toBeVisible();
     await expect(page.locator("[data-results-pricing]")).toBeVisible();
     await expect(page.locator("[data-results-trajectory]")).toBeVisible();
     await expect(page.locator("[data-results-chart]")).toBeVisible();
+    await expect(page.getByText(/journey momentum/i)).toBeVisible();
     await expect(page.locator("[data-results-summary]")).toBeVisible();
     await expect(page.getByText(/starts around/i)).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("visual-A3-results.png"), fullPage: true });
@@ -243,7 +246,9 @@ test.describe("GLPConvert branded E2E (visual)", () => {
       timeout: 25000,
     });
     await page.screenshot({ path: testInfo.outputPath("visual-C2-paid-results.png"), fullPage: true });
-    await expect(page.getByText(/typical monthly range/i)).toBeVisible();
+    await expect(
+      page.locator("[data-results-pricing]").getByText(/typical monthly range/i),
+    ).toBeVisible();
     await expect(page.locator("[data-results-trust-strip]")).toBeVisible();
     await expect(page.locator("[data-results-pricing]")).toBeVisible();
     await expect(page.locator("[data-owner-demo-panels]")).toHaveCount(0);

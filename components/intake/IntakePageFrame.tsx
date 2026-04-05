@@ -35,7 +35,7 @@ function IntakePageFrameInner({
 
   return (
     <main
-      className="min-h-screen px-4 py-10 md:py-16"
+      className="min-h-screen px-4 py-8 sm:px-6 md:py-12"
       style={backgroundStyle}
       data-intake-mode={demo ? "demo" : "paid"}
     >
@@ -56,7 +56,7 @@ export default function IntakePageFrame({
     <Suspense
       fallback={
         <main
-          className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100 px-4 py-10 md:py-16"
+          className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100 px-4 py-8 sm:px-6 md:py-12"
           data-intake-mode={demoServerHint ? "demo" : "paid"}
         >
           {children}

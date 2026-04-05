@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { useSearchParams } from "next/navigation";
 import GlpDemoOwnerPanels from "@/components/intake/GlpDemoOwnerPanels";
-import GlpWeightTrajectoryChart from "@/components/intake/GlpWeightTrajectoryChart";
+import GlpJourneyProgressChart from "@/components/intake/GlpJourneyProgressChart";
 import { persistUtmFromSearchParams, getMergedUtm } from "@/lib/glp-attribution";
 import { resolveGlpTenantSlug } from "@/lib/glp-tenant-slug";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
@@ -186,9 +186,8 @@ function IntakeStepper({
     building || step <= 1 ? 0 : ((step - 1) / (TOTAL_FLOW_STEPS - 1)) * 100;
   const labelIdx = building ? 0 : step - 1;
   return (
-    <div className={`${glpIntakeUi.column} mb-7`} data-intake-stepper>
-      <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
-        <p className={glpIntakeUi.kicker}>Progress</p>
+    <div className={`${glpIntakeUi.column} mb-6`} data-intake-stepper>
+      <div className="flex justify-end">
         <p className="text-xs font-medium text-slate-600">
           {building ? (
             <>
@@ -197,13 +196,13 @@ function IntakeStepper({
           ) : (
             <>
               Step {step} of {TOTAL_FLOW_STEPS} ·{" "}
-              <span className="text-slate-900">{STEP_LABELS[labelIdx]}</span>
+              <span className="font-semibold text-slate-900">{STEP_LABELS[labelIdx]}</span>
             </>
           )}
         </p>
       </div>
       <div
-        className="mt-3 h-2.5 overflow-hidden rounded-full bg-slate-100 ring-1 ring-slate-900/[0.06]"
+        className="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-100 ring-1 ring-slate-900/[0.06]"
         role="progressbar"
         aria-valuenow={building ? 1 : step}
         aria-valuemin={1}
@@ -482,18 +481,20 @@ export default function GlpSimulationFunnel() {
       ? `${glpIntakeUi.choiceBase} border-transparent text-white shadow-sm`
       : `${glpIntakeUi.choiceBase} ${glpIntakeUi.choiceIdle}`;
 
-  const weightChartPoints = useMemo(() => {
+  /** Upward illustrative “momentum” — % progress toward stated weight goal (not a medical forecast). */
+  const journeyProgressPoints = useMemo(() => {
     const rows = output.projectedMonthlyRange;
-    if (!rows.length) return [];
+    const loss = input.currentWeight - input.goalWeight;
+    if (!rows.length || loss <= 0) return [];
     return [
-      { label: "Start", weight: input.currentWeight, month: 0 },
+      { label: "Start", progress: 0, month: 0 },
       ...rows.map((m) => ({
-        label: `Month ${m.month}`,
-        weight: m.mid,
+        label: `M${m.month}`,
+        progress: Math.min(100, Math.round(((input.currentWeight - m.mid) / loss) * 100)),
         month: m.month,
       })),
     ];
-  }, [input.currentWeight, output.projectedMonthlyRange]);
+  }, [input.currentWeight, input.goalWeight, output.projectedMonthlyRange]);
 
   return (
     <div
@@ -504,13 +505,9 @@ export default function GlpSimulationFunnel() {
 
       <p
         data-intake-trust
-        className={`${glpIntakeUi.column} mb-2 text-center text-[10px] font-medium uppercase tracking-[0.14em] text-slate-400`}
+        className={`${glpIntakeUi.column} mb-6 text-center text-[10px] font-medium tracking-wide text-slate-400`}
       >
-        TLS · Routed to your clinic · General information only
-      </p>
-
-      <p className={`${glpIntakeUi.column} ${glpIntakeUi.bodyMuted} mb-7 text-center text-xs md:text-sm`}>
-        Overview → preferences → save or book.
+        Secure · Routed to your clinic · General information only
       </p>
 
       {step === 1 && (
@@ -767,14 +764,9 @@ export default function GlpSimulationFunnel() {
             </div>
           </header>
 
-          {weightChartPoints.length >= 2 ? (
+          {journeyProgressPoints.length >= 2 ? (
             <div className="mt-6">
-              <GlpWeightTrajectoryChart
-                points={weightChartPoints}
-                brandFill={brandFill}
-                goalWeight={input.goalWeight}
-                variant="default"
-              />
+              <GlpJourneyProgressChart points={journeyProgressPoints} brandFill={brandFill} variant="default" />
             </div>
           ) : null}
 
@@ -938,7 +930,7 @@ export default function GlpSimulationFunnel() {
             </summary>
             <div className="mt-4 space-y-3 pb-2">
               <p className="text-xs leading-relaxed text-slate-500">
-                Same numbers as the chart above — shown as checkpoints. Your provider sets targets.
+                Checkpoints along the illustrative path. Your provider sets targets.
               </p>
               <div className="flex flex-wrap gap-2">
                 {output.projectedMonthlyRange.slice(0, 6).map((m) => (
@@ -1255,7 +1247,7 @@ export default function GlpSimulationFunnel() {
                 {nextStep === "book"
                   ? effectiveBookingUrl
                     ? "Open scheduling"
-                    : "Book consult"
+                    : "Get a scheduling link"
                   : nextStep === "callback"
                     ? "Request callback"
                     : "Preview saved plan"}

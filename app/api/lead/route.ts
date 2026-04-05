@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+/** GLP leads persist via `storeLead` → Supabase (`@/src/lib/db-leads`). */
 import { storeLead, storeLeadFallback, getTenantByHandle, TENANT_FIELDS } from "@/src/lib/storage";
 import { checkRateLimit } from "@/src/lib/ratelimit";
 import { ENV } from "@/src/config/env";

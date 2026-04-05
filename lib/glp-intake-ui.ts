@@ -1,19 +1,29 @@
 /**
- * GLP intake funnel — single spacing + surface scale for a cohesive B2B look.
- * Scale: 4 (xs) · 5 (sm) · 6 (md) · 8 (section) · 10 (card padding)
+ * GLP intake funnel — spacing on an 8px grid (4·8·12·16·24·32·40·48).
+ * Surfaces tuned for premium white-label SaaS (calm borders, soft lift).
  */
 export const glpIntakeUi = {
-  /** Main column width — readable on desktop, full on mobile */
+  /** Main column — max readable width; side padding from parent */
   column: "mx-auto w-full max-w-2xl",
+
+  /** 8pt rhythm helpers (Tailwind = ×4px) */
+  space: {
+    xs: "gap-1", // 4
+    sm: "gap-2", // 8
+    md: "gap-3", // 12
+    section: "gap-4", // 16
+    block: "gap-6", // 24
+    major: "gap-8", // 32
+  } as const,
 
   /** Primary surface — calm elevation + hover lift (white-label SaaS norm) */
   card:
     "rounded-2xl border border-slate-200/90 bg-white shadow-[0_2px_4px_rgba(15,23,42,0.04),0_16px_40px_rgba(15,23,42,0.07)] transition-shadow duration-300 hover:shadow-[0_8px_16px_rgba(15,23,42,0.05),0_28px_48px_rgba(15,23,42,0.1)]",
-  cardPad: "p-8 md:p-10",
-  cardPadSm: "p-6 md:p-8",
+  cardPad: "p-6 md:p-8",
+  cardPadSm: "p-5 md:p-6",
 
   /** Major sections inside one card (results, readiness) */
-  stackSection: "space-y-7",
+  stackSection: "space-y-6",
   /** Step 1: even rhythm between intro copy, field grid, actions */
   stackStepForm: "space-y-5",
   stackMd: "space-y-6",
@@ -53,7 +63,7 @@ export const glpIntakeUi = {
   formNavRowRule:
     "mt-8 flex flex-col gap-3 border-t border-slate-100 pt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-4",
   chip: "rounded-full bg-slate-100 px-3.5 py-1 text-xs font-medium text-slate-700",
-  sectionRule: "border-t border-slate-100 pt-7 first:border-0 first:pt-0 first:mt-0 mt-7",
+  sectionRule: "border-t border-slate-100 pt-6 first:border-0 first:pt-0 first:mt-0 mt-6",
 
   /** Readiness fieldsets — uniform 32px between questions */
   readinessStack: "space-y-8",

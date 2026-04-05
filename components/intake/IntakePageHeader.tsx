@@ -136,25 +136,16 @@ function ClinicTopBar({
 }) {
   return (
     <div
-      className="mb-5 flex flex-col gap-4 rounded-2xl border bg-white/95 px-4 py-3 shadow-[0_1px_0_rgba(15,23,42,0.04)] ring-1 ring-slate-900/[0.04] backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:px-5"
-      style={{ borderColor: `${accent}30` }}
+      className="mb-6 flex flex-col gap-3 rounded-xl border border-slate-200/80 bg-white/90 px-3 py-2.5 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:px-4 sm:py-3"
+      style={{ borderColor: `${accent}24` }}
       data-intake-clinic-bar={demo ? "demo" : "paid"}
     >
-      <div className="flex min-w-0 flex-1 items-center gap-3">
+      <div className="flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3">
         <BrandMark logoUrl={logoUrl} companyLabel={companyLabel} accent={accent} size="sm" />
         <div className="min-w-0 text-left">
-          <p className="truncate text-base font-semibold tracking-tight text-slate-900">{companyLabel}</p>
-          <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-slate-500">
-            {demo ? (
-              <>
-                Preview for <span className="font-semibold text-slate-600">{companyLabel}</span>
-                <span className="mt-0.5 block font-normal normal-case tracking-normal text-slate-500">
-                  Activation-ready for your site
-                </span>
-              </>
-            ) : (
-              "Your next step — before the consult"
-            )}
+          <p className="truncate text-sm font-semibold tracking-tight text-slate-900 sm:text-base">{companyLabel}</p>
+          <p className="text-[11px] leading-snug text-slate-500">
+            {demo ? "Preview ready for your clinic" : "Clarity before you schedule"}
           </p>
         </div>
       </div>
@@ -179,36 +170,26 @@ function IntakePageHeaderInner() {
       <ClinicTopBar demo={demo} companyLabel={companyLabel} logoUrl={logoUrl} accent={accent} />
 
       <div
-        className="relative overflow-hidden rounded-3xl border bg-white px-5 py-7 text-center shadow-[0_2px_8px_rgba(15,23,42,0.04),0_24px_48px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/[0.04] md:px-8 md:py-8"
+        className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white px-5 py-6 text-center shadow-sm md:px-8 md:py-8"
         style={{
-          borderColor: `${accent}32`,
-          boxShadow: `0 2px 8px rgba(15,23,42,0.04), 0 24px 48px rgba(15,23,42,0.06), 0 0 0 1px ${accent}12`,
+          boxShadow: `0 1px 0 rgba(15,23,42,0.04), 0 16px 40px -12px rgba(15,23,42,0.07), 0 0 0 1px ${accent}10`,
         }}
       >
         <div
-          className="absolute inset-x-0 top-0 h-1 rounded-t-3xl"
+          className="absolute inset-x-0 top-0 h-0.5 rounded-t-2xl"
           style={{
             background: `linear-gradient(90deg, ${accent} 0%, ${accent2} 55%, ${accent} 100%)`,
           }}
           aria-hidden
         />
-        <div
-          className="pointer-events-none absolute -left-20 -top-20 h-44 w-44 rounded-full opacity-[0.06] blur-3xl"
-          style={{ backgroundColor: accent }}
-          aria-hidden
-        />
 
-        <div className="relative flex justify-center pt-0.5">
-          <BrandMark logoUrl={logoUrl} companyLabel={companyLabel} accent={accent} size="lg" />
-        </div>
-
-        <h1 className="mt-5 text-balance text-xl font-bold tracking-tight text-slate-900 md:text-2xl">
-          {demo ? "How traffic converts before the consult" : "Before you book"}
+        <h1 className="text-balance text-xl font-bold tracking-tight text-slate-900 md:text-2xl">
+          {demo ? "The patient path your traffic sees" : "Path, range, then scheduling"}
         </h1>
-        <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-slate-600">
+        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600">
           {demo
-            ? "Your brand and booking link — patients see the path, typical ranges, and a clear next step."
-            : "What to expect, typical ranges, then your scheduling link — general information only."}
+            ? "Branded steps: expectations, cost band, readiness — then your booking link."
+            : "Short, calm steps — general information only, not medical advice."}
         </p>
 
         {demo ? (
