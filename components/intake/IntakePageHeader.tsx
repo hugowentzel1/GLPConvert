@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 import { isIntakeDemoMode } from "@/lib/glp-intake-demo-mode";
+import { LAUNCH_BRANDED_CTA_LABEL } from "@/lib/product-identity";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
 
 const DEFAULT_DEMO_ACCENT = "#0f172a";
@@ -113,21 +114,18 @@ function DemoHeaderActions({
       </span>
       <motion.a
         href={`/pricing?company=${encodeURIComponent(companyLabel)}`}
-        className={`${glpIntakeUi.primaryBtn} relative w-full !min-h-[56px] !flex-row !items-center !justify-start !gap-3 !rounded-full !py-3 !pl-4 !pr-5 !shadow-md ring-offset-white`}
+        className={`${glpIntakeUi.primaryBtn} relative w-full !inline-flex !min-h-[52px] !flex-row !items-center !justify-center !gap-0 !rounded-xl !px-5 !py-3.5 !shadow-md ring-offset-white`}
         style={{ backgroundColor: accent }}
         data-demo-activate-intake
         data-intake-hero-activate
-        aria-label={`Activate GLPConvert for ${companyLabel}`}
+        aria-label={LAUNCH_BRANDED_CTA_LABEL}
         {...hover.primary}
       >
-        <span className="relative z-10 shrink-0 text-[22px] leading-none" aria-hidden>
+        <span className="relative z-10 mr-3 shrink-0 text-xl leading-none sm:text-2xl" aria-hidden>
           ⚡
         </span>
-        <span className="relative z-10 flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 text-center">
-          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/95">Activate</span>
-          <span className="line-clamp-2 max-w-[16rem] text-sm font-semibold leading-snug tracking-tight text-white">
-            {companyLabel}
-          </span>
+        <span className="relative z-10 text-center text-sm font-semibold leading-snug sm:text-base">
+          {LAUNCH_BRANDED_CTA_LABEL}
         </span>
       </motion.a>
 

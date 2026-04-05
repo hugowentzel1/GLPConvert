@@ -7,6 +7,9 @@ export const PRODUCT_NAME = "GLPConvert";
 export const PRODUCT_TAGLINE =
   "White-label pre-consult conversion for medical weight-loss programs";
 
+/** Primary checkout / demo CTA — aligned with marketing home and legacy Sunspire demo */
+export const LAUNCH_BRANDED_CTA_LABEL = "Launch Your Branded Version Now" as const;
+
 /** Shown when demo mode is on and no clinic brand replaces the platform line */
 export const PLATFORM_DISPLAY_NAME = `${PRODUCT_NAME} — a product of ${PARENT_COMPANY_LEGAL_NAME}`;
 

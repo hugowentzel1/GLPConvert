@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
+import { useMemo, type CSSProperties } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useBrandTakeover } from "@/src/brand/useBrandTakeover";
 import { useCountdown } from "@/src/demo/useCountdown";
 import { usePreviewQuota } from "@/src/demo/usePreviewQuota";
 import { isIntakeDemoMode } from "@/lib/glp-intake-demo-mode";
-import { PRODUCT_NAME } from "@/lib/product-identity";
+import { LAUNCH_BRANDED_CTA_LABEL, PRODUCT_NAME } from "@/lib/product-identity";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 
 const INTAKE_TAGLINE = "Medical weight-loss intake";
@@ -31,6 +31,10 @@ function useIntakeDemoHover(reduceMotion: boolean) {
   };
 }
 
+/**
+ * Intake site chrome: mirrors `src/demo/DemoChrome.tsx` `DemoBanner` preview strip + main bar layout,
+ * without Pricing / Partners / Support (intake-only). Uses CSS `var(--brand-primary)` like the home demo.
+ */
 export default function IntakeDemoSiteHeader() {
   const sp = useSearchParams();
   const reduceMotion = useReducedMotion();
@@ -43,6 +47,13 @@ export default function IntakeDemoSiteHeader() {
   const { primaryHex } = useMemo(() => parseGlpIntakeQueryBranding(sp), [sp]);
   const accent = primaryHex || "#0f172a";
   const hover = useIntakeDemoHover(reduceMotion);
+
+  const brandVarStyle = useMemo(
+    (): CSSProperties => ({
+      ["--brand-primary" as string]: accent,
+    }),
+    [accent],
+  );
 
   const homeHref = useMemo(() => {
     const q = new URLSearchParams();
@@ -60,63 +71,154 @@ export default function IntakeDemoSiteHeader() {
     <header
       className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-sm backdrop-blur-md"
       data-intake-site-header
+      style={brandVarStyle}
     >
       {demo && b.enabled ? (
-        <div className="border-b border-slate-100 bg-slate-50/90">
-          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-2 px-4 py-2 sm:justify-between">
-            <span
-              className="inline-flex max-w-full items-center rounded-full border px-3 py-1 text-xs font-semibold text-slate-700"
+        <div
+          style={{
+            background: "linear-gradient(180deg, #ffffff 0%, #fafbfc 100%)",
+            borderBottom: "1px solid #e5e7eb",
+            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
+          }}
+        >
+          {/* Mobile — same structure as DemoBanner */}
+          <div className="block px-4 py-3 md:hidden">
+            <div className="flex flex-col items-center gap-2.5 text-center">
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  padding: "5px 12px",
+                  background: "color-mix(in srgb, var(--brand-primary, #0f172a) 10%, white)",
+                  borderRadius: 6,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  color: "var(--brand-primary, #0f172a)",
+                  letterSpacing: "-0.01em",
+                  lineHeight: "1.4",
+                }}
+              >
+                {b.brand} Preview
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 8,
+                  fontSize: 12,
+                  color: "#6B7280",
+                  fontWeight: 500,
+                  lineHeight: "1.5",
+                  flexWrap: "wrap",
+                }}
+              >
+                <span style={{ whiteSpace: "nowrap" }}>
+                  {remaining} {remaining === 1 ? "run" : "runs"} left
+                </span>
+                <span style={{ color: "#D1D5DB", fontSize: 10 }}>•</span>
+                <span style={{ fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
+                  Expires {countdown.days}d {countdown.hours}h
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop — same row as DemoBanner (preview box + runs; no copy/dismiss on intake) */}
+          <div
+            className="hidden md:flex"
+            style={{
+              flexWrap: "wrap",
+              gap: 16,
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "14px 20px",
+            }}
+          >
+            <div
               style={{
-                borderColor: `${accent}33`,
-                backgroundColor: `${accent}0f`,
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 12,
+                alignItems: "center",
+                minWidth: 0,
+                flex: "1 1 auto",
               }}
+              className="justify-start"
             >
-              <span className="truncate">
-                Exclusive preview for {b.brand} — expires in {countdown.days}d {countdown.hours.toString().padStart(2, "0")}:
-                {countdown.minutes.toString().padStart(2, "0")}:{countdown.seconds.toString().padStart(2, "0")}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "8px 14px",
+                  background: "color-mix(in srgb, var(--brand-primary, #0f172a) 8%, white)",
+                  borderRadius: 8,
+                  border: "1px solid color-mix(in srgb, var(--brand-primary, #0f172a) 20%, white)",
+                }}
+              >
+                <strong
+                  style={{
+                    whiteSpace: "nowrap",
+                    fontSize: 15,
+                    color: "var(--brand-primary, #0f172a)",
+                    fontWeight: 600,
+                    fontVariantNumeric: "tabular-nums",
+                  }}
+                >
+                  Exclusive preview for {b.brand} — expires in {countdown.days}d{" "}
+                  {countdown.hours.toString().padStart(2, "0")}:{countdown.minutes.toString().padStart(2, "0")}:
+                  {countdown.seconds.toString().padStart(2, "0")}
+                </strong>
+              </div>
+              <span
+                style={{
+                  fontSize: 15,
+                  color: "#6B7280",
+                  whiteSpace: "nowrap",
+                  fontWeight: 500,
+                }}
+              >
+                {remaining} {remaining === 1 ? "run" : "runs"} left
               </span>
-            </span>
-            <span className="text-xs font-medium tabular-nums text-slate-500">
-              {remaining} {remaining === 1 ? "run" : "runs"} left
-            </span>
+            </div>
           </div>
         </div>
       ) : null}
 
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+      <div className="mx-auto flex h-auto min-h-[4rem] max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8 md:min-h-[5rem]">
         <Link
           href={homeHref}
-          className="flex min-w-0 items-center gap-3 rounded-lg outline-none ring-offset-2 transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-slate-900/20"
+          className="flex min-w-0 items-center gap-3 rounded-lg outline-none ring-offset-2 transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-slate-900/20 md:gap-4"
         >
           <div
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white shadow-sm"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white shadow-sm md:h-12 md:w-12"
             style={{ backgroundColor: accent }}
             aria-hidden
           >
             GP
           </div>
           <div className="min-w-0 text-left">
-            <p className="truncate text-lg font-bold tracking-tight text-slate-900">{PRODUCT_NAME}</p>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">{INTAKE_TAGLINE}</p>
+            <p className="truncate text-lg font-black tracking-tight text-slate-900 md:text-2xl">{PRODUCT_NAME}</p>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500 md:text-xs">
+              {INTAKE_TAGLINE}
+            </p>
           </div>
         </Link>
 
         {demo ? (
           <motion.a
             href={pricingHref}
-            className="intake-nav-activate relative inline-flex shrink-0 items-center gap-2 overflow-hidden rounded-full px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-shadow hover:shadow-lg"
+            className="intake-nav-activate relative inline-flex max-w-[min(100%,20rem)] shrink-0 items-center gap-2 overflow-hidden rounded-xl px-3 py-2.5 text-xs font-semibold text-white shadow-md transition-shadow hover:shadow-lg sm:gap-3 sm:px-5 sm:py-3 sm:text-sm"
             style={{ backgroundColor: accent }}
             data-intake-nav-activate
-            aria-label={`Activate GLPConvert for ${companyLabel}`}
+            aria-label={LAUNCH_BRANDED_CTA_LABEL}
             {...hover}
           >
-            <span className="relative z-10 flex items-center gap-2">
-              <span className="text-base" aria-hidden>
-                ⚡
-              </span>
-              <span className="hidden sm:inline">Activate your intake</span>
-              <span className="sm:hidden">Activate</span>
+            <span className="relative z-10 shrink-0 text-base sm:text-lg" aria-hidden>
+              ⚡
             </span>
+            <span className="relative z-10 min-w-0 text-center leading-snug">{LAUNCH_BRANDED_CTA_LABEL}</span>
           </motion.a>
         ) : null}
       </div>

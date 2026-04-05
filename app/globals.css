@@ -105,6 +105,37 @@ a.intake-nav-activate:hover::before {
   left: 100%;
 }
 
+/* Intake results chart — slow premium shimmer (Stripe / dashboard polish); respects reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  .glp-intake-chart-shimmer::before {
+    content: "";
+    position: absolute;
+    inset: -45% -35%;
+    width: 200%;
+    height: 220%;
+    background: linear-gradient(
+      118deg,
+      transparent 38%,
+      rgba(255, 255, 255, 0.42) 50%,
+      transparent 62%
+    );
+    opacity: 0.22;
+    animation: glp-intake-chart-shimmer 11s ease-in-out infinite;
+  }
+}
+
+@keyframes glp-intake-chart-shimmer {
+  0% {
+    transform: translateX(-18%) translateY(2%) rotate(0.5deg);
+  }
+  50% {
+    transform: translateX(14%) translateY(-1%) rotate(0deg);
+  }
+  100% {
+    transform: translateX(-18%) translateY(2%) rotate(0.5deg);
+  }
+}
+
 /* Fast Check: Disable transitions/animations for stability */
 [data-testid="footer"] * { 
   transition: none !important; 
