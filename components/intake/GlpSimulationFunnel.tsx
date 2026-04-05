@@ -683,7 +683,7 @@ export default function GlpSimulationFunnel() {
           </div>
 
           <div className="mt-8 border-t border-slate-100 pt-8">
-            <p className={`${glpIntakeUi.label} !mb-4`}>Additional preferences (optional)</p>
+            <p className="mb-5 block text-sm font-medium text-slate-700">Additional preferences (optional)</p>
             <details className="rounded-2xl border border-slate-200/90 bg-slate-50/60 px-4 py-4 open:bg-white open:shadow-sm">
             <summary className="cursor-pointer list-none text-sm font-semibold text-slate-800 [&::-webkit-details-marker]:hidden">
               Show optional details
@@ -1035,8 +1035,8 @@ export default function GlpSimulationFunnel() {
           </header>
 
           <div className={glpIntakeUi.readinessStack}>
-            <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
-              <legend className={`${glpIntakeUi.label} !mb-0`}>Comfortable with this general monthly range?</legend>
+            <fieldset className="space-y-0 border-0 p-0 m-0 min-w-0">
+              <legend className={glpIntakeUi.legendLabel}>Comfortable with this general monthly range?</legend>
               <div className={glpIntakeUi.segmentGrid3}>
                 {(
                   [
@@ -1057,8 +1057,8 @@ export default function GlpSimulationFunnel() {
                 ))}
               </div>
             </fieldset>
-            <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
-              <legend className={`${glpIntakeUi.label} !mb-0`}>Hoping to start soon?</legend>
+            <fieldset className="space-y-0 border-0 p-0 m-0 min-w-0">
+              <legend className={glpIntakeUi.legendLabel}>Hoping to start soon?</legend>
               <div className={glpIntakeUi.segmentGrid3}>
                 {(
                   [
@@ -1079,8 +1079,8 @@ export default function GlpSimulationFunnel() {
                 ))}
               </div>
             </fieldset>
-            <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
-              <legend className={`${glpIntakeUi.label} !mb-0`}>Want to review your next step now?</legend>
+            <fieldset className="space-y-0 border-0 p-0 m-0 min-w-0">
+              <legend className={glpIntakeUi.legendLabel}>Want to review your next step now?</legend>
               <div className={glpIntakeUi.segmentGrid3}>
                 {(
                   [
@@ -1174,8 +1174,8 @@ export default function GlpSimulationFunnel() {
             </label>
           </div>
 
-          <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
-            <legend className={`${glpIntakeUi.label} !mb-0`}>Preferred next step</legend>
+          <fieldset className="space-y-0 border-0 p-0 m-0 min-w-0">
+            <legend className={glpIntakeUi.legendLabel}>Preferred next step</legend>
             <div className="grid gap-4 sm:grid-cols-3">
               <label
                 className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition ${

@@ -45,13 +45,13 @@ export const glpIntakeUi = {
   fieldGroup: "space-y-4",
 
   grid2: "grid gap-5 md:grid-cols-2",
-  grid2Form: "grid grid-cols-1 gap-x-5 gap-y-4 md:grid-cols-2 md:items-start md:gap-x-8 md:gap-y-5",
+  grid2Form: "grid grid-cols-1 gap-x-5 gap-y-5 md:grid-cols-2 md:items-start md:gap-x-8 md:gap-y-6",
 
   /** Segmented choices: equal cells, no orphan wraps */
-  segmentGrid4: "grid grid-cols-2 gap-2 sm:gap-3",
-  segmentGrid5: "grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3",
+  segmentGrid4: "grid grid-cols-2 gap-2.5 sm:gap-3",
+  segmentGrid5: "grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3",
   /** Readiness: three options in one row on sm+ */
-  segmentGrid3: "grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-3",
+  segmentGrid3: "grid grid-cols-1 gap-2.5 sm:grid-cols-3 sm:gap-3",
 
   kicker: "text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500",
   titleLg: "text-2xl font-bold tracking-tight text-slate-900 md:text-[1.75rem] md:leading-snug",
@@ -60,7 +60,10 @@ export const glpIntakeUi = {
   body: "text-sm leading-relaxed text-slate-600",
   bodyMuted: "text-sm leading-relaxed text-slate-500",
 
-  label: "mb-2 block text-sm font-medium text-slate-700",
+  /** 16px below label before control / segment grid (avoids label crowding choices). */
+  label: "mb-4 block text-sm font-medium text-slate-700",
+  /** Fieldset legend — same type scale as label with space before option row */
+  legendLabel: "mb-5 block text-sm font-medium text-slate-700",
   control:
     "min-h-[48px] w-full rounded-xl border border-slate-200/95 bg-white px-4 py-3 text-sm text-slate-900 shadow-[0_1px_2px_rgba(15,23,42,0.03)] transition placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15 focus-visible:ring-offset-2",
 
@@ -82,7 +85,7 @@ export const glpIntakeUi = {
   sectionRule:
     "border-t border-slate-100 pt-8 mt-8 first:border-0 first:pt-0 first:mt-0 md:pt-10 md:mt-10",
 
-  readinessStack: "space-y-10 md:space-y-12",
+  readinessStack: "space-y-11 md:space-y-12",
   choiceRow: "flex flex-wrap gap-3",
   choiceBase:
     "rounded-xl border px-4 py-2.5 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/20 focus-visible:ring-offset-2",
