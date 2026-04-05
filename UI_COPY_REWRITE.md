@@ -14,7 +14,8 @@ Living index of **patient-facing** and **demo-owner** strings. Prefer short, cal
 | Path / phases | `runSimulation` → `phasePlan` | Process clarity, not dosing |
 | Expectations | 3 cards | Early / Middle / Ongoing |
 | Pricing | `data-results-pricing` | Starts around + typical range + vary copy |
-| Trajectory | `details` + `GlpWeightTrajectoryChart` | Optional, compact, not a forecast |
+| Journey viz | `GlpJourneyProgressChart` | Upward illustrative % progress — not a forecast |
+| Checkpoints | `details` `data-results-trajectory` | Monthly checkpoints only |
 | Readiness | Step 3 fieldsets | Comfort / timing / forward intent |
 | Contact / Done | Step 4–5 | Save, book, confirmation |
 | Demo owner panels | `GlpDemoOwnerPanels.tsx` | Impact + before/after + setup + activate |
