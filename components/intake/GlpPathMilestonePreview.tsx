@@ -1,5 +1,7 @@
 "use client";
 
+import { motion, useReducedMotion } from "framer-motion";
+
 /**
  * Horizontal “path preview” — milestone framing (not a medical forecast).
  * Premium white-label centerpiece; works with any accent color.
@@ -13,12 +15,16 @@ export default function GlpPathMilestonePreview({
   items: MilestoneItem[];
   brandFill: string;
 }) {
+  const reduceMotion = useReducedMotion();
   if (!items.length) return null;
 
   return (
-    <div
+    <motion.div
       data-results-milestones
       className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-b from-white to-slate-50/80 px-5 py-8 shadow-[0_2px_12px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/[0.04] sm:px-8 sm:py-10"
+      initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="mb-5 text-center sm:mb-6">
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
@@ -59,6 +65,6 @@ export default function GlpPathMilestonePreview({
           ))}
         </ul>
       </div>
-    </div>
+    </motion.div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { Suspense, useMemo, useState, useCallback } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 
@@ -88,13 +89,13 @@ function DemoClinicBarActions({
   }, []);
 
   return (
-    <div className="flex w-full min-w-0 flex-shrink-0 flex-col gap-2 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:items-center sm:justify-end sm:gap-2">
+    <div className="flex w-full flex-wrap items-center justify-end gap-2 sm:gap-3">
       <span className="sr-only" aria-live="polite">
         {copied ? "Demo link copied to clipboard" : ""}
       </span>
       <a
         href={`/pricing?company=${encodeURIComponent(companyLabel)}`}
-        className="inline-flex min-h-[44px] items-center justify-center rounded-xl px-4 py-2.5 text-center text-xs font-semibold text-white shadow-sm transition hover:opacity-95"
+        className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-xl px-4 py-2.5 text-center text-xs font-semibold text-white shadow-sm transition hover:opacity-95 sm:flex-initial sm:min-w-[12rem]"
         style={{ backgroundColor: accent }}
         data-demo-activate-intake
       >
@@ -103,14 +104,14 @@ function DemoClinicBarActions({
       <button
         type="button"
         onClick={() => void onCopy()}
-        className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+        className="inline-flex min-h-[44px] min-w-[8.5rem] items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
         data-demo-copy-link
       >
         {copied ? "Copied" : "Copy demo link"}
       </button>
       <p
         data-intake-demo-badge
-        className="inline-flex shrink-0 items-center justify-center self-start rounded-full border px-3 py-1.5 text-center text-[9px] font-bold uppercase tracking-[0.12em] sm:self-center"
+        className="inline-flex min-h-[44px] min-w-[4rem] shrink-0 items-center justify-center rounded-full border px-3 py-1.5 text-center text-[9px] font-bold uppercase tracking-[0.12em]"
         style={{
           borderColor: `${accent}55`,
           color: accent,
@@ -123,6 +124,9 @@ function DemoClinicBarActions({
   );
 }
 
+/**
+ * Two stacked bands (Linear / Stripe-style): identity never shares a row with CTAs → no overlap at any width.
+ */
 function ClinicTopBar({
   demo,
   companyLabel,
@@ -136,21 +140,25 @@ function ClinicTopBar({
 }) {
   return (
     <div
-      className="mb-6 flex flex-col gap-4 rounded-2xl border border-slate-200/90 bg-white px-4 py-4 shadow-sm sm:flex-row sm:items-start sm:justify-between sm:gap-6 sm:px-5 sm:py-4"
-      style={{ borderColor: `${accent}28` }}
+      className="mb-5 overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm"
+      style={{ borderColor: `${accent}22` }}
       data-intake-clinic-bar={demo ? "demo" : "paid"}
       {...(demo ? { "data-intake-demo-strip": "1" } : {})}
     >
-      <div className="flex min-w-0 flex-1 items-start gap-3 sm:items-center sm:gap-4">
+      <div className="flex items-start gap-3 px-4 py-4 sm:gap-4 sm:px-5 sm:py-4">
         <BrandMark logoUrl={logoUrl} companyLabel={companyLabel} accent={accent} size="sm" />
         <div className="min-w-0 flex-1 text-left">
           <p className="text-base font-semibold leading-snug tracking-tight text-slate-900">{companyLabel}</p>
-          <p className="mt-1 text-sm leading-relaxed text-slate-500">
-            {demo ? "Preview ready for your clinic — private branded path" : "Your next step before the consult"}
+          <p className="mt-1.5 text-sm leading-relaxed text-slate-500">
+            {demo ? "Private branded preview — ready to place on your site or funnel" : "Your next step before the consult"}
           </p>
         </div>
       </div>
-      {demo ? <DemoClinicBarActions companyLabel={companyLabel} accent={accent} /> : null}
+      {demo ? (
+        <div className="border-t border-slate-100 bg-slate-50/40 px-4 py-3 sm:px-5 sm:py-3.5">
+          <DemoClinicBarActions companyLabel={companyLabel} accent={accent} />
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -158,6 +166,7 @@ function ClinicTopBar({
 function IntakePageHeaderInner() {
   const sp = useSearchParams();
   const demo = isIntakeDemoMode(sp);
+  const reduceMotion = useReducedMotion();
   const companyLabel = safeCompanyLabel(sp?.get("company") ?? null);
   const { logoUrl, primaryHex, secondaryHex } = useMemo(
     () => parseGlpIntakeQueryBranding(sp),
@@ -166,16 +175,25 @@ function IntakePageHeaderInner() {
   const accent = primaryHex || DEFAULT_DEMO_ACCENT;
   const accent2 = secondaryHex || accent;
 
+  const heroMotion = reduceMotion
+    ? {}
+    : {
+        initial: { opacity: 0, y: 10 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const },
+      };
+
   return (
     <div className="w-full">
       <ClinicTopBar demo={demo} companyLabel={companyLabel} logoUrl={logoUrl} accent={accent} />
 
-      <div
-        className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white px-6 py-8 text-center shadow-sm sm:px-8 sm:py-10 md:px-10 md:py-12"
+      <motion.div
+        className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white px-5 py-6 text-center shadow-sm sm:px-7 sm:py-7 md:px-8 md:py-8"
         style={{
-          boxShadow: `0 1px 0 rgba(15,23,42,0.04), 0 16px 40px -12px rgba(15,23,42,0.07), 0 0 0 1px ${accent}10`,
+          boxShadow: `0 1px 0 rgba(15,23,42,0.04), 0 12px 32px -12px rgba(15,23,42,0.08), 0 0 0 1px ${accent}0f`,
         }}
         data-intake-hero
+        {...heroMotion}
       >
         <div
           className="absolute inset-x-0 top-0 h-0.5 rounded-t-2xl"
@@ -185,22 +203,26 @@ function IntakePageHeaderInner() {
           aria-hidden
         />
 
-        <div className="relative flex justify-center">
-          <BrandMark logoUrl={logoUrl} companyLabel={companyLabel} accent={accent} size="lg" />
-        </div>
+        {!demo ? (
+          <div className="relative flex justify-center">
+            <BrandMark logoUrl={logoUrl} companyLabel={companyLabel} accent={accent} size="lg" />
+          </div>
+        ) : null}
 
-        <h1 className="mt-6 text-balance text-xl font-bold tracking-tight text-slate-900 md:text-2xl">
+        <h1
+          className={`text-balance text-xl font-bold tracking-tight text-slate-900 md:text-2xl ${demo ? "relative pt-1" : "mt-5"}`}
+        >
           {demo ? "The patient-facing path, under your brand" : "Before you book"}
         </h1>
-        <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-slate-600 md:text-[15px]">
+        <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-slate-600 md:mt-4 md:text-[15px]">
           {demo
-            ? "Clarity on timing, typical ranges, and next steps — then your scheduling link. Built to drop into your site or funnel."
+            ? "Clarity on timing, typical ranges, and next steps — then your scheduling link."
             : "See what to expect, typical ranges, and a clear next step — general information only."}
         </p>
 
         {process.env.NODE_ENV === "development" ? (
           <details
-            className="mx-auto mt-8 max-w-lg rounded-xl border border-slate-200/80 bg-slate-50/90 px-4 py-3 text-left shadow-inner"
+            className="mx-auto mt-6 max-w-lg rounded-xl border border-slate-200/80 bg-slate-50/90 px-4 py-3 text-left shadow-inner"
             data-intake-local-urls
           >
             <summary className="cursor-pointer list-none text-[11px] font-semibold text-slate-600 [&::-webkit-details-marker]:hidden">
@@ -213,7 +235,7 @@ function IntakePageHeaderInner() {
             </p>
           </details>
         ) : null}
-      </div>
+      </motion.div>
     </div>
   );
 }

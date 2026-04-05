@@ -1,11 +1,17 @@
 /**
- * GLP intake — spacing system aligned to an 8px grid (Material / WCAG touch targets).
- * Tailwind spacing scale: 1=4px, 2=8px, 3=12px, 4=16px, 5=20px, 6=24px, 8=32px, 10=40px, 12=48px, 16=64px.
+ * GLP intake — spacing system aligned to an 8px grid (Material Design density, WCAG 2.2 touch targets).
+ * Section rhythm follows Stripe / Linear-style product flows: 16–24px within groups, 32–40px between sections.
  * Use these tokens sitewide in the funnel so rhythm stays predictable (not ad-hoc margins).
  */
 export const glpIntakeUi = {
   /** Main column — max readable width; outer frame supplies horizontal padding */
   column: "mx-auto w-full max-w-2xl",
+
+  /** Stepper: label sits in its own band above the track (clear hierarchy, not cramped to the bar) */
+  stepperShell: "mb-8 w-full",
+  stepperLabel: "mb-5 text-center text-xs font-medium leading-relaxed text-slate-600",
+  stepperTrackWrap: "mx-auto w-full max-w-xl",
+  stepperDotsWrap: "mx-auto mt-5 w-full max-w-xl",
 
   space: {
     xs: "gap-1", // 4
@@ -26,8 +32,8 @@ export const glpIntakeUi = {
 
   stackSection: "space-y-8 md:space-y-10",
   /** Step 1: 24px between intro, fields, optional, footer */
-  stackStepForm: "space-y-6",
-  stackMd: "space-y-6",
+  stackStepForm: "space-y-6 md:space-y-7",
+  stackMd: "space-y-6 md:space-y-8",
   stackSm: "space-y-4 md:space-y-5",
 
   /** One logical field (label + control + 16px gap to next field in a group) */
@@ -71,7 +77,7 @@ export const glpIntakeUi = {
   sectionRule:
     "border-t border-slate-100 pt-8 mt-8 first:border-0 first:pt-0 first:mt-0 md:pt-10 md:mt-10",
 
-  readinessStack: "space-y-8",
+  readinessStack: "space-y-10 md:space-y-12",
   choiceRow: "flex flex-wrap gap-3",
   choiceBase:
     "rounded-xl border px-4 py-2.5 text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/20 focus-visible:ring-offset-2",

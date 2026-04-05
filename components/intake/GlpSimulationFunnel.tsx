@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import GlpDemoOwnerPanels from "@/components/intake/GlpDemoOwnerPanels";
 import GlpJourneyProgressChart from "@/components/intake/GlpJourneyProgressChart";
@@ -9,6 +10,7 @@ import { persistUtmFromSearchParams, getMergedUtm } from "@/lib/glp-attribution"
 import { resolveGlpTenantSlug } from "@/lib/glp-tenant-slug";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
+import { hexToRgba } from "@/lib/intake-color-helpers";
 
 type TenantIntakePublicJson = {
   ok?: boolean;
@@ -190,8 +192,8 @@ function IntakeStepper({
       : Math.min(100, ((step - 0.5) / TOTAL_FLOW_STEPS) * 100);
   const labelIdx = building ? 0 : step - 1;
   return (
-    <div className={`${glpIntakeUi.column} mb-6`} data-intake-stepper>
-      <p className="text-center text-xs font-medium text-slate-600">
+    <div className={`${glpIntakeUi.column} ${glpIntakeUi.stepperShell}`} data-intake-stepper>
+      <p className={glpIntakeUi.stepperLabel}>
         {building ? (
           <>
             Preparing preview… <span className="text-slate-400">(not a step)</span>
@@ -203,30 +205,32 @@ function IntakeStepper({
           </>
         )}
       </p>
-      <div
-        className="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-100 ring-1 ring-slate-900/[0.06]"
-        role="progressbar"
-        aria-valuenow={building ? 1 : step}
-        aria-valuemin={1}
-        aria-valuemax={TOTAL_FLOW_STEPS}
-        aria-valuetext={
-          building
-            ? "Preparing plan preview"
-            : `Step ${step} of ${TOTAL_FLOW_STEPS}, ${STEP_LABELS[labelIdx]}`
-        }
-      >
+      <div className={glpIntakeUi.stepperTrackWrap}>
         <div
-          className="h-full rounded-full shadow-[0_0_12px_rgba(0,0,0,0.08)] transition-[width] duration-500 ease-out"
-          style={{ width: `${pct}%`, backgroundColor: brandFill }}
-        />
+          className="h-2 overflow-hidden rounded-full bg-slate-100 ring-1 ring-slate-900/[0.06]"
+          role="progressbar"
+          aria-valuenow={building ? 1 : step}
+          aria-valuemin={1}
+          aria-valuemax={TOTAL_FLOW_STEPS}
+          aria-valuetext={
+            building
+              ? "Preparing plan preview"
+              : `Step ${step} of ${TOTAL_FLOW_STEPS}, ${STEP_LABELS[labelIdx]}`
+          }
+        >
+          <div
+            className="h-full rounded-full shadow-[0_0_12px_rgba(0,0,0,0.08)] transition-[width] duration-500 ease-out"
+            style={{ width: `${pct}%`, backgroundColor: brandFill }}
+          />
+        </div>
       </div>
-      <div className="mt-3 flex justify-between gap-0.5 px-0.5" aria-hidden>
+      <div className={`${glpIntakeUi.stepperDotsWrap} flex justify-between gap-0.5 px-0.5`} aria-hidden>
         {STEP_LABELS.map((_, i) => {
           const n = i + 1;
           const done = !building && step > n;
           const current = building ? n === 1 : step === n;
           return (
-            <div key={n} className="flex min-w-0 flex-1 flex-col items-center gap-1">
+            <div key={n} className="flex min-w-0 flex-1 flex-col items-center gap-1.5">
               <span
                 className={`h-2 w-2 shrink-0 rounded-full transition-colors duration-300 ${
                   current ? "ring-2 ring-white ring-offset-1 ring-offset-slate-50" : ""
@@ -279,6 +283,7 @@ export default function GlpSimulationFunnel() {
   const effectiveLogo = logoFromQuery || publicCfg?.logoUrl || null;
   const brandFill = primaryHex || publicCfg?.brandColor || DEFAULT_BRAND;
   const effectiveSecondary = secondaryFromQuery || publicCfg?.brandColorSecondary || null;
+  const reduceMotion = useReducedMotion();
 
   const [step, setStep] = useState<FlowStep>(1);
   const [input, setInput] = useState<SimInput>({
@@ -510,6 +515,14 @@ export default function GlpSimulationFunnel() {
       ? `${glpIntakeUi.choiceBase} border-transparent text-white shadow-sm`
       : `${glpIntakeUi.choiceBase} ${glpIntakeUi.choiceIdle}`;
 
+  const stepMotion = reduceMotion
+    ? {}
+    : {
+        initial: { opacity: 0, y: 12 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.38, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+      };
+
   /** Upward illustrative “momentum” — % progress toward stated weight goal (not a medical forecast). */
   const journeyProgressPoints = useMemo(() => {
     const rows = output.projectedMonthlyRange;
@@ -534,16 +547,20 @@ export default function GlpSimulationFunnel() {
 
       <p
         data-intake-trust
-        className={`${glpIntakeUi.column} mb-6 text-center text-[10px] font-medium tracking-wide text-slate-400`}
+        className={`${glpIntakeUi.column} mb-8 text-center text-[10px] font-medium tracking-wide text-slate-400`}
       >
         Secure · Routed to your clinic · General information only
       </p>
 
       {step === 1 && (
-        <section
+        <motion.section
           data-flow-step="1"
-          className={`relative ${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackStepForm} border-l-[3px]`}
-          style={{ borderLeftColor: brandFill }}
+          className={`relative ${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackStepForm} border-2`}
+          style={{
+            borderColor: hexToRgba(brandFill, 0.4),
+            boxShadow: `0 2px 6px rgba(15,23,42,0.04), 0 0 0 1px ${hexToRgba(brandFill, 0.12)}`,
+          }}
+          {...stepMotion}
         >
           {building ? (
             <div
@@ -730,13 +747,14 @@ export default function GlpSimulationFunnel() {
               Continue
             </button>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {step === 2 && (
-        <section
+        <motion.section
           data-flow-step="2"
           className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} ${glpIntakeUi.stackSection}`}
+          {...stepMotion}
         >
           <div
             data-results-trust-strip
@@ -1024,11 +1042,15 @@ export default function GlpSimulationFunnel() {
               </button>
             </div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {step === 3 && (
-        <section data-flow-step="3" className={`${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackSection}`}>
+        <motion.section
+          data-flow-step="3"
+          className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} ${glpIntakeUi.stackSection}`}
+          {...stepMotion}
+        >
           <header className={glpIntakeUi.stackSm}>
             <p className={glpIntakeUi.kicker}>Step 3</p>
             <h2 className={glpIntakeUi.titleLg}>Almost there</h2>
@@ -1038,7 +1060,7 @@ export default function GlpSimulationFunnel() {
           </header>
 
           <div className={glpIntakeUi.readinessStack}>
-            <fieldset className="space-y-3 border-0 p-0 m-0 min-w-0">
+            <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
               <legend className={`${glpIntakeUi.label} !mb-0`}>Comfortable with this general monthly range?</legend>
               <div className={glpIntakeUi.segmentGrid3}>
                 {(
@@ -1060,7 +1082,7 @@ export default function GlpSimulationFunnel() {
                 ))}
               </div>
             </fieldset>
-            <fieldset className="space-y-3 border-0 p-0 m-0 min-w-0">
+            <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
               <legend className={`${glpIntakeUi.label} !mb-0`}>Hoping to start soon?</legend>
               <div className={glpIntakeUi.segmentGrid3}>
                 {(
@@ -1082,7 +1104,7 @@ export default function GlpSimulationFunnel() {
                 ))}
               </div>
             </fieldset>
-            <fieldset className="space-y-3 border-0 p-0 m-0 min-w-0">
+            <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
               <legend className={`${glpIntakeUi.label} !mb-0`}>Want to review your next step now?</legend>
               <div className={glpIntakeUi.segmentGrid3}>
                 {(
@@ -1122,11 +1144,15 @@ export default function GlpSimulationFunnel() {
               </button>
             </div>
           </div>
-        </section>
+        </motion.section>
       )}
 
       {step === 4 && (
-        <section data-flow-step="4" className={`${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackSection}`}>
+        <motion.section
+          data-flow-step="4"
+          className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} ${glpIntakeUi.stackSection}`}
+          {...stepMotion}
+        >
           <header className={glpIntakeUi.stackSm}>
             <p className={glpIntakeUi.kicker}>Step 4</p>
             <h3 className={glpIntakeUi.titleLg}>Save and continue</h3>
@@ -1273,14 +1299,15 @@ export default function GlpSimulationFunnel() {
             </div>
           </div>
           {saveMsg ? <p className="text-sm font-medium text-red-600">{saveMsg}</p> : null}
-        </section>
+        </motion.section>
       )}
 
       {step === 5 && (
-        <section
+        <motion.section
           data-flow-step="5"
-          className={`${glpIntakeUi.card} ${glpIntakeUi.cardPad} text-center ${glpIntakeUi.stackMd} border-slate-200/90 bg-gradient-to-b from-slate-50/90 to-white shadow-[0_12px_40px_rgba(15,23,42,0.06)]`}
+          className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} text-center ${glpIntakeUi.stackMd} border-slate-200/90 bg-gradient-to-b from-slate-50/90 to-white shadow-[0_12px_40px_rgba(15,23,42,0.06)]`}
           style={{ borderColor: `${brandFill}33` }}
+          {...stepMotion}
         >
           <div
             className="mx-auto flex h-14 w-14 items-center justify-center rounded-full text-2xl text-white shadow-md"
@@ -1321,7 +1348,7 @@ export default function GlpSimulationFunnel() {
           >
             Back to home
           </a>
-        </section>
+        </motion.section>
       )}
     </div>
   );
