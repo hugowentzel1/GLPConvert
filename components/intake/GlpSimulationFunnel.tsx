@@ -272,8 +272,6 @@ export default function GlpSimulationFunnel() {
   const company = companyFromQuery || publicCfg?.displayName || "your clinic";
   const isDemoMode =
     sp?.get("demo") === "1" || sp?.get("preview") === "1" || sp?.get("mode") === "demo";
-  const demoQuick =
-    sp?.get("demo_quick") === "1" || sp?.get("fast") === "1" || sp?.get("quick") === "1";
   const demoTraffic = Math.min(50_000, Math.max(50, Number(sp?.get("demo_traffic") || 400) || 400));
   const { logoUrl: logoFromQuery, primaryHex, secondaryHex: secondaryFromQuery } = useMemo(
     () => parseGlpIntakeQueryBranding(sp),
@@ -396,17 +394,6 @@ export default function GlpSimulationFunnel() {
       // ignore
     }
   }, [tenantSlug]);
-
-  const skipDemoToResults = useCallback(async () => {
-    if (buildingTimerRef.current != null) {
-      window.clearTimeout(buildingTimerRef.current);
-      buildingTimerRef.current = null;
-    }
-    setBuilding(false);
-    await logEvent("simulation_started", { input, demo: isDemoMode, demo_skip: true });
-    await logEvent("simulation_completed", { input, output, demo: isDemoMode, demo_skip: true });
-    setStep(2);
-  }, [input, output, isDemoMode, logEvent]);
 
   const goBack = useCallback(() => {
     if (building) {
@@ -579,25 +566,6 @@ export default function GlpSimulationFunnel() {
                 Back
               </button>
             </div>
-          ) : null}
-          {isDemoMode ? (
-            <details className="mb-1 rounded-xl border border-dashed border-slate-200/90 bg-slate-50/50 px-4 py-3">
-              <summary className="cursor-pointer list-none text-center text-[11px] font-semibold text-slate-500 [&::-webkit-details-marker]:hidden">
-                Demo shortcut — jump to sample results
-              </summary>
-              <div className="mt-3 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-                <p className={`${glpIntakeUi.bodyMuted} text-center text-xs sm:text-left`}>
-                  Uses the prefilled numbers below. Optional — the full path is the real product.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => void skipDemoToResults()}
-                  className={`${glpIntakeUi.secondaryBtn} w-full shrink-0 text-xs sm:w-auto sm:min-w-[10rem]`}
-                >
-                  {demoQuick ? "Open sample overview" : "Skip to overview"}
-                </button>
-              </div>
-            </details>
           ) : null}
           <header className={glpIntakeUi.stackSm}>
             <p className={glpIntakeUi.kicker}>Step 1</p>

@@ -96,54 +96,51 @@ export default function IntakeDemoSiteHeader() {
 
   const showDemoStrip = demo && b.enabled && !stripDismissed;
 
+  const brandNavRow = (
+    <div className="mx-auto flex h-auto min-h-[4rem] max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8 md:min-h-[5rem]">
+      <Link
+        href={homeHref}
+        className="flex min-w-0 items-center gap-3 rounded-lg outline-none ring-offset-2 transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-slate-900/20 md:gap-4"
+      >
+        <div
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white shadow-sm md:h-12 md:w-12"
+          style={{ backgroundColor: accent }}
+          aria-hidden
+        >
+          GP
+        </div>
+        <div className="min-w-0 text-left">
+          <p className="truncate text-lg font-black tracking-tight text-slate-900 md:text-2xl">{PRODUCT_NAME}</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500 md:text-xs">
+            {INTAKE_TAGLINE}
+          </p>
+        </div>
+      </Link>
+
+      {demo ? (
+        <motion.a
+          href={pricingHref}
+          className="intake-nav-activate relative inline-flex max-w-[min(100%,20rem)] shrink-0 items-center gap-2 overflow-hidden rounded-xl px-3 py-2.5 text-xs font-semibold text-white shadow-md transition-shadow hover:shadow-lg sm:gap-3 sm:px-5 sm:py-3 sm:text-sm"
+          style={{ backgroundColor: accent }}
+          data-intake-nav-activate
+          aria-label={LAUNCH_BRANDED_CTA_LABEL}
+          {...hover}
+        >
+          <span className="relative z-10 shrink-0 text-base sm:text-lg" aria-hidden>
+            ⚡
+          </span>
+          <span className="relative z-10 min-w-0 text-center leading-snug">{LAUNCH_BRANDED_CTA_LABEL}</span>
+        </motion.a>
+      ) : null}
+    </div>
+  );
+
   return (
     <header
       className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-sm backdrop-blur-md"
       data-intake-site-header
       style={brandVarStyle}
     >
-      {/* Brand + primary CTA first — above demo strip & private disclaimer (sunspire-style hierarchy) */}
-      <div
-        className={`mx-auto flex h-auto min-h-[4rem] max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8 md:min-h-[5rem] ${
-          showDemoStrip ? "border-b border-slate-100" : ""
-        }`}
-      >
-        <Link
-          href={homeHref}
-          className="flex min-w-0 items-center gap-3 rounded-lg outline-none ring-offset-2 transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-slate-900/20 md:gap-4"
-        >
-          <div
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white shadow-sm md:h-12 md:w-12"
-            style={{ backgroundColor: accent }}
-            aria-hidden
-          >
-            GP
-          </div>
-          <div className="min-w-0 text-left">
-            <p className="truncate text-lg font-black tracking-tight text-slate-900 md:text-2xl">{PRODUCT_NAME}</p>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500 md:text-xs">
-              {INTAKE_TAGLINE}
-            </p>
-          </div>
-        </Link>
-
-        {demo ? (
-          <motion.a
-            href={pricingHref}
-            className="intake-nav-activate relative inline-flex max-w-[min(100%,20rem)] shrink-0 items-center gap-2 overflow-hidden rounded-xl px-3 py-2.5 text-xs font-semibold text-white shadow-md transition-shadow hover:shadow-lg sm:gap-3 sm:px-5 sm:py-3 sm:text-sm"
-            style={{ backgroundColor: accent }}
-            data-intake-nav-activate
-            aria-label={LAUNCH_BRANDED_CTA_LABEL}
-            {...hover}
-          >
-            <span className="relative z-10 shrink-0 text-base sm:text-lg" aria-hidden>
-              ⚡
-            </span>
-            <span className="relative z-10 min-w-0 text-center leading-snug">{LAUNCH_BRANDED_CTA_LABEL}</span>
-          </motion.a>
-        ) : null}
-      </div>
-
       {showDemoStrip ? (
         <div
           data-intake-demo-banner-strip
@@ -153,6 +150,7 @@ export default function IntakeDemoSiteHeader() {
             boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
           }}
         >
+          {/* Top: exclusive preview + runs + copy + dismiss */}
           {/* Mobile — DemoChrome */}
           <div className="block px-4 py-3 md:hidden">
             <div className="flex flex-col items-center gap-2.5 text-center">
@@ -310,18 +308,23 @@ export default function IntakeDemoSiteHeader() {
             </div>
           </div>
 
-          {/* Private disclaimer — same gradient “box” as DemoBanner (inner rule) */}
+          {/* Middle: GP / GLPConvert / Launch — between preview strip and private disclaimer */}
+          <div className="border-t border-slate-100/90 bg-white/60">{brandNavRow}</div>
+
+          {/* Bottom: private disclaimer */}
           <div
             className="border-t border-slate-100 px-4 py-2.5 text-center md:px-5 md:py-2"
             data-intake-private-demo-disclaimer
           >
             <p style={{ fontSize: 12, color: "#6B7280", fontWeight: 500, lineHeight: 1.5 }}>
-              Private demo for <span style={{ color: "#374151", fontWeight: 600 }}>{companyLabel}</span>. Not
+              Private demo for <span style={{ color: "#374151", fontWeight: 500 }}>{companyLabel}</span>. Not
               affiliated.
             </p>
           </div>
         </div>
-      ) : null}
+      ) : (
+        brandNavRow
+      )}
     </header>
   );
 }

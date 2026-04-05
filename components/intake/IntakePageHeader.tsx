@@ -187,7 +187,7 @@ function IntakePageHeaderInner() {
           }}
         >
           <p style={{ fontSize: 12, color: "#6B7280", fontWeight: 500, lineHeight: 1.5 }}>
-            Private demo for <span style={{ color: "#374151", fontWeight: 600 }}>{companyLabel}</span>. Not affiliated.
+            Private demo for <span style={{ color: "#374151", fontWeight: 500 }}>{companyLabel}</span>. Not affiliated.
           </p>
         </div>
       ) : null}
