@@ -562,12 +562,12 @@ export default function GlpSimulationFunnel() {
               className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-6 rounded-2xl bg-gradient-to-b from-white via-white to-slate-50/95 px-6 py-12 backdrop-blur-[4px]"
               data-building-overlay
             >
-              <div className="relative flex h-16 w-16 items-center justify-center" aria-hidden>
-                <div
-                  className="relative h-12 w-12 animate-spin rounded-full border-2 border-slate-200"
-                  style={{ borderTopColor: brandFill }}
-                />
-              </div>
+              {/* Same spinner pattern as report loading (`app/report/page.tsx` solar report): brand on alternating quadrants */}
+              <div
+                className="mx-auto h-16 w-16 shrink-0 animate-spin rounded-full border-4"
+                style={{ borderColor: `${brandFill} transparent ${brandFill} transparent` }}
+                aria-hidden
+              />
               <div className="max-w-xs text-center">
                 <p className={glpIntakeUi.kicker}>Preparing your plan preview</p>
                 <h2 className={`${glpIntakeUi.titleMd} mt-2 tracking-tight`}>Path, range, and next step</h2>
