@@ -1,14 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, type CSSProperties } from "react";
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useBrandTakeover } from "@/src/brand/useBrandTakeover";
 import { useCountdown } from "@/src/demo/useCountdown";
 import { usePreviewQuota } from "@/src/demo/usePreviewQuota";
+import { track } from "@/src/demo/track";
 import { isIntakeDemoMode } from "@/lib/glp-intake-demo-mode";
 import { LAUNCH_BRANDED_CTA_LABEL, PRODUCT_NAME } from "@/lib/product-identity";
+import { INTAKE_DEMO_BANNER_DISMISS_EVENT, INTAKE_DEMO_BANNER_DISMISS_KEY } from "@/lib/intake-demo-banner-dismiss";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 
 const INTAKE_TAGLINE = "Medical weight-loss intake";
@@ -32,8 +34,8 @@ function useIntakeDemoHover(reduceMotion: boolean) {
 }
 
 /**
- * Intake site chrome: mirrors `src/demo/DemoChrome.tsx` `DemoBanner` preview strip + main bar layout,
- * without Pricing / Partners / Support (intake-only). Uses CSS `var(--brand-primary)` like the home demo.
+ * Intake site chrome: mirrors `src/demo/DemoChrome.tsx` `DemoBanner` (preview strip, copy, dismiss,
+ * private disclaimer row inside the same gradient box). No Pricing / Partners / Support.
  */
 export default function IntakeDemoSiteHeader() {
   const sp = useSearchParams();
@@ -47,6 +49,31 @@ export default function IntakeDemoSiteHeader() {
   const { primaryHex } = useMemo(() => parseGlpIntakeQueryBranding(sp), [sp]);
   const accent = primaryHex || "#0f172a";
   const hover = useIntakeDemoHover(reduceMotion);
+
+  const [stripDismissed, setStripDismissed] = useState(false);
+
+  useEffect(() => {
+    try {
+      if (sessionStorage.getItem(INTAKE_DEMO_BANNER_DISMISS_KEY) === "1") setStripDismissed(true);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const dismissStrip = useCallback(() => {
+    try {
+      sessionStorage.setItem(INTAKE_DEMO_BANNER_DISMISS_KEY, "1");
+    } catch {
+      /* ignore */
+    }
+    setStripDismissed(true);
+    window.dispatchEvent(new Event(INTAKE_DEMO_BANNER_DISMISS_EVENT));
+  }, []);
+
+  const copyDemoLink = useCallback(() => {
+    void navigator.clipboard.writeText(window.location.href);
+    track("cta_click", { event: "cta_click", cta_type: "copy_link" });
+  }, []);
 
   const brandVarStyle = useMemo(
     (): CSSProperties => ({
@@ -67,21 +94,24 @@ export default function IntakeDemoSiteHeader() {
 
   const pricingHref = `/pricing?company=${encodeURIComponent(companyLabel)}`;
 
+  const showDemoStrip = demo && b.enabled && !stripDismissed;
+
   return (
     <header
       className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-sm backdrop-blur-md"
       data-intake-site-header
       style={brandVarStyle}
     >
-      {demo && b.enabled ? (
+      {showDemoStrip ? (
         <div
+          data-intake-demo-banner-strip
           style={{
             background: "linear-gradient(180deg, #ffffff 0%, #fafbfc 100%)",
             borderBottom: "1px solid #e5e7eb",
             boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
           }}
         >
-          {/* Mobile — same structure as DemoBanner */}
+          {/* Mobile — DemoChrome */}
           <div className="block px-4 py-3 md:hidden">
             <div className="flex flex-col items-center gap-2.5 text-center">
               <div
@@ -124,7 +154,7 @@ export default function IntakeDemoSiteHeader() {
             </div>
           </div>
 
-          {/* Desktop — same row as DemoBanner (preview box + runs; no copy/dismiss on intake) */}
+          {/* Desktop — preview + runs + Copy demo link + ✕ (DemoChrome.tsx) */}
           <div
             className="hidden md:flex"
             style={{
@@ -182,6 +212,71 @@ export default function IntakeDemoSiteHeader() {
                 {remaining} {remaining === 1 ? "run" : "runs"} left
               </span>
             </div>
+            <div
+              style={{
+                display: "flex",
+                gap: 8,
+                alignItems: "center",
+                flexWrap: "wrap",
+              }}
+              className="w-full justify-center md:w-auto md:justify-end"
+            >
+              <button
+                type="button"
+                className="btn"
+                onClick={copyDemoLink}
+                style={{
+                  fontSize: 13,
+                  padding: "8px 14px",
+                  whiteSpace: "nowrap",
+                  fontWeight: 500,
+                  background: "white",
+                  color: "#374151",
+                  border: "1px solid #d1d5db",
+                  borderRadius: 8,
+                  cursor: "pointer",
+                  transition: "all 0.15s ease",
+                }}
+              >
+                Copy demo link
+              </button>
+              <button
+                type="button"
+                onClick={dismissStrip}
+                aria-label="Dismiss"
+                style={{
+                  padding: "6px 10px",
+                  fontSize: 18,
+                  cursor: "pointer",
+                  border: "none",
+                  background: "transparent",
+                  color: "#9CA3AF",
+                  borderRadius: 6,
+                  transition: "all 0.15s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "#f3f4f6";
+                  e.currentTarget.style.color = "#6B7280";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "transparent";
+                  e.currentTarget.style.color = "#9CA3AF";
+                }}
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+
+          {/* Private disclaimer — same gradient “box” as DemoBanner (inner rule) */}
+          <div
+            className="border-t border-slate-100 px-4 py-2.5 text-center md:px-5 md:py-2"
+            data-intake-private-demo-disclaimer
+          >
+            <p style={{ fontSize: 12, color: "#6B7280", fontWeight: 500, lineHeight: 1.5 }}>
+              Private demo for <span style={{ color: "#374151", fontWeight: 600 }}>{companyLabel}</span>. Not
+              affiliated.
+            </p>
           </div>
         </div>
       ) : null}

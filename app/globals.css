@@ -136,6 +136,22 @@ a.intake-nav-activate:hover::before {
   }
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  [data-results-chart].glp-intake-chart-card {
+    animation: glp-intake-chart-ambient 9s ease-in-out infinite;
+  }
+}
+
+@keyframes glp-intake-chart-ambient {
+  0%,
+  100% {
+    box-shadow: 0 12px 40px -16px rgba(15, 23, 42, 0.1);
+  }
+  50% {
+    box-shadow: 0 18px 52px -14px rgba(15, 23, 42, 0.14), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  }
+}
+
 /* Fast Check: Disable transitions/animations for stability */
 [data-testid="footer"] * { 
   transition: none !important; 

@@ -564,10 +564,6 @@ export default function GlpSimulationFunnel() {
             >
               <div className="relative flex h-16 w-16 items-center justify-center" aria-hidden>
                 <div
-                  className="absolute inset-0 rounded-full opacity-25 blur-xl"
-                  style={{ backgroundColor: brandFill }}
-                />
-                <div
                   className="relative h-12 w-12 animate-spin rounded-full border-2 border-slate-200"
                   style={{ borderTopColor: brandFill }}
                 />
@@ -789,9 +785,10 @@ export default function GlpSimulationFunnel() {
               aria-hidden
             />
             <div className="relative px-5 py-6 sm:px-8 sm:py-7">
-              <p className={glpIntakeUi.kicker}>{company}</p>
-              <h2 className={`${glpIntakeUi.titleLg} mt-2.5 md:text-[1.65rem]`}>Your path preview</h2>
-              <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:mx-0 md:text-[15px] md:leading-relaxed">
+              <p className={glpIntakeUi.kicker}>Step 2</p>
+              <h2 className={`${glpIntakeUi.titleLg} mt-2 md:text-[1.65rem]`}>Your path preview</h2>
+              <p className="mt-2 text-sm font-medium text-slate-700">{company}</p>
+              <p className="mx-auto mt-4 max-w-2xl text-sm font-normal leading-relaxed text-slate-600 sm:mx-0 md:text-[15px] md:leading-relaxed">
                 What many people review before a visit — not a diagnosis, guarantee, or medical advice.
               </p>
             </div>
@@ -810,38 +807,32 @@ export default function GlpSimulationFunnel() {
             data-results-summary
           >
             <div className={glpIntakeUi.resultsSummaryCard}>
+              <p className={glpIntakeUi.resultsSummaryOverline}>At a glance</p>
               <p className={glpIntakeUi.resultsSummaryCardTitle}>Expected path</p>
               <div className={glpIntakeUi.resultsSummaryPrimaryBlock}>
                 <p className={glpIntakeUi.resultsSummaryBody}>{output.pathLabel}</p>
               </div>
-              <p className={`${glpIntakeUi.resultsSummaryMeta} border-t border-slate-100 pt-3`}>
-                Framing only — your provider sets the plan.
-              </p>
+              <p className={glpIntakeUi.resultsSummaryMeta}>Framing only — your provider sets the plan.</p>
             </div>
             <div className={glpIntakeUi.resultsSummaryCard}>
+              <p className={glpIntakeUi.resultsSummaryOverline}>At a glance</p>
               <p className={glpIntakeUi.resultsSummaryCardTitle}>Illustrative timeline</p>
               <div className={glpIntakeUi.resultsSummaryPrimaryBlock}>
-                <p className={glpIntakeUi.resultsSummaryBody}>
-                  <span className={`${glpIntakeUi.resultsSummaryEmphasis} tabular-nums`}>{output.weeksToGoal}</span>
-                </p>
+                <p className={glpIntakeUi.resultsSummaryMetric}>{output.weeksToGoal}</p>
+                <p className="mt-2 text-xs font-medium uppercase tracking-wide text-slate-400">weeks (illustrative)</p>
               </div>
-              <p className={`${glpIntakeUi.resultsSummaryMeta} border-t border-slate-100 pt-3`}>
-                weeks discussed · individual results vary
-              </p>
+              <p className={glpIntakeUi.resultsSummaryMeta}>weeks discussed · individual results vary</p>
             </div>
             <div className={glpIntakeUi.resultsSummaryCard}>
+              <p className={glpIntakeUi.resultsSummaryOverline}>At a glance</p>
               <p className={glpIntakeUi.resultsSummaryCardTitle}>Monthly cost band</p>
               <div className={glpIntakeUi.resultsSummaryPrimaryBlock}>
-                <p className={`${glpIntakeUi.resultsSummaryBody} tabular-nums`}>
-                  <span className={glpIntakeUi.resultsSummaryEmphasis}>
-                    ${output.monthlyCostLow}–${output.monthlyCostHigh}
-                  </span>
-                  <span className="text-sm font-normal text-slate-500"> /mo</span>
+                <p className={glpIntakeUi.resultsSummaryMetric}>
+                  ${output.monthlyCostLow}–${output.monthlyCostHigh}
+                  <span className="text-base font-medium text-slate-500"> /mo</span>
                 </p>
               </div>
-              <p className={`${glpIntakeUi.resultsSummaryMeta} border-t border-slate-100 pt-3`}>
-                Educational — not a quote
-              </p>
+              <p className={glpIntakeUi.resultsSummaryMeta}>Educational — not a quote</p>
             </div>
           </div>
 

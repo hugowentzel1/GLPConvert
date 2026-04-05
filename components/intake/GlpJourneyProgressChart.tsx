@@ -51,7 +51,7 @@ export default function GlpJourneyProgressChart({
   return (
     <div
       data-results-chart
-      className={`relative w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-b from-white via-white to-slate-50/90 ring-1 ring-slate-900/[0.04] ${
+      className={`glp-intake-chart-card relative w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-b from-white via-white to-slate-50/90 ring-1 ring-slate-900/[0.04] ${
         compact
           ? "px-3 pb-3 pt-4 shadow-sm sm:px-4"
           : "px-4 pb-5 pt-6 shadow-[0_12px_40px_-16px_rgba(15,23,42,0.12)] sm:px-6 sm:pb-6 sm:pt-7"
@@ -63,14 +63,14 @@ export default function GlpJourneyProgressChart({
       />
 
       {!compact ? (
-        <div className="mb-6 space-y-2.5 px-2 text-center sm:mb-7 sm:px-3">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+        <div className="mb-6 space-y-2 px-2 text-center sm:mb-7 sm:space-y-2.5 sm:px-3">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
             Momentum snapshot (illustrative)
           </p>
-          <p className="text-base font-semibold leading-snug text-slate-900 sm:text-lg">
+          <p className="text-lg font-semibold leading-snug tracking-tight text-slate-900 sm:text-xl">
             How progress toward your stated goal can build over time
           </p>
-          <p className="mx-auto max-w-lg text-xs leading-relaxed text-slate-500 sm:text-sm sm:leading-relaxed">
+          <p className="mx-auto max-w-lg text-sm font-normal leading-relaxed text-slate-600 sm:text-[15px] sm:leading-relaxed">
             Each point is a modeled checkpoint — not a promise. Vertical axis: share of your goal; horizontal: months
             from start. Your provider sets the real pace.
           </p>
@@ -101,9 +101,9 @@ export default function GlpJourneyProgressChart({
           <AreaChart data={points} margin={{ top: 8, right: 8, left: 0, bottom: 8 }}>
             <defs>
               <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={brandFill} stopOpacity={0.5} />
-                <stop offset="50%" stopColor={brandFill} stopOpacity={0.18} />
-                <stop offset="100%" stopColor={brandFill} stopOpacity={0.03} />
+                <stop offset="0%" stopColor={brandFill} stopOpacity={0.55} />
+                <stop offset="45%" stopColor={brandFill} stopOpacity={0.22} />
+                <stop offset="100%" stopColor={brandFill} stopOpacity={0.04} />
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 6" vertical={false} stroke="#e2e8f0" />
@@ -165,10 +165,12 @@ export default function GlpJourneyProgressChart({
               dataKey="progress"
               stroke={brandFill}
               strokeWidth={2.75}
+              strokeLinecap="round"
+              strokeLinejoin="round"
               fill={`url(#${gradId})`}
               isAnimationActive={animate}
-              animationDuration={animate ? 900 : 0}
-              animationEasing="ease-out"
+              animationDuration={animate ? 2200 : 0}
+              animationEasing="ease-in-out"
               activeDot={{ r: 6, strokeWidth: 2, stroke: "#fff" }}
               dot={{ r: 3.5, strokeWidth: 2, stroke: "#fff", fill: brandFill }}
             />

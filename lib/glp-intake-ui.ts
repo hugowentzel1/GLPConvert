@@ -82,14 +82,19 @@ export const glpIntakeUi = {
   secondaryBtn:
     "inline-flex w-full min-w-0 flex-1 items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-5 py-[0.875rem] text-sm font-semibold text-slate-800 shadow-sm transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:border-slate-300 hover:bg-slate-50/80 hover:shadow-md active:scale-[0.99] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15 focus-visible:ring-offset-2 min-h-[52px] sm:max-w-md sm:min-w-[10rem]",
 
-  /** Step 2 summary cards: title vs body hierarchy (aligned rhythm: Material 8dp steps) */
-  resultsSummaryCard: "flex min-h-[240px] flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_2px_20px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/[0.04] sm:p-6",
-  resultsSummaryCardTitle: "text-sm font-bold tracking-tight text-slate-900 sm:text-[15px]",
-  resultsSummaryBody: "text-sm font-normal leading-relaxed text-slate-600",
-  resultsSummaryEmphasis: "text-base font-normal tabular-nums text-slate-800 sm:text-lg",
-  resultsSummaryMeta: "mt-auto text-xs font-normal leading-relaxed text-slate-500",
-  /** Primary block under title — equal min-height so descriptions align across columns */
-  resultsSummaryPrimaryBlock: "mt-3 min-h-[6.5rem] flex-1",
+  /**
+   * Step 2 summary cards — SaaS-style hierarchy: overline (eyebrow) → headline / metric → body → footnote.
+   * References: Stripe / Linear metric tiles; Material “headline + supporting text”.
+   */
+  resultsSummaryCard:
+    "flex min-h-[248px] flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_2px_24px_rgba(15,23,42,0.07)] ring-1 ring-slate-900/[0.05] sm:min-h-[260px] sm:p-6",
+  resultsSummaryOverline: "text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500",
+  resultsSummaryCardTitle: "mt-2 text-lg font-semibold tracking-tight text-slate-900 sm:text-xl",
+  resultsSummaryBody: "text-sm font-normal leading-relaxed text-slate-600 sm:text-[15px]",
+  resultsSummaryMetric: "text-2xl font-semibold tabular-nums tracking-tight text-slate-900 sm:text-[1.65rem]",
+  resultsSummaryMeta: "mt-auto border-t border-slate-100 pt-3 text-xs font-normal leading-relaxed text-slate-500",
+  /** Primary block under title — equal min-height so footnotes align across columns */
+  resultsSummaryPrimaryBlock: "mt-3 min-h-[6.75rem] flex-1",
 
   /** Step 2 results: generous vertical rhythm (M3-style section spacing) */
   resultsStack: "space-y-12 md:space-y-14",

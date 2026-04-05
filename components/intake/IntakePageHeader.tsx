@@ -1,10 +1,11 @@
 "use client";
 
-import { Suspense, useMemo, useState, useCallback } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 import { isIntakeDemoMode } from "@/lib/glp-intake-demo-mode";
+import { INTAKE_DEMO_BANNER_DISMISS_EVENT, INTAKE_DEMO_BANNER_DISMISS_KEY } from "@/lib/intake-demo-banner-dismiss";
 import { LAUNCH_BRANDED_CTA_LABEL } from "@/lib/product-identity";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
 
@@ -150,6 +151,20 @@ function IntakePageHeaderInner() {
   const { logoUrl, primaryHex } = useMemo(() => parseGlpIntakeQueryBranding(sp), [sp]);
   const accent = primaryHex || DEFAULT_DEMO_ACCENT;
 
+  const [demoBannerDismissed, setDemoBannerDismissed] = useState(false);
+  useEffect(() => {
+    const sync = () => {
+      try {
+        setDemoBannerDismissed(sessionStorage.getItem(INTAKE_DEMO_BANNER_DISMISS_KEY) === "1");
+      } catch {
+        setDemoBannerDismissed(false);
+      }
+    };
+    sync();
+    window.addEventListener(INTAKE_DEMO_BANNER_DISMISS_EVENT, sync);
+    return () => window.removeEventListener(INTAKE_DEMO_BANNER_DISMISS_EVENT, sync);
+  }, []);
+
   const heroMotion = reduceMotion
     ? {}
     : {
@@ -160,7 +175,7 @@ function IntakePageHeaderInner() {
 
   return (
     <div className="w-full">
-      {demo ? (
+      {demo && demoBannerDismissed ? (
         <div
           className="-mx-4 mb-5 px-4 py-2.5 text-center sm:-mx-6 sm:px-6 md:-mx-8 md:px-8"
           data-intake-private-demo-disclaimer
@@ -171,8 +186,8 @@ function IntakePageHeaderInner() {
             boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
           }}
         >
-          <p className="text-[11px] leading-relaxed text-slate-600 sm:text-xs">
-            Private demo for <span className="font-medium text-slate-800">{companyLabel}</span>. Not affiliated.
+          <p style={{ fontSize: 12, color: "#6B7280", fontWeight: 500, lineHeight: 1.5 }}>
+            Private demo for <span style={{ color: "#374151", fontWeight: 600 }}>{companyLabel}</span>. Not affiliated.
           </p>
         </div>
       ) : null}
