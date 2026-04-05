@@ -4,6 +4,7 @@ import { Suspense, useMemo, useState, useCallback } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
+import { glpIntakeUi } from "@/lib/glp-intake-ui";
 
 const DEFAULT_DEMO_ACCENT = "#0f172a";
 
@@ -61,7 +62,7 @@ function BrandMark({
   }
   return (
     <div
-      className={`flex ${h} shrink-0 items-center justify-center rounded-xl text-sm font-bold tracking-tight text-white shadow-md ring-2 ring-white`}
+      className={`flex ${h} shrink-0 items-center justify-center rounded-2xl text-sm font-bold tracking-tight text-white shadow-md ring-2 ring-white`}
       style={{ backgroundColor: accent }}
       aria-hidden
     >
@@ -70,7 +71,7 @@ function BrandMark({
   );
 }
 
-function DemoClinicBarActions({
+function DemoHeaderActions({
   companyLabel,
   accent,
 }: {
@@ -89,35 +90,33 @@ function DemoClinicBarActions({
   }, []);
 
   return (
-    <div className="flex w-full min-w-0 flex-col gap-3 lg:max-w-[min(100%,22rem)] lg:shrink-0">
+    <div className="mx-auto w-full max-w-md space-y-4">
       <span className="sr-only" aria-live="polite">
         {copied ? "Demo link copied to clipboard" : ""}
       </span>
       <a
         href={`/pricing?company=${encodeURIComponent(companyLabel)}`}
-        className="inline-flex min-h-[48px] w-full items-center justify-center gap-x-2.5 gap-y-1 rounded-xl px-4 py-3 text-center shadow-sm transition hover:opacity-[0.97] active:scale-[0.998] sm:min-h-[44px] sm:flex-row sm:py-2.5"
+        className="inline-flex min-h-[52px] w-full items-center justify-center gap-x-3 rounded-full px-6 py-3.5 text-center text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.02] active:scale-[0.998]"
         style={{ backgroundColor: accent }}
         data-demo-activate-intake
         aria-label={`Activate GLPConvert for ${companyLabel}`}
       >
         <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/90">Activate</span>
-        <span className="hidden h-3.5 w-px shrink-0 bg-white/35 sm:inline" aria-hidden />
-        <span className="line-clamp-2 max-w-[18rem] text-sm font-semibold leading-snug text-white sm:line-clamp-1 sm:text-left">
-          {companyLabel}
-        </span>
+        <span className="h-4 w-px shrink-0 bg-white/35" aria-hidden />
+        <span className="line-clamp-2 text-left leading-snug">{companyLabel}</span>
       </a>
-      <div className="flex flex-wrap items-stretch gap-2 sm:gap-2.5">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-center sm:gap-3">
         <button
           type="button"
           onClick={() => void onCopy()}
-          className="inline-flex min-h-[44px] min-w-0 flex-1 items-center justify-center rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 sm:min-w-[9.5rem] sm:flex-initial"
+          className="inline-flex min-h-[48px] flex-1 items-center justify-center rounded-full border border-slate-200/95 bg-white px-5 py-2.5 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 sm:min-h-[44px]"
           data-demo-copy-link
         >
           {copied ? "Copied" : "Copy link to this preview"}
         </button>
         <p
           data-intake-demo-badge
-          className="inline-flex min-h-[44px] min-w-[6.5rem] shrink-0 items-center justify-center rounded-xl border px-3 py-2 text-center text-[10px] font-bold uppercase leading-tight tracking-[0.12em]"
+          className="inline-flex min-h-[48px] flex-1 items-center justify-center rounded-full border px-4 py-2 text-center text-[10px] font-bold uppercase leading-tight tracking-[0.12em] sm:min-h-[44px] sm:max-w-[11rem] sm:flex-initial"
           style={{
             borderColor: `${accent}44`,
             color: accent,
@@ -127,64 +126,6 @@ function DemoClinicBarActions({
           Demo preview
         </p>
       </div>
-    </div>
-  );
-}
-
-function ClinicIdentityBlock({
-  companyLabel,
-  logoUrl,
-  accent,
-  demo,
-}: {
-  companyLabel: string;
-  logoUrl: string | null;
-  accent: string;
-  demo: boolean;
-}) {
-  return (
-    <div className="flex min-w-0 flex-1 items-start gap-3 sm:gap-4">
-      <BrandMark logoUrl={logoUrl} companyLabel={companyLabel} accent={accent} size="sm" />
-      <div className="min-w-0 flex-1">
-        <p className="text-base font-semibold leading-snug tracking-tight text-slate-900">{companyLabel}</p>
-        <p className="mt-2 text-sm leading-relaxed text-slate-500">
-          {demo ? "Branded patient preview — embed on your site or ad funnel" : "Your next step before the consult"}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function ClinicTopBar({
-  demo,
-  companyLabel,
-  logoUrl,
-  accent,
-}: {
-  demo: boolean;
-  companyLabel: string;
-  logoUrl: string | null;
-  accent: string;
-}) {
-  return (
-    <div
-      className="mb-5 overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm"
-      style={{ borderColor: `${accent}22` }}
-      data-intake-clinic-bar={demo ? "demo" : "paid"}
-      {...(demo ? { "data-intake-demo-strip": "1" } : {})}
-    >
-      {demo ? (
-        <div className="px-4 py-5 sm:px-6 sm:py-6">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
-            <ClinicIdentityBlock companyLabel={companyLabel} logoUrl={logoUrl} accent={accent} demo={demo} />
-            <DemoClinicBarActions companyLabel={companyLabel} accent={accent} />
-          </div>
-        </div>
-      ) : (
-        <div className="px-4 py-5 sm:px-6 sm:py-5">
-          <ClinicIdentityBlock companyLabel={companyLabel} logoUrl={logoUrl} accent={accent} demo={demo} />
-        </div>
-      )}
     </div>
   );
 }
@@ -204,43 +145,66 @@ function IntakePageHeaderInner() {
   const heroMotion = reduceMotion
     ? {}
     : {
-        initial: { opacity: 0, y: 10 },
+        initial: { opacity: 0, y: 12 },
         animate: { opacity: 1, y: 0 },
-        transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as const },
+        transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
       };
 
   return (
     <div className="w-full">
-      <ClinicTopBar demo={demo} companyLabel={companyLabel} logoUrl={logoUrl} accent={accent} />
-
       <motion.div
-        className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white px-5 py-6 text-center shadow-sm sm:px-7 sm:py-7 md:px-8 md:py-8"
+        className={`relative overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white text-center ${glpIntakeUi.intakeHeaderPad}`}
         style={{
-          boxShadow: `0 1px 0 rgba(15,23,42,0.04), 0 12px 32px -12px rgba(15,23,42,0.08), 0 0 0 1px ${accent}0f`,
+          boxShadow: `0 24px 64px -16px rgba(15,23,42,0.12), 0 0 0 1px ${accent}18`,
         }}
+        data-intake-clinic-bar={demo ? "demo" : "paid"}
+        {...(demo ? { "data-intake-demo-strip": "1" } : {})}
         data-intake-hero
         {...heroMotion}
       >
         <div
-          className="absolute inset-x-0 top-0 h-0.5 rounded-t-2xl"
+          className="absolute inset-x-0 top-0 h-[3px] rounded-t-[2rem]"
           style={{
-            background: `linear-gradient(90deg, ${accent} 0%, ${accent2} 55%, ${accent} 100%)`,
+            background: `linear-gradient(90deg, ${accent} 0%, ${accent2} 50%, ${accent} 100%)`,
           }}
           aria-hidden
         />
 
-        <div className="relative flex justify-center">
-          <BrandMark logoUrl={logoUrl} companyLabel={companyLabel} accent={accent} size="lg" />
-        </div>
+        <div className="relative mx-auto flex max-w-lg flex-col items-center">
+          <div className="mb-6 flex justify-center sm:mb-8">
+            <BrandMark logoUrl={logoUrl} companyLabel={companyLabel} accent={accent} size="lg" />
+          </div>
 
-        <h1 className="text-balance pt-4 text-xl font-bold tracking-tight text-slate-900 md:pt-5 md:text-2xl">
-          {demo ? "The patient-facing path, under your brand" : "Before you book"}
-        </h1>
-        <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-slate-600 md:mt-4 md:text-[15px]">
-          {demo
-            ? "Clarity on timing, typical ranges, and next steps — then your scheduling link."
-            : "See what to expect, typical ranges, and a clear next step — general information only."}
-        </p>
+          <p className="text-pretty text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">{companyLabel}</p>
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-500 sm:text-[15px]">
+            {demo ? "Branded patient preview — embed on your site or ad funnel" : "Your next step before the consult"}
+          </p>
+
+          {demo ? (
+            <>
+              <div className="mt-10 w-full sm:mt-12">
+                <DemoHeaderActions companyLabel={companyLabel} accent={accent} />
+              </div>
+              <div className="mt-10 w-full border-t border-slate-100 pt-10 sm:mt-12 sm:pt-12">
+                <h1 className="text-pretty text-2xl font-bold tracking-tight text-slate-900 md:text-[1.65rem] md:leading-snug">
+                  The patient-facing path, under your brand
+                </h1>
+                <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-slate-600 md:mt-5 md:text-[15px]">
+                  Clarity on timing, typical ranges, and next steps — then your scheduling link.
+                </p>
+              </div>
+            </>
+          ) : (
+            <div className="mt-10 w-full sm:mt-12">
+              <h1 className="text-pretty text-2xl font-bold tracking-tight text-slate-900 md:text-[1.65rem] md:leading-snug">
+                Before you book
+              </h1>
+              <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-slate-600 md:mt-5 md:text-[15px]">
+                See what to expect, typical ranges, and a clear next step — general information only.
+              </p>
+            </div>
+          )}
+        </div>
       </motion.div>
     </div>
   );
@@ -251,7 +215,7 @@ export default function IntakePageHeader() {
     <Suspense
       fallback={
         <div
-          className="mx-auto mb-8 h-32 w-full max-w-2xl rounded-2xl bg-slate-100/90 ring-1 ring-slate-200/80"
+          className="mx-auto mb-8 h-40 w-full max-w-2xl rounded-[2rem] bg-slate-100/90 ring-1 ring-slate-200/80"
           aria-busy
           aria-label="Loading intake header"
         />
