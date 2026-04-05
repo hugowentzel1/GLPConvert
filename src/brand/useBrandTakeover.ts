@@ -14,7 +14,7 @@ import {
 function clean(s: string | null) {
   return s ? s.replace(/[<>]/g, "").trim().slice(0, 40) : null;
 }
-function hex(h: string | null, fallback = "#2563EB") {
+function hex(h: string | null, fallback = "#0f172a") {
   if (!h) return fallback;
   const x = h.startsWith("#") ? h : `#${h}`;
   return /^#[0-9a-fA-F]{6}$/.test(x) ? x.toUpperCase() : fallback;
@@ -100,7 +100,7 @@ export function useBrandTakeover(): BrandState {
           try {
             themeColor = getBrandTheme(companyName);
           } catch {
-            themeColor = "#2563EB";
+            themeColor = "#0f172a";
           }
         }
 

@@ -16,8 +16,8 @@ export function getBrandTheme(companyHandle?: string) {
     redfin: "#D21F3C",
     chase: "#117ACA",
     wellsfargo: "#D71E28",
-    // default blue if none
-    default: "#2563EB",
+    // neutral slate default — matches white-label intake when no hex is passed
+    default: "#0f172a",
   };
   const key = (companyHandle || "").toLowerCase();
   return map[key] || map.default;

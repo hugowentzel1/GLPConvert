@@ -1,12 +1,12 @@
 /**
- * GLP intake funnel — spacing on an 8px grid (4·8·12·16·24·32·40·48).
- * Surfaces tuned for premium white-label SaaS (calm borders, soft lift).
+ * GLP intake — spacing system aligned to an 8px grid (Material / WCAG touch targets).
+ * Tailwind spacing scale: 1=4px, 2=8px, 3=12px, 4=16px, 5=20px, 6=24px, 8=32px, 10=40px, 12=48px, 16=64px.
+ * Use these tokens sitewide in the funnel so rhythm stays predictable (not ad-hoc margins).
  */
 export const glpIntakeUi = {
-  /** Main column — max readable width; side padding from parent */
+  /** Main column — max readable width; outer frame supplies horizontal padding */
   column: "mx-auto w-full max-w-2xl",
 
-  /** 8pt rhythm helpers (Tailwind = ×4px) */
   space: {
     xs: "gap-1", // 4
     sm: "gap-2", // 8
@@ -16,26 +16,32 @@ export const glpIntakeUi = {
     major: "gap-8", // 32
   } as const,
 
-  /** Primary surface — calm elevation + hover lift (white-label SaaS norm) */
   card:
-    "rounded-2xl border border-slate-200/90 bg-white shadow-[0_2px_4px_rgba(15,23,42,0.04),0_16px_40px_rgba(15,23,42,0.07)] transition-shadow duration-300 hover:shadow-[0_8px_16px_rgba(15,23,42,0.05),0_28px_48px_rgba(15,23,42,0.1)]",
+    "rounded-2xl border border-slate-200/90 bg-white shadow-[0_2px_6px_rgba(15,23,42,0.04),0_20px_48px_-8px_rgba(15,23,42,0.1)] transition-all duration-300 hover:border-slate-200 hover:shadow-[0_8px_24px_rgba(15,23,42,0.08),0_28px_56px_-12px_rgba(15,23,42,0.12)]",
+  /** Card interior: 24px mobile → 32px desktop (6 / 8 on 4px grid) */
   cardPad: "p-6 md:p-8",
   cardPadSm: "p-5 md:p-6",
 
-  /** Major sections inside one card (results, readiness) */
-  stackSection: "space-y-6",
-  /** Step 1: even rhythm between intro copy, field grid, actions */
-  stackStepForm: "space-y-5",
+  stackSection: "space-y-6 md:space-y-8",
+  /** Step 1: 24px between intro, fields, optional, footer */
+  stackStepForm: "space-y-6",
   stackMd: "space-y-6",
-  stackSm: "space-y-5",
+  stackSm: "space-y-4 md:space-y-5",
+
+  /** One logical field (label + control + 16px gap to next field in a group) */
+  fieldGroup: "space-y-4",
 
   grid2: "grid gap-5 md:grid-cols-2",
-  /** Form fields: uniform 28px row rhythm (7 × 4px grid) */
-  grid2Form: "grid grid-cols-1 gap-y-5 gap-x-5 md:grid-cols-2 md:items-start md:gap-x-7 md:gap-y-5",
+  grid2Form: "grid grid-cols-1 gap-x-5 gap-y-4 md:grid-cols-2 md:items-start md:gap-x-8 md:gap-y-5",
+
+  /** Segmented choices: equal cells, no orphan wraps */
+  segmentGrid4: "grid grid-cols-2 gap-2 sm:gap-3",
+  segmentGrid5: "grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3",
+  /** Readiness: three options in one row on sm+ */
+  segmentGrid3: "grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-3",
 
   kicker: "text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500",
   titleLg: "text-2xl font-bold tracking-tight text-slate-900 md:text-[1.75rem] md:leading-snug",
-  /** Results hero — editorial weight without shouting */
   titleResults: "text-3xl font-bold tracking-tight text-slate-900 md:text-[2rem] md:leading-[1.2]",
   titleMd: "text-lg font-semibold tracking-tight text-slate-900",
   body: "text-sm leading-relaxed text-slate-600",
@@ -45,27 +51,23 @@ export const glpIntakeUi = {
   control:
     "min-h-[48px] w-full rounded-xl border border-slate-200/95 bg-white px-4 py-3 text-sm text-slate-900 shadow-[0_1px_2px_rgba(15,23,42,0.03)] transition placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15 focus-visible:ring-offset-2",
 
-  /** Wizard back — same min height as primary for aligned rows (WCAG touch target ≥44px) */
+  /** Secondary / back: fixed readable width; primary flexes (NN/g: primary wider, secondary equal height) */
   backBtn:
-    "inline-flex w-full shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white px-5 py-[0.875rem] text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15 focus-visible:ring-offset-2 sm:w-[8.75rem] sm:min-w-[8.75rem] min-h-[52px]",
+    "inline-flex w-full shrink-0 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 py-[0.875rem] text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15 focus-visible:ring-offset-2 min-h-[52px] sm:w-[10rem] md:w-[11rem]",
 
   primaryBtn:
-    "glp-intake-primary-btn inline-flex w-full items-center justify-center rounded-xl px-5 py-[0.875rem] text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.03] active:scale-[0.995] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/25 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-45 disabled:hover:shadow-md min-h-[52px]",
+    "glp-intake-primary-btn inline-flex w-full min-w-0 flex-1 items-center justify-center rounded-xl px-5 py-[0.875rem] text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.03] active:scale-[0.995] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/25 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-45 disabled:hover:shadow-md min-h-[52px] sm:max-w-xl sm:min-w-[12rem]",
   secondaryBtn:
-    "inline-flex w-full items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-5 py-[0.875rem] text-sm font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50/80 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15 focus-visible:ring-offset-2 min-h-[52px]",
+    "inline-flex w-full min-w-0 flex-1 items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-5 py-[0.875rem] text-sm font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50/80 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15 focus-visible:ring-offset-2 min-h-[52px] sm:max-w-md sm:min-w-[10rem]",
 
-  /** Primary + optional secondary stack; pair with back row */
-  formActions: "flex min-w-0 flex-1 flex-col gap-3 sm:max-w-md sm:ml-auto sm:items-stretch",
-  /** Row: Previous (left) + actions (right on sm+) */
-  formNavRow:
-    "mt-8 flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
-  /** Wizard actions after body copy — top rule separates from content */
+  formActions: "flex w-full min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-end sm:gap-3",
+  formNavRow: "mt-8 flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
   formNavRowRule:
-    "mt-8 flex flex-col gap-3 border-t border-slate-100 pt-8 sm:flex-row sm:items-center sm:justify-between sm:gap-4",
+    "mt-8 flex flex-col gap-3 border-t border-slate-100 pt-8 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
+
   chip: "rounded-full bg-slate-100 px-3.5 py-1 text-xs font-medium text-slate-700",
   sectionRule: "border-t border-slate-100 pt-6 first:border-0 first:pt-0 first:mt-0 mt-6",
 
-  /** Readiness fieldsets — uniform 32px between questions */
   readinessStack: "space-y-8",
   choiceRow: "flex flex-wrap gap-3",
   choiceBase:

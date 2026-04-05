@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties }
 import { useSearchParams } from "next/navigation";
 import GlpDemoOwnerPanels from "@/components/intake/GlpDemoOwnerPanels";
 import GlpJourneyProgressChart from "@/components/intake/GlpJourneyProgressChart";
+import GlpPathMilestonePreview from "@/components/intake/GlpPathMilestonePreview";
 import { persistUtmFromSearchParams, getMergedUtm } from "@/lib/glp-attribution";
 import { resolveGlpTenantSlug } from "@/lib/glp-tenant-slug";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
@@ -181,26 +182,27 @@ function IntakeStepper({
   brandFill: string;
   building: boolean;
 }) {
-  /** Discrete stops: bar ends exactly on step N (0%, 25%, 50%, 75%, 100%). Building keeps step 1 + 0% fill. */
-  const pct =
-    building || step <= 1 ? 0 : ((step - 1) / (TOTAL_FLOW_STEPS - 1)) * 100;
+  /** Fill aligns to the *center* of the current step dot (5 equal segments), not interval midpoints. */
+  const pct = building
+    ? 0
+    : step >= TOTAL_FLOW_STEPS
+      ? 100
+      : Math.min(100, ((step - 0.5) / TOTAL_FLOW_STEPS) * 100);
   const labelIdx = building ? 0 : step - 1;
   return (
     <div className={`${glpIntakeUi.column} mb-6`} data-intake-stepper>
-      <div className="flex justify-end">
-        <p className="text-xs font-medium text-slate-600">
-          {building ? (
-            <>
-              Preparing preview… <span className="text-slate-500">(not a step)</span>
-            </>
-          ) : (
-            <>
-              Step {step} of {TOTAL_FLOW_STEPS} ·{" "}
-              <span className="font-semibold text-slate-900">{STEP_LABELS[labelIdx]}</span>
-            </>
-          )}
-        </p>
-      </div>
+      <p className="text-center text-xs font-medium text-slate-600">
+        {building ? (
+          <>
+            Preparing preview… <span className="text-slate-400">(not a step)</span>
+          </>
+        ) : (
+          <>
+            Step {step} of {TOTAL_FLOW_STEPS} ·{" "}
+            <span className="font-semibold text-slate-900">{STEP_LABELS[labelIdx]}</span>
+          </>
+        )}
+      </p>
       <div
         className="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-100 ring-1 ring-slate-900/[0.06]"
         role="progressbar"
@@ -214,7 +216,7 @@ function IntakeStepper({
         }
       >
         <div
-          className="h-full rounded-full transition-[width] duration-500 ease-out"
+          className="h-full rounded-full shadow-[0_0_12px_rgba(0,0,0,0.08)] transition-[width] duration-500 ease-out"
           style={{ width: `${pct}%`, backgroundColor: brandFill }}
         />
       </div>
@@ -243,6 +245,21 @@ function IntakeStepper({
     </div>
   );
 }
+
+const URGENCY_OPTIONS: { v: NonNullable<SimInput["urgency"]>; l: string }[] = [
+  { v: "asap", l: "As soon as possible" },
+  { v: "three_months", l: "Within 3 months" },
+  { v: "six_months", l: "Within 6 months" },
+  { v: "exploring", l: "Exploring" },
+];
+
+const STRUGGLE_OPTIONS: { v: NonNullable<SimInput["biggestStruggle"]>; l: string }[] = [
+  { v: "food_noise", l: "Food noise" },
+  { v: "cravings", l: "Cravings" },
+  { v: "hunger_control", l: "Hunger" },
+  { v: "consistency", l: "Consistency" },
+  { v: "unsure", l: "Not sure" },
+];
 
 export default function GlpSimulationFunnel() {
   const sp = useSearchParams();
@@ -299,6 +316,16 @@ export default function GlpSimulationFunnel() {
     }
     return base;
   }, [input, publicCfg?.pricingMonthlyLow, publicCfg?.pricingMonthlyHigh]);
+
+  const milestoneItems = useMemo(
+    () =>
+      output.phasePlan.map((p) => ({
+        title: p.phase,
+        caption: p.weeks,
+        detail: p.focus,
+      })),
+    [output.phasePlan],
+  );
 
   const bookingUrlParam = useMemo(() => parseHttpsBookingFromSearch(sp), [sp]);
   const effectiveBookingUrl = bookingUrlParam || resolvedBookingUrl;
@@ -474,7 +501,9 @@ export default function GlpSimulationFunnel() {
       ? effectiveBookingUrl || "/contact"
       : nextStep === "callback"
         ? "/support"
-        : "/result?demo=1";
+        : isDemoMode
+          ? "/result?demo=1"
+          : "/contact";
 
   const choiceClass = (on: boolean) =>
     on
@@ -489,7 +518,7 @@ export default function GlpSimulationFunnel() {
     return [
       { label: "Start", progress: 0, month: 0 },
       ...rows.map((m) => ({
-        label: `M${m.month}`,
+        label: `Month ${m.month}`,
         progress: Math.min(100, Math.round(((input.currentWeight - m.mid) / loss) * 100)),
         month: m.month,
       })),
@@ -564,13 +593,12 @@ export default function GlpSimulationFunnel() {
           ) : null}
           <header className={glpIntakeUi.stackSm}>
             <p className={glpIntakeUi.kicker}>Step 1</p>
-            <h2 className={glpIntakeUi.titleLg}>Start your plan preview</h2>
+            <h2 className={glpIntakeUi.titleLg}>Start your intake preview</h2>
             <p className={glpIntakeUi.body}>
-              Answer a few basics to preview the path, typical range, and what many patients want clarified before
-              booking.
+              A few basics to preview timing, typical ranges, and what patients often want clear before they book.
             </p>
             <p className={`${glpIntakeUi.bodyMuted} text-xs`}>
-              General information only — final treatment decisions are made by a licensed provider.
+              General information only — your provider makes treatment decisions.
             </p>
           </header>
 
@@ -593,7 +621,7 @@ export default function GlpSimulationFunnel() {
                 onChange={(e) => setInput((v) => ({ ...v, goalWeight: Number(e.target.value || 0) }))}
               />
             </label>
-            <label className="block min-w-0">
+            <label className="block min-w-0 md:col-span-2">
               <span className={glpIntakeUi.label}>Height (inches)</span>
               <input
                 type="number"
@@ -602,40 +630,51 @@ export default function GlpSimulationFunnel() {
                 onChange={(e) => setInput((v) => ({ ...v, heightIn: Number(e.target.value || 0) }))}
               />
             </label>
-            <label className="block min-w-0">
+            <div className="min-w-0 md:col-span-2">
               <span className={glpIntakeUi.label}>Goal timeframe</span>
-              <select
-                className={glpIntakeUi.control}
-                value={input.urgency}
-                onChange={(e) => setInput((v) => ({ ...v, urgency: e.target.value as SimInput["urgency"] }))}
-              >
-                <option value="asap">As soon as possible</option>
-                <option value="three_months">Within 3 months</option>
-                <option value="six_months">Within 6 months</option>
-                <option value="exploring">Just exploring</option>
-              </select>
-            </label>
-            <label className="block min-w-0 md:col-span-2">
-              <span className={glpIntakeUi.label}>Biggest struggle right now</span>
-              <select
-                className={glpIntakeUi.control}
-                value={input.biggestStruggle}
-                onChange={(e) =>
-                  setInput((v) => ({ ...v, biggestStruggle: e.target.value as SimInput["biggestStruggle"] }))
-                }
-              >
-                <option value="food_noise">Food noise</option>
-                <option value="cravings">Cravings</option>
-                <option value="hunger_control">Hunger control</option>
-                <option value="consistency">Consistency / routine</option>
-                <option value="unsure">Not sure</option>
-              </select>
-            </label>
+              <div className={glpIntakeUi.segmentGrid4} role="group" aria-label="Goal timeframe">
+                {URGENCY_OPTIONS.map(({ v, l }) => {
+                  const on = input.urgency === v;
+                  return (
+                    <button
+                      key={v}
+                      type="button"
+                      onClick={() => setInput((s) => ({ ...s, urgency: v }))}
+                      className={`${choiceClass(on)} flex min-h-[48px] items-center justify-center px-2 text-center text-xs leading-snug sm:px-3 sm:text-sm`}
+                      style={on ? { backgroundColor: brandFill } : undefined}
+                    >
+                      {l}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="min-w-0 md:col-span-2">
+              <span className={glpIntakeUi.label}>Biggest challenge right now</span>
+              <div className={glpIntakeUi.segmentGrid5} role="group" aria-label="Biggest challenge">
+                {STRUGGLE_OPTIONS.map(({ v, l }) => {
+                  const on = input.biggestStruggle === v;
+                  return (
+                    <button
+                      key={v}
+                      type="button"
+                      onClick={() => setInput((s) => ({ ...s, biggestStruggle: v }))}
+                      className={`${choiceClass(on)} flex min-h-[48px] items-center justify-center px-2 text-center text-xs leading-snug sm:text-sm`}
+                      style={on ? { backgroundColor: brandFill } : undefined}
+                    >
+                      {l}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
-          <details className="mt-6 rounded-2xl border border-slate-200/90 bg-slate-50/60 px-4 py-3 open:bg-white open:shadow-sm">
-            <summary className="cursor-pointer list-none text-sm font-semibold text-slate-700 [&::-webkit-details-marker]:hidden">
-              Additional preferences <span className="font-normal text-slate-500">(optional)</span>
+          <div className="mt-8 border-t border-slate-100 pt-8">
+            <p className={`${glpIntakeUi.label} !mb-4`}>Additional preferences (optional)</p>
+            <details className="rounded-2xl border border-slate-200/90 bg-slate-50/60 px-4 py-4 open:bg-white open:shadow-sm">
+            <summary className="cursor-pointer list-none text-sm font-semibold text-slate-800 [&::-webkit-details-marker]:hidden">
+              Show optional details
             </summary>
             <div className={`${glpIntakeUi.grid2Form} mt-4`}>
               <label className="block min-w-0 md:col-span-2">
@@ -679,6 +718,7 @@ export default function GlpSimulationFunnel() {
               </label>
             </div>
           </details>
+          </div>
 
           <div className="mt-8 w-full border-t border-slate-100 pt-8">
             <button
@@ -697,19 +737,19 @@ export default function GlpSimulationFunnel() {
         <section data-flow-step="2" className={`${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackSection}`}>
           <div
             data-results-trust-strip
-            className="flex flex-wrap items-center gap-3 rounded-2xl border border-slate-200/90 bg-white/95 px-4 py-3 shadow-sm ring-1 ring-slate-900/[0.03]"
+            className="flex flex-wrap items-center gap-3 rounded-xl border border-slate-200/85 bg-slate-50/60 px-3 py-2.5 sm:px-4"
           >
             {effectiveLogo ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={effectiveLogo}
                 alt=""
-                className="h-9 w-auto max-w-[150px] object-contain md:h-10 md:max-w-[180px]"
+                className="h-8 w-auto max-w-[120px] object-contain sm:h-9 sm:max-w-[150px]"
                 loading="lazy"
               />
             ) : (
               <div
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-xs font-bold text-white shadow-sm"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-xs font-bold text-white shadow-sm"
                 style={{ backgroundColor: brandFill }}
                 aria-hidden
               >
@@ -722,50 +762,33 @@ export default function GlpSimulationFunnel() {
                   .toUpperCase() || "?"}
               </div>
             )}
-            <div className="flex min-w-0 flex-1 flex-wrap gap-2">
-              {trustChips.map((c) => (
-                <span
-                  key={c}
-                  className={`${glpIntakeUi.chip} border border-slate-200/80 bg-slate-50/90 text-[11px] shadow-none`}
-                >
-                  {c}
-                </span>
-              ))}
-            </div>
+            <p className="min-w-0 flex-1 text-[11px] leading-snug text-slate-500">
+              {trustChips.join(" · ")}
+            </p>
           </div>
 
-          <header
-            className={`relative mt-5 overflow-hidden rounded-3xl border p-5 md:p-7`}
-            style={{
-              borderColor: `${brandFill}2e`,
-              background: `linear-gradient(165deg, white 0%, rgba(248,250,252,0.97) 48%, rgba(241,245,249,0.45) 100%)`,
-              boxShadow: `inset 0 1px 0 rgba(255,255,255,0.92), 0 20px 44px -14px rgba(15,23,42,0.09)`,
-            }}
-          >
+          <header className="relative mt-4 rounded-2xl border border-slate-200/90 bg-white px-4 py-5 text-left shadow-sm sm:px-6 sm:py-6">
             <div
-              className="pointer-events-none absolute -left-16 -top-20 h-44 w-44 rounded-full opacity-[0.1] blur-3xl"
-              style={{ backgroundColor: brandFill }}
-              aria-hidden
-            />
-            <div
-              className="pointer-events-none absolute left-0 top-0 h-full w-1 rounded-l-3xl"
+              className="pointer-events-none absolute left-0 top-0 h-full w-1 rounded-l-2xl"
               style={{
                 background: `linear-gradient(180deg, ${brandFill} 0%, ${effectiveSecondary || brandFill} 100%)`,
-                opacity: 0.88,
+                opacity: 0.85,
               }}
               aria-hidden
             />
-            <div className="relative pl-1 sm:pl-2">
+            <div className="relative pl-3 sm:pl-4">
               <p className={glpIntakeUi.kicker}>{company}</p>
-              <h2 className={glpIntakeUi.titleResults}>Your GLP path</h2>
+              <h2 className={glpIntakeUi.titleResults}>Your path preview</h2>
               <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-600">
-                Topics many patients review before a provider visit — not a diagnosis, guarantee, or medical advice.
+                What many people review before a visit — not a diagnosis, guarantee, or medical advice.
               </p>
             </div>
           </header>
 
+          <GlpPathMilestonePreview items={milestoneItems} brandFill={brandFill} />
+
           {journeyProgressPoints.length >= 2 ? (
-            <div className="mt-6">
+            <div className="mt-2">
               <GlpJourneyProgressChart points={journeyProgressPoints} brandFill={brandFill} variant="default" />
             </div>
           ) : null}
@@ -996,9 +1019,6 @@ export default function GlpSimulationFunnel() {
               >
                 Continue to readiness
               </button>
-              <p className="text-center text-xs text-slate-500 sm:text-right">
-                Three quick preferences — then save or book.
-              </p>
             </div>
           </div>
         </section>
@@ -1015,9 +1035,9 @@ export default function GlpSimulationFunnel() {
           </header>
 
           <div className={glpIntakeUi.readinessStack}>
-            <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
+            <fieldset className="space-y-3 border-0 p-0 m-0 min-w-0">
               <legend className={`${glpIntakeUi.label} !mb-0`}>Comfortable with this general monthly range?</legend>
-              <div className={glpIntakeUi.choiceRow}>
+              <div className={glpIntakeUi.segmentGrid3}>
                 {(
                   [
                     ["comfortable", "Yes, roughly"],
@@ -1029,7 +1049,7 @@ export default function GlpSimulationFunnel() {
                     key={val}
                     type="button"
                     onClick={() => setReadiness((r) => ({ ...r, priceComfort: val }))}
-                    className={choiceClass(readiness.priceComfort === val)}
+                    className={`${choiceClass(readiness.priceComfort === val)} flex min-h-[48px] items-center justify-center px-2 text-center text-sm`}
                     style={readiness.priceComfort === val ? { backgroundColor: brandFill } : undefined}
                   >
                     {label}
@@ -1037,9 +1057,9 @@ export default function GlpSimulationFunnel() {
                 ))}
               </div>
             </fieldset>
-            <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
+            <fieldset className="space-y-3 border-0 p-0 m-0 min-w-0">
               <legend className={`${glpIntakeUi.label} !mb-0`}>Hoping to start soon?</legend>
-              <div className={glpIntakeUi.choiceRow}>
+              <div className={glpIntakeUi.segmentGrid3}>
                 {(
                   [
                     ["soon", "Soon (weeks)"],
@@ -1051,7 +1071,7 @@ export default function GlpSimulationFunnel() {
                     key={val}
                     type="button"
                     onClick={() => setReadiness((r) => ({ ...r, startTimeline: val }))}
-                    className={choiceClass(readiness.startTimeline === val)}
+                    className={`${choiceClass(readiness.startTimeline === val)} flex min-h-[48px] items-center justify-center px-2 text-center text-sm`}
                     style={readiness.startTimeline === val ? { backgroundColor: brandFill } : undefined}
                   >
                     {label}
@@ -1059,9 +1079,9 @@ export default function GlpSimulationFunnel() {
                 ))}
               </div>
             </fieldset>
-            <fieldset className="space-y-4 border-0 p-0 m-0 min-w-0">
+            <fieldset className="space-y-3 border-0 p-0 m-0 min-w-0">
               <legend className={`${glpIntakeUi.label} !mb-0`}>Want to review your next step now?</legend>
-              <div className={glpIntakeUi.choiceRow}>
+              <div className={glpIntakeUi.segmentGrid3}>
                 {(
                   [
                     ["yes", "Yes"],
@@ -1073,7 +1093,7 @@ export default function GlpSimulationFunnel() {
                     key={val}
                     type="button"
                     onClick={() => setReadiness((r) => ({ ...r, exploreIntent: val }))}
-                    className={choiceClass(readiness.exploreIntent === val)}
+                    className={`${choiceClass(readiness.exploreIntent === val)} flex min-h-[48px] items-center justify-center px-2 text-center text-sm`}
                     style={readiness.exploreIntent === val ? { backgroundColor: brandFill } : undefined}
                   >
                     {label}
@@ -1088,11 +1108,6 @@ export default function GlpSimulationFunnel() {
               Previous
             </button>
             <div className={glpIntakeUi.formActions}>
-              {!readinessComplete() ? (
-                <p className="text-center text-xs text-slate-500 sm:text-right">
-                  Choose one option in each row to continue.
-                </p>
-              ) : null}
               <button
                 type="button"
                 disabled={!readinessComplete()}

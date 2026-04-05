@@ -78,11 +78,11 @@ export function DemoBanner() {
             display: "inline-flex",
             alignItems: "center",
             padding: "5px 12px",
-            background: `color-mix(in srgb, var(--brand-primary, #2563eb) 10%, white)`,
+            background: `color-mix(in srgb, var(--brand-primary, #0f172a) 10%, white)`,
             borderRadius: 6,
             fontSize: 13,
             fontWeight: 600,
-            color: "var(--brand-primary, #2563eb)",
+            color: "var(--brand-primary, #0f172a)",
             letterSpacing: "-0.01em",
             lineHeight: "1.4"
           }}>
@@ -141,14 +141,14 @@ export function DemoBanner() {
           alignItems: "center",
           gap: 8,
           padding: "8px 14px",
-          background: `color-mix(in srgb, var(--brand-primary, #2563eb) 8%, white)`,
+          background: `color-mix(in srgb, var(--brand-primary, #0f172a) 8%, white)`,
           borderRadius: 8,
-          border: `1px solid color-mix(in srgb, var(--brand-primary, #2563eb) 20%, white)`,
+          border: `1px solid color-mix(in srgb, var(--brand-primary, #0f172a) 20%, white)`,
         }}>
           <strong style={{ 
             whiteSpace: "nowrap", 
             fontSize: 15,
-            color: "var(--brand-primary, #2563eb)",
+            color: "var(--brand-primary, #0f172a)",
             fontWeight: 600,
             fontVariantNumeric: "tabular-nums"
           }}>
