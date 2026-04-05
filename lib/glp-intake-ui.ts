@@ -18,11 +18,13 @@ export const glpIntakeUi = {
 
   card:
     "rounded-2xl border border-slate-200/90 bg-white shadow-[0_2px_6px_rgba(15,23,42,0.04),0_20px_48px_-8px_rgba(15,23,42,0.1)] transition-all duration-300 hover:border-slate-200 hover:shadow-[0_8px_24px_rgba(15,23,42,0.08),0_28px_56px_-12px_rgba(15,23,42,0.12)]",
-  /** Card interior: 24px mobile → 32px desktop (6 / 8 on 4px grid) */
-  cardPad: "p-6 md:p-8",
+  /** Card interior — generous rhythm so step 2+ never feels cramped */
+  cardPad: "p-6 sm:p-8 md:p-10",
   cardPadSm: "p-5 md:p-6",
+  /** Results / long steps: extra vertical air */
+  cardPadLoose: "p-6 sm:p-8 md:p-10 lg:p-12",
 
-  stackSection: "space-y-6 md:space-y-8",
+  stackSection: "space-y-8 md:space-y-10",
   /** Step 1: 24px between intro, fields, optional, footer */
   stackStepForm: "space-y-6",
   stackMd: "space-y-6",
@@ -66,7 +68,8 @@ export const glpIntakeUi = {
     "mt-8 flex flex-col gap-3 border-t border-slate-100 pt-8 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
 
   chip: "rounded-full bg-slate-100 px-3.5 py-1 text-xs font-medium text-slate-700",
-  sectionRule: "border-t border-slate-100 pt-6 first:border-0 first:pt-0 first:mt-0 mt-6",
+  sectionRule:
+    "border-t border-slate-100 pt-8 mt-8 first:border-0 first:pt-0 first:mt-0 md:pt-10 md:mt-10",
 
   readinessStack: "space-y-8",
   choiceRow: "flex flex-wrap gap-3",

@@ -35,8 +35,6 @@ export default function ConditionalDemoBanner() {
   ];
   // Customer dashboard / activation (post-pay): no "Activate on your domain" etc.
   if (pathname === '/c' || pathname?.startsWith('/c/')) return null;
-  // Intake has its own demo strip; skip sticky banner to avoid duplicate CTAs and off-brand blue.
-  if (pathname === '/intake') return null;
 
   // Don't show banner on legal/regulatory pages
   if (noBannerPages.some(page => pathname?.startsWith(page))) {

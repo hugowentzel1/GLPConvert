@@ -734,10 +734,13 @@ export default function GlpSimulationFunnel() {
       )}
 
       {step === 2 && (
-        <section data-flow-step="2" className={`${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackSection}`}>
+        <section
+          data-flow-step="2"
+          className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} ${glpIntakeUi.stackSection}`}
+        >
           <div
             data-results-trust-strip
-            className="flex flex-wrap items-center gap-3 rounded-xl border border-slate-200/85 bg-slate-50/60 px-3 py-2.5 sm:px-4"
+            className="flex flex-wrap items-center gap-4 rounded-xl border border-slate-200/85 bg-slate-50/60 px-4 py-4 sm:px-5 sm:py-4"
           >
             {effectiveLogo ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -767,7 +770,7 @@ export default function GlpSimulationFunnel() {
             </p>
           </div>
 
-          <header className="relative mt-4 rounded-2xl border border-slate-200/90 bg-white px-4 py-5 text-left shadow-sm sm:px-6 sm:py-6">
+          <header className="relative mt-2 rounded-2xl border border-slate-200/90 bg-white px-5 py-6 text-left shadow-sm sm:px-8 sm:py-8">
             <div
               className="pointer-events-none absolute left-0 top-0 h-full w-1 rounded-l-2xl"
               style={{
@@ -776,10 +779,10 @@ export default function GlpSimulationFunnel() {
               }}
               aria-hidden
             />
-            <div className="relative pl-3 sm:pl-4">
+            <div className="relative pl-4 sm:pl-5">
               <p className={glpIntakeUi.kicker}>{company}</p>
               <h2 className={glpIntakeUi.titleResults}>Your path preview</h2>
-              <p className="mt-2 max-w-xl text-sm leading-relaxed text-slate-600">
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600 md:text-[15px]">
                 What many people review before a visit — not a diagnosis, guarantee, or medical advice.
               </p>
             </div>
@@ -788,28 +791,28 @@ export default function GlpSimulationFunnel() {
           <GlpPathMilestonePreview items={milestoneItems} brandFill={brandFill} />
 
           {journeyProgressPoints.length >= 2 ? (
-            <div className="mt-2">
+            <div className="mt-4 md:mt-6">
               <GlpJourneyProgressChart points={journeyProgressPoints} brandFill={brandFill} variant="default" />
             </div>
           ) : null}
 
           <div
-            className="mt-6 grid gap-3 md:grid-cols-3"
+            className="mt-8 grid gap-4 md:grid-cols-3 md:gap-5"
             data-results-summary
           >
             <div
-              className="rounded-2xl border border-slate-200/90 bg-white/95 p-4 shadow-[0_2px_12px_rgba(15,23,42,0.05)]"
+              className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 shadow-[0_2px_12px_rgba(15,23,42,0.05)] md:p-6"
               style={{ borderColor: `${brandFill}28` }}
             >
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">Expected path</p>
               <p className="mt-2 text-sm font-medium leading-snug text-slate-900">{output.pathLabel}</p>
             </div>
-            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-4 shadow-[0_2px_12px_rgba(15,23,42,0.05)]">
+            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 shadow-[0_2px_12px_rgba(15,23,42,0.05)]">
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">Illustrative timeline</p>
               <p className="mt-2 text-2xl font-bold tabular-nums text-slate-900">{output.weeksToGoal}</p>
               <p className="text-xs text-slate-500">weeks discussed · individual results vary</p>
             </div>
-            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-4 shadow-[0_2px_12px_rgba(15,23,42,0.05)]">
+            <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 shadow-[0_2px_12px_rgba(15,23,42,0.05)]">
               <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">Monthly cost band</p>
               <p className="mt-2 text-xl font-semibold tabular-nums text-slate-900">
                 ${output.monthlyCostLow}–${output.monthlyCostHigh}

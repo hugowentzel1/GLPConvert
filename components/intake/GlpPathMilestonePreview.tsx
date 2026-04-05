@@ -18,7 +18,7 @@ export default function GlpPathMilestonePreview({
   return (
     <div
       data-results-milestones
-      className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-b from-white to-slate-50/80 px-4 py-6 shadow-[0_2px_12px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/[0.04] sm:px-6 sm:py-8"
+      className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-b from-white to-slate-50/80 px-5 py-8 shadow-[0_2px_12px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/[0.04] sm:px-8 sm:py-10"
     >
       <div className="mb-5 text-center sm:mb-6">
         <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
