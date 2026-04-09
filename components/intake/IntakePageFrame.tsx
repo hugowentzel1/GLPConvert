@@ -26,17 +26,18 @@ function IntakePageFrameInner({
   const accent = primaryHex || "#475569";
 
   const backgroundStyle = useMemo(() => {
-    const wash = hexToRgba(accent, demo ? 0.1 : 0.06);
-    const wash2 = hexToRgba(accent, 0.04);
+    const wash = hexToRgba(accent, demo ? 0.08 : 0.05);
+    const wash2 = hexToRgba(accent, 0.035);
+    // Tighter ellipses so the brand wash reads as a subtle halo, not a giant “arc” across the viewport
     return {
-      background: `radial-gradient(ellipse 100% 58% at 50% -10%, ${wash}, transparent 50%), radial-gradient(ellipse 80% 40% at 100% 80%, ${wash2}, transparent 45%), linear-gradient(180deg, #f8fafc 0%, #ffffff 42%, #f1f5f9 100%)`,
+      background: `radial-gradient(ellipse 65% 42% at 50% -8%, ${wash}, transparent 52%), radial-gradient(ellipse 55% 35% at 100% 85%, ${wash2}, transparent 48%), linear-gradient(180deg, #f8fafc 0%, #ffffff 42%, #f1f5f9 100%)`,
     };
   }, [accent, demo]);
 
   return (
     <main
       className={`min-h-screen px-4 pb-8 sm:px-6 md:px-8 md:pb-10 ${demo ? "pt-8 sm:pt-10 md:pt-12" : "py-8 md:py-10"}`}
-      style={backgroundStyle}
+      style={{ ...backgroundStyle, minHeight: "100vh" }}
       data-intake-mode={demo ? "demo" : "paid"}
     >
       <div className="mx-auto w-full max-w-2xl space-y-8 md:space-y-10">{children}</div>

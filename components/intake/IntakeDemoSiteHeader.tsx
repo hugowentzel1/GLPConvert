@@ -24,7 +24,7 @@ function safeCompanyLabel(raw: string | null): string {
   }
 }
 
-function useIntakeDemoHover(reduceMotion: boolean) {
+function useIntakeDemoHover(reduceMotion: boolean | null | undefined) {
   if (reduceMotion) return {};
   return {
     whileHover: { y: -2, scale: 1.02 },
@@ -48,7 +48,7 @@ export default function IntakeDemoSiteHeader() {
   const companyLabel = safeCompanyLabel(sp?.get("company") ?? null);
   const { primaryHex } = useMemo(() => parseGlpIntakeQueryBranding(sp), [sp]);
   const accent = primaryHex || "#0f172a";
-  const hover = useIntakeDemoHover(reduceMotion ?? false);
+  const hover = useIntakeDemoHover(reduceMotion);
 
   const [stripDismissed, setStripDismissed] = useState(false);
 
@@ -97,7 +97,19 @@ export default function IntakeDemoSiteHeader() {
   const showDemoStrip = demo && b.enabled && !stripDismissed;
 
   const brandNavRow = (
-    <div className="mx-auto flex h-auto min-h-[4rem] max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8 md:min-h-[5rem]">
+    <div
+      className="mx-auto flex h-auto min-h-[4rem] max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8 md:min-h-[5rem]"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: "1rem",
+        maxWidth: "80rem",
+        marginLeft: "auto",
+        marginRight: "auto",
+        minHeight: "4rem",
+      }}
+    >
       <Link
         href={homeHref}
         className="flex min-w-0 items-center gap-3 rounded-lg outline-none ring-offset-2 transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-slate-900/20 md:gap-4"

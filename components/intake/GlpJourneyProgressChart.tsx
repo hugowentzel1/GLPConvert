@@ -90,14 +90,23 @@ export default function GlpJourneyProgressChart({
           </div>
         </div>
       ) : null}
-      <div className={`relative ${compact ? "h-[200px] w-full sm:h-[220px]" : "h-[240px] w-full sm:h-[260px]"}`}>
+      <div
+        className={`relative ${compact ? "h-[200px] w-full sm:h-[220px]" : "h-[240px] w-full sm:h-[260px]"}`}
+        style={{ minHeight: compact ? 200 : 240, minWidth: 0, isolation: "isolate" }}
+      >
         <div
           className="pointer-events-none absolute inset-0 z-[2] overflow-hidden rounded-xl sm:rounded-2xl"
           aria-hidden
         >
           <div className="glp-intake-chart-shimmer absolute inset-0" />
         </div>
-        <ResponsiveContainer className="relative z-[3]" width="100%" height="100%">
+        <ResponsiveContainer
+          className="relative z-[3]"
+          width="100%"
+          height="100%"
+          minHeight={compact ? 200 : 240}
+          minWidth={0}
+        >
           <AreaChart data={points} margin={{ top: 8, right: 8, left: 0, bottom: 8 }}>
             <defs>
               <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
