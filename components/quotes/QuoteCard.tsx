@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type Props = {
   headline: string;            // concise metric/outcome
   support?: string;            // single sentence
@@ -50,7 +52,14 @@ export default function QuoteCard({
             )}
           </div>
           {logoSrc ? (
-            <img src={logoSrc} alt={logoAlt || ""} className="h-5 opacity-60" />
+            <Image
+              src={logoSrc}
+              alt={logoAlt || ""}
+              width={120}
+              height={20}
+              className="h-5 w-auto max-w-[120px] object-contain opacity-60"
+              unoptimized
+            />
           ) : null}
         </div>
       </figcaption>

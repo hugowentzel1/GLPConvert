@@ -106,7 +106,7 @@ function DemoHeaderActions({
     }
   }, []);
 
-  const hover = useMarketingHover(reduceMotion);
+  const hover = useMarketingHover(reduceMotion ?? false);
 
   return (
     <div className="mx-auto w-full max-w-sm space-y-3">
@@ -147,6 +147,7 @@ function IntakePageHeaderInner() {
   const sp = useSearchParams();
   const demo = isIntakeDemoMode(sp);
   const reduceMotion = useReducedMotion();
+  const prefersReducedMotion = reduceMotion ?? false;
   const companyLabel = safeCompanyLabel(sp?.get("company") ?? null);
   const { logoUrl, primaryHex } = useMemo(() => parseGlpIntakeQueryBranding(sp), [sp]);
   const accent = primaryHex || DEFAULT_DEMO_ACCENT;
@@ -165,7 +166,7 @@ function IntakePageHeaderInner() {
     return () => window.removeEventListener(INTAKE_DEMO_BANNER_DISMISS_EVENT, sync);
   }, []);
 
-  const heroMotion = reduceMotion
+  const heroMotion = prefersReducedMotion
     ? {}
     : {
         initial: { opacity: 0, y: 12 },
@@ -211,7 +212,7 @@ function IntakePageHeaderInner() {
                 Branded patient preview — embed on your site or ad funnel
               </p>
               <div className="mt-5 flex w-full justify-center sm:mt-6">
-                <DemoHeaderActions companyLabel={companyLabel} accent={accent} reduceMotion={reduceMotion} />
+                <DemoHeaderActions companyLabel={companyLabel} accent={accent} reduceMotion={prefersReducedMotion} />
               </div>
 
               <div className="mt-6 w-full border-t border-slate-100 pt-6 text-center sm:mt-7 sm:pt-7">

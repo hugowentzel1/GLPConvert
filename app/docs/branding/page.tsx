@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import { useSearchParams } from 'next/navigation';
 import Container from '@/components/layout/Container';
@@ -180,10 +181,13 @@ export default function BrandingCustomizationPage() {
                         <h3 className="text-xl font-semibold text-neutral-900 mb-4">Current Logo</h3>
                         <div className="flex items-center space-x-4 p-4 bg-neutral-50 rounded-lg">
                           {b.enabled && b.logo ? (
-                            <img 
-                              src={b.logo} 
-                              alt={`${b.brand} logo`} 
+                            <Image
+                              src={b.logo}
+                              alt={`${b.brand} logo`}
+                              width={64}
+                              height={64}
                               className="w-16 h-16 object-contain rounded-lg"
+                              unoptimized
                             />
                           ) : (
                             <div className="w-16 h-16 bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-lg flex items-center justify-center">

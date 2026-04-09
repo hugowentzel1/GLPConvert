@@ -617,6 +617,8 @@ function ReportContent() {
     window.consumeQuotaIfNeeded = () => {
       console.log('🔒 Demo quota - checkout clicked, quota already consumed on estimate generation');
     };
+    // Intentionally omit fetchEstimate: effect should re-run only when URL/search params change, not when quota state updates.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- fetchEstimate closes over quota; adding it would re-fetch on quota flip
     }, [searchParams, pickDemoAddress]);
 
   if (tenantLoading || isLoading) {

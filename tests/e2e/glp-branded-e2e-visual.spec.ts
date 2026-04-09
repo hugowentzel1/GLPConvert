@@ -199,7 +199,10 @@ test.describe("GLPConvert branded E2E (visual)", () => {
       waitUntil: "domcontentloaded",
     });
 
-    await expect(page.getByText(/turn glp traffic into booked/i)).toBeVisible({ timeout: 20000 });
+    await expect(page.locator('[data-testid="home-demo-headline"]')).toContainText(
+      /Stop losing GLP-1 leads/i,
+      { timeout: 20000 },
+    );
     await expect(page.getByText(/Demo for E2E Buyer Clinic/i).first()).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("visual-B1-buyer-hero.png"), fullPage: true });
 

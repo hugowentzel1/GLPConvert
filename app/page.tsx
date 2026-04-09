@@ -191,16 +191,28 @@ function HomeContent() {
             </div>
           )}
           
-          {/* Company Branding Section - Demo only */}
+          {/* Company Branding Section - Demo only (cold-email buyer: clarity + outcome + risk reversal) */}
           {isDemo && b.enabled && (
             <div>
               <div className="rounded-2xl border border-slate-200/90 bg-white py-6 px-8 shadow-sm mx-auto max-w-2xl">
                 <div className="text-center" {...tid('demo-cta')}>
-                  <h2 className="text-3xl font-bold text-gray-900">
-                    Demo for {b.brand || 'Your Company'} — <a href="/status" className="hover:underline" style={{ color: b.primary }}>{PRODUCT_NAME}</a>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                    Personalized demo
+                  </p>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-2">
+                    Demo for {b.brand || 'Your Company'} —{" "}
+                    <a href="/status" className="hover:underline" style={{ color: b.primary }}>
+                      {PRODUCT_NAME}
+                    </a>
                   </h2>
-                  <p className="text-lg text-gray-600 mt-4">
-                    Your logo. Your URL. Branded GLP-1 intake &amp; booking — live in 24 hours.
+                  <p className="text-base sm:text-lg text-slate-600 mt-4 max-w-xl mx-auto leading-relaxed">
+                    This is the patient-facing path in <strong className="font-semibold text-slate-800">your</strong> brand: a guided
+                    pre-consult flow that answers “what happens next?”, sets realistic expectations, and routes{" "}
+                    <strong className="font-semibold text-slate-800">higher-intent</strong> leads to{" "}
+                    <strong className="font-semibold text-slate-800">your</strong> booking link. Every click you pay for on Meta or
+                    Google should move toward a booked consult—not stall in the gap between “interested” and “on the calendar.”
+                    That gap is where ad spend becomes{" "}
+                    <strong className="font-semibold text-slate-800">silent churn</strong> and revenue walks out the door.
                   </p>
        <button 
          data-cta="primary"
@@ -241,22 +253,55 @@ function HomeContent() {
           
           <div className="space-y-6">
             <div className="space-y-6">
-              
-              <h1 className="text-4xl sm:text-5xl md:text-[2.75rem] font-semibold tracking-tight text-slate-900 leading-[1.15] max-w-3xl mx-auto">
-                Turn GLP traffic into booked, higher-intent consults.
-              </h1>
+              {isDemo && b.enabled ? (
+                <>
+                  <h1
+                    className="text-4xl sm:text-5xl md:text-[2.75rem] font-semibold tracking-tight text-slate-900 leading-[1.15] max-w-3xl mx-auto"
+                    data-testid="home-demo-headline"
+                  >
+                    Stop losing GLP-1 leads between the ad and the consult.
+                  </h1>
 
-              <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                {PRODUCT_NAME} is a white-label <strong className="font-semibold text-gray-800">pre-consult conversion layer</strong> for telehealth, med spas, and weight-loss programs: clarity, expectations, consult readiness, then handoff to <em>your</em> booking flow — not medical advice.
-              </p>
-              <div className="pt-4">
-                <a
-                  href={intakeHref}
-                  className="inline-flex items-center justify-center px-6 py-3 rounded-xl text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 transition-colors shadow-sm"
-                >
-                  Try the branded intake experience
-                </a>
-              </div>
+                  <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                    {PRODUCT_NAME} is a <strong className="font-semibold text-slate-800">white-label</strong> layer that runs{" "}
+                    <em>before</em> your scheduler: patients get clarity on pathway, timing, and typical ranges; you get consult-ready
+                    leads routed to <strong className="font-semibold text-slate-800">your</strong> booking link—without hiring dev or
+                    rebuilding your site. Stronger conversion here means{" "}
+                    <strong className="font-semibold text-slate-800">more revenue from the same ad budget</strong> (and fewer
+                    dollars lost to drop-off between ad click and consult). Built for telehealth, med spas, and GLP-1 programs.
+                    Education and intake only—not prescribing or medical advice.
+                  </p>
+                  <div className="pt-4">
+                    <a
+                      href={intakeHref}
+                      className="inline-flex items-center justify-center px-6 py-3 rounded-xl text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 transition-colors shadow-sm"
+                      data-testid="home-demo-try-intake"
+                    >
+                      Open the branded intake preview
+                    </a>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h1 className="text-4xl sm:text-5xl md:text-[2.75rem] font-semibold tracking-tight text-slate-900 leading-[1.15] max-w-3xl mx-auto">
+                    Turn GLP traffic into booked, higher-intent consults.
+                  </h1>
+
+                  <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                    {PRODUCT_NAME} is a white-label <strong className="font-semibold text-gray-800">pre-consult conversion layer</strong>{" "}
+                    for telehealth, med spas, and weight-loss programs: clarity, expectations, consult readiness, then handoff to{" "}
+                    <em>your</em> booking flow — not medical advice.
+                  </p>
+                  <div className="pt-4">
+                    <a
+                      href={intakeHref}
+                      className="inline-flex items-center justify-center px-6 py-3 rounded-xl text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 transition-colors shadow-sm"
+                    >
+                      Try the branded intake experience
+                    </a>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
@@ -278,37 +323,76 @@ function HomeContent() {
           {/* Trust Signals - Logo Wall */}
           {trustData && <LogoWall logos={trustData.logos} />}
 
-          {/* Features - Single row of 3 cards with company color gradient shading */}
+          {/* Features — demo: pain/outcome; default: product facts */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto py-8 md:py-12">
-            <div className="rounded-2xl border border-slate-200/90 bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-md flex flex-col justify-center">
-              <div className="text-lg font-semibold text-slate-900 mb-3">Consult-ready education</div>
-              <div className="text-slate-600 text-sm leading-relaxed">
-                Expectations and typical ranges in plain language — a licensed provider still decides eligibility and treatment.
-              </div>
-            </div>
-            <div className="rounded-2xl border border-slate-200/90 bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-md flex flex-col justify-center">
-              <div className="text-lg font-semibold text-slate-900 mb-3">Leads to inbox + dashboard</div>
-              <div className="text-slate-600 text-sm leading-relaxed">
-                Instant email when a lead submits, plus your dashboard. Optional handoff to HubSpot, Salesforce, or your CRM.
-              </div>
-            </div>
-            <div className="rounded-2xl border border-slate-200/90 bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-md flex flex-col justify-center">
-              <div className="text-lg font-semibold text-slate-900 mb-3">HIPAA-ready posture</div>
-              <div className="text-slate-600 text-sm leading-relaxed">
-                Encryption in transit, access-controlled infrastructure, and tenant-scoped handling — BAAs where required.
-              </div>
-            </div>
+            {isDemo && b.enabled ? (
+              <>
+                <div className="rounded-2xl border border-slate-200/90 bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-md flex flex-col justify-center">
+                  <div className="text-lg font-semibold text-slate-900 mb-3">Stop burning paid spend on dead-end clicks</div>
+                  <div className="text-slate-600 text-sm leading-relaxed">
+                    Patients understand pathway, timing, and typical ranges <em>before</em> they book—fewer no-shows, fewer “what is
+                    this?” calls, and less budget wasted on traffic that never becomes a consult.
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-slate-200/90 bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-md flex flex-col justify-center">
+                  <div className="text-lg font-semibold text-slate-900 mb-3">Pipeline you can monetize</div>
+                  <div className="text-slate-600 text-sm leading-relaxed">
+                    Submissions hit your inbox and dashboard the same day—so sales and scheduling can act while intent is hot.
+                    Optional push to HubSpot, Salesforce, or the CRM you already pay for.
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-slate-200/90 bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-md flex flex-col justify-center">
+                  <div className="text-lg font-semibold text-slate-900 mb-3">HIPAA-ready posture</div>
+                  <div className="text-slate-600 text-sm leading-relaxed">
+                    Encryption in transit, access-controlled infrastructure, tenant-scoped handling—BAAs where required.
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="rounded-2xl border border-slate-200/90 bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-md flex flex-col justify-center">
+                  <div className="text-lg font-semibold text-slate-900 mb-3">Consult-ready education</div>
+                  <div className="text-slate-600 text-sm leading-relaxed">
+                    Expectations and typical ranges in plain language — a licensed provider still decides eligibility and treatment.
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-slate-200/90 bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-md flex flex-col justify-center">
+                  <div className="text-lg font-semibold text-slate-900 mb-3">Leads to inbox + dashboard</div>
+                  <div className="text-slate-600 text-sm leading-relaxed">
+                    Instant email when a lead submits, plus your dashboard. Optional handoff to HubSpot, Salesforce, or your CRM.
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-slate-200/90 bg-white p-8 text-center shadow-sm transition-shadow hover:shadow-md flex flex-col justify-center">
+                  <div className="text-lg font-semibold text-slate-900 mb-3">HIPAA-ready posture</div>
+                  <div className="text-slate-600 text-sm leading-relaxed">
+                    Encryption in transit, access-controlled infrastructure, and tenant-scoped handling — BAAs where required.
+                  </div>
+                </div>
+              </>
+            )}
           </div>
 
           {/* Final CTA Section */}
           <div className="max-w-4xl mx-auto py-8 md:py-10">
             <div className="rounded-2xl border border-slate-200/90 bg-white p-8 shadow-sm">
               <div className="text-center space-y-8">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Launch Your Branded Version Now</h2>
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+                  {isDemo && b.enabled ? "Ship your branded intake this week" : "Launch Your Branded Version Now"}
+                </h2>
                 <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
-                  <span>• &lt;24h setup</span>
-                  <span>• Instant lead email + dashboard (+ optional CRM)</span>
-                  <span>• Ongoing support</span>
+                  {isDemo && b.enabled ? (
+                    <>
+                      <span>• Live in 24h—or setup fee refunded</span>
+                      <span>• $99/mo + $399 setup (fraction of one wasted ad day)</span>
+                      <span>• Your logo & colors on every step</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>• &lt;24h setup</span>
+                      <span>• Instant lead email + dashboard (+ optional CRM)</span>
+                      <span>• Ongoing support</span>
+                    </>
+                  )}
                 </div>
        <button 
          onClick={handleLaunchClick}
@@ -355,35 +439,108 @@ function HomeContent() {
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-[var(--brand-primary)] rounded-full flex items-center justify-center text-white font-semibold text-base shadow-md flex-shrink-0">
                     1
                   </div>
-                  <span className="text-base text-slate-700 max-w-[140px]">Patient starts your intake</span>
+                  <span className="text-base text-slate-700 max-w-[160px]">
+                    {isDemo && b.enabled ? "Prospect starts your branded intake" : "Patient starts your intake"}
+                  </span>
                 </div>
                 <div className="hidden md:block text-slate-400 text-2xl flex-shrink-0 -mt-8">→</div>
                 <div className="flex flex-col items-center space-y-2 w-full md:w-auto text-center">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-[var(--brand-primary)] rounded-full flex items-center justify-center text-white font-semibold text-base shadow-md flex-shrink-0">
                     2
                   </div>
-                  <span className="text-base text-slate-700 max-w-[140px]">Education &amp; consult readiness</span>
+                  <span className="text-base text-slate-700 max-w-[160px]">
+                    {isDemo && b.enabled ? "Clarity, timing & readiness (not a diagnosis)" : "Education & consult readiness"}
+                  </span>
                 </div>
                 <div className="hidden md:block text-slate-400 text-2xl flex-shrink-0 -mt-8">→</div>
                 <div className="flex flex-col items-center space-y-2 w-full md:w-auto text-center">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-[var(--brand-primary)] rounded-full flex items-center justify-center text-white font-semibold text-base shadow-md flex-shrink-0">
                     3
                   </div>
-                  <span className="text-base text-slate-700 max-w-[140px]">Consultation booked</span>
+                  <span className="text-base text-slate-700 max-w-[160px]">
+                    {isDemo && b.enabled ? "Books your consult link" : "Consultation booked"}
+                  </span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* FAQ Section - Demo only */}
-          {isDemo && (
-            <div className="max-w-4xl mx-auto py-8 md:py-10 px-4" {...tid('pricing-section')}>
-              <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">Frequently Asked Questions</h2>
-              {/* Demo FAQ — order tuned for clinic buyer objections */}
+          {/* FAQ — buyer-focused when branded demo; default marketing FAQ otherwise */}
+          <div className="max-w-4xl mx-auto py-8 md:py-10 px-4" {...tid('pricing-section')}>
+            <h2 className="text-3xl font-bold text-gray-900 text-center mb-8">Frequently Asked Questions</h2>
+            {isDemo && b.enabled ? (
+              <div className="space-y-6">
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">What exactly am I buying?</h3>
+                  <p className="text-gray-600">
+                    A <strong className="font-semibold text-gray-800">white-label</strong> pre-consult funnel: your branding, your
+                    booking URL at the end, lead capture to your inbox/dashboard, and optional CRM handoff. We are{" "}
+                    <strong className="font-semibold text-gray-800">not</strong> an EMR, pharmacy, or telehealth visit—this is the
+                    education and qualification layer <em>before</em> the consult.
+                  </p>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">How does this pay for itself?</h3>
+                  <p className="text-gray-600">
+                    Paid acquisition only works if clicks convert into <strong className="font-semibold text-gray-800">booked</strong>{" "}
+                    consults. This layer reduces drop-off between ad and calendar, so you recover margin you were already spending
+                    to acquire—plus fewer no-shows and confused prospects on the phone.
+                  </p>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Is this medical advice?</h3>
+                  <p className="text-gray-600">
+                    No. {PRODUCT_NAME} is for education, intake, and routing only. A licensed provider determines eligibility and
+                    treatment.{" "}
+                    <a
+                      href="/methodology"
+                      className="text-[var(--brand-primary)] hover:text-[var(--brand-primary)]/80 hover:underline font-medium transition-colors duration-200"
+                    >
+                      How we describe programs
+                    </a>
+                    .
+                  </p>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">How fast can we go live?</h3>
+                  <p className="text-gray-600">
+                    Target <strong className="font-semibold text-gray-800">24 hours</strong> from checkout: we give you a snippet or
+                    hosted link, you drop it on your site or ads—no engineering sprint.
+                  </p>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Will it work with our site / ads?</h3>
+                  <p className="text-gray-600">
+                    Yes—one embed script or a hosted page you can link from Meta, Google, or your homepage. WordPress, Webflow,
+                    Squarespace, custom stacks.
+                  </p>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Security &amp; compliance</h3>
+                  <p className="text-gray-600">
+                    Encryption in transit (and at rest where applicable), access-controlled infrastructure, HIPAA-ready posture—
+                    BAAs where required for your use case.
+                  </p>
+                </div>
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Support</h3>
+                  <p className="text-gray-600">Email support plus onboarding help so your team isn’t guessing at embed or copy.</p>
+                </div>
+              </div>
+            ) : (
               <div className="space-y-6">
                 <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Is this medical advice?</h3>
-                  <p className="text-gray-600">No. {PRODUCT_NAME} is for education, intake, and booking only. A licensed provider determines final eligibility. <a href="/methodology" className="text-[var(--brand-primary)] hover:text-[var(--brand-primary)]/80 hover:underline font-medium transition-colors duration-200">How we describe programs</a>.</p>
+                  <p className="text-gray-600">
+                    No. {PRODUCT_NAME} is for education, intake, and booking only. A licensed provider determines final eligibility.{" "}
+                    <a
+                      href="/methodology"
+                      className="text-[var(--brand-primary)] hover:text-[var(--brand-primary)]/80 hover:underline font-medium transition-colors duration-200"
+                    >
+                      How we describe programs
+                    </a>
+                    .
+                  </p>
                 </div>
                 <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50">
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">Setup time? — Live on your site within 24 hours, no coding required</h3>
@@ -394,7 +551,7 @@ function HomeContent() {
                   <p className="text-gray-600">Works with any website platform. Just add one line of code.</p>
                 </div>
                 <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Security? — Encrypted in transit & at rest</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">Security? — Encrypted in transit &amp; at rest</h3>
                   <p className="text-gray-600">Bank-level security for all customer data.</p>
                 </div>
                 <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/50">
@@ -402,8 +559,8 @@ function HomeContent() {
                   <p className="text-gray-600">Get help whenever you need it.</p>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* Trust Signals - About Block */}
           {trustData && (

@@ -48,7 +48,7 @@ export default function IntakeDemoSiteHeader() {
   const companyLabel = safeCompanyLabel(sp?.get("company") ?? null);
   const { primaryHex } = useMemo(() => parseGlpIntakeQueryBranding(sp), [sp]);
   const accent = primaryHex || "#0f172a";
-  const hover = useIntakeDemoHover(reduceMotion);
+  const hover = useIntakeDemoHover(reduceMotion ?? false);
 
   const [stripDismissed, setStripDismissed] = useState(false);
 

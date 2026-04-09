@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import { useSearchParams } from 'next/navigation';
 import { PRODUCT_NAME, PLATFORM_DISPLAY_NAME, SUPPORT_EMAIL } from '@/lib/product-identity';
@@ -63,10 +64,13 @@ export default function LegalFooter({
               {isDemo ? PLATFORM_DISPLAY_NAME : (companyName || 'Your Company')}
             </h3>
             {!isDemo && proxiedLogoUrl && (
-              <img
+              <Image
                 src={proxiedLogoUrl}
                 alt={`${companyName || 'Your Company'} logo`}
+                width={48}
+                height={48}
                 className="h-12 w-12 rounded-lg object-contain"
+                unoptimized
               />
             )}
           </div>
