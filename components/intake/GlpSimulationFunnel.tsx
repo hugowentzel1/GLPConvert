@@ -528,11 +528,18 @@ export default function GlpSimulationFunnel() {
   return (
     <div
       className={`glp-intake-funnel ${glpIntakeUi.column} pb-6`}
-      style={{ "--glp-brand-fill": brandFill } as CSSProperties}
+      style={
+        {
+          "--glp-brand-fill": brandFill,
+          /* Mirror sunspire-clean `TrustRow`: brand tint + icon color */
+          "--brand-primary": brandFill,
+          "--brand-600": brandFill,
+        } as CSSProperties
+      }
     >
-      <IntakeStepper step={step} brandFill={brandFill} building={building} />
-
       <IntakeTrustStrip />
+
+      <IntakeStepper step={step} brandFill={brandFill} building={building} />
 
       {step === 1 && (
         <motion.section
