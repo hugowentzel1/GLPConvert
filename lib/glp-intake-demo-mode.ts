@@ -8,3 +8,15 @@ export function isIntakeDemoMode(sp: URLSearchParams | null): boolean {
     sp.get("mode") === "demo"
   );
 }
+
+/**
+ * Sales / cold-email preview: explicit demo params **or** branded `company` without tenant `handle`.
+ * Paid embeds use `handle=` for config API — those stay in “paid” chrome.
+ */
+export function isIntakeBrandedMarketingMode(sp: URLSearchParams | null): boolean {
+  if (!sp) return false;
+  if (isIntakeDemoMode(sp)) return true;
+  const company = sp.get("company")?.trim();
+  const handle = sp.get("handle")?.trim();
+  return Boolean(company) && !handle;
+}

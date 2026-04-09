@@ -4,14 +4,8 @@ import { Suspense, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 import { hexToRgba } from "@/lib/intake-color-helpers";
+import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
 import IntakePageFooter from "@/components/intake/IntakePageFooter";
-
-function isIntakeDemoMode(sp: URLSearchParams | null): boolean {
-  if (!sp) return false;
-  return (
-    sp.get("demo") === "1" || sp.get("preview") === "1" || sp.get("mode") === "demo"
-  );
-}
 
 function IntakePageFrameInner({
   demoServerHint,
@@ -21,7 +15,7 @@ function IntakePageFrameInner({
   children: React.ReactNode;
 }) {
   const sp = useSearchParams();
-  const demo = isIntakeDemoMode(sp) || demoServerHint;
+  const demo = isIntakeBrandedMarketingMode(sp) || demoServerHint;
   const { primaryHex } = useMemo(() => parseGlpIntakeQueryBranding(sp), [sp]);
   const accent = primaryHex || "#475569";
 
@@ -37,7 +31,7 @@ function IntakePageFrameInner({
   return (
     <main
       className={`min-h-screen px-4 pb-8 sm:px-6 md:px-8 md:pb-10 ${demo ? "pt-8 sm:pt-10 md:pt-12" : "py-8 md:py-10"}`}
-      style={{ ...backgroundStyle, minHeight: "100vh" }}
+      style={backgroundStyle}
       data-intake-mode={demo ? "demo" : "paid"}
     >
       <div className="mx-auto w-full max-w-2xl space-y-8 md:space-y-10">{children}</div>

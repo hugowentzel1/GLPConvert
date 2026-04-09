@@ -8,7 +8,7 @@ import { useBrandTakeover } from "@/src/brand/useBrandTakeover";
 import { useCountdown } from "@/src/demo/useCountdown";
 import { usePreviewQuota } from "@/src/demo/usePreviewQuota";
 import { track } from "@/src/demo/track";
-import { isIntakeDemoMode } from "@/lib/glp-intake-demo-mode";
+import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
 import { LAUNCH_BRANDED_CTA_LABEL, PRODUCT_NAME } from "@/lib/product-identity";
 import { INTAKE_DEMO_BANNER_DISMISS_EVENT, INTAKE_DEMO_BANNER_DISMISS_KEY } from "@/lib/intake-demo-banner-dismiss";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
@@ -44,11 +44,11 @@ export default function IntakeDemoSiteHeader() {
   const countdown = useCountdown(b.expireDays || 7);
   const { read } = usePreviewQuota(2);
   const remaining = read();
-  const demo = isIntakeDemoMode(sp);
+  const marketing = isIntakeBrandedMarketingMode(sp);
   const companyLabel = safeCompanyLabel(sp?.get("company") ?? null);
   const { primaryHex } = useMemo(() => parseGlpIntakeQueryBranding(sp), [sp]);
   const accent = primaryHex || "#0f172a";
-  const hover = useIntakeDemoHover(reduceMotion);
+  const hover = useIntakeDemoHover(reduceMotion ?? false);
 
   const [stripDismissed, setStripDismissed] = useState(false);
 
@@ -94,7 +94,9 @@ export default function IntakeDemoSiteHeader() {
 
   const pricingHref = `/pricing?company=${encodeURIComponent(companyLabel)}`;
 
-  const showDemoStrip = demo && b.enabled && !stripDismissed;
+  /** Preview strip: exclusive preview row + nav + disclaimer (reset dismiss key in lib if it hides forever). */
+  const showDemoStrip = b.enabled && !stripDismissed && marketing;
+  const showLaunchCta = marketing;
 
   const brandNavRow = (
     <div
@@ -129,7 +131,7 @@ export default function IntakeDemoSiteHeader() {
         </div>
       </Link>
 
-      {demo ? (
+      {showLaunchCta ? (
         <motion.a
           href={pricingHref}
           className="intake-nav-activate relative inline-flex max-w-[min(100%,20rem)] shrink-0 items-center gap-2 overflow-hidden rounded-xl px-3 py-2.5 text-xs font-semibold text-white shadow-md transition-shadow hover:shadow-lg sm:gap-3 sm:px-5 sm:py-3 sm:text-sm"

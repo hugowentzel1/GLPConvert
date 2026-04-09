@@ -1,10 +1,10 @@
-/* Inter is loaded via next/font in app/layout.tsx — avoid a blocking @import here
-   (Safari can delay the rest of this file, including @tailwind, until external CSS resolves). */
-@import url("../components/ui/premium-tokens.css");
-
+/* Inter is loaded via next/font in app/layout.tsx. Load Tailwind before `premium-tokens.css`
+   (it uses @apply) so utilities resolve and pages don’t render nearly unstyled in Safari. */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url("../components/ui/premium-tokens.css");
 
 /* Global width and gutter tokens - single source of truth */
 :root {

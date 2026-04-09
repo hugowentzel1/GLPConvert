@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import GlpDemoOwnerPanels from "@/components/intake/GlpDemoOwnerPanels";
 import GlpJourneyProgressChart from "@/components/intake/GlpJourneyProgressChart";
@@ -11,6 +10,7 @@ import { persistUtmFromSearchParams, getMergedUtm } from "@/lib/glp-attribution"
 import { resolveGlpTenantSlug } from "@/lib/glp-tenant-slug";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
+import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
 
 type TenantIntakePublicJson = {
   ok?: boolean;
@@ -271,8 +271,7 @@ export default function GlpSimulationFunnel() {
   const companyFromQuery = sp?.get("company")?.trim() || "";
   const [publicCfg, setPublicCfg] = useState<TenantIntakePublicJson | null>(null);
   const company = companyFromQuery || publicCfg?.displayName || "your clinic";
-  const isDemoMode =
-    sp?.get("demo") === "1" || sp?.get("preview") === "1" || sp?.get("mode") === "demo";
+  const isDemoMode = isIntakeBrandedMarketingMode(sp);
   const demoTraffic = Math.min(50_000, Math.max(50, Number(sp?.get("demo_traffic") || 400) || 400));
   const { logoUrl: logoFromQuery, primaryHex, secondaryHex: secondaryFromQuery } = useMemo(
     () => parseGlpIntakeQueryBranding(sp),
@@ -281,8 +280,6 @@ export default function GlpSimulationFunnel() {
   const effectiveLogo = logoFromQuery || publicCfg?.logoUrl || null;
   const brandFill = primaryHex || publicCfg?.brandColor || DEFAULT_BRAND;
   const effectiveSecondary = secondaryFromQuery || publicCfg?.brandColorSecondary || null;
-  const reduceMotion = useReducedMotion();
-
   const [step, setStep] = useState<FlowStep>(1);
   const [input, setInput] = useState<SimInput>({
     currentWeight: 220,
@@ -502,14 +499,6 @@ export default function GlpSimulationFunnel() {
       ? `${glpIntakeUi.choiceBase} border-transparent text-white shadow-sm`
       : `${glpIntakeUi.choiceBase} ${glpIntakeUi.choiceIdle}`;
 
-  const stepMotion = reduceMotion
-    ? {}
-    : {
-        initial: { opacity: 0, y: 12 },
-        animate: { opacity: 1, y: 0 },
-        transition: { duration: 0.38, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-      };
-
   /** Upward illustrative “momentum” — % progress toward stated weight goal (not a medical forecast). */
   const journeyProgressPoints = useMemo(() => {
     const rows = output.projectedMonthlyRange;
@@ -542,10 +531,9 @@ export default function GlpSimulationFunnel() {
       <IntakeStepper step={step} brandFill={brandFill} building={building} />
 
       {step === 1 && (
-        <motion.section
+        <section
           data-flow-step="1"
           className={`relative ${glpIntakeUi.card} ${glpIntakeUi.cardPad} ${glpIntakeUi.stackStepForm}`}
-          {...stepMotion}
         >
           {building ? (
             <div
@@ -709,14 +697,13 @@ export default function GlpSimulationFunnel() {
               Continue
             </button>
           </div>
-        </motion.section>
+        </section>
       )}
 
       {step === 2 && (
-        <motion.section
+        <section
           data-flow-step="2"
           className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} ${glpIntakeUi.resultsStack}`}
-          {...stepMotion}
         >
           <div
             data-results-trust-strip
@@ -996,14 +983,13 @@ export default function GlpSimulationFunnel() {
               </button>
             </div>
           </div>
-        </motion.section>
+        </section>
       )}
 
       {step === 3 && (
-        <motion.section
+        <section
           data-flow-step="3"
           className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} ${glpIntakeUi.stackSection}`}
-          {...stepMotion}
         >
           <header className={glpIntakeUi.stackSm}>
             <p className={glpIntakeUi.kicker}>Step 3</p>
@@ -1098,14 +1084,13 @@ export default function GlpSimulationFunnel() {
               </button>
             </div>
           </div>
-        </motion.section>
+        </section>
       )}
 
       {step === 4 && (
-        <motion.section
+        <section
           data-flow-step="4"
           className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} ${glpIntakeUi.stackSection}`}
-          {...stepMotion}
         >
           <header className={glpIntakeUi.stackSm}>
             <p className={glpIntakeUi.kicker}>Step 4</p>
@@ -1253,14 +1238,13 @@ export default function GlpSimulationFunnel() {
             </div>
           </div>
           {saveMsg ? <p className="text-sm font-medium text-red-600">{saveMsg}</p> : null}
-        </motion.section>
+        </section>
       )}
 
       {step === 5 && (
-        <motion.section
+        <section
           data-flow-step="5"
           className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} text-center ${glpIntakeUi.stackMd} bg-gradient-to-b from-slate-50/90 to-white`}
-          {...stepMotion}
         >
           <div
             className="mx-auto flex h-14 w-14 items-center justify-center rounded-full text-2xl text-white shadow-md"
@@ -1301,7 +1285,7 @@ export default function GlpSimulationFunnel() {
           >
             Back to home
           </a>
-        </motion.section>
+        </section>
       )}
     </div>
   );

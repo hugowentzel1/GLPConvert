@@ -200,10 +200,10 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     });
 
     await expect(page.locator('[data-testid="home-demo-headline"]')).toContainText(
-      /Stop losing GLP-1 leads/i,
+      /more GLP-1 consult revenue/i,
       { timeout: 20000 },
     );
-    await expect(page.getByText(/Demo for E2E Buyer Clinic/i).first()).toBeVisible();
+    await expect(page.locator('[data-testid="demo-cta"]').getByText(/E2E Buyer Clinic/)).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("visual-B1-buyer-hero.png"), fullPage: true });
 
     const launchBtn = page.locator('[data-cta-button]').first();
@@ -323,5 +323,28 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await expect(page.locator("[data-intake-demo-badge]")).toHaveCount(0);
     await page.setViewportSize({ width: 390, height: 844 });
     await page.screenshot({ path: testInfo.outputPath("visual-F2-paid-mobile.png"), fullPage: true });
+  });
+
+  test("H — Intake: company-only URL shows top demo strip, hero, and step 1 form", async ({
+    page,
+  }) => {
+    await mockTenantIntakeConfig(page);
+    await page.addInitScript(() => {
+      try {
+        sessionStorage.removeItem("intake-demo-banner-dismissed-v3");
+      } catch {
+        /* ignore */
+      }
+    });
+    await page.goto("/intake?company=Playwright%20Clinic&brand=059669&transition_ms=600", {
+      waitUntil: "domcontentloaded",
+    });
+    await expect(page.locator('[data-intake-mode="demo"]')).toBeVisible({ timeout: 25000 });
+    await expect(page.locator("[data-intake-demo-banner-strip]")).toBeVisible({ timeout: 20000 });
+    await expect(page.locator("[data-intake-hero]")).toBeVisible();
+    await expect(page.getByText(/Playwright Clinic/i).first()).toBeVisible();
+    await expect(page.locator('[data-intake-clinic-bar="demo"]')).toBeVisible({ timeout: 20000 });
+    await expect(page.getByRole("spinbutton", { name: /current weight/i })).toBeVisible({ timeout: 20000 });
+    await expect(page.locator("[data-intake-trust]")).toBeVisible();
   });
 });

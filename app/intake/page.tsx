@@ -22,12 +22,18 @@ function isDemoFromSearchParams(
   const previewStr = Array.isArray(preview) ? preview[0] : preview;
   const mode = sp.mode;
   const modeStr = Array.isArray(mode) ? mode[0] : mode;
-  return (
+  const company = sp.company;
+  const companyStr = (Array.isArray(company) ? company[0] : company)?.trim();
+  const handle = sp.handle;
+  const handleStr = (Array.isArray(handle) ? handle[0] : handle)?.trim();
+  const explicitDemo =
     demoStr === "1" ||
     demoStr === "true" ||
     previewStr === "1" ||
-    modeStr === "demo"
-  );
+    modeStr === "demo";
+  /** Match `isIntakeBrandedMarketingMode`: branded company cold links without tenant handle. */
+  const brandedPreview = Boolean(companyStr) && !handleStr;
+  return explicitDemo || brandedPreview;
 }
 
 export default function IntakePage({

@@ -197,22 +197,30 @@ function HomeContent() {
               <div className="rounded-2xl border border-slate-200/90 bg-white py-6 px-8 shadow-sm mx-auto max-w-2xl">
                 <div className="text-center" {...tid('demo-cta')}>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
-                    Personalized demo
+                    Personalized preview
                   </p>
                   <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-2">
-                    Demo for {b.brand || 'Your Company'} —{" "}
-                    <a href="/status" className="hover:underline" style={{ color: b.primary }}>
+                    {b.brand || "Your clinic"}: your branded GLP-1 intake path
+                  </h2>
+                  <p className="text-sm text-slate-500 mt-1">
+                    Powered by{" "}
+                    <a href="/status" className="font-medium hover:underline" style={{ color: b.primary }}>
                       {PRODUCT_NAME}
                     </a>
-                  </h2>
+                  </p>
                   <p className="text-base sm:text-lg text-slate-600 mt-4 max-w-xl mx-auto leading-relaxed">
-                    This is the patient-facing path in <strong className="font-semibold text-slate-800">your</strong> brand: a guided
-                    pre-consult flow that answers “what happens next?”, sets realistic expectations, and routes{" "}
-                    <strong className="font-semibold text-slate-800">higher-intent</strong> leads to{" "}
-                    <strong className="font-semibold text-slate-800">your</strong> booking link. Every click you pay for on Meta or
-                    Google should move toward a booked consult—not stall in the gap between “interested” and “on the calendar.”
-                    That gap is where ad spend becomes{" "}
-                    <strong className="font-semibold text-slate-800">silent churn</strong> and revenue walks out the door.
+                    This is what patients see <strong className="font-semibold text-slate-800">before</strong> they hit your
+                    scheduler: clarity on pathway, timing, and typical ranges—so fewer no-shows and abandoned bookings, and more
+                    consults per dollar of ad spend. Self-serve evaluation is standard for B2B buyers (
+                    <a
+                      href="https://www.gartner.com/en/sales/insights/b2b-buying-journey"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-semibold text-slate-800 underline decoration-slate-300 underline-offset-2 hover:text-slate-900"
+                    >
+                      Gartner
+                    </a>
+                    ); your prospects expect the same before they buy—your patients do too before they book.
                   </p>
        <button 
          data-cta="primary"
@@ -259,17 +267,32 @@ function HomeContent() {
                     className="text-4xl sm:text-5xl md:text-[2.75rem] font-semibold tracking-tight text-slate-900 leading-[1.15] max-w-3xl mx-auto"
                     data-testid="home-demo-headline"
                   >
-                    Stop losing GLP-1 leads between the ad and the consult.
+                    More GLP-1 consult revenue from the same ad spend—not more meetings.
                   </h1>
 
                   <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                    {PRODUCT_NAME} is a <strong className="font-semibold text-slate-800">white-label</strong> layer that runs{" "}
-                    <em>before</em> your scheduler: patients get clarity on pathway, timing, and typical ranges; you get consult-ready
-                    leads routed to <strong className="font-semibold text-slate-800">your</strong> booking link—without hiring dev or
-                    rebuilding your site. Stronger conversion here means{" "}
-                    <strong className="font-semibold text-slate-800">more revenue from the same ad budget</strong> (and fewer
-                    dollars lost to drop-off between ad click and consult). Built for telehealth, med spas, and GLP-1 programs.
-                    Education and intake only—not prescribing or medical advice.
+                    {PRODUCT_NAME} is a <strong className="font-semibold text-slate-800">white-label</strong> pre-consult layer: it
+                    runs <em>before</em> your booking link so clicks turn into <strong className="font-semibold text-slate-800">
+                      scheduled
+                    </strong>{" "}
+                    consults instead of “I’ll think about it.” You keep your site and ads; we add the conversion path in{" "}
+                    <strong className="font-semibold text-slate-800">your</strong> colors and logo. Built for telehealth, med spas,
+                    and GLP-1 programs. Education and intake only—not prescribing or medical advice.
+                  </p>
+                  <p
+                    className="text-xs text-slate-500 max-w-2xl mx-auto leading-relaxed text-center mt-4"
+                    data-home-proof-footnote
+                  >
+                    Context: self-directed digital buying is the norm—see{" "}
+                    <a
+                      href="https://www.gartner.com/en/sales/insights/b2b-buying-journey"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium text-slate-600 underline decoration-slate-300 underline-offset-2 hover:text-slate-900"
+                    >
+                      Gartner on the B2B buying journey
+                    </a>
+                    .
                   </p>
                   <div className="pt-4">
                     <a

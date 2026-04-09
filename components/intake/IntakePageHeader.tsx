@@ -4,7 +4,7 @@ import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
-import { isIntakeDemoMode } from "@/lib/glp-intake-demo-mode";
+import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
 import { INTAKE_DEMO_BANNER_DISMISS_EVENT, INTAKE_DEMO_BANNER_DISMISS_KEY } from "@/lib/intake-demo-banner-dismiss";
 import { LAUNCH_BRANDED_CTA_LABEL } from "@/lib/product-identity";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
@@ -145,7 +145,7 @@ function DemoHeaderActions({
 
 function IntakePageHeaderInner() {
   const sp = useSearchParams();
-  const demo = isIntakeDemoMode(sp);
+  const demo = isIntakeBrandedMarketingMode(sp);
   const reduceMotion = useReducedMotion();
   const prefersReducedMotion = reduceMotion ?? false;
   const companyLabel = safeCompanyLabel(sp?.get("company") ?? null);
@@ -166,14 +166,6 @@ function IntakePageHeaderInner() {
     return () => window.removeEventListener(INTAKE_DEMO_BANNER_DISMISS_EVENT, sync);
   }, []);
 
-  const heroMotion = prefersReducedMotion
-    ? {}
-    : {
-        initial: { opacity: 0, y: 12 },
-        animate: { opacity: 1, y: 0 },
-        transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
-      };
-
   return (
     <div className="w-full">
       {demo && demoBannerDismissed ? (
@@ -193,12 +185,11 @@ function IntakePageHeaderInner() {
         </div>
       ) : null}
 
-      <motion.div
+      <div
         className={`relative overflow-hidden rounded-[1.75rem] border border-slate-200/90 bg-white text-center shadow-[0_4px_24px_-4px_rgba(15,23,42,0.08),0_12px_40px_-12px_rgba(15,23,42,0.1)] ring-1 ring-slate-900/[0.04] ${glpIntakeUi.intakeHeaderPad}`}
         data-intake-clinic-bar={demo ? "demo" : "paid"}
         {...(demo ? { "data-intake-demo-strip": "1" } : {})}
         data-intake-hero
-        {...heroMotion}
       >
         <div className="relative mx-auto w-full max-w-[min(100%,36rem)]">
           {demo ? (
@@ -209,7 +200,7 @@ function IntakePageHeaderInner() {
               </div>
 
               <p className="mx-auto mt-5 max-w-md text-pretty text-sm leading-relaxed text-slate-500 sm:mt-6 sm:text-[15px]">
-                Branded patient preview — embed on your site or ad funnel
+                Protect paid traffic: turn clicks into booked consults—more revenue from the same ad spend
               </p>
               <div className="mt-5 flex w-full justify-center sm:mt-6">
                 <DemoHeaderActions companyLabel={companyLabel} accent={accent} reduceMotion={prefersReducedMotion} />
@@ -217,10 +208,11 @@ function IntakePageHeaderInner() {
 
               <div className="mt-6 w-full border-t border-slate-100 pt-6 text-center sm:mt-7 sm:pt-7">
                 <h1 className="text-pretty text-[1.35rem] font-bold leading-snug tracking-tight text-slate-900 sm:text-2xl">
-                  The patient-facing path, under your brand
+                  Stop leaking ad budget—book more consults from the same spend
                 </h1>
                 <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 sm:mt-3.5">
-                  Clarity on timing, typical ranges, and next steps — then your scheduling link.
+                  Patients get clarity on timing and typical ranges; you keep margin in-house with a path to your scheduling link—not
+                  another vendor tax on every click.
                 </p>
               </div>
             </>
@@ -244,7 +236,7 @@ function IntakePageHeaderInner() {
             </div>
           )}
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }
