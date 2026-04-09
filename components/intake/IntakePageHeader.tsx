@@ -12,7 +12,7 @@ import { glpIntakeUi } from "@/lib/glp-intake-ui";
 const DEFAULT_DEMO_ACCENT = "#0f172a";
 
 /** Primary CTA hover: subtle lift + scale (Framer); respects reduced motion. */
-function useMarketingHover(reduceMotion: boolean) {
+function useMarketingHover(reduceMotion: boolean | null | undefined) {
   if (reduceMotion) {
     return { primary: {}, secondary: {} } as const;
   }
@@ -93,7 +93,7 @@ function DemoHeaderActions({
 }: {
   companyLabel: string;
   accent: string;
-  reduceMotion: boolean;
+  reduceMotion: boolean | null | undefined;
 }) {
   const [copied, setCopied] = useState(false);
   const onCopy = useCallback(async () => {
@@ -106,7 +106,7 @@ function DemoHeaderActions({
     }
   }, []);
 
-  const hover = useMarketingHover(reduceMotion ?? false);
+  const hover = useMarketingHover(reduceMotion);
 
   return (
     <div className="mx-auto w-full max-w-sm space-y-3">
