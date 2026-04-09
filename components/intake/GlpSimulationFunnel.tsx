@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import GlpDemoOwnerPanels from "@/components/intake/GlpDemoOwnerPanels";
 import GlpJourneyProgressChart from "@/components/intake/GlpJourneyProgressChart";
 import GlpPathMilestonePreview from "@/components/intake/GlpPathMilestonePreview";
+import IntakeTrustStrip from "@/components/intake/IntakeTrustStrip";
 import { persistUtmFromSearchParams, getMergedUtm } from "@/lib/glp-attribution";
 import { resolveGlpTenantSlug } from "@/lib/glp-tenant-slug";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
@@ -531,12 +532,7 @@ export default function GlpSimulationFunnel() {
     >
       <IntakeStepper step={step} brandFill={brandFill} building={building} />
 
-      <p
-        data-intake-trust
-        className={`${glpIntakeUi.column} mb-10 text-center text-[10px] font-medium tracking-wide text-slate-400`}
-      >
-        Secure · Routed to your clinic · General information only
-      </p>
+      <IntakeTrustStrip />
 
       {step === 1 && (
         <motion.section
