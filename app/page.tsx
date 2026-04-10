@@ -1,9 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import LegalFooter from '@/components/legal/LegalFooter';
-import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
+import { useBrandTakeover, brandStateFromSearchParams } from '@/src/brand/useBrandTakeover';
 import HeroBrand from '@/src/brand/HeroBrand';
 import { useBrandColors } from '@/hooks/useBrandColors';
 import PriceWithMicrocopy from '@/components/PriceWithMicrocopy';
@@ -29,7 +30,12 @@ import TrustRow from '@/components/trust/TrustRow';
 import ReadingProgressBar from '@/components/ReadingProgressBar';
 import StickyCtaBar from '@/components/StickyCtaBar';
 import DemoPreviewTopBar from '@/components/marketing/DemoPreviewTopBar';
+import DemoRoiTeaser from '@/components/marketing/DemoRoiTeaser';
+import PartnerSummaryCopy from '@/components/marketing/PartnerSummaryCopy';
+import { persistUtmFromSearchParams } from '@/lib/glp-attribution';
+import { buildStripeCheckoutClientPayload } from '@/lib/stripe-checkout-client';
 import { PRODUCT_NAME } from '@/lib/product-identity';
+import { track } from '@/src/demo/track';
 
 function HomeContent() {
   const [trustData, setTrustData] = useState<any>(null);
@@ -60,6 +66,19 @@ function HomeContent() {
   useEffect(() => {
     getTrustData().then(setTrustData);
   }, []);
+
+  useEffect(() => {
+    if (searchParams) {
+      persistUtmFromSearchParams(new URLSearchParams(searchParams.toString()));
+    }
+  }, [searchParams]);
+
+  const demoViewTracked = useRef(false);
+  useEffect(() => {
+    if (!isDemo || !b.enabled || demoViewTracked.current) return;
+    demoViewTracked.current = true;
+    track("demo_home_view", { brand: b.brand, placement: "home" });
+  }, [isDemo, b.enabled, b.brand]);
 
   // Attach checkout handlers to CTAs
   useEffect(() => {
@@ -105,62 +124,56 @@ function HomeContent() {
 
 
 
-  const handleLaunchClick = async () => {
-    if (b.enabled) {
-      // Start Stripe checkout with tracking
+  const handleLaunchClick = async (e?: React.MouseEvent<HTMLButtonElement>) => {
+    const snap =
+      typeof window !== "undefined"
+        ? brandStateFromSearchParams(new URLSearchParams(window.location.search))
+        : null;
+    const checkoutEnabled = snap?.enabled ?? b.enabled;
+    if (checkoutEnabled) {
       try {
-        // Collect tracking parameters from URL
-        const token = searchParams?.get('token');
-        const company = searchParams?.get('company');
-        const utm_source = searchParams?.get('utm_source');
-        const utm_campaign = searchParams?.get('utm_campaign');
-        
-        // Capture current page URL for cancel redirect
-        const cancel_url = window.location.href;
-        
-        // Show optimistic loading state with micro-feedback
-        const button = document.querySelector('[data-cta-button]') as HTMLButtonElement;
+        const payload = buildStripeCheckoutClientPayload();
+        track("checkout_start", {
+          brand: snap?.brand ?? b.brand,
+          company: payload.company || undefined,
+          utm_source: payload.utm_source,
+          utm_medium: payload.utm_medium,
+          utm_campaign: payload.utm_campaign,
+          placement: "home_primary",
+        });
+
+        const button = (e?.currentTarget as HTMLButtonElement | undefined) ??
+          (document.querySelector("[data-cta-button]") as HTMLButtonElement | null);
         if (button) {
-          const originalText = button.textContent;
-          button.textContent = 'Preparing your branded checkout...';
+          button.textContent = "Preparing secure checkout…";
           button.disabled = true;
-          
-          // Add progress indicator at top
-          const progressBar = document.createElement('div');
-          progressBar.id = 'checkout-progress';
-          progressBar.className = 'fixed top-0 left-0 right-0 h-0.5 z-50';
-          progressBar.style.backgroundColor = 'var(--brand-primary, #0f172a)';
-          progressBar.style.animation = 'progressSlide 1.2s ease-in-out infinite';
+
+          const progressBar = document.createElement("div");
+          progressBar.id = "checkout-progress";
+          progressBar.className = "fixed top-0 left-0 right-0 h-0.5 z-50 motion-reduce:animate-none";
+          progressBar.style.backgroundColor = "var(--brand-primary, #0f172a)";
+          progressBar.style.animation = "progressSlide 1.2s ease-in-out infinite";
           document.body.appendChild(progressBar);
-          
-          // Start checkout
-          const response = await fetch('/api/stripe/create-checkout-session', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              plan: 'starter',
-              token,
-              company,
-              utm_source,
-              utm_campaign,
-              cancel_url
-            })
-          });
-          
-          if (!response.ok) {
-            throw new Error('Checkout failed');
-          }
-          
-          const { url } = await response.json();
-          window.location.href = url;
         }
+
+        const response = await fetch("/api/stripe/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          throw new Error("Checkout failed");
+        }
+
+        const { url } = await response.json();
+        window.location.href = url;
       } catch (error) {
-        console.error('Checkout error:', error);
-        alert('Unable to start checkout. Please try again.');
+        console.error("Checkout error:", error);
+        alert("Unable to start checkout. Please try again.");
       }
     } else {
-      // Route to signup page for non-branded experience
-      router.push('/signup');
+      router.push("/signup");
     }
   };
 
@@ -193,14 +206,14 @@ function HomeContent() {
           
           {/* Company Branding Section - Demo only (cold-email buyer: clarity + outcome + risk reversal) */}
           {isDemo && b.enabled && (
-            <div>
-              <div className="rounded-2xl border border-slate-200/90 bg-white py-6 px-8 shadow-sm mx-auto max-w-2xl">
-                <div className="text-center" {...tid('demo-cta')}>
+            <div className="home-demo-preview-module">
+              <div className="rounded-2xl border border-slate-200/90 bg-white py-7 px-6 shadow-[0_8px_40px_-12px_rgba(15,23,42,0.12)] ring-1 ring-slate-900/[0.04] sm:px-10 mx-auto max-w-2xl">
+                <div className="text-center" {...tid("demo-cta")}>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
-                    Personalized preview
+                    Private link — evaluate without a call
                   </p>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-2">
-                    {b.brand || "Your clinic"}: your branded GLP-1 intake path
+                  <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mt-2 text-pretty">
+                    {b.brand || "Your clinic"}: see the patient path before they book
                   </h2>
                   <p className="text-sm text-slate-500 mt-1">
                     Powered by{" "}
@@ -208,35 +221,50 @@ function HomeContent() {
                       {PRODUCT_NAME}
                     </a>
                   </p>
-                  <p className="text-base sm:text-lg text-slate-600 mt-4 max-w-xl mx-auto leading-relaxed">
-                    This is what patients see <strong className="font-semibold text-slate-800">before</strong> they hit your
-                    scheduler: clarity on pathway, timing, and typical ranges—so fewer no-shows and abandoned bookings, and more
-                    consults per dollar of ad spend. Self-serve evaluation is standard for B2B buyers (
+                  <ul className="mt-5 max-w-lg mx-auto text-left text-sm text-slate-700 space-y-2 list-disc pl-5">
+                    <li>
+                      <strong className="text-slate-900">Included:</strong> hosted intake + embed script, lead email + dashboard,
+                      optional CRM webhook.
+                    </li>
+                    <li>
+                      <strong className="text-slate-900">Not included:</strong> EMR, prescribing, telehealth visits — education &
+                      routing only.
+                    </li>
+                  </ul>
+                  <p className="text-base sm:text-lg text-slate-600 mt-5 max-w-xl mx-auto leading-relaxed text-pretty">
+                    Between your paid click and your scheduler, patients get clarity on pathway, timing, and typical ranges—fewer
+                    abandoned bookings and no-shows. Evaluate on your own timeline; activate when you’re ready.
+                  </p>
+                  <p className="text-xs text-slate-500 mt-3 max-w-xl mx-auto">
+                    Why self-serve B2B evaluation matters →{" "}
                     <a
                       href="https://www.gartner.com/en/sales/insights/b2b-buying-journey"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-semibold text-slate-800 underline decoration-slate-300 underline-offset-2 hover:text-slate-900"
+                      className="font-medium text-slate-600 underline decoration-slate-300 underline-offset-2 hover:text-slate-900"
                     >
-                      Gartner
+                      Gartner on the B2B buying journey
                     </a>
-                    ); your prospects expect the same before they buy—your patients do too before they book.
                   </p>
-       <button 
-         data-cta="primary"
-         onClick={handleLaunchClick}
-         data-cta-button
-         className="inline-flex items-center justify-center px-5 py-3.5 rounded-xl text-sm font-semibold text-white border border-transparent shadow-sm hover:opacity-[0.97] active:scale-[0.995] transition cursor-pointer mt-6"
-         style={{ backgroundColor: 'var(--brand-primary)' }}
-         aria-label="Launch Your Branded Version Now"
-         data-testid="primary-cta-hero"
-       >
-         <span className="mr-3">⚡</span>
-         <span>Launch Your Branded Version Now</span>
-       </button>
-       <p className="text-sm text-gray-600 mt-6" data-testid="microcopy-hero">
-         $99/mo + $399 setup • Live in 24 hours — or your setup fee is refunded.
-       </p>
+                  <button
+                    onClick={handleLaunchClick}
+                    data-cta-button
+                    className="inline-flex items-center justify-center px-5 py-3.5 rounded-xl text-sm font-semibold text-white border border-transparent shadow-sm hover:opacity-[0.97] active:scale-[0.995] transition cursor-pointer mt-6"
+                    style={{ backgroundColor: "var(--brand-primary)" }}
+                    aria-label="Continue to secure checkout"
+                    data-testid="primary-cta-hero"
+                  >
+                    <span className="mr-3">⚡</span>
+                    <span>Continue to secure checkout</span>
+                  </button>
+                  <p className="text-sm text-slate-700 mt-4 font-medium max-w-lg mx-auto" data-testid="microcopy-hero">
+                    $99/mo + $399 setup · Go live in 24h · Setup fee refunded if we miss the window · Tax & total shown on Stripe (
+                    <Link href="/legal/refund" className="underline underline-offset-2 hover:text-slate-900">
+                      refund policy
+                    </Link>
+                    ).
+                  </p>
+                  <PartnerSummaryCopy brandName={b.brand || "Your clinic"} />
                 </div>
               </div>
             </div>
@@ -264,43 +292,42 @@ function HomeContent() {
               {isDemo && b.enabled ? (
                 <>
                   <h1
-                    className="text-4xl sm:text-5xl md:text-[2.75rem] font-semibold tracking-tight text-slate-900 leading-[1.15] max-w-3xl mx-auto"
+                    className="text-4xl sm:text-5xl md:text-[2.75rem] font-semibold tracking-tight text-slate-900 leading-[1.15] max-w-3xl mx-auto text-pretty"
                     data-testid="home-demo-headline"
                   >
-                    More GLP-1 consult revenue from the same ad spend—not more meetings.
+                    Turn the GLP-1 clicks you already buy into booked consults—without a sales call.
                   </h1>
 
-                  <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                    {PRODUCT_NAME} is a <strong className="font-semibold text-slate-800">white-label</strong> pre-consult layer: it
-                    runs <em>before</em> your booking link so clicks turn into <strong className="font-semibold text-slate-800">
-                      scheduled
-                    </strong>{" "}
-                    consults instead of “I’ll think about it.” You keep your site and ads; we add the conversion path in{" "}
-                    <strong className="font-semibold text-slate-800">your</strong> colors and logo. Built for telehealth, med spas,
-                    and GLP-1 programs. Education and intake only—not prescribing or medical advice.
+                  <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed text-pretty">
+                    {PRODUCT_NAME} sits <strong className="font-semibold text-slate-800">between your ads and your booking link</strong>
+                    : branded education and intake, then handoff to <em>your</em> scheduler. Not medical advice; not prescribing.
                   </p>
-                  <p
-                    className="text-xs text-slate-500 max-w-2xl mx-auto leading-relaxed text-center mt-4"
-                    data-home-proof-footnote
-                  >
-                    Context: self-directed digital buying is the norm—see{" "}
-                    <a
-                      href="https://www.gartner.com/en/sales/insights/b2b-buying-journey"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-medium text-slate-600 underline decoration-slate-300 underline-offset-2 hover:text-slate-900"
-                    >
-                      Gartner on the B2B buying journey
-                    </a>
-                    .
-                  </p>
-                  <div className="pt-4">
+                  <DemoRoiTeaser />
+                  <div className="mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-slate-600">
+                    <Link href="/security" className="underline underline-offset-2 hover:text-slate-900">
+                      Security
+                    </Link>
+                    <span className="text-slate-300" aria-hidden>
+                      ·
+                    </span>
+                    <Link href="/methodology" className="underline underline-offset-2 hover:text-slate-900">
+                      Methodology
+                    </Link>
+                    <span className="text-slate-300" aria-hidden>
+                      ·
+                    </span>
+                    <Link href="/legal/refund" className="underline underline-offset-2 hover:text-slate-900">
+                      Refund policy
+                    </Link>
+                  </div>
+                  <div className="pt-6">
                     <a
                       href={intakeHref}
+                      onClick={() => track("intake_preview_click", { brand: b.brand, placement: "home_secondary" })}
                       className="inline-flex items-center justify-center px-6 py-3 rounded-xl text-sm font-semibold text-white bg-slate-900 hover:bg-slate-800 transition-colors shadow-sm"
                       data-testid="home-demo-try-intake"
                     >
-                      Open the branded intake preview
+                      Preview the patient intake (~2 min)
                     </a>
                   </div>
                 </>
@@ -400,8 +427,14 @@ function HomeContent() {
             <div className="rounded-2xl border border-slate-200/90 bg-white p-8 shadow-sm">
               <div className="text-center space-y-8">
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-                  {isDemo && b.enabled ? "Ship your branded intake this week" : "Launch Your Branded Version Now"}
+                  {isDemo && b.enabled ? `Activate ${b.brand || "your clinic"} this week` : "Launch Your Branded Version Now"}
                 </h2>
+                {isDemo && b.enabled ? (
+                  <p className="text-sm text-slate-600 max-w-xl mx-auto">
+                    After checkout: onboarding email with embed / hosted link instructions — same-day target, 24h max or setup fee
+                    refunded per policy.
+                  </p>
+                ) : null}
                 <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
                   {isDemo && b.enabled ? (
                     <>
@@ -419,18 +452,19 @@ function HomeContent() {
                 </div>
        <button 
          onClick={handleLaunchClick}
-         data-cta="primary"
          data-cta-button
          className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl text-base font-semibold text-white border border-transparent shadow-sm hover:opacity-[0.97] transition cursor-pointer"
          style={{ backgroundColor: 'var(--brand-primary)' }}
-         aria-label="Launch Your Branded Version Now"
+         aria-label="Continue to secure checkout"
          data-testid="primary-cta-bottom"
        >
          <span className="mr-3">⚡</span>
-         <span>Launch Your Branded Version Now</span>
+         <span>{isDemo && b.enabled ? "Continue to secure checkout" : "Launch Your Branded Version Now"}</span>
        </button>
        <p className="text-sm text-slate-500 mt-2" data-testid="microcopy-bottom">
-         $99/mo + $399 setup • Live in 24 hours — or your setup fee is refunded.
+         {isDemo && b.enabled
+           ? "$99/mo + $399 setup · Tax & total on Stripe · Refund policy applies to setup fee timing"
+           : "$99/mo + $399 setup • Live in 24 hours — or your setup fee is refunded."}
        </p>
               </div>
             </div>
@@ -599,10 +633,13 @@ function HomeContent() {
       <Footer />
       
       {/* Sticky CTA - Simple and consistent on mobile, Smart on desktop */}
-      <SmartStickyCTA onClick={handleLaunchClick} />
+      <SmartStickyCTA
+        onClick={handleLaunchClick}
+        ctaLabel={isDemo && b.enabled ? "Continue to secure checkout" : "Launch Your Branded Version Now"}
+      />
       
       <StickyCtaBar
-         label="Launch Your Branded Version Now"
+         label={isDemo && b.enabled ? "Continue to secure checkout" : "Launch Your Branded Version Now"}
         testId="sticky-demo-cta"
         className="md:hidden"   // MOBILE-ONLY - always visible
         onClick={handleLaunchClick}

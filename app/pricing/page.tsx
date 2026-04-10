@@ -8,6 +8,7 @@ import Container from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { Card } from '@/components/ui/Card';
 import { PRODUCT_NAME } from '@/lib/product-identity';
+import { buildStripeCheckoutClientPayload } from '@/lib/stripe-checkout-client';
 
 export default function PricingPage() {
   const searchParams = useSearchParams();
@@ -21,17 +22,11 @@ export default function PricingPage() {
 
   const handleStartSetup = async () => {
     try {
+      const payload = buildStripeCheckoutClientPayload();
       const response = await fetch('/api/stripe/create-checkout-session', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          plan: 'starter',
-          token: searchParams?.get('token'),
-          company: searchParams?.get('company'),
-          utm_source: searchParams?.get('utm_source'),
-          utm_campaign: searchParams?.get('utm_campaign'),
-          cancel_url: window.location.href,
-        }),
+        body: JSON.stringify(payload),
       });
       if (!response.ok) throw new Error('Checkout failed');
       const { url } = await response.json();

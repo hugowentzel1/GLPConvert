@@ -15,7 +15,9 @@ export type TrackEvent =
   | "session_company"
   | "address_entered"
   | "report_generated"
-  | "cta_launch_clicked";
+  | "cta_launch_clicked"
+  | "demo_home_view"
+  | "intake_preview_click";
 
 export type TrackPayload = {
   event: TrackEvent;

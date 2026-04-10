@@ -22,7 +22,6 @@ export default function StickyCtaBar({
       <div className="mx-auto max-w-screen-sm px-4 py-3">
         <button 
           onClick={onClick}
-          data-cta="primary"
           data-cta-button
           className="w-full h-12 rounded-xl px-5 text-white font-semibold hover:opacity-90 transition-all active:scale-[0.98]"
           style={{

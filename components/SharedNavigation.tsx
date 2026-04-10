@@ -8,6 +8,8 @@ import { useCompany } from './CompanyContext';
 import { useIsDemo } from '@/src/lib/isDemo';
 import { PRODUCT_NAME } from '@/lib/product-identity';
 import { companyLabelFromSearchParams } from '@/lib/company';
+import { buildStripeCheckoutClientPayload } from '@/lib/stripe-checkout-client';
+import { track } from '@/src/demo/track';
 
 export default function SharedNavigation() {
   const pathname = usePathname();
@@ -130,28 +132,20 @@ export default function SharedNavigation() {
     if (b.enabled) {
       // Start Stripe checkout with tracking
       try {
-        // Collect tracking parameters from URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
-        const company = urlParams.get('company');
-        const utm_source = urlParams.get('utm_source');
-        const utm_campaign = urlParams.get('utm_campaign');
-        
-        // Capture current page URL for cancel redirect
-        const cancel_url = window.location.href;
-        
-        // Start checkout
+        const payload = buildStripeCheckoutClientPayload();
+        track("checkout_start", {
+          brand: b.brand,
+          company: payload.company || undefined,
+          utm_source: payload.utm_source,
+          utm_medium: payload.utm_medium,
+          utm_campaign: payload.utm_campaign,
+          placement: "nav_primary",
+        });
+
         const response = await fetch('/api/stripe/create-checkout-session', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            plan: 'starter',
-            token,
-            company,
-            utm_source,
-            utm_campaign,
-            cancel_url
-          })
+          body: JSON.stringify(payload),
         });
         
         if (!response.ok) {

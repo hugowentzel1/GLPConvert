@@ -22,7 +22,9 @@ export default function DemoPreviewTopBar({ brandName, countdown, runsLeft }: Pr
     <div className="sticky top-0 z-40 border-b border-sky-200/80 bg-sky-50/95 px-3 py-2.5 text-center text-xs text-sky-950 shadow-sm backdrop-blur-sm sm:px-4">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 sm:flex-row sm:text-left">
         <p className="font-medium">
-          <span className="text-sky-800/90">Exclusive preview for {brandName}</span>
+          <span className="text-sky-800/90">
+            Preview for {brandName} — your logo & colors on the intake
+          </span>
           <span className="mx-2 hidden text-sky-300 sm:inline" aria-hidden>
             ·
           </span>

@@ -48,5 +48,7 @@ export default defineConfig({
         url: "http://localhost:3330",
         reuseExistingServer: !!process.env.PW_REUSE_DEV,
         timeout: 180000,
+        /** Enables `tid()` data-testid attributes in client components (e.g. demo-cta). */
+        env: { ...process.env, NEXT_PUBLIC_E2E: "1" },
       },
 });

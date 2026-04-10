@@ -67,8 +67,60 @@ test.describe("GLPConvert branded E2E (visual)", () => {
 
   test.beforeEach(async ({ page }) => {
     await page.addInitScript(() => {
+      try {
+        window.localStorage.removeItem("glpconvert-brand-takeover");
+        window.localStorage.removeItem("sunspire-brand-takeover");
+      } catch {
+        /* ignore */
+      }
       window.localStorage.setItem("cookie-consent", "accepted");
     });
+  });
+
+  test("B — Branded demo home (buyer) Launch → checkout (mocked)", async ({ page }, testInfo) => {
+    await mockTenantIntakeConfig(page);
+    await page.route(/\/api\/stripe\/create-checkout-session\b/, async (route) => {
+      if (route.request().method() !== "POST") return route.continue();
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ url: "https://example.com/e2e-checkout-mock" }),
+      });
+    });
+
+    await page.goto(`/?company=E2E%20Buyer%20Clinic&demo=1&logo=${LOGO}&brand=${BRAND}`, {
+      waitUntil: "domcontentloaded",
+    });
+    await page.waitForLoadState("networkidle", { timeout: 120000 }).catch(() => {});
+
+    await expect(page.locator('[data-testid="home-demo-headline"]')).toContainText(
+      /GLP-1 clicks you already buy/i,
+      { timeout: 20000 },
+    );
+    await expect(
+      page.getByRole("heading", {
+        level: 2,
+        name: /E2E Buyer Clinic: see the patient path before they book/i,
+      }),
+    ).toBeVisible({ timeout: 20000 });
+    await page.screenshot({ path: testInfo.outputPath("visual-B1-buyer-hero.png"), fullPage: true });
+
+    const launchBtn = page.getByTestId("primary-cta-hero");
+    await expect(launchBtn).toBeVisible({ timeout: 15000 });
+    await expect(launchBtn).toBeEnabled({ timeout: 20000 });
+
+    await Promise.all([
+      page.waitForURL("**/example.com/e2e-checkout-mock**", {
+        timeout: 30000,
+        waitUntil: "commit",
+      }),
+      launchBtn.click(),
+    ]);
+
+    expect(page.url()).toContain("example.com");
+    await page.screenshot({ path: testInfo.outputPath("visual-B2-checkout-redirect.png"), fullPage: true });
+
+    await page.goto("/", { waitUntil: "domcontentloaded" });
   });
 
   test("D — Intake loads global CSS (Tailwind + fonts; local http must not strip stylesheets)", async ({
@@ -182,44 +234,6 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await expect(page.getByRole("heading", { name: /your next step is ready/i })).toBeVisible({ timeout: 15000 });
     await expect(page.getByRole("link", { name: /open scheduling/i })).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath("visual-A6-confirmation.png"), fullPage: true });
-  });
-
-  test("B — Branded demo home (buyer) Launch → checkout (mocked)", async ({ page }, testInfo) => {
-    await mockTenantIntakeConfig(page);
-    await page.route("**/api/stripe/create-checkout-session", async (route) => {
-      if (route.request().method() !== "POST") return route.continue();
-      await route.fulfill({
-        status: 200,
-        contentType: "application/json",
-        body: JSON.stringify({ url: "https://example.com/e2e-checkout-mock" }),
-      });
-    });
-
-    await page.goto(`/?company=E2E%20Buyer%20Clinic&demo=1&logo=${LOGO}&brand=${BRAND}`, {
-      waitUntil: "domcontentloaded",
-    });
-
-    await expect(page.locator('[data-testid="home-demo-headline"]')).toContainText(
-      /more GLP-1 consult revenue/i,
-      { timeout: 20000 },
-    );
-    await expect(page.locator('[data-testid="demo-cta"]').getByText(/E2E Buyer Clinic/)).toBeVisible();
-    await page.screenshot({ path: testInfo.outputPath("visual-B1-buyer-hero.png"), fullPage: true });
-
-    const launchBtn = page.locator('[data-cta-button]').first();
-    await expect(launchBtn).toBeVisible({ timeout: 15000 });
-    await expect(launchBtn).toBeEnabled({ timeout: 20000 });
-
-    await Promise.all([
-      page.waitForURL("**/example.com/e2e-checkout-mock**", { timeout: 15000 }),
-      launchBtn.click(),
-    ]);
-
-    expect(page.url()).toContain("example.com");
-    await page.screenshot({ path: testInfo.outputPath("visual-B2-checkout-redirect.png"), fullPage: true });
-
-    // Same tab left the app — reset so serial test C starts on our origin (not example.com).
-    await page.goto("/", { waitUntil: "domcontentloaded" });
   });
 
   test("C — Paid patient intake (no demo) full funnel", async ({ page }, testInfo) => {
@@ -342,7 +356,7 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     await expect(page.locator('[data-intake-mode="demo"]')).toBeVisible({ timeout: 25000 });
     await expect(page.locator("[data-intake-demo-banner-strip]")).toBeVisible({ timeout: 20000 });
     await expect(page.locator("[data-intake-hero]")).toBeVisible();
-    await expect(page.getByText(/Playwright Clinic/i).first()).toBeVisible();
+    await expect(page.locator("[data-intake-hero]").getByText(/Playwright Clinic/i)).toBeVisible();
     await expect(page.locator('[data-intake-clinic-bar="demo"]')).toBeVisible({ timeout: 20000 });
     await expect(page.getByRole("spinbutton", { name: /current weight/i })).toBeVisible({ timeout: 20000 });
     await expect(page.locator("[data-intake-trust]")).toBeVisible();

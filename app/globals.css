@@ -14,6 +14,32 @@
   --sat-safe-bottom: 0px;    /* JS will set actual safe-area */
 }
 
+/* Demo home: neutral shell so tenant --brand-primary reads as premium accent (NN/g: hierarchy + whitespace) */
+.home-demo-preview-module {
+  border-radius: 1rem;
+  border: 1px solid rgb(226 232 240 / 0.95);
+  background: rgb(255 255 255 / 0.85);
+  box-shadow: 0 1px 2px rgb(15 23 42 / 0.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button[data-cta="primary"]::before,
+  button[data-cta-button]::before {
+    display: none;
+  }
+  button[data-cta="primary"],
+  button[data-cta-button] {
+    transition: none;
+  }
+  button[data-cta="primary"]:hover,
+  button[data-cta-button]:hover:not(:disabled) {
+    transform: none;
+  }
+  .sticky-cta__button {
+    transition: none !important;
+  }
+}
+
 /* CTA Button Hover Effects with Glossy Shine - Standardized Motion */
 button[data-cta="primary"],
 button[data-cta-button] {

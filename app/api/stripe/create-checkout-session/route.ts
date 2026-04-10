@@ -62,8 +62,12 @@ export async function POST(req: NextRequest) {
       email,
       utm_source,
       utm_campaign,
+      utm_medium,
+      utm_term,
+      utm_content,
       tenant_handle,
       cancel_url,
+      client_reference_id,
     } = body;
 
     console.log("🔍 Creating Stripe checkout session...");
@@ -74,8 +78,12 @@ export async function POST(req: NextRequest) {
       email,
       utm_source,
       utm_campaign,
+      utm_medium,
+      utm_term,
+      utm_content,
       tenant_handle,
       cancel_url,
+      client_reference_id,
     });
 
     // Build URLs
@@ -84,10 +92,24 @@ export async function POST(req: NextRequest) {
       "",
     );
 
+    const metaUtm = {
+      utm_source: utm_source || "",
+      utm_campaign: utm_campaign || "",
+      utm_medium: utm_medium || "",
+      utm_term: utm_term || "",
+      utm_content: utm_content || "",
+    };
+
+    const ref =
+      typeof client_reference_id === "string" && client_reference_id.trim().length > 0
+        ? client_reference_id.trim().slice(0, 200)
+        : undefined;
+
     // Create Stripe checkout session with both setup fee and monthly subscription
     const checkoutSession = await stripeClient.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "subscription",
+      ...(ref ? { client_reference_id: ref } : {}),
       line_items: [
         {
           price: monthlyPrice,
@@ -102,8 +124,7 @@ export async function POST(req: NextRequest) {
         metadata: {
           tenant_handle: tenant_handle || company || "",
           plan,
-          utm_source: utm_source || "",
-          utm_campaign: utm_campaign || "",
+          ...metaUtm,
         },
       },
       metadata: {
@@ -111,8 +132,7 @@ export async function POST(req: NextRequest) {
         company: company || "",
         tenant_handle: tenant_handle || company || "",
         plan,
-        utm_source: utm_source || "",
-        utm_campaign: utm_campaign || "",
+        ...metaUtm,
       },
       success_url: `${base}/c/${encodeURIComponent((company || '').toLowerCase().replace(/[^a-z0-9]/g, '-'))}?session_id={CHECKOUT_SESSION_ID}&demo=1`,
       cancel_url: cancel_url || `${base}/?canceled=1&company=${encodeURIComponent(company || '')}`,
@@ -186,8 +206,12 @@ export async function GET(req: NextRequest) {
     const email = url.searchParams.get("email");
     const utm_source = url.searchParams.get("utm_source");
     const utm_campaign = url.searchParams.get("utm_campaign");
+    const utm_medium = url.searchParams.get("utm_medium");
+    const utm_term = url.searchParams.get("utm_term");
+    const utm_content = url.searchParams.get("utm_content");
     const tenant_handle = url.searchParams.get("tenant_handle");
     const cancel_url = url.searchParams.get("cancel_url");
+    const client_reference_id = url.searchParams.get("client_reference_id");
 
     console.log("🔍 Creating Stripe checkout session from GET...");
     console.log("🔍 Request data:", {
@@ -197,8 +221,12 @@ export async function GET(req: NextRequest) {
       email,
       utm_source,
       utm_campaign,
+      utm_medium,
+      utm_term,
+      utm_content,
       tenant_handle,
       cancel_url,
+      client_reference_id,
     });
 
     // Build URLs
@@ -207,10 +235,24 @@ export async function GET(req: NextRequest) {
       "",
     );
 
+    const metaUtmGet = {
+      utm_source: utm_source || "",
+      utm_campaign: utm_campaign || "",
+      utm_medium: utm_medium || "",
+      utm_term: utm_term || "",
+      utm_content: utm_content || "",
+    };
+
+    const refGet =
+      client_reference_id && client_reference_id.trim().length > 0
+        ? client_reference_id.trim().slice(0, 200)
+        : undefined;
+
     // Create Stripe checkout session with both setup fee and monthly subscription
     const checkoutSession = await stripeClient.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "subscription",
+      ...(refGet ? { client_reference_id: refGet } : {}),
       line_items: [
         {
           price: monthlyPrice,
@@ -225,8 +267,7 @@ export async function GET(req: NextRequest) {
         metadata: {
           tenant_handle: tenant_handle || company || "",
           plan,
-          utm_source: utm_source || "",
-          utm_campaign: utm_campaign || "",
+          ...metaUtmGet,
         },
       },
       metadata: {
@@ -234,8 +275,7 @@ export async function GET(req: NextRequest) {
         company: company || "",
         tenant_handle: tenant_handle || company || "",
         plan,
-        utm_source: utm_source || "",
-        utm_campaign: utm_campaign || "",
+        ...metaUtmGet,
       },
       success_url: `${base}/c/${encodeURIComponent((company || '').toLowerCase().replace(/[^a-z0-9]/g, '-'))}?session_id={CHECKOUT_SESSION_ID}&demo=1`,
       cancel_url: cancel_url || `${base}/?canceled=1&company=${encodeURIComponent(company || '')}`,

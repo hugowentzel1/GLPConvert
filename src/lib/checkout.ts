@@ -1,5 +1,7 @@
 "use client";
 
+import { buildStripeCheckoutClientPayload } from "@/lib/stripe-checkout-client";
+
 export async function startCheckout(explicit?: {
   plan?: "starter" | "pro";
   company?: string | null;
@@ -9,21 +11,20 @@ export async function startCheckout(explicit?: {
   email?: string | null;
 }) {
   try {
-    const sp = new URLSearchParams(
-      typeof window !== "undefined" ? window.location.search : "",
-    );
-    
-    // Capture the current page URL for cancel redirect
-    const currentUrl = typeof window !== "undefined" ? window.location.href : "";
-    
+    const merged = buildStripeCheckoutClientPayload();
     const body = {
-      plan: explicit?.plan ?? "starter",
-      company: explicit?.company ?? sp.get("company"),
-      token: explicit?.token ?? sp.get("token"),
-      utm_source: explicit?.utm_source ?? sp.get("utm_source"),
-      utm_campaign: explicit?.utm_campaign ?? sp.get("utm_campaign"),
+      plan: explicit?.plan ?? merged.plan,
+      company: explicit?.company ?? merged.company,
+      token: explicit?.token ?? merged.token,
+      tenant_handle: merged.tenant_handle,
+      utm_source: explicit?.utm_source ?? merged.utm_source,
+      utm_campaign: explicit?.utm_campaign ?? merged.utm_campaign,
+      utm_medium: merged.utm_medium,
+      utm_term: merged.utm_term,
+      utm_content: merged.utm_content,
+      client_reference_id: merged.client_reference_id,
       email: explicit?.email ?? null,
-      cancel_url: currentUrl, // Pass current URL for cancel redirect
+      cancel_url: merged.cancel_url || (typeof window !== "undefined" ? window.location.href : ""),
     };
 
     const res = await fetch("/api/stripe/create-checkout-session", {

@@ -16,6 +16,8 @@ import PaidFooter from "@/components/PaidFooter";
 import TrustRow from "@/components/trust/TrustRow";
 import DemoPreviewTopBar from "@/components/marketing/DemoPreviewTopBar";
 import { PRODUCT_NAME } from "@/lib/product-identity";
+import { buildStripeCheckoutClientPayload } from "@/lib/stripe-checkout-client";
+import { track } from "@/src/demo/track";
 
 function buildIntakeHref(
   searchParams: ReturnType<typeof useSearchParams>,
@@ -87,10 +89,15 @@ function HomeContent() {
   const handleLaunchClick = async () => {
     if (b.enabled) {
       try {
-        const token = searchParams?.get("token");
-        const company = searchParams?.get("company");
-        const utm_source = searchParams?.get("utm_source");
-        const utm_campaign = searchParams?.get("utm_campaign");
+        const payload = buildStripeCheckoutClientPayload();
+        track("checkout_start", {
+          brand: b.brand,
+          company: payload.company || undefined,
+          utm_source: payload.utm_source,
+          utm_medium: payload.utm_medium,
+          utm_campaign: payload.utm_campaign,
+          placement: "paid_primary",
+        });
         const button = document.querySelector(
           "[data-cta-button]",
         ) as HTMLButtonElement;
@@ -100,13 +107,7 @@ function HomeContent() {
           const response = await fetch("/api/stripe/create-checkout-session", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              plan: "starter",
-              token,
-              company,
-              utm_source,
-              utm_campaign,
-            }),
+            body: JSON.stringify(payload),
           });
           if (!response.ok) throw new Error("Checkout failed");
           const { url } = await response.json();
