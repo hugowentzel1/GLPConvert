@@ -11,6 +11,7 @@ import { track } from "@/src/demo/track";
 import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
 import { LAUNCH_BRANDED_CTA_LABEL, PRODUCT_NAME } from "@/lib/product-identity";
 import { INTAKE_DEMO_BANNER_DISMISS_EVENT, INTAKE_DEMO_BANNER_DISMISS_KEY } from "@/lib/intake-demo-banner-dismiss";
+import { buildIntakePricingHref, buildMarketingHomeHref } from "@/lib/glp-intake-nav-href";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 
 const INTAKE_TAGLINE = "Medical weight-loss intake";
@@ -82,17 +83,9 @@ export default function IntakeDemoSiteHeader() {
     [accent],
   );
 
-  const homeHref = useMemo(() => {
-    const q = new URLSearchParams();
-    if (sp?.get("company")) q.set("company", sp.get("company")!);
-    if (sp?.get("demo")) q.set("demo", sp.get("demo")!);
-    if (sp?.get("brand")) q.set("brand", sp.get("brand")!);
-    if (sp?.get("logo")) q.set("logo", sp.get("logo")!);
-    const s = q.toString();
-    return s ? `/?${s}` : "/";
-  }, [sp]);
+  const homeHref = useMemo(() => buildMarketingHomeHref(sp), [sp]);
 
-  const pricingHref = `/pricing?company=${encodeURIComponent(companyLabel)}`;
+  const pricingHref = useMemo(() => buildIntakePricingHref(sp, companyLabel), [sp, companyLabel]);
 
   /** Preview strip: exclusive preview row + nav + disclaimer (reset dismiss key in lib if it hides forever). */
   const showDemoStrip = b.enabled && !stripDismissed && marketing;
@@ -100,17 +93,7 @@ export default function IntakeDemoSiteHeader() {
 
   const brandNavRow = (
     <div
-      className="mx-auto flex h-auto min-h-[4rem] max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8 md:min-h-[5rem]"
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: "1rem",
-        maxWidth: "80rem",
-        marginLeft: "auto",
-        marginRight: "auto",
-        minHeight: "4rem",
-      }}
+      className="mx-auto flex h-auto min-h-[4rem] w-full max-w-2xl items-center justify-between gap-4 px-4 py-3 sm:px-6 md:min-h-[5rem]"
     >
       <Link
         href={homeHref}

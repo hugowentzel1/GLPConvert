@@ -1,5 +1,8 @@
 "use client";
 
+import type { ReactElement, ReactNode } from "react";
+import { glpIntakeUi } from "@/lib/glp-intake-ui";
+
 /**
  * Patient-intake trust strip — Sunspire-style **tint** (`color-mix` 15% + white) + `--brand-600` icons.
  * Grid layout: four tiles side-by-side on `md+`, 2×2 on narrow viewports.
@@ -60,7 +63,7 @@ const pillStyle = {
   color: "var(--brand-600, #475569)",
 } as const;
 
-function TrustBadgeGrid({ icon, text }: { icon: React.ReactNode; text: string }) {
+function TrustBadgeGrid({ icon, text }: { icon: ReactNode; text: string }) {
   return (
     <div className="flex w-full max-w-[11rem] flex-col items-center justify-start justify-self-center text-center">
       <div
@@ -76,7 +79,7 @@ function TrustBadgeGrid({ icon, text }: { icon: React.ReactNode; text: string })
   );
 }
 
-const ITEMS: { text: string; Icon: () => React.ReactElement }[] = [
+const ITEMS: { text: string; Icon: () => ReactElement }[] = [
   { text: "Encrypted in transit", Icon: LockIcon },
   { text: "HIPAA-ready posture", Icon: ShieldIcon },
   { text: "Routes to your clinic", Icon: ArrowRightCircleIcon },
@@ -92,7 +95,7 @@ export default function IntakeTrustStrip() {
       className="mx-auto mb-8 w-full max-w-4xl border-b border-slate-100/90 pb-8"
       aria-label="Trust and privacy signals"
     >
-      <div className="rounded-2xl border border-slate-200/60 bg-white/80 px-4 py-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] backdrop-blur-md sm:px-6 sm:py-6">
+      <div className={`${glpIntakeUi.intakeHeroShell} bg-white/95 px-4 py-5 backdrop-blur-[2px] sm:px-6 sm:py-6`}>
         <div className="mx-auto grid w-full max-w-4xl grid-cols-2 justify-items-center gap-x-4 gap-y-8 md:grid-cols-4 md:gap-x-3 md:gap-y-0">
           {ITEMS.map(({ text, Icon }) => (
             <TrustBadgeGrid key={text} icon={<Icon />} text={text} />

@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
 import { INTAKE_DEMO_BANNER_DISMISS_EVENT, INTAKE_DEMO_BANNER_DISMISS_KEY } from "@/lib/intake-demo-banner-dismiss";
+import { buildIntakePricingHref } from "@/lib/glp-intake-nav-href";
 import { LAUNCH_BRANDED_CTA_LABEL } from "@/lib/product-identity";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
 
@@ -90,10 +91,12 @@ function DemoHeaderActions({
   companyLabel,
   accent,
   reduceMotion,
+  pricingHref,
 }: {
   companyLabel: string;
   accent: string;
   reduceMotion: boolean | null | undefined;
+  pricingHref: string;
 }) {
   const [copied, setCopied] = useState(false);
   const onCopy = useCallback(async () => {
@@ -114,7 +117,7 @@ function DemoHeaderActions({
         {copied ? "Demo link copied to clipboard" : ""}
       </span>
       <motion.a
-        href={`/pricing?company=${encodeURIComponent(companyLabel)}`}
+        href={pricingHref}
         className={`${glpIntakeUi.primaryBtn} relative w-full !inline-flex !min-h-[52px] !flex-row !items-center !justify-center !gap-0 !rounded-xl !px-5 !py-3.5 !shadow-md ring-offset-white`}
         style={{ backgroundColor: accent }}
         data-demo-activate-intake
@@ -151,6 +154,7 @@ function IntakePageHeaderInner() {
   const companyLabel = safeCompanyLabel(sp?.get("company") ?? null);
   const { logoUrl, primaryHex } = useMemo(() => parseGlpIntakeQueryBranding(sp), [sp]);
   const accent = primaryHex || DEFAULT_DEMO_ACCENT;
+  const heroPricingHref = useMemo(() => buildIntakePricingHref(sp, companyLabel), [sp, companyLabel]);
 
   const [demoBannerDismissed, setDemoBannerDismissed] = useState(false);
   useEffect(() => {
@@ -186,7 +190,7 @@ function IntakePageHeaderInner() {
       ) : null}
 
       <div
-        className={`relative overflow-hidden rounded-[1.75rem] border border-slate-200/90 bg-white text-center shadow-[0_4px_24px_-4px_rgba(15,23,42,0.08),0_12px_40px_-12px_rgba(15,23,42,0.1)] ring-1 ring-slate-900/[0.04] ${glpIntakeUi.intakeHeaderPad}`}
+        className={`${glpIntakeUi.intakeHeroShell} text-center ${glpIntakeUi.intakeHeaderPad}`}
         data-intake-clinic-bar={demo ? "demo" : "paid"}
         {...(demo ? { "data-intake-demo-strip": "1" } : {})}
         data-intake-hero
@@ -203,7 +207,12 @@ function IntakePageHeaderInner() {
                 Protect paid traffic: turn clicks into booked consults—more revenue from the same ad spend
               </p>
               <div className="mt-5 flex w-full justify-center sm:mt-6">
-                <DemoHeaderActions companyLabel={companyLabel} accent={accent} reduceMotion={prefersReducedMotion} />
+                <DemoHeaderActions
+                  companyLabel={companyLabel}
+                  accent={accent}
+                  reduceMotion={prefersReducedMotion}
+                  pricingHref={heroPricingHref}
+                />
               </div>
 
               <div className="mt-6 w-full border-t border-slate-100 pt-6 text-center sm:mt-7 sm:pt-7">

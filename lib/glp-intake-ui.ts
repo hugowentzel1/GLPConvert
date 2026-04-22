@@ -46,6 +46,10 @@ export const glpIntakeUi = {
   /** Marketing header: balanced inset (tighter than before to reduce dead space in demo hero) */
   intakeHeaderPad: "px-5 py-6 sm:px-8 sm:py-8 md:px-10 md:py-9",
 
+  /** Match clinic hero card: used for trust strip inner, quote cards, premium chart shell */
+  intakeHeroShell:
+    "relative overflow-hidden rounded-[1.75rem] border border-slate-200/90 bg-white shadow-[0_4px_24px_-4px_rgba(15,23,42,0.08),0_12px_40px_-12px_rgba(15,23,42,0.1)] ring-1 ring-slate-900/[0.04]",
+
   stackSection: "space-y-9 md:space-y-10",
   /** 32px between intro, field clusters, footer — less cramped than 24px-only stacks */
   stackStepForm: "space-y-8 md:space-y-9",

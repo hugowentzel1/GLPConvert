@@ -4,11 +4,12 @@ import { useMemo, type CSSProperties } from "react";
 import { useSearchParams } from "next/navigation";
 import AvatarInitials from "@/components/AvatarInitials";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
+import { glpIntakeUi } from "@/lib/glp-intake-ui";
 import { INTAKE_DEMO_HERO_QUOTES } from "@/lib/intake-demo-quotes";
 
 const DEFAULT_ACCENT = "#0f172a";
 
-/** Demo social proof — white cards, same column as funnel. */
+/** Demo social proof — same shell as clinic hero + trust row. */
 export default function IntakeDemoQuoteStrip() {
   const sp = useSearchParams();
   const accent = useMemo(() => parseGlpIntakeQueryBranding(sp).primaryHex || DEFAULT_ACCENT, [sp]);
@@ -22,7 +23,7 @@ export default function IntakeDemoQuoteStrip() {
       {INTAKE_DEMO_HERO_QUOTES.map((q) => (
         <article
           key={q.quote.slice(0, 32)}
-          className="flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-6 shadow-[0_1px_3px_rgba(15,23,42,0.06)]"
+          className={`flex h-full flex-col overflow-hidden ${glpIntakeUi.intakeHeroShell} p-6`}
           data-testid="intake-demo-testimonial-card"
         >
           <blockquote className="flex min-h-0 flex-1 flex-col">
@@ -48,16 +49,6 @@ export default function IntakeDemoQuoteStrip() {
               </span>
               <span>{q.orgLine}</span>
             </p>
-            <span
-              data-testid="intake-demo-illustrative-badge"
-              title="Composite quote for marketing — not a third-party verification"
-              className="inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 bg-slate-50 px-2.5 py-1 text-[11px] font-medium text-slate-600"
-            >
-              <span className="text-slate-400" aria-hidden="true">
-                ✓
-              </span>
-              Illustrative
-            </span>
           </figcaption>
         </article>
       ))}
