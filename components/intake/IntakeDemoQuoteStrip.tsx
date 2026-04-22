@@ -9,7 +9,7 @@ import { INTAKE_DEMO_HERO_QUOTES } from "@/lib/intake-demo-quotes";
 
 const DEFAULT_ACCENT = "#0f172a";
 
-/** Pain → story → outcome layout; same shell as clinic hero + trust row. */
+/** Centered social proof; same shell as clinic hero + trust row. */
 export default function IntakeDemoQuoteStrip() {
   const sp = useSearchParams();
   const accent = useMemo(() => parseGlpIntakeQueryBranding(sp).primaryHex || DEFAULT_ACCENT, [sp]);
@@ -22,43 +22,27 @@ export default function IntakeDemoQuoteStrip() {
     >
       {INTAKE_DEMO_HERO_QUOTES.map((q) => (
         <article
-          key={q.painLabel}
-          className={`flex h-full flex-col overflow-hidden text-left ${glpIntakeUi.intakeHeroShell} p-6 sm:p-7`}
+          key={q.name}
+          className={`flex h-full flex-col items-center text-center ${glpIntakeUi.intakeHeroShell} p-6 sm:p-7`}
           data-testid="intake-demo-testimonial-card"
         >
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
-            {q.painLabel}
-          </p>
-          <blockquote className="mt-4 flex min-h-0 flex-1 flex-col border-l-2 border-slate-200 pl-4">
-            <p className="text-[15px] leading-[1.65] text-slate-800 sm:text-[16px]">
-              <span className="font-serif text-slate-400" aria-hidden>
-                &ldquo;
-              </span>
-              {q.quote}
-              <span className="font-serif text-slate-400" aria-hidden>
-                &rdquo;
-              </span>
+          <blockquote className="mx-auto w-full max-w-prose">
+            <p className="text-[15px] leading-relaxed text-slate-800 sm:text-[16px] sm:leading-[1.65]">
+              &ldquo;{q.quote}&rdquo;
             </p>
           </blockquote>
-          <p className="mt-5 rounded-lg bg-slate-50/90 px-3 py-2.5 text-[13px] font-medium leading-snug text-slate-700 ring-1 ring-slate-900/[0.04]">
-            {q.outcome}
-          </p>
 
-          <figcaption className="mt-5 flex items-start gap-3 border-t border-slate-100 pt-5">
+          <figcaption className="mt-6 flex w-full flex-col items-center gap-3 border-t border-slate-100 pt-6">
             <div
-              className="shrink-0"
+              className="flex shrink-0"
               style={{ ["--brand-primary" as string]: accent } as CSSProperties}
             >
               <AvatarInitials name={q.name} size={40} variant="duo" />
             </div>
-            <div className="min-w-0">
+            <div className="w-full text-center">
               <p className="text-sm font-semibold text-slate-900">{q.name}</p>
-              <p className="mt-0.5 text-xs leading-relaxed text-slate-600">
-                <span className="font-medium text-slate-700">{q.role}</span>
-                <span className="mx-1.5 text-slate-300" aria-hidden>
-                  ·
-                </span>
-                {q.orgLine}
+              <p className="mt-1 text-[13px] leading-snug text-slate-600">
+                {q.role} · {q.orgLine}
               </p>
             </div>
           </figcaption>
