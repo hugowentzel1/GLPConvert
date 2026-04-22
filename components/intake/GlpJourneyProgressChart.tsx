@@ -17,8 +17,8 @@ import { glpIntakeUi } from "@/lib/glp-intake-ui";
 export type JourneyProgressPoint = { label: string; progress: number; month: number };
 
 /**
- * Illustrative curve (8f6c176 copy + structure). Visual pass: flagship shell, deeper plot, crisper stroke
- * (CRO: one strong “hero” artifact that feels expensive, not busy).
+ * Momentum chart — **no** tinted/plate behind the plot (white field only; brand only *in* the series).
+ * Visual emphasis: natural curve, stronger end-point, calm grid (contrast = line, not background noise).
  */
 export default function GlpJourneyProgressChart({
   points,
@@ -48,9 +48,10 @@ export default function GlpJourneyProgressChart({
   const compact = variant === "compact";
   const last = points[points.length - 1];
   const first = points[0];
+  const lastIndex = points.length - 1;
 
-  const plotH = compact ? "h-[200px] sm:h-[220px]" : "h-[268px] w-full sm:h-[300px]";
-  const plotMin = compact ? 200 : 268;
+  const plotH = compact ? "h-[200px] sm:h-[220px]" : "h-[280px] w-full sm:h-[300px]";
+  const plotMin = compact ? 200 : 280;
 
   return (
     <div
@@ -62,11 +63,6 @@ export default function GlpJourneyProgressChart({
     >
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-px rounded-t-[1.75rem] bg-gradient-to-r from-transparent via-slate-300/80 to-transparent"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute -right-16 -top-10 h-40 w-40 rounded-full opacity-[0.07] blur-3xl"
-        style={{ backgroundColor: brandFill }}
         aria-hidden
       />
 
@@ -103,42 +99,32 @@ export default function GlpJourneyProgressChart({
         </div>
       ) : null}
 
+      {/* Plot well: white only — no brand wash / gradient plate behind the graph */}
       <div
-        className={`relative z-[1] overflow-hidden rounded-[1.25rem] border border-slate-200/80 bg-gradient-to-b from-slate-50/90 via-white to-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.9)] sm:rounded-[1.35rem] ${plotH}`}
+        className={`relative z-[1] overflow-hidden rounded-[1.25rem] border border-slate-200/90 bg-white sm:rounded-[1.35rem] ${plotH}`}
         style={{ minHeight: plotMin, minWidth: 0, isolation: "isolate" }}
       >
-        <div
-          className="pointer-events-none absolute inset-0 rounded-[1.25rem] sm:rounded-[1.35rem]"
-          style={{ background: `radial-gradient(ellipse 90% 65% at 50% 12%, color-mix(in srgb, ${brandFill} 12%, transparent), transparent 58%)` }}
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-0 z-[2] overflow-hidden rounded-[1.25rem] sm:rounded-[1.35rem]"
-          aria-hidden
-        >
-          <div className="glp-intake-chart-shimmer absolute inset-0 opacity-40" />
-        </div>
         <ResponsiveContainer
-          className="relative z-[3]"
+          className="relative z-[1]"
           width="100%"
           height="100%"
           minHeight={plotMin}
           minWidth={0}
         >
-          <AreaChart data={points} margin={{ top: 14, right: 10, left: 4, bottom: 10 }}>
+          <AreaChart data={points} margin={{ top: 16, right: 12, left: 6, bottom: 10 }}>
             <defs>
               <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={brandFill} stopOpacity={0.62} />
-                <stop offset="42%" stopColor={brandFill} stopOpacity={0.28} />
-                <stop offset="100%" stopColor={brandFill} stopOpacity={0.05} />
+                <stop offset="0%" stopColor={brandFill} stopOpacity={0.58} />
+                <stop offset="45%" stopColor={brandFill} stopOpacity={0.2} />
+                <stop offset="100%" stopColor={brandFill} stopOpacity={0.03} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 7" vertical={false} stroke="#e8ecf1" />
+            <CartesianGrid strokeDasharray="3 6" vertical={false} stroke="#f1f5f9" />
             <ReferenceLine
               y={100}
               stroke={brandFill}
-              strokeOpacity={0.22}
-              strokeDasharray="5 5"
+              strokeOpacity={0.2}
+              strokeDasharray="4 4"
               strokeWidth={1}
               ifOverflow="visible"
             />
@@ -173,10 +159,11 @@ export default function GlpJourneyProgressChart({
             </YAxis>
             <Tooltip
               contentStyle={{
-                borderRadius: 14,
+                borderRadius: 12,
                 border: "1px solid #e2e8f0",
                 fontSize: 12,
-                boxShadow: "0 20px 50px rgba(15,23,42,0.14)",
+                boxShadow: "0 16px 40px rgba(15,23,42,0.12)",
+                background: "#fff",
               }}
               formatter={(value: number) => [
                 `${value}% of your stated goal (illustrative)`,
@@ -185,18 +172,38 @@ export default function GlpJourneyProgressChart({
               labelFormatter={(label) => `${label}`}
             />
             <Area
-              type="monotone"
+              type="natural"
               dataKey="progress"
               stroke={brandFill}
-              strokeWidth={3.25}
+              strokeWidth={3.5}
               strokeLinecap="round"
               strokeLinejoin="round"
               fill={`url(#${gradId})`}
               isAnimationActive={animate}
-              animationDuration={animate ? 2400 : 0}
-              animationEasing="ease-out"
-              activeDot={{ r: 7, strokeWidth: 2.5, stroke: "#fff" }}
-              dot={{ r: 4, strokeWidth: 2, stroke: "#fff", fill: brandFill }}
+              animationDuration={animate ? 1800 : 0}
+              animationEasing="ease-in-out"
+              activeDot={false}
+              dot={(props) => {
+                const { cx, cy, index } = props;
+                if (cx == null || cy == null || index == null) return null;
+                if (index === 0) {
+                  return <circle cx={cx} cy={cy} r={3.5} fill={brandFill} stroke="#fff" strokeWidth={2} />;
+                }
+                if (index === lastIndex) {
+                  return (
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r={8}
+                      fill={brandFill}
+                      stroke="#fff"
+                      strokeWidth={3}
+                      style={{ filter: `drop-shadow(0 4px 12px color-mix(in srgb, ${brandFill} 50%, transparent))` }}
+                    />
+                  );
+                }
+                return null;
+              }}
             />
           </AreaChart>
         </ResponsiveContainer>
