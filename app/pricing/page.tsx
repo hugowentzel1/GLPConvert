@@ -8,17 +8,12 @@ import Container from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { Card } from '@/components/ui/Card';
 import { PRODUCT_NAME } from '@/lib/product-identity';
+import { buildAppHomeHref, buildMarketingPathHref } from '@/lib/glp-intake-nav-href';
 import { buildStripeCheckoutClientPayload } from '@/lib/stripe-checkout-client';
 
 export default function PricingPage() {
   const searchParams = useSearchParams();
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
-
-  const createUrlWithParams = (path: string) => {
-    const params = new URLSearchParams(searchParams?.toString() || '');
-    const q = params.toString();
-    return q ? `${path}?${q}` : path;
-  };
 
   const handleStartSetup = async () => {
     try {
@@ -62,7 +57,7 @@ export default function PricingPage() {
         <Container>
           <div className="space-y-10">
             <div>
-              <Link href={createUrlWithParams('/')} className="inline-flex items-center text-sm text-neutral-600 hover:text-neutral-900">
+              <Link href={buildAppHomeHref(searchParams)} className="inline-flex items-center text-sm text-neutral-600 hover:text-neutral-900">
                 ← Back to Home
               </Link>
             </div>
@@ -106,6 +101,27 @@ export default function PricingPage() {
                 </ul>
               </Card>
             </div>
+
+            <p className="text-center text-xs text-neutral-500 max-w-2xl mx-auto leading-relaxed">
+              Payments: checkout runs on{" "}
+              <a
+                href="https://stripe.com"
+                className="text-neutral-700 underline hover:text-neutral-900"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Stripe
+              </a>
+              . This page is product information, not a medical claim.{" "}
+              <Link href={buildMarketingPathHref(searchParams, "/privacy")} className="text-neutral-700 underline">
+                Privacy
+              </Link>
+              {" · "}
+              <Link href={buildMarketingPathHref(searchParams, "/legal/terms")} className="text-neutral-700 underline">
+                Terms
+              </Link>
+              .
+            </p>
 
             <div className="space-y-4">
               <h2 className="text-2xl font-bold text-neutral-900">Frequently Asked Questions</h2>

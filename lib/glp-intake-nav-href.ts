@@ -2,12 +2,23 @@
  * Intake / marketing — preserve full query (UTMs, branding, demo) on navigation.
  */
 
-type SearchLike = URLSearchParams | null;
+/** Works with `useSearchParams()` (ReadonlyURLSearchParams) and `URLSearchParams`. */
+type SearchLike = { toString(): string; get(name: string): string | null } | null;
 
 export function buildMarketingHomeHref(sp: SearchLike): string {
   if (!sp) return "/";
   const q = sp.toString();
   return q ? `/?${q}` : "/";
+}
+
+/** Demos and intake previews: home is marketing `/`. Logged-in / paid entry without `demo` often maps to `/paid`. */
+export function buildAppHomeHref(sp: SearchLike): string {
+  if (!sp) return "/";
+  const q = sp.toString();
+  if (sp.get("demo")) {
+    return q ? `/?${q}` : "/";
+  }
+  return q ? `/paid?${q}` : "/paid";
 }
 
 export function buildIntakeSelfHref(sp: SearchLike): string {

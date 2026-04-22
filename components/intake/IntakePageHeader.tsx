@@ -1,11 +1,10 @@
 "use client";
 
-import { Suspense, useCallback, useEffect, useMemo, useState } from "react";
+import { Suspense, useCallback, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
-import { INTAKE_DEMO_BANNER_DISMISS_EVENT, INTAKE_DEMO_BANNER_DISMISS_KEY } from "@/lib/intake-demo-banner-dismiss";
 import { buildIntakePricingHref } from "@/lib/glp-intake-nav-href";
 import { LAUNCH_BRANDED_CTA_LABEL } from "@/lib/product-identity";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
@@ -156,39 +155,8 @@ function IntakePageHeaderInner() {
   const accent = primaryHex || DEFAULT_DEMO_ACCENT;
   const heroPricingHref = useMemo(() => buildIntakePricingHref(sp, companyLabel), [sp, companyLabel]);
 
-  const [demoBannerDismissed, setDemoBannerDismissed] = useState(false);
-  useEffect(() => {
-    const sync = () => {
-      try {
-        setDemoBannerDismissed(sessionStorage.getItem(INTAKE_DEMO_BANNER_DISMISS_KEY) === "1");
-      } catch {
-        setDemoBannerDismissed(false);
-      }
-    };
-    sync();
-    window.addEventListener(INTAKE_DEMO_BANNER_DISMISS_EVENT, sync);
-    return () => window.removeEventListener(INTAKE_DEMO_BANNER_DISMISS_EVENT, sync);
-  }, []);
-
   return (
     <div className="w-full">
-      {demo && demoBannerDismissed ? (
-        <div
-          className="-mx-4 mb-5 px-4 py-2.5 text-center sm:-mx-6 sm:px-6 md:-mx-8 md:px-8"
-          data-intake-private-demo-disclaimer
-          style={{
-            borderTop: "1px solid #e5e7eb",
-            borderBottom: "1px solid #e5e7eb",
-            background: "linear-gradient(180deg, #ffffff 0%, #fafbfc 100%)",
-            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
-          }}
-        >
-          <p style={{ fontSize: 12, color: "#6B7280", fontWeight: 500, lineHeight: 1.5 }}>
-            Private demo for <span style={{ color: "#374151", fontWeight: 500 }}>{companyLabel}</span>. Not affiliated.
-          </p>
-        </div>
-      ) : null}
-
       <div
         className={`${glpIntakeUi.intakeHeroShell} text-center ${glpIntakeUi.intakeHeaderPad}`}
         data-intake-clinic-bar={demo ? "demo" : "paid"}
@@ -204,16 +172,11 @@ function IntakePageHeaderInner() {
               </div>
 
               <p className="mx-auto mt-4 max-w-md text-pretty text-sm leading-relaxed text-slate-600 sm:mt-5 sm:text-[15px]">
-                You pay for <span className="font-medium text-slate-800">GLP-1 and weight-care clicks</span>—then lose
-                people to <span className="font-medium text-slate-800">drop-off</span> after the ad, to{" "}
-                <span className="font-medium text-slate-800">abandoned forms</span>, and to{" "}
-                <span className="font-medium text-slate-800">no-shows</span> that never make it to a real conversation.
-                This <span className="font-medium text-slate-800">branded</span> path is built for{" "}
-                <span className="font-medium text-slate-800">{companyLabel}</span> with your logo, your colors, and
-                the scheduling link you already use. Put the same link on <span className="font-medium text-slate-800">your site</span>, in{" "}
-                <span className="font-medium text-slate-800">ads</span>, in email, or in your bio—so more of the traffic
-                you already buy actually turns into booked consults, higher conversion, and more revenue on the same
-                spend. General information only; your team owns medical decisions.
+                Clicks get lost to abandoned intakes, no-shows, and calendar friction—while ad spend and staff time
+                don&apos;t come back. This path is built for{" "}
+                <span className="font-medium text-slate-800">{companyLabel}</span>: your brand, your book link, more
+                booked consults from the same traffic so revenue stays in-house. General information only; your team owns
+                care decisions.
               </p>
               <div className="mt-4 flex w-full justify-center sm:mt-5">
                 <DemoHeaderActions
@@ -226,12 +189,10 @@ function IntakePageHeaderInner() {
 
               <div className="mt-5 w-full border-t border-slate-100 pt-5 text-center sm:mt-6 sm:pt-6">
                 <h1 className="text-pretty text-lg font-bold leading-snug tracking-tight text-slate-900 sm:text-xl">
-                  Stop the leak between the form and the meeting—turn paid clicks into your consults
+                  From ad to booked consult—less drop-off
                 </h1>
                 <p className="mx-auto mt-2.5 max-w-md text-sm leading-relaxed text-slate-600 sm:mt-3">
-                  A short pre-consult flow: what to expect, typical ranges, then straight to your book link—so you keep
-                  margin and patient relationships, not another vendor clipping every click. Not medical advice; you
-                  control follow-up and treatment.
+                  Short pre-flow, then your book link. You keep the margin and the relationship. Not medical advice.
                 </p>
               </div>
             </>

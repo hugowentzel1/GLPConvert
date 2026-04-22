@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import { useSearchParams } from 'next/navigation';
 import { useCompany } from '@/components/CompanyContext';
@@ -12,6 +13,7 @@ import EarningsMini from '@/components/partners/EarningsMini';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/Button';
 import { SUPPORT_EMAIL, PRODUCT_NAME } from '@/lib/product-identity';
+import { buildAppHomeHref, buildMarketingPathHref } from '@/lib/glp-intake-nav-href';
 
 export default function PartnersPage() {
   const b = useBrandTakeover();
@@ -87,16 +89,27 @@ export default function PartnersPage() {
           <Stack>
             {/* Back Button */}
             <div className="mb-8">
-              <a 
-                href={searchParams?.get('demo') ? `/?${searchParams?.toString()}` : `/paid?${searchParams?.toString()}`} 
+              <Link
+                href={buildAppHomeHref(searchParams)}
                 className="inline-flex items-center text-neutral-500 hover:text-neutral-900 transition-colors font-medium"
               >
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
                 Back to Home
-              </a>
+              </Link>
             </div>
+            <p className="text-xs text-neutral-500 -mt-2 mb-8 max-w-2xl leading-relaxed">
+              Partner terms are governed by our{" "}
+              <Link href={buildMarketingPathHref(searchParams, "/legal/terms")} className="text-neutral-700 underline">
+                Terms
+              </Link>{" "}
+              and{" "}
+              <Link href={buildMarketingPathHref(searchParams, "/privacy")} className="text-neutral-700 underline">
+                Privacy
+              </Link>
+              . Payouts and eligibility are confirmed in writing after approval.
+            </p>
 
             {/* Hero Block */}
             <div className="text-center">

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import { useSearchParams } from 'next/navigation';
 import Container from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
@@ -11,9 +10,9 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { SUPPORT_EMAIL } from '@/lib/product-identity';
+import { buildAppHomeHref, buildMarketingPathHref } from '@/lib/glp-intake-nav-href';
 
 export default function SupportPage() {
-  const b = useBrandTakeover();
   const searchParams = useSearchParams();
   const [formData, setFormData] = useState({
     name: '',
@@ -95,25 +94,50 @@ export default function SupportPage() {
   ];
 
   return (
-    <div 
+    <div
       className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 font-inter"
       data-brand
     >
-      <Section>
-        <Container>
+      <Section className="py-14 sm:py-20">
+        <Container className="max-w-4xl">
           <Stack>
             {/* Back Button */}
-            <div className="mb-8">
-              <a 
-                href={searchParams?.get('demo') ? `/?${searchParams?.toString()}` : `/paid?${searchParams?.toString()}`} 
+            <div className="mb-10 sm:mb-12">
+              <Link
+                href={buildAppHomeHref(searchParams)}
                 className="inline-flex items-center text-neutral-500 hover:text-neutral-900 transition-colors font-medium"
               >
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
                 Back to Home
-              </a>
+              </Link>
             </div>
+            <p className="text-xs text-neutral-500 -mt-2 mb-8 max-w-2xl leading-relaxed text-center sm:text-left">
+              For regulated health or advertising questions, U.S. clinics often reference{" "}
+              <a
+                className="text-neutral-700 underline"
+                href="https://www.hhs.gov/hipaa/index.html"
+                target="_blank"
+                rel="noreferrer"
+              >
+                HHS (HIPAA)
+              </a>{" "}
+              and{" "}
+              <a
+                className="text-neutral-700 underline"
+                href="https://www.ftc.gov/business-guidance/resources/health-products-compliance"
+                target="_blank"
+                rel="noreferrer"
+              >
+                FTC health-products guidance
+              </a>
+              . Product policies:{" "}
+              <Link href={buildMarketingPathHref(searchParams, "/privacy")} className="text-neutral-700 underline">
+                Privacy
+              </Link>
+              .
+            </p>
 
             {/* Hero Block */}
             <div className="text-center">

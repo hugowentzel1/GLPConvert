@@ -2,14 +2,27 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useMemo } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import { useCompany } from './CompanyContext';
 import { useIsDemo } from '@/src/lib/isDemo';
-import { PRODUCT_NAME } from '@/lib/product-identity';
+import { LAUNCH_BRANDED_CTA_LABEL, PRODUCT_NAME } from '@/lib/product-identity';
 import { companyLabelFromSearchParams } from '@/lib/company';
-import { buildStripeCheckoutClientPayload } from '@/lib/stripe-checkout-client';
-import { track } from '@/src/demo/track';
+import { buildAppHomeHref, buildIntakePricingHref, buildMarketingPathHref } from '@/lib/glp-intake-nav-href';
+
+function companyLabelForPricing(
+  sp: { get(name: string): string | null } | null,
+  fallback: string,
+) {
+  const raw = sp?.get("company");
+  if (!raw?.trim()) return fallback;
+  try {
+    return decodeURIComponent(raw.trim());
+  } catch {
+    return raw.trim();
+  }
+}
 
 export default function SharedNavigation() {
   const pathname = usePathname();
@@ -18,18 +31,17 @@ export default function SharedNavigation() {
   const { company } = useCompany();
   const isDemo = useIsDemo();
 
-  // Function to create URLs with preserved parameters
-  const createUrlWithParams = (path: string) => {
-    const params = new URLSearchParams();
-    if (searchParams?.get('company')) params.set('company', searchParams?.get('company') || '');
-    if (searchParams?.get('demo')) params.set('demo', searchParams?.get('demo') || '');
-    if (searchParams?.get('brandColor')) params.set('brandColor', searchParams?.get('brandColor') || '');
-    if (searchParams?.get('logo')) params.set('logo', searchParams?.get('logo') || '');
-    if (searchParams?.get('domain')) params.set('domain', searchParams?.get('domain') || '');
-
-    const queryString = params.toString();
-    return queryString ? `${path}?${queryString}` : path;
-  };
+  const homeHref = useMemo(() => buildAppHomeHref(searchParams), [searchParams]);
+  const companyFallback = company.companyName || "Your clinic";
+  const pricingLabel = useMemo(
+    () => companyLabelForPricing(searchParams, companyFallback),
+    [searchParams, companyFallback],
+  );
+  const pricingHref = useMemo(
+    () => buildIntakePricingHref(searchParams, pricingLabel),
+    [searchParams, pricingLabel],
+  );
+  const toPath = (path: string) => buildMarketingPathHref(searchParams, path);
   
   // Don't render on pages that have their own custom banners
   if (pathname === '/report' || pathname === '/demo-result') {
@@ -128,42 +140,6 @@ export default function SharedNavigation() {
   };
   const proxiedLogoUrl = logoUrl ? getProxiedLogoUrl(logoUrl) : null;
 
-  const handleLaunchClick = async () => {
-    if (b.enabled) {
-      // Start Stripe checkout with tracking
-      try {
-        const payload = buildStripeCheckoutClientPayload();
-        track("checkout_start", {
-          brand: b.brand,
-          company: payload.company || undefined,
-          utm_source: payload.utm_source,
-          utm_medium: payload.utm_medium,
-          utm_campaign: payload.utm_campaign,
-          placement: "nav_primary",
-        });
-
-        const response = await fetch('/api/stripe/create-checkout-session', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-        
-        if (!response.ok) {
-          throw new Error('Checkout failed');
-        }
-        
-        const { url } = await response.json();
-        window.location.href = url;
-      } catch (error) {
-        console.error('Checkout error:', error);
-        alert('Unable to start checkout. Please try again.');
-      }
-    } else {
-      // Default demo behavior
-      window.location.href = '/demo-result';
-    }
-  };
-
   const queryBrandLabel = companyLabelFromSearchParams(searchParams);
   const navTitle = b.enabled
     ? b.brand
@@ -173,7 +149,7 @@ export default function SharedNavigation() {
     <header className="bg-white border-b border-gray-200/30 shadow-sm" data-testid="main-site-nav">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center md:justify-between items-center h-20">
-          <Link href={createUrlWithParams("/")} className="flex items-center space-x-4 hover:opacity-80 transition-opacity">
+          <Link href={homeHref} className="flex items-center space-x-4 hover:opacity-80 transition-opacity">
             {b.enabled && proxiedLogoUrl ? (
               <Image
                 src={proxiedLogoUrl}
@@ -210,57 +186,41 @@ export default function SharedNavigation() {
           </Link>
           
           <nav
-            className="hidden md:flex items-center gap-6 text-sm"
+            className="hidden md:flex items-center text-sm"
             aria-label={isDemo ? "Demo navigation" : "Site links"}
           >
             {isDemo ? (
-              <>
+              <div className="flex items-center space-x-12">
                 <Link
-                  href={createUrlWithParams("/intake")}
+                  href={toPath("/pricing")}
                   className="font-medium text-gray-600 transition-colors hover:text-[var(--brand-primary)]"
                 >
-                  Intake demo
+                  Pricing
                 </Link>
-                <details className="group relative" data-nav-demo-more>
-                  <summary className="cursor-pointer list-none rounded-lg px-2 py-1.5 font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)] [&::-webkit-details-marker]:hidden">
-                    More
-                  </summary>
-                  <div className="absolute right-0 top-full z-50 mt-2 flex min-w-[200px] flex-col gap-0.5 rounded-xl border border-gray-200 bg-white py-2 shadow-lg">
-                    <Link
-                      href={createUrlWithParams("/pricing")}
-                      className="px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)]"
-                    >
-                      Pricing
-                    </Link>
-                    <Link
-                      href={createUrlWithParams("/partners")}
-                      className="px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)]"
-                    >
-                      Partners
-                    </Link>
-                    <Link
-                      href={createUrlWithParams("/support")}
-                      className="px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)]"
-                    >
-                      Support
-                    </Link>
-                    <Link
-                      href={createUrlWithParams("/about")}
-                      className="px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)]"
-                    >
-                      About
-                    </Link>
-                  </div>
-                </details>
-                <button
-                  type="button"
-                  onClick={handleLaunchClick}
-                  className="btn-primary ml-2 inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold"
-                  data-demo-nav-activate
+                <Link
+                  href={toPath("/partners")}
+                  className="font-medium text-gray-600 transition-colors hover:text-[var(--brand-primary)]"
                 >
-                  Activate your intake
-                </button>
-              </>
+                  Partners
+                </Link>
+                <Link
+                  href={toPath("/support")}
+                  className="font-medium text-gray-600 transition-colors hover:text-[var(--brand-primary)]"
+                >
+                  Support
+                </Link>
+                <Link
+                  href={pricingHref}
+                  className="btn-primary ml-12 inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold"
+                  data-demo-nav-activate
+                  data-intake-nav-activate
+                >
+                  <span className="mr-3" aria-hidden>
+                    ⚡
+                  </span>
+                  <span>{LAUNCH_BRANDED_CTA_LABEL}</span>
+                </Link>
+              </div>
             ) : (
               <details className="group relative">
                 <summary className="cursor-pointer list-none rounded-lg px-2 py-1.5 font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)] [&::-webkit-details-marker]:hidden">
@@ -268,19 +228,25 @@ export default function SharedNavigation() {
                 </summary>
                 <div className="absolute right-0 top-full z-50 mt-2 flex min-w-[180px] flex-col gap-0.5 rounded-xl border border-gray-200 bg-white py-2 shadow-lg">
                   <Link
-                    href="/support"
+                    href={toPath("/support")}
                     className="px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)]"
                   >
                     Help
                   </Link>
                   <Link
-                    href="/privacy"
+                    href={toPath("/privacy")}
                     className="px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)]"
                   >
                     Privacy
                   </Link>
                   <Link
-                    href="/about"
+                    href={toPath("/legal/terms")}
+                    className="px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)]"
+                  >
+                    Terms
+                  </Link>
+                  <Link
+                    href={toPath("/about")}
                     className="px-4 py-2 text-gray-700 transition-colors hover:bg-gray-50 hover:text-[var(--brand-primary)]"
                   >
                     About

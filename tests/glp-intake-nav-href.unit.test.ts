@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  buildAppHomeHref,
   buildIntakePricingHref,
   buildIntakeSelfHref,
   buildMarketingHomeHref,
@@ -10,6 +11,12 @@ describe("glp-intake-nav-href", () => {
   it("buildMarketingHomeHref preserves full query", () => {
     const sp = new URLSearchParams("demo=1&utm=email");
     expect(buildMarketingHomeHref(sp)).toBe("/?demo=1&utm=email");
+  });
+
+  it("buildAppHomeHref routes demo traffic to / and other traffic to /paid", () => {
+    expect(buildAppHomeHref(new URLSearchParams("demo=1&x=2"))).toBe("/?demo=1&x=2");
+    expect(buildAppHomeHref(new URLSearchParams("token=ab"))).toBe("/paid?token=ab");
+    expect(buildAppHomeHref(new URLSearchParams())).toBe("/paid");
   });
 
   it("buildIntakePricingHref sets company and keeps params", () => {

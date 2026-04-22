@@ -1,20 +1,19 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useBrandTakeover } from "@/src/brand/useBrandTakeover";
 import { useCountdown } from "@/src/demo/useCountdown";
 import { usePreviewQuota } from "@/src/demo/usePreviewQuota";
 import { track } from "@/src/demo/track";
 import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
-import { LAUNCH_BRANDED_CTA_LABEL, PRODUCT_NAME } from "@/lib/product-identity";
+import { LAUNCH_BRANDED_CTA_LABEL } from "@/lib/product-identity";
 import { INTAKE_DEMO_BANNER_DISMISS_EVENT, INTAKE_DEMO_BANNER_DISMISS_KEY } from "@/lib/intake-demo-banner-dismiss";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
-import { buildIntakePricingHref, buildMarketingPathHref } from "@/lib/glp-intake-nav-href";
-
-const INTAKE_TAGLINE = "Medical weight-loss intake";
+import { buildAppHomeHref, buildIntakePricingHref, buildMarketingPathHref } from "@/lib/glp-intake-nav-href";
+import { getProxiedLogoUrl } from "@/lib/logoProxy";
 
 function safeCompanyLabel(raw: string | null): string {
   if (!raw?.trim()) return "Your clinic";
@@ -25,32 +24,25 @@ function safeCompanyLabel(raw: string | null): string {
   }
 }
 
-function useIntakeDemoHover(reduceMotion: boolean | null | undefined) {
-  if (reduceMotion) return {};
-  return {
-    whileHover: { y: -2, scale: 1.02 },
-    whileTap: { scale: 0.99 },
-    transition: { type: "spring" as const, stiffness: 420, damping: 28 },
-  };
-}
-
 /**
- * Intake site chrome: mirrors `src/demo/DemoChrome.tsx` `DemoBanner` (preview strip, copy, dismiss,
- * private disclaimer). When marketing, nav row also mirrors `sunspire-clean` / `SharedNavigation`
- * (Pricing, Partners, Support, Privacy) with query preserved on links.
+ * Intake site chrome: preview strip (when marketing + brand takeover) and main row aligned with
+ * `sunspire-clean` / `SharedNavigation` — `h-20`, `space-x-12`, `btn-primary ml-12` (Privacy lives in
+ * the disclaimer line, not the top nav, matching that demo’s three links + CTA).
  */
 export default function IntakeDemoSiteHeader() {
   const sp = useSearchParams();
-  const reduceMotion = useReducedMotion();
   const b = useBrandTakeover();
   const countdown = useCountdown(b.expireDays || 7);
   const { read } = usePreviewQuota(2);
   const remaining = read();
   const marketing = isIntakeBrandedMarketingMode(sp);
   const companyLabel = safeCompanyLabel(sp?.get("company") ?? null);
-  const { primaryHex } = useMemo(() => parseGlpIntakeQueryBranding(sp), [sp]);
+  const { primaryHex, logoUrl: queryLogoUrl } = useMemo(() => parseGlpIntakeQueryBranding(sp), [sp]);
   const accent = primaryHex || "#0f172a";
-  const hover = useIntakeDemoHover(reduceMotion ?? false);
+  const rawLogoUrl = b.enabled && b.logo ? b.logo : queryLogoUrl;
+  const proxiedLogoUrl = getProxiedLogoUrl(rawLogoUrl);
+  const navTitle = b.enabled ? b.brand : companyLabel;
+  const navSubtitle = b.enabled ? "Branded intake" : "Branded preview";
 
   const [stripDismissed, setStripDismissed] = useState(false);
 
@@ -80,106 +72,103 @@ export default function IntakeDemoSiteHeader() {
   const brandVarStyle = useMemo(
     (): CSSProperties => ({
       ["--brand-primary" as string]: accent,
+      ["--brand" as string]: accent,
     }),
     [accent],
   );
 
-  const homeHref = useMemo(() => {
-    const q = new URLSearchParams();
-    if (sp?.get("company")) q.set("company", sp.get("company")!);
-    if (sp?.get("demo")) q.set("demo", sp.get("demo")!);
-    if (sp?.get("brand")) q.set("brand", sp.get("brand")!);
-    if (sp?.get("logo")) q.set("logo", sp.get("logo")!);
-    const s = q.toString();
-    return s ? `/?${s}` : "/";
-  }, [sp]);
-
+  const homeHref = useMemo(() => buildAppHomeHref(sp), [sp]);
   const pricingHref = useMemo(() => buildIntakePricingHref(sp, companyLabel), [sp, companyLabel]);
   const partnersHref = useMemo(() => buildMarketingPathHref(sp, "/partners"), [sp]);
   const supportHref = useMemo(() => buildMarketingPathHref(sp, "/support"), [sp]);
   const privacyHref = useMemo(() => buildMarketingPathHref(sp, "/privacy"), [sp]);
 
-  /** Preview strip: exclusive preview row + nav + disclaimer (reset dismiss key in lib if it hides forever). */
   const showDemoStrip = b.enabled && !stripDismissed && marketing;
   const showLaunchCta = marketing;
 
-  const brandNavRow = (
-    <div
-      className="mx-auto flex h-auto min-h-[4rem] max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8 md:min-h-[5rem]"
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: "0.75rem",
-        maxWidth: "80rem",
-        marginLeft: "auto",
-        marginRight: "auto",
-        minHeight: "4rem",
-      }}
-    >
-      <Link
-        href={homeHref}
-        className="flex min-w-0 shrink-0 items-center gap-3 rounded-lg outline-none ring-offset-2 transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-slate-900/20 md:gap-4"
-      >
-        <div
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white shadow-sm md:h-12 md:w-12"
-          style={{ backgroundColor: accent }}
-          aria-hidden
+  const brandMainRow = (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style={brandVarStyle}>
+      <div className="flex justify-center md:justify-between items-center h-20">
+        <Link
+          href={homeHref}
+          className="flex items-center space-x-4 hover:opacity-80 transition-opacity min-w-0"
         >
-          GP
-        </div>
-        <div className="min-w-0 text-left">
-          <p className="truncate text-lg font-black tracking-tight text-slate-900 md:text-2xl">{PRODUCT_NAME}</p>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500 md:text-xs">
-            {INTAKE_TAGLINE}
-          </p>
-        </div>
-      </Link>
+          {proxiedLogoUrl ? (
+            <Image
+              src={proxiedLogoUrl}
+              unoptimized
+              alt={`${navTitle} logo`}
+              width={48}
+              height={48}
+              className="rounded-lg shrink-0"
+              style={{
+                objectFit: "contain",
+                width: "48px",
+                height: "48px",
+                minWidth: "48px",
+                minHeight: "48px",
+                maxWidth: "48px",
+                maxHeight: "48px",
+              }}
+            />
+          ) : (
+            <div
+              className="w-12 h-12 rounded-lg flex items-center justify-center shrink-0"
+              style={{ backgroundColor: accent }}
+              aria-hidden
+            >
+              <span className="text-white text-lg font-bold" aria-hidden>
+                ⚕️
+              </span>
+            </div>
+          )}
+          <div className="min-w-0 text-left">
+            <h1 className="text-2xl font-black text-[var(--brand-primary)] truncate">{navTitle}</h1>
+            <p className="text-xs font-semibold text-gray-500 tracking-widest uppercase">
+              {navSubtitle}
+            </p>
+          </div>
+        </Link>
 
-      {showLaunchCta ? (
-        <nav
-          className="hidden min-w-0 flex-1 items-center justify-center gap-4 text-[11px] font-medium text-slate-600 sm:gap-5 sm:text-xs md:flex"
-          aria-label="Product links"
-        >
-          <Link
-            href={pricingHref}
-            className="shrink-0 text-slate-600 transition-colors hover:text-slate-900"
-          >
-            Pricing
-          </Link>
-          <Link href={partnersHref} className="shrink-0 text-slate-600 transition-colors hover:text-slate-900">
-            Partners
-          </Link>
-          <Link href={supportHref} className="shrink-0 text-slate-600 transition-colors hover:text-slate-900">
-            Support
-          </Link>
-          <Link href={privacyHref} className="shrink-0 text-slate-600 transition-colors hover:text-slate-900">
-            Privacy
-          </Link>
-        </nav>
-      ) : null}
-
-      {showLaunchCta ? (
-        <motion.a
-          href={pricingHref}
-          className="intake-nav-activate relative inline-flex max-w-[min(100%,20rem)] shrink-0 items-center gap-2 overflow-hidden rounded-xl px-3 py-2.5 text-xs font-semibold text-white shadow-md transition-shadow hover:shadow-lg sm:gap-3 sm:px-5 sm:py-3 sm:text-sm"
-          style={{ backgroundColor: accent }}
-          data-intake-nav-activate
-          aria-label={LAUNCH_BRANDED_CTA_LABEL}
-          {...hover}
-        >
-          <span className="relative z-10 shrink-0 text-base sm:text-lg" aria-hidden>
-            ⚡
-          </span>
-          <span className="relative z-10 min-w-0 text-center leading-snug">{LAUNCH_BRANDED_CTA_LABEL}</span>
-        </motion.a>
-      ) : null}
+        {showLaunchCta ? (
+          <nav className="hidden md:flex items-center space-x-12" aria-label="Product links">
+            <Link
+              href={pricingHref}
+              className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium"
+            >
+              Pricing
+            </Link>
+            <Link
+              href={partnersHref}
+              className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium"
+            >
+              Partners
+            </Link>
+            <Link
+              href={supportHref}
+              className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium"
+            >
+              Support
+            </Link>
+            <Link
+              href={pricingHref}
+              className="btn-primary ml-12 inline-flex items-center justify-center text-sm font-semibold"
+              data-intake-nav-activate
+            >
+              <span className="mr-3" aria-hidden>
+                ⚡
+              </span>
+              <span>{LAUNCH_BRANDED_CTA_LABEL}</span>
+            </Link>
+          </nav>
+        ) : null}
+      </div>
     </div>
   );
 
   return (
     <header
-      className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 shadow-sm backdrop-blur-md"
+      className="sticky top-0 z-50 bg-white border-b border-gray-200/30 shadow-sm"
       data-intake-site-header
       style={brandVarStyle}
     >
@@ -192,8 +181,6 @@ export default function IntakeDemoSiteHeader() {
             boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
           }}
         >
-          {/* Top: exclusive preview + runs + copy + dismiss */}
-          {/* Mobile — DemoChrome */}
           <div className="block px-4 py-3 md:hidden">
             <div className="flex flex-col items-center gap-2.5 text-center">
               <div
@@ -236,7 +223,6 @@ export default function IntakeDemoSiteHeader() {
             </div>
           </div>
 
-          {/* Desktop — preview + runs + Copy demo link + ✕ (DemoChrome.tsx) */}
           <div
             className="hidden md:flex"
             style={{
@@ -279,7 +265,8 @@ export default function IntakeDemoSiteHeader() {
                   }}
                 >
                   Exclusive preview for {b.brand} — expires in {countdown.days}d{" "}
-                  {countdown.hours.toString().padStart(2, "0")}:{countdown.minutes.toString().padStart(2, "0")}:
+                  {countdown.hours.toString().padStart(2, "0")}:
+                  {countdown.minutes.toString().padStart(2, "0")}:
                   {countdown.seconds.toString().padStart(2, "0")}
                 </strong>
               </div>
@@ -350,22 +337,43 @@ export default function IntakeDemoSiteHeader() {
             </div>
           </div>
 
-          {/* Middle: GP / GLPConvert / Launch — between preview strip and private disclaimer */}
-          <div className="border-t border-slate-100/90 bg-white/60">{brandNavRow}</div>
+          <div className="border-t border-gray-200/30 bg-white">{brandMainRow}</div>
 
-          {/* Bottom: private disclaimer */}
-          <div
-            className="border-t border-slate-100 px-4 py-2.5 text-center md:px-5 md:py-2"
-            data-intake-private-demo-disclaimer
-          >
-            <p style={{ fontSize: 12, color: "#6B7280", fontWeight: 500, lineHeight: 1.5 }}>
-              Private demo for <span style={{ color: "#374151", fontWeight: 500 }}>{companyLabel}</span>. Not
-              affiliated.
-            </p>
+          <div className="border-t border-gray-100 bg-gray-50/50" data-intake-private-demo-disclaimer>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+              <p className="text-xs text-gray-500 text-center">
+                Private demo for <span className="text-gray-600 font-medium">{b.brand || companyLabel}</span>. Not
+                affiliated.{" "}
+                <Link
+                  href={privacyHref}
+                  className="font-medium text-gray-600 underline underline-offset-2 transition-colors hover:text-[var(--brand-primary)]"
+                >
+                  Privacy
+                </Link>
+              </p>
+            </div>
           </div>
         </div>
       ) : (
-        brandNavRow
+        <div>
+          {brandMainRow}
+          {b.enabled && marketing && stripDismissed ? (
+            <div className="border-t border-gray-100 bg-gray-50/50" data-intake-private-demo-disclaimer>
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+                <p className="text-xs text-gray-500 text-center">
+                  Private demo for <span className="text-gray-600 font-medium">{b.brand || companyLabel}</span>. Not
+                  affiliated.{" "}
+                  <Link
+                    href={privacyHref}
+                    className="font-medium text-gray-600 underline underline-offset-2 transition-colors hover:text-[var(--brand-primary)]"
+                  >
+                    Privacy
+                  </Link>
+                </p>
+              </div>
+            </div>
+          ) : null}
+        </div>
       )}
     </header>
   );

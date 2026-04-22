@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import { useSearchParams } from 'next/navigation';
 import { PRODUCT_NAME, PLATFORM_DISPLAY_NAME, SUPPORT_EMAIL } from '@/lib/product-identity';
+import { buildMarketingPathHref } from '@/lib/glp-intake-nav-href';
 
 export default function LegalFooter({ 
   hideMarketingLinks = false, 
@@ -41,17 +42,7 @@ export default function LegalFooter({
   // Check if this is demo mode
   const isDemo = searchParams?.get('demo') === '1' || searchParams?.get('demo') === 'true';
 
-  // Function to create URLs with preserved parameters
-  const createUrlWithParams = (path: string) => {
-    const params = new URLSearchParams();
-    if (urlCompany) params.set('company', urlCompany);
-    if (searchParams?.get('demo')) params.set('demo', searchParams?.get('demo') || '1');
-    if (searchParams?.get('brandColor')) params.set('brandColor', searchParams?.get('brandColor') || '');
-    if (searchParams?.get('logo')) params.set('logo', searchParams?.get('logo') || '');
-
-    const queryString = params.toString();
-    return queryString ? `${path}?${queryString}` : path;
-  };
+  const withQ = (path: string) => buildMarketingPathHref(searchParams, path);
 
   return (
     <footer className="bg-gradient-to-b from-gray-50 via-white to-gray-100 border-t border-gray-200 mt-20">
@@ -82,31 +73,31 @@ export default function LegalFooter({
             </h4>
             <div className="space-y-3">
               <a
-                href={createUrlWithParams("/privacy")}
+                href={withQ("/privacy")}
                 className="block text-gray-600 hover:opacity-80 transition-colors duration-200"
               >
                 Privacy Policy
               </a>
               <a
-                href={createUrlWithParams("/terms")}
+                href={withQ("/legal/terms")}
                 className="block text-gray-600 hover:opacity-80 transition-colors duration-200"
               >
                 Terms of Service
               </a>
               <a
-                href={createUrlWithParams("/security")}
+                href={withQ("/security")}
                 className="block text-gray-600 hover:opacity-80 transition-colors duration-200"
               >
                 Security
               </a>
               <a
-                href={createUrlWithParams("/dpa")}
+                href={withQ("/dpa")}
                 className="block text-gray-600 hover:opacity-80 transition-colors duration-200"
               >
                 DPA
               </a>
               <a
-                href={createUrlWithParams("/do-not-sell")}
+                href={withQ("/do-not-sell")}
                 className="block text-gray-600 hover:opacity-80 transition-colors duration-200"
               >
                 Do Not Sell My Data
