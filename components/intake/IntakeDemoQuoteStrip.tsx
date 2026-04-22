@@ -17,34 +17,32 @@ export default function IntakeDemoQuoteStrip() {
   return (
     <section
       aria-label="Operator perspectives (illustrative)"
-      className="mx-auto w-full max-w-2xl grid gap-5 sm:grid-cols-2 sm:gap-6"
+      className="mx-auto grid w-full max-w-2xl gap-5 sm:grid-cols-2 sm:items-stretch sm:gap-6"
       data-intake-demo-quote-strip
     >
       {INTAKE_DEMO_HERO_QUOTES.map((q) => (
         <article
           key={q.name}
-          className={`flex h-full flex-col ${glpIntakeUi.intakeHeroShell} p-6 sm:p-7`}
+          className={`flex h-full min-h-0 flex-col ${glpIntakeUi.intakeHeroShell} p-5 sm:p-6`}
           data-testid="intake-demo-testimonial-card"
         >
-          <blockquote className="w-full border-l-2 border-slate-200 pl-4 text-left">
+          <blockquote className="flex min-h-0 flex-1 flex-col justify-start border-l-2 border-slate-200 pl-4 text-left">
             <p className="text-[15px] leading-relaxed text-slate-800 sm:text-[16px] sm:leading-[1.65]">
               &ldquo;{q.quote}&rdquo;
             </p>
           </blockquote>
 
-          <figcaption className="mt-6 flex w-full flex-col items-center gap-3 border-t border-slate-100 pt-6 text-center">
+          <figcaption className="mt-5 flex w-full shrink-0 flex-col items-center gap-2.5 border-t border-slate-100 pt-5 text-center">
             <div
-              className="flex shrink-0"
+              className="flex justify-center"
               style={{ ["--brand-primary" as string]: accent } as CSSProperties}
             >
               <AvatarInitials name={q.name} size={40} variant="duo" />
             </div>
-            <div className="w-full text-center">
-              <p className="text-sm font-semibold text-slate-900">{q.name}</p>
-              <p className="mt-1 text-[13px] leading-snug text-slate-600">
-                {q.role} · {q.orgLine}
-              </p>
-            </div>
+            <p className="w-full text-sm font-semibold leading-tight text-slate-900">{q.name}</p>
+            <p className="w-full translate-y-0.5 text-[13px] leading-snug text-slate-600">
+              {q.role} · {q.orgLine}
+            </p>
           </figcaption>
         </article>
       ))}

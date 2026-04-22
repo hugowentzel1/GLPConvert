@@ -4,14 +4,14 @@
 export const INTAKE_DEMO_HERO_QUOTES = [
   {
     quote:
-      "Prospects used to hit a generic form cold. Now they see a branded path—timing, typical monthly band, then booking—so our team spends the consult on fit, not damage control.",
+      "We stopped running weight-care ads to a template. First screen is finally ours: logo, color, the same book link the front desk already uses. Consults are warmer—no more starting calls apologizing for the page.",
     name: "Jordan M.",
     role: "Owner",
     orgLine: "Boutique med spa, Southwest US",
   },
   {
     quote:
-      "We dropped one URL into ads, site, and link-in-bio. Leads still land in HubSpot, but with readiness tags—we finally know who actually read the path before they booked.",
+      "One link in ads, site, and bio. The CRM is unchanged, but a lead now shows who read the path before they booked—not a bare name in the hopper. We chase quality, not just volume.",
     name: "Priya K.",
     role: "Growth lead",
     orgLine: "Multi-state telehealth clinic",

@@ -65,14 +65,14 @@ const pillStyle = {
 
 function TrustBadgeGrid({ icon, text }: { icon: ReactNode; text: string }) {
   return (
-    <div className="flex w-full max-w-[11rem] flex-col items-center justify-start justify-self-center text-center">
+    <div className="mx-auto flex h-full min-h-[7.5rem] w-full max-w-[11rem] flex-col items-center justify-center gap-2.5 self-stretch py-1 text-center sm:min-h-[6.5rem]">
       <div
-        className="mb-2.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
         style={pillStyle}
       >
         {icon}
       </div>
-      <p className="w-full text-balance text-center text-[11px] font-semibold leading-snug tracking-tight text-slate-800 sm:min-h-[2.75rem] sm:text-xs">
+      <p className="w-full text-balance text-center text-[11px] font-semibold leading-snug tracking-tight text-slate-800 sm:text-xs">
         {text}
       </p>
     </div>
@@ -96,7 +96,7 @@ export default function IntakeTrustStrip() {
       aria-label="Trust and privacy signals"
     >
       <div className={`${glpIntakeUi.intakeHeroShell} bg-white/95 px-4 py-5 backdrop-blur-[2px] sm:px-6 sm:py-6`}>
-        <div className="mx-auto grid w-full max-w-4xl grid-cols-2 justify-items-center gap-x-4 gap-y-8 md:grid-cols-4 md:gap-x-3 md:gap-y-0">
+        <div className="mx-auto grid w-full max-w-4xl grid-cols-2 content-center items-stretch justify-items-stretch gap-x-4 gap-y-6 sm:items-center md:grid-cols-4 md:gap-x-3 md:gap-y-0">
           {ITEMS.map(({ text, Icon }) => (
             <TrustBadgeGrid key={text} icon={<Icon />} text={text} />
           ))}
