@@ -9,7 +9,7 @@ import { INTAKE_DEMO_HERO_QUOTES } from "@/lib/intake-demo-quotes";
 
 const DEFAULT_ACCENT = "#0f172a";
 
-/** Centered social proof; same shell as clinic hero + trust row. */
+/** Quote copy with left rule; attribution centered. Same shell as clinic hero + trust row. */
 export default function IntakeDemoQuoteStrip() {
   const sp = useSearchParams();
   const accent = useMemo(() => parseGlpIntakeQueryBranding(sp).primaryHex || DEFAULT_ACCENT, [sp]);
@@ -23,16 +23,16 @@ export default function IntakeDemoQuoteStrip() {
       {INTAKE_DEMO_HERO_QUOTES.map((q) => (
         <article
           key={q.name}
-          className={`flex h-full flex-col items-center text-center ${glpIntakeUi.intakeHeroShell} p-6 sm:p-7`}
+          className={`flex h-full flex-col ${glpIntakeUi.intakeHeroShell} p-6 sm:p-7`}
           data-testid="intake-demo-testimonial-card"
         >
-          <blockquote className="mx-auto w-full max-w-prose">
+          <blockquote className="w-full border-l-2 border-slate-200 pl-4 text-left">
             <p className="text-[15px] leading-relaxed text-slate-800 sm:text-[16px] sm:leading-[1.65]">
               &ldquo;{q.quote}&rdquo;
             </p>
           </blockquote>
 
-          <figcaption className="mt-6 flex w-full flex-col items-center gap-3 border-t border-slate-100 pt-6">
+          <figcaption className="mt-6 flex w-full flex-col items-center gap-3 border-t border-slate-100 pt-6 text-center">
             <div
               className="flex shrink-0"
               style={{ ["--brand-primary" as string]: accent } as CSSProperties}

@@ -15,15 +15,10 @@ import { buildIntakePricingHref, buildMarketingHomeHref } from "@/lib/glp-intake
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 
 /**
- * Demo / intake chrome — single value line + persistent primary CTA (PLG “first-click value” pattern).
- * Ungated entry, short path to “aha,” clear next step; interactive demo trends (2024–2025) emphasize
- * value before feature lists.
- *
- * @see https://www.chameleon.io/blog/interactive-demos-product-led-growth — interactive demos & PLG
- * @see https://www.wearespoton.com/blog/best-practices-for-saas-interactive-product-demos-that-generate-leads — demo structure & CTA
- * @see https://demogo.com/2025/10/14/what-to-include-in-an-effective-saas-demo-the-complete-checklist-for-2025/ — pain → value → CTA
+ * Intake site chrome: mirrors `src/demo/DemoChrome.tsx` `DemoBanner` (preview strip, copy, dismiss,
+ * private disclaimer row inside the same gradient box). No Pricing / Partners / Support.
  */
-const INTAKE_TAGLINE = "Branded path from ad click to consult";
+const INTAKE_TAGLINE = "Medical weight-loss intake";
 
 function safeCompanyLabel(raw: string | null): string {
   if (!raw?.trim()) return "Your clinic";
