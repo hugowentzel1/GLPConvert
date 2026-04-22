@@ -1,8 +1,14 @@
 import { Suspense } from "react";
 import GlpSimulationFunnel from "@/components/intake/GlpSimulationFunnel";
 import AttributionPixels from "@/components/attribution/AttributionPixels";
+import IntakeDemoQuoteStrip from "@/components/intake/IntakeDemoQuoteStrip";
 import IntakePageFrame from "@/components/intake/IntakePageFrame";
 import IntakePageHeader from "@/components/intake/IntakePageHeader";
+import IntakeSearchParamsSanitizer from "@/components/intake/IntakeSearchParamsSanitizer";
+import {
+  isIntakeBrandedMarketingMode,
+  toUrlSearchParamsFromIntakePage,
+} from "@/lib/glp-intake-demo-mode";
 import { PRODUCT_NAME } from "@/lib/product-identity";
 import type { Metadata } from "next";
 
@@ -12,48 +18,29 @@ export const metadata: Metadata = {
     "Branded pre-consult path: clarity, typical ranges, then your scheduling link. General information only.",
 };
 
-function isDemoFromSearchParams(
-  sp: Record<string, string | string[] | undefined> | undefined,
-): boolean {
-  if (!sp) return false;
-  const demo = sp.demo;
-  const demoStr = Array.isArray(demo) ? demo[0] : demo;
-  const preview = sp.preview;
-  const previewStr = Array.isArray(preview) ? preview[0] : preview;
-  const mode = sp.mode;
-  const modeStr = Array.isArray(mode) ? mode[0] : mode;
-  const company = sp.company;
-  const companyStr = (Array.isArray(company) ? company[0] : company)?.trim();
-  const handle = sp.handle;
-  const handleStr = (Array.isArray(handle) ? handle[0] : handle)?.trim();
-  const explicitDemo =
-    demoStr === "1" ||
-    demoStr === "true" ||
-    previewStr === "1" ||
-    modeStr === "demo";
-  /** Match `isIntakeBrandedMarketingMode`: branded company cold links without tenant handle. */
-  const brandedPreview = Boolean(companyStr) && !handleStr;
-  return explicitDemo || brandedPreview;
-}
-
 export default function IntakePage({
   searchParams,
 }: {
   searchParams?: Record<string, string | string[] | undefined>;
 }) {
-  const demo = isDemoFromSearchParams(searchParams);
+  const demo = isIntakeBrandedMarketingMode(toUrlSearchParamsFromIntakePage(searchParams));
 
   return (
     <IntakePageFrame demoServerHint={demo}>
-      <IntakePageHeader />
-      <Suspense
-        fallback={
-          <div className="mx-auto max-w-lg text-center text-sm text-slate-500">Loading intake…</div>
-        }
-      >
-        <AttributionPixels />
-        <GlpSimulationFunnel />
+      <Suspense fallback={null}>
+        <IntakeSearchParamsSanitizer />
       </Suspense>
+      <IntakePageHeader />
+      {demo ? (
+        <div
+          className="w-full border-t border-slate-200/50 pt-10 pb-6 md:pt-12 md:pb-8"
+          data-intake-demo-social-proof
+        >
+          <IntakeDemoQuoteStrip />
+        </div>
+      ) : null}
+      <AttributionPixels />
+      <GlpSimulationFunnel />
     </IntakePageFrame>
   );
 }

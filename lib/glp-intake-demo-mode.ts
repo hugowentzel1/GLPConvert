@@ -1,3 +1,26 @@
+export const INTAKE_DEMO_EXAMPLE_HREF =
+  "http://localhost:3000/intake?company=Sunspire+Weight+Clinic&demo=1&logo=https%3A%2F%2Fexample.com%2Flogo.png" as const;
+
+type IntakePageSearchParams = Readonly<
+  Record<string, string | string[] | undefined> | undefined
+>;
+
+export function toUrlSearchParamsFromIntakePage(sp: IntakePageSearchParams): URLSearchParams {
+  const out = new URLSearchParams();
+  if (!sp) return out;
+  for (const [key, value] of Object.entries(sp)) {
+    if (value === undefined) continue;
+    if (Array.isArray(value)) {
+      for (const item of value) {
+        if (item !== undefined) out.append(key, item);
+      }
+    } else {
+      out.set(key, value);
+    }
+  }
+  return out;
+}
+
 /** True when the GLP intake should show demo affordances (preview URL modes + demo=1|true). */
 export function isIntakeDemoMode(sp: URLSearchParams | null): boolean {
   if (!sp) return false;
