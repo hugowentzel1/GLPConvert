@@ -203,10 +203,19 @@ function IntakePageHeaderInner() {
                 <p className="text-pretty text-xl font-bold tracking-tight text-slate-900 sm:text-2xl">{companyLabel}</p>
               </div>
 
-              <p className="mx-auto mt-5 max-w-md text-pretty text-sm leading-relaxed text-slate-500 sm:mt-6 sm:text-[15px]">
-                Protect paid traffic: turn clicks into booked consults—more revenue from the same ad spend
+              <p className="mx-auto mt-4 max-w-md text-pretty text-sm leading-relaxed text-slate-600 sm:mt-5 sm:text-[15px]">
+                You pay for <span className="font-medium text-slate-800">GLP-1 and weight-care clicks</span>—then lose
+                people to <span className="font-medium text-slate-800">drop-off</span> after the ad, to{" "}
+                <span className="font-medium text-slate-800">abandoned forms</span>, and to{" "}
+                <span className="font-medium text-slate-800">no-shows</span> that never make it to a real conversation.
+                This <span className="font-medium text-slate-800">branded</span> path is built for{" "}
+                <span className="font-medium text-slate-800">{companyLabel}</span> with your logo, your colors, and
+                the scheduling link you already use. Put the same link on <span className="font-medium text-slate-800">your site</span>, in{" "}
+                <span className="font-medium text-slate-800">ads</span>, in email, or in your bio—so more of the traffic
+                you already buy actually turns into booked consults, higher conversion, and more revenue on the same
+                spend. General information only; your team owns medical decisions.
               </p>
-              <div className="mt-5 flex w-full justify-center sm:mt-6">
+              <div className="mt-4 flex w-full justify-center sm:mt-5">
                 <DemoHeaderActions
                   companyLabel={companyLabel}
                   accent={accent}
@@ -215,13 +224,14 @@ function IntakePageHeaderInner() {
                 />
               </div>
 
-              <div className="mt-6 w-full border-t border-slate-100 pt-6 text-center sm:mt-7 sm:pt-7">
-                <h1 className="text-pretty text-[1.35rem] font-bold leading-snug tracking-tight text-slate-900 sm:text-2xl">
-                  Stop leaking ad budget—book more consults from the same spend
+              <div className="mt-5 w-full border-t border-slate-100 pt-5 text-center sm:mt-6 sm:pt-6">
+                <h1 className="text-pretty text-lg font-bold leading-snug tracking-tight text-slate-900 sm:text-xl">
+                  Stop the leak between the form and the meeting—turn paid clicks into your consults
                 </h1>
-                <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-slate-600 sm:mt-3.5">
-                  Patients get clarity on timing and typical ranges; you keep margin in-house with a path to your scheduling link—not
-                  another vendor tax on every click.
+                <p className="mx-auto mt-2.5 max-w-md text-sm leading-relaxed text-slate-600 sm:mt-3">
+                  A short pre-consult flow: what to expect, typical ranges, then straight to your book link—so you keep
+                  margin and patient relationships, not another vendor clipping every click. Not medical advice; you
+                  control follow-up and treatment.
                 </p>
               </div>
             </>

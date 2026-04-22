@@ -1,18 +1,21 @@
 "use client";
 
-import { useEffect, useId, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useState } from "react";
+import Lottie from "lottie-react";
 import { motion } from "framer-motion";
 import {
   Area,
   AreaChart,
   CartesianGrid,
   Label,
+  Line,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import peakSpark from "@/lib/lotties/peak-spark.json";
 
 export type JourneyProgressPoint = { label: string; progress: number; month: number };
 
@@ -20,8 +23,9 @@ export type JourneyProgressPoint = { label: string; progress: number; month: num
  * Illustrative curve: modeled % progress toward the patient’s stated weight goal over time.
  * Visual hierarchy follows dashboard chart patterns (Stripe Atlas / Amplitude): title → subtitle → axis labels → legend.
  *
- * Markup, copy, and Recharts tree match `8f6c1760b282c6547dfd1bb7caa387972669aa53`; this file adds
- * framer-motion entrance, skeleton crossfade, and slightly tuned draw (motion-safe).
+ * Copy, margins, and Recharts tree match `8f6c1760b282c6547dfd1bb7caa387972669aa53`.
+ * This file adds: Framer entry, plot-ready gating, skeleton crossfade, neutral load bar, subtle 3D settle
+ * (no brand-color–cycling effects).
  */
 export default function GlpJourneyProgressChart({
   points,
@@ -34,6 +38,7 @@ export default function GlpJourneyProgressChart({
 }) {
   const [animate, setAnimate] = useState(true);
   const [plotReady, setPlotReady] = useState(false);
+  const [sparkOn, setSparkOn] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -53,19 +58,82 @@ export default function GlpJourneyProgressChart({
   const compact = variant === "compact";
   const last = points[points.length - 1];
   const first = points[0];
+  const legendStartPair = first?.label === "Start" ? "Month 0" : (first?.label ?? "Month 0");
 
   useEffect(() => {
     setPlotReady(false);
-    const t = window.setTimeout(() => setPlotReady(true), animate ? 380 : 0);
+    const t = window.setTimeout(() => setPlotReady(true), animate ? 400 : 0);
     return () => window.clearTimeout(t);
   }, [points, brandFill, animate, compact]);
+
+  useEffect(() => {
+    if (!plotReady || compact) {
+      setSparkOn(false);
+      return;
+    }
+    if (!animate) {
+      setSparkOn(true);
+      return;
+    }
+    setSparkOn(false);
+    const t = window.setTimeout(() => setSparkOn(true), 2200);
+    return () => window.clearTimeout(t);
+  }, [plotReady, animate, points, compact]);
+
+  const areaDot = useCallback(
+    (dotProps: { cx?: number; cy?: number; index?: number }) => {
+      const { cx, cy, index } = dotProps;
+      if (cx == null || cy == null || index == null) return null;
+      const isLast = index === points.length - 1;
+      if (!isLast) {
+        return (
+          <circle
+            key={`glp-d-${index}`}
+            cx={cx}
+            cy={cy}
+            r={3.5}
+            fill={brandFill}
+            stroke="#fff"
+            strokeWidth={2}
+          />
+        );
+      }
+      return (
+        <g key={`glp-d-${index}`}>
+          <circle cx={cx} cy={cy} r={3.5} fill={brandFill} stroke="#fff" strokeWidth={2} />
+          {sparkOn && animate ? (
+            <foreignObject
+              x={cx - 18}
+              y={cy - 18}
+              width={36}
+              height={36}
+              style={{ overflow: "visible", pointerEvents: "none" }}
+            >
+              <div
+                className="flex h-9 w-9 items-center justify-center [transform:translateZ(0)]"
+                style={{ width: 36, height: 36 }}
+              >
+                <Lottie
+                  animationData={peakSpark}
+                  loop
+                  className="pointer-events-none h-9 w-9 opacity-90"
+                  style={{ width: 36, height: 36 }}
+                />
+              </div>
+            </foreignObject>
+          ) : null}
+        </g>
+      );
+    },
+    [points.length, brandFill, sparkOn, animate],
+  );
 
   return (
     <motion.div
       data-results-chart
-      initial={animate ? { opacity: 0, y: 14 } : undefined}
+      initial={animate && !compact ? { opacity: 0, y: 12 } : false}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       className={`glp-intake-chart-card relative w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-b from-white via-white to-slate-50/90 ring-1 ring-slate-900/[0.04] ${
         compact
           ? "px-3 pb-3 pt-4 shadow-sm sm:px-4"
@@ -78,35 +146,70 @@ export default function GlpJourneyProgressChart({
       />
 
       {!compact ? (
-        <div className="mb-6 space-y-2 px-2 text-center sm:mb-7 sm:space-y-2.5 sm:px-3">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+        <motion.div
+          className="mb-6 space-y-2 px-2 text-center sm:mb-7 sm:space-y-2.5 sm:px-3"
+          initial="hidden"
+          animate="show"
+          variants={{
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren: animate ? 0.07 : 0,
+                delayChildren: animate ? 0.05 : 0,
+              },
+            },
+          }}
+        >
+          <motion.p
+            className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500"
+            variants={{ hidden: { opacity: 0, y: 6 }, show: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          >
             Momentum snapshot (illustrative)
-          </p>
-          <p className="text-lg font-semibold leading-snug tracking-tight text-slate-900 sm:text-xl">
+          </motion.p>
+          <motion.p
+            className="text-lg font-semibold leading-snug tracking-tight text-slate-900 sm:text-xl"
+            variants={{ hidden: { opacity: 0, y: 6 }, show: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          >
             How progress toward your stated goal can build over time
-          </p>
-          <p className="mx-auto max-w-lg text-sm font-normal leading-relaxed text-slate-600 sm:text-[15px] sm:leading-relaxed">
+          </motion.p>
+          <motion.p
+            className="mx-auto max-w-lg text-sm font-normal leading-relaxed text-slate-600 sm:text-[15px] sm:leading-relaxed"
+            variants={{ hidden: { opacity: 0, y: 6 }, show: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          >
             Each point is a modeled checkpoint — not a promise. Vertical axis: share of your goal; horizontal: months
             from start. Your provider sets the real pace.
-          </p>
-          <div className="mx-auto mt-4 flex max-w-md flex-col items-center gap-2.5 text-[11px] leading-relaxed text-slate-600 sm:mt-5 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-6 sm:gap-y-2">
+          </motion.p>
+          <motion.div
+            className="mx-auto mt-4 flex max-w-md flex-col items-center gap-2.5 text-[11px] leading-relaxed text-slate-600 sm:mt-5 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-6 sm:gap-y-2"
+            variants={{ hidden: { opacity: 0, y: 6 }, show: { opacity: 1, y: 0 } }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          >
             <span className="inline-flex items-center gap-2">
               <span className="h-2 w-2 rounded-full bg-slate-300" aria-hidden />
-              Start · {first?.label ?? "Month 0"}
+              Start · {legendStartPair}
             </span>
             <span className="inline-flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full shadow-sm ring-2 ring-white" style={{ backgroundColor: brandFill }} aria-hidden />
+              <span
+                className="h-2 w-2 rounded-full shadow-sm ring-2 ring-white"
+                style={{ backgroundColor: brandFill }}
+                aria-hidden
+              />
               Modeled path
             </span>
             <span className="inline-flex items-center gap-2">
               <span className="h-2 w-0.5 rounded-full bg-slate-200" aria-hidden />
               100% = stated goal
             </span>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       ) : null}
       <div
-        className={`relative ${compact ? "h-[200px] w-full sm:h-[220px]" : "h-[240px] w-full sm:h-[260px]"}`}
+        className={`relative perspective-[1000px] ${
+          compact ? "h-[200px] w-full sm:h-[220px]" : "h-[240px] w-full sm:h-[260px]"
+        }`}
         style={{ minHeight: compact ? 200 : 240, minWidth: 0, isolation: "isolate" }}
       >
         <div
@@ -116,20 +219,49 @@ export default function GlpJourneyProgressChart({
           <div className="glp-intake-chart-shimmer absolute inset-0" />
         </div>
         <motion.div
-          className="absolute inset-0 z-[4] rounded-xl bg-gradient-to-b from-slate-100/95 to-white sm:rounded-2xl"
+          className="absolute inset-0 z-[4] rounded-xl bg-gradient-to-b from-slate-100/90 to-white sm:rounded-2xl"
           initial={false}
           animate={{ opacity: plotReady ? 0 : 1 }}
-          transition={{ duration: animate ? 0.5 : 0, ease: "easeOut" }}
+          transition={{ duration: animate ? 0.55 : 0, ease: "easeOut" }}
           style={{ pointerEvents: plotReady ? "none" : "auto" }}
           aria-hidden
         />
-        <ResponsiveContainer
-          className="relative z-[3]"
-          width="100%"
-          height="100%"
-          minHeight={compact ? 200 : 240}
-          minWidth={0}
+        <motion.div
+          className="pointer-events-none absolute inset-x-6 bottom-2 z-[5] h-0.5 overflow-hidden rounded-full bg-slate-200/80 sm:inset-x-8"
+          initial={false}
+          animate={{ opacity: plotReady ? 0 : 1 }}
+          transition={{ duration: 0.35 }}
         >
+          <motion.div
+            className="h-full origin-left rounded-full bg-slate-500/80"
+            initial={false}
+            animate={{ scaleX: plotReady ? 1 : 0.1 }}
+            transition={{ duration: plotReady && animate ? 0.5 : 0, ease: [0.22, 1, 0.36, 1] }}
+            aria-hidden
+          />
+        </motion.div>
+        <motion.div
+          className="relative z-[3] h-full w-full [transform-style:preserve-3d] [transform-origin:50%_75%] rounded-xl sm:rounded-2xl"
+          initial={false}
+          animate={
+            plotReady
+              ? { scale: 1, opacity: 1, rotateX: 0, boxShadow: "0 0 0 1px rgba(15, 23, 42, 0.04)" }
+              : {
+                  scale: !compact && animate ? 0.985 : 1,
+                  opacity: !compact && animate ? 0.9 : 1,
+                  rotateX: !compact && animate ? 3.5 : 0,
+                  boxShadow: "0 0 0 0px rgba(15, 23, 42, 0)",
+                }
+          }
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <ResponsiveContainer
+            className="relative h-full w-full"
+            width="100%"
+            height="100%"
+            minHeight={compact ? 200 : 240}
+            minWidth={0}
+          >
           <AreaChart data={points} margin={{ top: 8, right: 8, left: 0, bottom: 8 }}>
             <defs>
               <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
@@ -192,6 +324,22 @@ export default function GlpJourneyProgressChart({
               ]}
               labelFormatter={(label) => `${label}`}
             />
+            {!compact && plotReady ? (
+              <Line
+                type="monotone"
+                dataKey="progress"
+                stroke={brandFill}
+                strokeWidth={7}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeOpacity={0.1}
+                dot={false}
+                isAnimationActive={plotReady && animate}
+                animationDuration={animate ? 2400 : 0}
+                animationEasing="ease-in-out"
+                name="glow"
+              />
+            ) : null}
             <Area
               type="monotone"
               dataKey="progress"
@@ -201,13 +349,15 @@ export default function GlpJourneyProgressChart({
               strokeLinejoin="round"
               fill={`url(#${gradId})`}
               isAnimationActive={plotReady && animate}
-              animationDuration={animate ? 2800 : 0}
-              animationEasing="ease-out"
+              animationDuration={animate ? 2400 : 0}
+              animationEasing="ease-in-out"
               activeDot={{ r: 6, strokeWidth: 2, stroke: "#fff" }}
-              dot={{ r: 3.5, strokeWidth: 2, stroke: "#fff", fill: brandFill }}
+              // Recharts 3: custom dot + Lottie at peak; prop typing lags render-prop shape
+              dot={areaDot as never}
             />
           </AreaChart>
         </ResponsiveContainer>
+        </motion.div>
       </div>
       {!compact ? (
         <p className="mt-4 border-t border-slate-100 px-1 text-center text-[11px] leading-relaxed text-slate-500 sm:px-2">

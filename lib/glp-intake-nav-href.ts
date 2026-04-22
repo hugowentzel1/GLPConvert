@@ -22,3 +22,11 @@ export function buildIntakePricingHref(sp: SearchLike, companyLabel: string): st
   q.set("company", label);
   return `/pricing?${q.toString()}`;
 }
+
+/** Preserve current query (UTMs, demo, branding) for marketing site links (sunspire-style header). */
+export function buildMarketingPathHref(sp: SearchLike, path: string): string {
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  if (!sp) return normalized;
+  const qs = sp.toString();
+  return qs ? `${normalized}?${qs}` : normalized;
+}

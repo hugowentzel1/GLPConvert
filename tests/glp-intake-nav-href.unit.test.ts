@@ -3,6 +3,7 @@ import {
   buildIntakePricingHref,
   buildIntakeSelfHref,
   buildMarketingHomeHref,
+  buildMarketingPathHref,
 } from "@/lib/glp-intake-nav-href";
 
 describe("glp-intake-nav-href", () => {
@@ -25,5 +26,11 @@ describe("glp-intake-nav-href", () => {
     const sp = new URLSearchParams("a=1");
     expect(buildIntakeSelfHref(sp)).toBe("/intake?a=1");
     expect(buildIntakeSelfHref(null)).toBe("/intake");
+  });
+
+  it("buildMarketingPathHref appends current query to path", () => {
+    const sp = new URLSearchParams("demo=1&brand=abc");
+    expect(buildMarketingPathHref(sp, "/partners")).toBe("/partners?demo=1&brand=abc");
+    expect(buildMarketingPathHref(null, "/privacy")).toBe("/privacy");
   });
 });

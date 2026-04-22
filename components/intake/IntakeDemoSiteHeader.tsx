@@ -11,13 +11,9 @@ import { track } from "@/src/demo/track";
 import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
 import { LAUNCH_BRANDED_CTA_LABEL, PRODUCT_NAME } from "@/lib/product-identity";
 import { INTAKE_DEMO_BANNER_DISMISS_EVENT, INTAKE_DEMO_BANNER_DISMISS_KEY } from "@/lib/intake-demo-banner-dismiss";
-import { buildIntakePricingHref, buildMarketingHomeHref } from "@/lib/glp-intake-nav-href";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
+import { buildIntakePricingHref, buildMarketingPathHref } from "@/lib/glp-intake-nav-href";
 
-/**
- * Intake site chrome: mirrors `src/demo/DemoChrome.tsx` `DemoBanner` (preview strip, copy, dismiss,
- * private disclaimer row inside the same gradient box). No Pricing / Partners / Support.
- */
 const INTAKE_TAGLINE = "Medical weight-loss intake";
 
 function safeCompanyLabel(raw: string | null): string {
@@ -40,7 +36,8 @@ function useIntakeDemoHover(reduceMotion: boolean | null | undefined) {
 
 /**
  * Intake site chrome: mirrors `src/demo/DemoChrome.tsx` `DemoBanner` (preview strip, copy, dismiss,
- * private disclaimer row inside the same gradient box). No Pricing / Partners / Support.
+ * private disclaimer). When marketing, nav row also mirrors `sunspire-clean` / `SharedNavigation`
+ * (Pricing, Partners, Support, Privacy) with query preserved on links.
  */
 export default function IntakeDemoSiteHeader() {
   const sp = useSearchParams();
@@ -87,9 +84,20 @@ export default function IntakeDemoSiteHeader() {
     [accent],
   );
 
-  const homeHref = useMemo(() => buildMarketingHomeHref(sp), [sp]);
+  const homeHref = useMemo(() => {
+    const q = new URLSearchParams();
+    if (sp?.get("company")) q.set("company", sp.get("company")!);
+    if (sp?.get("demo")) q.set("demo", sp.get("demo")!);
+    if (sp?.get("brand")) q.set("brand", sp.get("brand")!);
+    if (sp?.get("logo")) q.set("logo", sp.get("logo")!);
+    const s = q.toString();
+    return s ? `/?${s}` : "/";
+  }, [sp]);
 
   const pricingHref = useMemo(() => buildIntakePricingHref(sp, companyLabel), [sp, companyLabel]);
+  const partnersHref = useMemo(() => buildMarketingPathHref(sp, "/partners"), [sp]);
+  const supportHref = useMemo(() => buildMarketingPathHref(sp, "/support"), [sp]);
+  const privacyHref = useMemo(() => buildMarketingPathHref(sp, "/privacy"), [sp]);
 
   /** Preview strip: exclusive preview row + nav + disclaimer (reset dismiss key in lib if it hides forever). */
   const showDemoStrip = b.enabled && !stripDismissed && marketing;
@@ -97,11 +105,21 @@ export default function IntakeDemoSiteHeader() {
 
   const brandNavRow = (
     <div
-      className="mx-auto flex h-auto min-h-[4rem] w-full max-w-2xl items-center justify-between gap-4 px-4 py-3 sm:px-6 md:min-h-[5rem]"
+      className="mx-auto flex h-auto min-h-[4rem] max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8 md:min-h-[5rem]"
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: "0.75rem",
+        maxWidth: "80rem",
+        marginLeft: "auto",
+        marginRight: "auto",
+        minHeight: "4rem",
+      }}
     >
       <Link
         href={homeHref}
-        className="flex min-w-0 items-center gap-3 rounded-lg outline-none ring-offset-2 transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-slate-900/20 md:gap-4"
+        className="flex min-w-0 shrink-0 items-center gap-3 rounded-lg outline-none ring-offset-2 transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-slate-900/20 md:gap-4"
       >
         <div
           className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold text-white shadow-sm md:h-12 md:w-12"
@@ -117,6 +135,29 @@ export default function IntakeDemoSiteHeader() {
           </p>
         </div>
       </Link>
+
+      {showLaunchCta ? (
+        <nav
+          className="hidden min-w-0 flex-1 items-center justify-center gap-4 text-[11px] font-medium text-slate-600 sm:gap-5 sm:text-xs md:flex"
+          aria-label="Product links"
+        >
+          <Link
+            href={pricingHref}
+            className="shrink-0 text-slate-600 transition-colors hover:text-slate-900"
+          >
+            Pricing
+          </Link>
+          <Link href={partnersHref} className="shrink-0 text-slate-600 transition-colors hover:text-slate-900">
+            Partners
+          </Link>
+          <Link href={supportHref} className="shrink-0 text-slate-600 transition-colors hover:text-slate-900">
+            Support
+          </Link>
+          <Link href={privacyHref} className="shrink-0 text-slate-600 transition-colors hover:text-slate-900">
+            Privacy
+          </Link>
+        </nav>
+      ) : null}
 
       {showLaunchCta ? (
         <motion.a
