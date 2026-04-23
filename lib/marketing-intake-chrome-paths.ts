@@ -9,6 +9,7 @@ export const MARKETING_INTAKE_CHROME_PATHS: readonly string[] = [
   "/partners",
   "/pricing",
   "/contact",
+  "/terms",
   "/legal/terms",
 ] as const;
 

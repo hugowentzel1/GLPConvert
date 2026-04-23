@@ -33,19 +33,22 @@ export default function IntakeDemoQuoteStrip() {
           </blockquote>
 
           <figcaption className="w-full shrink-0">
-            <div
-              className="grid w-full min-h-[7.5rem] shrink-0 grid-rows-[auto_1fr_auto] border-t border-slate-100 pt-4 text-center sm:min-h-[7rem] sm:pt-5"
-            >
+            {/*
+              Equal vertical rhythm below the avatar and above the role line so the name sits
+              exactly centered between them regardless of how the role/org text wraps.
+              ─ avatar ─ (mt-3.5) ─ name ─ (mt-3.5) ─ role/org ─
+            */}
+            <div className="flex w-full shrink-0 flex-col items-center border-t border-slate-100 pt-4 text-center sm:pt-5">
               <div
                 className="flex shrink-0 justify-center"
                 style={{ ["--brand-primary" as string]: accent } as CSSProperties}
               >
                 <AvatarInitials name={q.name} size={40} variant="duo" />
               </div>
-              <div className="flex min-h-0 min-w-0 items-center justify-center px-1">
-                <p className="w-full text-sm font-semibold leading-tight text-slate-900">{q.name}</p>
-              </div>
-              <p className="w-full shrink-0 self-end text-[13px] leading-snug text-slate-600">
+              <p className="mt-3.5 w-full text-sm font-semibold leading-tight text-slate-900 sm:mt-4">
+                {q.name}
+              </p>
+              <p className="mt-3.5 w-full text-[13px] leading-snug text-slate-600 sm:mt-4">
                 {q.role} · {q.orgLine}
               </p>
             </div>

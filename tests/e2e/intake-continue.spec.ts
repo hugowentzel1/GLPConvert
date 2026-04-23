@@ -30,14 +30,13 @@ test("intake Continue shows preparing overlay then advances to step 2", async ({
   ).toBeVisible();
 });
 
-test("partners (branded demo) shows exclusive strip in header (no private-demo line on static subpages)", async ({
-  page,
-}) => {
+test("partners (branded demo) shows exclusive strip and private-demo disclaimer in header", async ({ page }) => {
   await page.goto(
     "/partners?demo=1&company=Sunspire%20Weight%20Clinic&brand=059669&handle=glpconvert",
-    { waitUntil: "domcontentloaded" },
+    { waitUntil: "load" },
   );
   await expect(page.locator("[data-intake-demo-banner-strip]")).toBeVisible({ timeout: 25000 });
   await expect(page.getByText(/Exclusive preview for/i).first()).toBeVisible();
-  await expect(page.locator("[data-intake-private-demo-disclaimer]")).toHaveCount(0);
+  await expect(page.locator("[data-intake-private-demo-disclaimer]")).toBeVisible();
+  await expect(page.getByText(/Private demo for/i).first()).toBeVisible();
 });

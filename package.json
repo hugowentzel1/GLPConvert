@@ -36,6 +36,7 @@
     "test:sidebar": "playwright test tests/sidebar-cta.spec.ts -g \"@sidebar\" --reporter=list",
     "test:all-browsers": "node scripts/test-all-browsers.js",
     "test:cross-browser": "playwright test tests/cross-browser-consistency.spec.ts --reporter=list",
+    "test:marketing-chrome": "playwright test tests/e2e/marketing-chrome-smoke.spec.ts --reporter=list",
     "test:unit": "vitest run",
     "test:watch": "vitest",
     "test:estimation": "vitest run tests/estimation.unit.test.ts tests/estimation.integration.test.ts && playwright test tests/estimation.e2e.spec.ts --reporter=list",

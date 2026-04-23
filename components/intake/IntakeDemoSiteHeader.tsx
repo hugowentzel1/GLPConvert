@@ -3,8 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
-import { isIntakeFlowPath } from "@/lib/marketing-intake-chrome-paths";
+import { useSearchParams } from "next/navigation";
 import { useBrandTakeover } from "@/src/brand/useBrandTakeover";
 import { useCountdown } from "@/src/demo/useCountdown";
 import { usePreviewQuota } from "@/src/demo/usePreviewQuota";
@@ -36,7 +35,6 @@ function safeCompanyLabel(raw: string | null): string {
  * the disclaimer line, not the top nav, matching that demo’s three links + CTA).
  */
 export default function IntakeDemoSiteHeader() {
-  const pathname = usePathname();
   const sp = useSearchParams();
   const b = useBrandTakeover();
   const countdown = useCountdown(b.expireDays || 7);
@@ -94,15 +92,14 @@ export default function IntakeDemoSiteHeader() {
   /** All pages that use this header (intake, partners, privacy, …) get the same preview strip in branded demo mode. */
   const showDemoStrip = b.enabled && !stripDismissed && marketing;
   const showLaunchCta = marketing;
-  /** "Private demo…" belongs on the live intake form surface, not on static marketing/legal subpages. */
-  const showPrivateDemoDisclaimer = b.enabled && marketing && isIntakeFlowPath(pathname);
+  const showPrivateDemoDisclaimer = b.enabled && marketing;
 
   const brandMainRow = (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style={brandVarStyle}>
-      <div className="flex h-20 min-w-0 items-center justify-center gap-4 md:justify-between">
+      <div className="flex min-h-20 w-full min-w-0 flex-col items-stretch justify-center gap-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:py-0 md:h-20">
         <Link
           href={homeHref}
-          className="flex min-w-0 items-center gap-4 transition-opacity hover:opacity-80 md:min-w-0 md:flex-1"
+          className="flex min-w-0 items-center gap-4 transition-opacity hover:opacity-80 sm:min-w-0 sm:flex-1 sm:justify-start"
         >
           {proxiedLogoUrl ? (
             <Image
@@ -143,7 +140,16 @@ export default function IntakeDemoSiteHeader() {
 
         {showLaunchCta ? (
           <nav
-            className="relative z-10 hidden shrink-0 items-center gap-5 text-sm md:flex lg:gap-6"
+            className="relative z-10 flex w-full min-w-0 shrink-0 flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm sm:w-auto sm:flex-nowrap sm:justify-end lg:gap-6"
+            // Inline layout so nav stays spaced even if utility CSS fails to load (raw adjacent
+            // <a> tags have no inter-element space and read as "PricingPartnersSupport").
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              columnGap: "1.25rem",
+              rowGap: "0.5rem",
+            }}
             aria-label="Product links"
           >
             <Link
@@ -152,18 +158,21 @@ export default function IntakeDemoSiteHeader() {
             >
               Pricing
             </Link>
+            {" "}
             <Link
               href={partnersHref}
               className="shrink-0 font-medium text-gray-600 transition-colors hover:text-[var(--brand-primary)]"
             >
               Partners
             </Link>
+            {" "}
             <Link
               href={supportHref}
               className="shrink-0 font-medium text-gray-600 transition-colors hover:text-[var(--brand-primary)]"
             >
               Support
             </Link>
+            {" "}
             <Link
               href={pricingHref}
               className="btn-primary inline-flex shrink-0 items-center justify-center px-5 py-2.5 text-sm font-semibold"
@@ -195,48 +204,7 @@ export default function IntakeDemoSiteHeader() {
             boxShadow: "0 1px 3px rgba(0, 0, 0, 0.04)",
           }}
         >
-          <div className="block px-4 py-3 md:hidden">
-            <div className="flex flex-col items-center gap-2.5 text-center">
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  padding: "5px 12px",
-                  background: "color-mix(in srgb, var(--brand-primary, #0f172a) 10%, white)",
-                  borderRadius: 6,
-                  fontSize: 13,
-                  fontWeight: 600,
-                  color: "var(--brand-primary, #0f172a)",
-                  letterSpacing: "-0.01em",
-                  lineHeight: "1.4",
-                }}
-              >
-                {b.brand} Preview
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 8,
-                  fontSize: 12,
-                  color: "#6B7280",
-                  fontWeight: 500,
-                  lineHeight: "1.5",
-                  flexWrap: "wrap",
-                }}
-              >
-                <span style={{ whiteSpace: "nowrap" }}>
-                  {remaining} {remaining === 1 ? "run" : "runs"} left
-                </span>
-                <span style={{ color: "#D1D5DB", fontSize: 10 }}>•</span>
-                <span style={{ fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
-                  Expires {countdown.days}d {countdown.hours}h
-                </span>
-              </div>
-            </div>
-          </div>
-
+          {/* Desktop strip renders first so `.first()` text selectors at md+ match the visible copy. */}
           <div
             className="hidden md:flex"
             style={{
@@ -348,6 +316,48 @@ export default function IntakeDemoSiteHeader() {
               >
                 ✕
               </button>
+            </div>
+          </div>
+
+          <div className="block px-4 py-3 md:hidden">
+            <div className="flex flex-col items-center gap-2.5 text-center">
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  padding: "5px 12px",
+                  background: "color-mix(in srgb, var(--brand-primary, #0f172a) 10%, white)",
+                  borderRadius: 6,
+                  fontSize: 13,
+                  fontWeight: 600,
+                  color: "var(--brand-primary, #0f172a)",
+                  letterSpacing: "-0.01em",
+                  lineHeight: "1.4",
+                }}
+              >
+                {b.brand} Preview
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 8,
+                  fontSize: 12,
+                  color: "#6B7280",
+                  fontWeight: 500,
+                  lineHeight: "1.5",
+                  flexWrap: "wrap",
+                }}
+              >
+                <span style={{ whiteSpace: "nowrap" }}>
+                  {remaining} {remaining === 1 ? "run" : "runs"} left
+                </span>
+                <span style={{ color: "#D1D5DB", fontSize: 10 }}>•</span>
+                <span style={{ fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
+                  Expires {countdown.days}d {countdown.hours}h
+                </span>
+              </div>
             </div>
           </div>
 

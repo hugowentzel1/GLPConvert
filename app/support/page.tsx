@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 import { useSearchParams } from 'next/navigation';
 import Container from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
@@ -97,6 +97,7 @@ export default function SupportPage() {
     <div
       className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 font-inter"
       data-brand
+      role="main"
     >
       <Section className="py-14 sm:py-20">
         <Container className="max-w-4xl">

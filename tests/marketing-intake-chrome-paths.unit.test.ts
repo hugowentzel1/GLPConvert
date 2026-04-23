@@ -6,6 +6,7 @@ describe("marketing-intake-chrome-paths", () => {
     expect(isMarketingIntakeChromePath("/partners")).toBe(true);
     expect(isMarketingIntakeChromePath("/pricing")).toBe(true);
     expect(isMarketingIntakeChromePath("/legal/terms")).toBe(true);
+    expect(isMarketingIntakeChromePath("/terms")).toBe(true);
     expect(isMarketingIntakeChromePath("/legal/privacy")).toBe(true);
     expect(isMarketingIntakeChromePath("/intake/extra")).toBe(true);
   });

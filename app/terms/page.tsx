@@ -1,12 +1,11 @@
 "use client";
 
-import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
-import { useSearchParams } from 'next/navigation';
-import Footer from '@/components/Footer';
-import { PRODUCT_NAME, SUPPORT_EMAIL } from '@/lib/product-identity';
+import { useSearchParams } from "next/navigation";
+import Footer from "@/components/Footer";
+import { buildBrandedDemoReturnHref } from "@/lib/glp-intake-nav-href";
+import { PRODUCT_NAME, SUPPORT_EMAIL } from "@/lib/product-identity";
 
 export default function TermsPage() {
-  const b = useBrandTakeover();
   const searchParams = useSearchParams();
 
   return (
@@ -15,7 +14,7 @@ export default function TermsPage() {
         {/* Back to Home Button */}
         <div className="mb-8">
           <a
-            href={searchParams?.get('demo') ? `/?${searchParams?.toString()}` : `/paid?${searchParams?.toString()}`}
+            href={buildBrandedDemoReturnHref(searchParams)}
             className="inline-flex items-center text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium"
           >
             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

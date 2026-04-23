@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useId, useMemo, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useState, type CSSProperties } from "react";
 import { motion } from "framer-motion";
 import {
   Area,
@@ -45,23 +45,60 @@ export default function GlpJourneyProgressChart({
 
   const domain = useMemo((): [number, number] => [0, 100], []);
 
+  const lastIndex = points.length - 1;
   const areaDot = useCallback(
     (dotProps: { cx?: number; cy?: number; index?: number }) => {
       const { cx, cy, index } = dotProps;
       if (cx == null || cy == null || index == null) return null;
+      const isLast = index === lastIndex;
+      if (!isLast) {
+        return (
+          <circle
+            key={`glp-d-${index}`}
+            cx={cx}
+            cy={cy}
+            r={3.5}
+            fill={brandFill}
+            stroke="#fff"
+            strokeWidth={2}
+          />
+        );
+      }
+      /**
+       * Final-checkpoint "expensive" halo: two concentric pulses + a crisp fill. Pure SVG
+       * `<animate>` so it works without JS and respects `prefers-reduced-motion` (the outer
+       * wrapper gates with `animate`, which follows the media query set in the effect below).
+       */
       return (
-        <circle
-          key={`glp-d-${index}`}
-          cx={cx}
-          cy={cy}
-          r={3.5}
-          fill={brandFill}
-          stroke="#fff"
-          strokeWidth={2}
-        />
+        <g key={`glp-d-${index}`}>
+          {animate ? (
+            <>
+              <circle cx={cx} cy={cy} r={6} fill={brandFill} opacity={0.18}>
+                <animate attributeName="r" values="6;16;6" dur="2.4s" repeatCount="indefinite" />
+                <animate
+                  attributeName="opacity"
+                  values="0.35;0;0.35"
+                  dur="2.4s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+              <circle cx={cx} cy={cy} r={4} fill={brandFill} opacity={0.28}>
+                <animate attributeName="r" values="4;10;4" dur="2.4s" begin="0.8s" repeatCount="indefinite" />
+                <animate
+                  attributeName="opacity"
+                  values="0.45;0;0.45"
+                  dur="2.4s"
+                  begin="0.8s"
+                  repeatCount="indefinite"
+                />
+              </circle>
+            </>
+          ) : null}
+          <circle cx={cx} cy={cy} r={5} fill={brandFill} stroke="#fff" strokeWidth={2.5} />
+        </g>
       );
     },
-    [brandFill],
+    [brandFill, lastIndex, animate],
   );
 
   if (points.length < 2) return null;
@@ -70,6 +107,20 @@ export default function GlpJourneyProgressChart({
   const last = points[points.length - 1];
   const first = points[0];
   const legendStartPair = first?.label === "Start" ? "Month 0" : (first?.label ?? "Month 0");
+
+  /**
+   * Exact match for the x-axis `<Label style={{ fontSize: 11, fill: "#64748b", fontWeight: 600 }}>`
+   * — HTML uses `color` instead of SVG `fill`, and we inherit the document font so the two
+   * captions visually read as the same pair of axis labels.
+   */
+  const axisCaptionStyle: CSSProperties = {
+    fontSize: 11,
+    color: "#64748b",
+    fontWeight: 600,
+    fontFamily: "inherit",
+    letterSpacing: 0,
+    lineHeight: 1.25,
+  };
 
   return (
     <motion.div
@@ -121,11 +172,41 @@ export default function GlpJourneyProgressChart({
         </div>
       ) : null}
       <div
-        className={`relative ${
-          compact ? "h-[200px] w-full sm:h-[220px]" : "h-[240px] w-full sm:h-[260px]"
-        }`}
-        style={{ minHeight: compact ? 200 : 240, minWidth: 0, isolation: "isolate" }}
+        className={`${compact ? "" : "flex min-w-0 flex-col gap-3 md:flex-row md:items-stretch md:gap-0"}`}
       >
+        {!compact ? (
+          <>
+            {/* Desktop vertical label — rendered first so `.first()` selectors at md+ hit the visible one.
+                `self-stretch` lets the label container fill the flex-row height so the vertical text
+                centers naturally alongside the plot area (between the graph and the outer card). */}
+            <div
+              className="hidden shrink-0 self-stretch flex-col items-center justify-center border-slate-200/80 pr-1 text-center md:flex md:w-[4.5rem] md:border-r md:pr-3 lg:w-[5rem]"
+            >
+              <p
+                className="text-center [writing-mode:vertical-rl] rotate-180"
+                style={axisCaptionStyle}
+                data-results-chart-y-label
+              >
+                Toward your stated goal
+              </p>
+            </div>
+            <div className="flex justify-center px-1 md:hidden">
+              <p
+                className="max-w-[14rem] text-center"
+                style={axisCaptionStyle}
+                data-results-chart-y-label
+              >
+                Toward your stated goal
+              </p>
+            </div>
+          </>
+        ) : null}
+        <div
+          className={`relative min-w-0 flex-1 ${
+            compact ? "h-[200px] w-full sm:h-[220px]" : "h-[240px] w-full sm:h-[260px]"
+          }`}
+          style={{ minHeight: compact ? 200 : 240, minWidth: 0, isolation: "isolate" }}
+        >
         <div
           className="pointer-events-none absolute inset-0 z-20 overflow-hidden rounded-xl sm:rounded-2xl [mask-image:linear-gradient(180deg,black_0%,black_88%,transparent_100%)]"
           aria-hidden
@@ -185,17 +266,8 @@ export default function GlpJourneyProgressChart({
                 axisLine={false}
                 tickLine={false}
                 tickFormatter={(v) => `${v}%`}
-                width={48}
-              >
-                <Label
-                  angle={-90}
-                  position="insideLeft"
-                  dx={-12}
-                  style={{ fontSize: 11, fill: "#64748b", fontWeight: 600, textAnchor: "middle" }}
-                >
-                  Toward your stated goal
-                </Label>
-              </YAxis>
+                width={40}
+              />
               <Tooltip
                 contentStyle={{
                   borderRadius: 12,
@@ -214,13 +286,13 @@ export default function GlpJourneyProgressChart({
                   type="monotone"
                   dataKey="progress"
                   stroke={brandFill}
-                  strokeWidth={7}
+                  strokeWidth={8}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeOpacity={0.1}
+                  strokeOpacity={0.12}
                   dot={false}
                   isAnimationActive={animate}
-                  animationDuration={animate ? 2000 : 0}
+                  animationDuration={animate ? 2400 : 0}
                   animationEasing="ease-in-out"
                   name="glow"
                 />
@@ -234,7 +306,7 @@ export default function GlpJourneyProgressChart({
                 strokeLinejoin="round"
                 fill={`url(#${gradId})`}
                 isAnimationActive={animate}
-                animationDuration={animate ? 2000 : 0}
+                animationDuration={animate ? 2400 : 0}
                 animationEasing="ease-in-out"
                 activeDot={{ r: 6, strokeWidth: 2, stroke: "#fff" }}
                 dot={areaDot as never}
@@ -242,6 +314,7 @@ export default function GlpJourneyProgressChart({
             </AreaChart>
           </ResponsiveContainer>
         </div>
+      </div>
       </div>
       {!compact ? (
         <p className="mt-4 border-t border-slate-100 px-1 text-center text-[11px] leading-relaxed text-slate-500 sm:px-2">

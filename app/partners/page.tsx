@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 import Link from 'next/link';
 import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import { useSearchParams } from 'next/navigation';
@@ -80,9 +80,10 @@ export default function PartnersPage() {
   };
 
   return (
-    <div 
+    <div
       className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 font-inter"
       data-brand
+      role="main"
     >
       <Section>
         <Container>

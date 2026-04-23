@@ -52,7 +52,7 @@ export default function PricingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 font-inter">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 font-inter" role="main">
       <Section>
         <Container>
           <div className="space-y-10">

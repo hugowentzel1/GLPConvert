@@ -305,7 +305,6 @@ export default function GlpSimulationFunnel() {
   const [nextStep, setNextStep] = useState<"book" | "callback" | "save_only">("book");
   const [resolvedBookingUrl, setResolvedBookingUrl] = useState<string | null>(null);
   const [building, setBuilding] = useState(false);
-  const buildingTimerRef = useRef<number | null>(null);
 
   const output = useMemo(() => {
     const base = runSimulation(input);
@@ -316,6 +315,22 @@ export default function GlpSimulationFunnel() {
     }
     return base;
   }, [input, publicCfg?.pricingMonthlyLow, publicCfg?.pricingMonthlyHigh]);
+
+  const inputRef = useRef(input);
+  const outputRef = useRef(output);
+  inputRef.current = input;
+  outputRef.current = output;
+
+  /** Step 1 "building" → step 2 delay; must not live in a useEffect (deps can clear the timeout). */
+  const step1To2TimerRef = useRef<ReturnType<typeof window.setTimeout> | null>(null);
+  useEffect(() => {
+    return () => {
+      if (step1To2TimerRef.current != null) {
+        window.clearTimeout(step1To2TimerRef.current);
+        step1To2TimerRef.current = null;
+      }
+    };
+  }, []);
 
   const milestoneItems = useMemo(
     () =>
@@ -367,19 +382,11 @@ export default function GlpSimulationFunnel() {
     };
   }, [tenantSlug, bookingUrlParam]);
 
-  const transitionMs = Math.min(
-    30_000,
-    Math.max(800, Number(sp?.get("transition_ms")) || 1400) || 800,
+  const transitionParam = sp?.get("transition_ms") ?? null;
+  const transitionMs = useMemo(
+    () => Math.min(30_000, Math.max(800, (Number(transitionParam) || 1400) || 800)),
+    [transitionParam],
   );
-
-  useEffect(() => {
-    return () => {
-      if (buildingTimerRef.current != null) {
-        window.clearTimeout(buildingTimerRef.current);
-        buildingTimerRef.current = null;
-      }
-    };
-  }, []);
 
   const logEvent = useCallback(async (type: string, metadata: Record<string, unknown>) => {
     try {
@@ -393,11 +400,16 @@ export default function GlpSimulationFunnel() {
     }
   }, [tenantSlug]);
 
+  const logEventRef = useRef(logEvent);
+  const isDemoModeRef = useRef(isDemoMode);
+  logEventRef.current = logEvent;
+  isDemoModeRef.current = isDemoMode;
+
   const goBack = useCallback(() => {
     if (building) {
-      if (buildingTimerRef.current != null) {
-        window.clearTimeout(buildingTimerRef.current);
-        buildingTimerRef.current = null;
+      if (step1To2TimerRef.current != null) {
+        window.clearTimeout(step1To2TimerRef.current);
+        step1To2TimerRef.current = null;
       }
       setBuilding(false);
       return;
@@ -412,16 +424,21 @@ export default function GlpSimulationFunnel() {
   }, [building]);
 
   function onContinueFromInput() {
+    if (building) return;
     void logEvent("simulation_started", { input, demo: isDemoMode });
-    if (buildingTimerRef.current != null) {
-      window.clearTimeout(buildingTimerRef.current);
-      buildingTimerRef.current = null;
+    if (step1To2TimerRef.current != null) {
+      window.clearTimeout(step1To2TimerRef.current);
     }
     setBuilding(true);
-    buildingTimerRef.current = window.setTimeout(() => {
-      buildingTimerRef.current = null;
+    const ms = transitionMs;
+    step1To2TimerRef.current = window.setTimeout(() => {
+      step1To2TimerRef.current = null;
       setBuilding(false);
-      void logEvent("simulation_completed", { input, output, demo: isDemoMode });
+      void logEventRef.current("simulation_completed", {
+        input: inputRef.current,
+        output: outputRef.current,
+        demo: isDemoModeRef.current,
+      });
       setStep(2);
       requestAnimationFrame(() => {
         document.querySelector<HTMLElement>("[data-flow-step=\"2\"]")?.scrollIntoView({
@@ -429,7 +446,7 @@ export default function GlpSimulationFunnel() {
           block: "start",
         });
       });
-    }, transitionMs);
+    }, ms);
   }
 
   function readinessComplete(): boolean {
@@ -695,8 +712,12 @@ export default function GlpSimulationFunnel() {
           <div className="mt-8 w-full border-t border-slate-100 pt-8">
             <button
               type="button"
-              onClick={onContinueFromInput}
-              className={`${glpIntakeUi.primaryBtn} w-full`}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onContinueFromInput();
+              }}
+              className={`${glpIntakeUi.primaryBtn} w-full ${building ? "pointer-events-none opacity-90" : ""}`}
               style={{ backgroundColor: brandFill }}
               data-intake-continue
             >
