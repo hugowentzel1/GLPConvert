@@ -23,7 +23,7 @@ export default function IntakeDemoQuoteStrip() {
       {INTAKE_DEMO_HERO_QUOTES.map((q) => (
         <article
           key={q.name}
-          className={`flex h-full min-h-0 flex-col ${glpIntakeUi.intakeHeroShell} p-5 sm:p-6`}
+          className={`flex h-full min-h-0 flex-col space-y-4 ${glpIntakeUi.intakeHeroShell} p-5 sm:space-y-5 sm:p-6`}
           data-testid="intake-demo-testimonial-card"
         >
           <blockquote className="flex min-h-0 flex-1 flex-col justify-start border-l-2 border-slate-200 pl-4 text-left">
@@ -32,17 +32,23 @@ export default function IntakeDemoQuoteStrip() {
             </p>
           </blockquote>
 
-          <figcaption className="mt-5 flex w-full shrink-0 flex-col items-center gap-2.5 border-t border-slate-100 pt-5 text-center">
+          <figcaption className="w-full shrink-0">
             <div
-              className="flex justify-center"
-              style={{ ["--brand-primary" as string]: accent } as CSSProperties}
+              className="grid w-full min-h-[7.5rem] shrink-0 grid-rows-[auto_1fr_auto] border-t border-slate-100 pt-4 text-center sm:min-h-[7rem] sm:pt-5"
             >
-              <AvatarInitials name={q.name} size={40} variant="duo" />
+              <div
+                className="flex shrink-0 justify-center"
+                style={{ ["--brand-primary" as string]: accent } as CSSProperties}
+              >
+                <AvatarInitials name={q.name} size={40} variant="duo" />
+              </div>
+              <div className="flex min-h-0 min-w-0 items-center justify-center px-1">
+                <p className="w-full text-sm font-semibold leading-tight text-slate-900">{q.name}</p>
+              </div>
+              <p className="w-full shrink-0 self-end text-[13px] leading-snug text-slate-600">
+                {q.role} · {q.orgLine}
+              </p>
             </div>
-            <p className="w-full text-sm font-semibold leading-tight text-slate-900">{q.name}</p>
-            <p className="w-full translate-y-0.5 text-[13px] leading-snug text-slate-600">
-              {q.role} · {q.orgLine}
-            </p>
           </figcaption>
         </article>
       ))}

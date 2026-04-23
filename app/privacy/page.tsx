@@ -208,28 +208,113 @@ function PrivacyInner() {
         personal information from children. If you believe we have, contact us to delete.
       </p>
 
-      <h2>11. Reference sources (educational)</h2>
+      <h2>11. Regulatory, industry, and vendor context (educational)</h2>
       <p>
-        U.S. health privacy:{" "}
-        <a
-          href="https://www.hhs.gov/hipaa/index.html"
-          className="text-slate-900 underline decoration-slate-300"
-          target="_blank"
-          rel="noreferrer"
-        >
-          HHS HIPAA
-        </a>
-        . U.S. health marketing:{" "}
-        <a
-          href="https://www.ftc.gov/business-guidance/resources/health-products-compliance"
-          className="text-slate-900 underline decoration-slate-300"
-          target="_blank"
-          rel="noreferrer"
-        >
-          FTC health-products materials
-        </a>
-        . These are general references, not a substitute for your counsel.
+        {PRODUCT_NAME} is used in regulated health-adjacent workflows. We publish this section so clinics, compliance
+        teams, and patients can place our processing in context. It is <strong>not</strong> legal advice and does not
+        change who is responsible for HIPAA, state privacy, or advertising law in your deployment.
       </p>
+      <h3>11.1 United States — health and consumer protection</h3>
+      <ul>
+        <li>
+          <strong>HIPAA</strong> — the U.S. Department of Health and Human Services publishes the{" "}
+          <a
+            href="https://www.hhs.gov/hipaa/index.html"
+            className="text-slate-900 underline decoration-slate-300"
+            target="_blank"
+            rel="noreferrer"
+          >
+            HIPAA hub
+          </a>{" "}
+          (Security Rule, Privacy Rule, Breach Notification). Business associate relationships are documented in a BAA
+          when we process PHI on behalf of a covered entity or business associate customer.
+        </li>
+        <li>
+          <strong>FTC</strong> — the{" "}
+          <a
+            href="https://www.ftc.gov/business-guidance/resources/health-products-compliance"
+            className="text-slate-900 underline decoration-slate-300"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Health products compliance business guidance
+          </a>{" "}
+          summarizes truth-in-advertising expectations for health claims. Your marketing and clinical teams remain
+          responsible for substantiation.
+        </li>
+        <li>
+          <strong>FDA</strong> — drug promotion is overseen by the{" "}
+          <a
+            href="https://www.fda.gov/drugs"
+            className="text-slate-900 underline decoration-slate-300"
+            target="_blank"
+            rel="noreferrer"
+          >
+            FDA
+          </a>
+          ; {PRODUCT_NAME} does not promote specific drug products in software unless you configure copy that you have
+          cleared.
+        </li>
+      </ul>
+      <h3>11.2 European Union and United Kingdom</h3>
+      <p>
+        Where GDPR or UK GDPR applies, we support data processing agreements, records of processing, and appropriate
+        transfer mechanisms. The{" "}
+        <a
+          href="https://commission.europa.eu/law/law-topic/data-protection_en"
+          className="text-slate-900 underline decoration-slate-300"
+          target="_blank"
+          rel="noreferrer"
+        >
+          European Commission data protection portal
+        </a>{" "}
+        and the{" "}
+        <a href="https://ico.org.uk/" className="text-slate-900 underline decoration-slate-300" target="_blank" rel="noreferrer">
+          UK ICO
+        </a>{" "}
+        publish guidance for controllers and processors.
+      </p>
+      <h3>11.3 Payments, infrastructure, and common B2B SaaS practices</h3>
+      <ul>
+        <li>
+          <strong>Stripe</strong> — subscription checkout and card data are typically handled by Stripe; see{" "}
+          <a
+            href="https://stripe.com/privacy"
+            className="text-slate-900 underline decoration-slate-300"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Stripe&apos;s privacy policy
+          </a>{" "}
+          and{" "}
+          <a
+            href="https://stripe.com/legal/dpa"
+            className="text-slate-900 underline decoration-slate-300"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Data Processing Agreement
+          </a>{" "}
+          for how they process payment data as a processor.
+        </li>
+        <li>
+          <strong>Security baselines</strong> — many enterprises ask vendors to map controls to{" "}
+          <a
+            href="https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final"
+            className="text-slate-900 underline decoration-slate-300"
+            target="_blank"
+            rel="noreferrer"
+          >
+            NIST SP 800-53
+          </a>{" "}
+          or pursue SOC 2 attestation; we implement defense-in-depth regardless of public marketing of a specific badge.
+        </li>
+        <li>
+          <strong>Comparable products</strong> — buyers often evaluate scheduling and form tools (e.g. Calendly, Typeform,
+          HubSpot forms) alongside specialized medical conversion layers. {PRODUCT_NAME} is purpose-built for
+          pre-consult education and handoff with clinic-owned branding and booking destinations you control.
+        </li>
+      </ul>
 
       <h2>12. Contact</h2>
       <p>

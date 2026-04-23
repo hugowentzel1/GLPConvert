@@ -187,12 +187,13 @@ function IntakePageHeaderInner() {
                 />
               </div>
 
-              <div className="mt-5 w-full border-t border-slate-100 pt-5 text-center sm:mt-6 sm:pt-6">
+              <div className="mt-5 w-full space-y-4 border-t border-slate-100 pt-5 text-center sm:mt-6 sm:pt-6">
                 <h1 className="text-pretty text-lg font-bold leading-snug tracking-tight text-slate-900 sm:text-xl">
-                  From ad to booked consult—less drop-off
+                  From paid click to your book link—less leakage, more consults
                 </h1>
-                <p className="mx-auto mt-2.5 max-w-md text-sm leading-relaxed text-slate-600 sm:mt-3">
-                  Short pre-flow, then your book link. You keep the margin and the relationship. Not medical advice.
+                <p className="mx-auto max-w-md text-sm leading-relaxed text-slate-600">
+                  Short branded path, then your schedule link. You keep margin, trust, and the relationship. Not medical
+                  advice.
                 </p>
               </div>
             </>

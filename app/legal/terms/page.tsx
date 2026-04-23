@@ -150,6 +150,62 @@ function TermsContent() {
         <br />
         {PARENT_COMPANY_LEGAL_NAME} · 1700 Northside Drive Suite A7 #5164, Atlanta, GA 30318, USA
       </p>
+
+      <div className="not-prose mt-12 border-t border-slate-200 pt-10">
+        <h2 className="text-base font-semibold text-slate-900">Appendix — Further reading (non-contractual)</h2>
+        <p className="mt-3 text-sm leading-relaxed text-slate-600">
+          Enterprise buyers of B2B SaaS often benchmark agreements against industry practice, security publications, and
+          commercial law sources. The following links do <strong>not</strong> amend these Terms; they are provided for
+          transparency and due diligence only.
+        </p>
+        <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-slate-600">
+          <li>
+            <a
+              href="https://www.law.cornell.edu/wex/contracts"
+              className="text-slate-800 underline decoration-slate-300"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Wex — Contracts (Legal Information Institute / Cornell)
+            </a>{" "}
+            — general U.S. contract concepts.
+          </li>
+          <li>
+            <a
+              href="https://www.ftc.gov/business-guidance/privacy-security"
+              className="text-slate-800 underline decoration-slate-300"
+              target="_blank"
+              rel="noreferrer"
+            >
+              FTC — Privacy &amp; security
+            </a>{" "}
+            — U.S. consumer-facing expectations for data practices.
+          </li>
+          <li>
+            <a
+              href="https://stripe.com/legal/ssa"
+              className="text-slate-800 underline decoration-slate-300"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Stripe Services Agreement
+            </a>{" "}
+            — example of how payment processors structure B2B SaaS + payments.
+          </li>
+          <li>
+            <a
+              href="https://www.cloudflare.com/trust-hub/"
+              className="text-slate-800 underline decoration-slate-300"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Cloudflare Trust Hub
+            </a>{" "}
+            — example of how infrastructure vendors publish compliance artifacts.
+          </li>
+        </ul>
+      </div>
+
       <p className="text-sm text-slate-500 not-prose">
         <em>Summary for readability only. This is not legal advice; have counsel review for your use case.</em>
       </p>

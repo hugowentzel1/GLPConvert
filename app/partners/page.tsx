@@ -10,10 +10,10 @@ import { Section } from '@/components/layout/Section';
 import { Stack } from '@/components/layout/Stack';
 import { Card } from '@/components/ui/Card';
 import EarningsMini from '@/components/partners/EarningsMini';
-import Footer from '@/components/Footer';
+import BrandedDemoOrDefaultFooter from '@/components/intake/BrandedDemoOrDefaultFooter';
 import { Button } from '@/components/ui/Button';
 import { SUPPORT_EMAIL, PRODUCT_NAME } from '@/lib/product-identity';
-import { buildAppHomeHref, buildMarketingPathHref } from '@/lib/glp-intake-nav-href';
+import { buildBrandedDemoReturnHref, buildMarketingPathHref } from '@/lib/glp-intake-nav-href';
 
 export default function PartnersPage() {
   const b = useBrandTakeover();
@@ -90,7 +90,7 @@ export default function PartnersPage() {
             {/* Back Button */}
             <div className="mb-8">
               <Link
-                href={buildAppHomeHref(searchParams)}
+                href={buildBrandedDemoReturnHref(searchParams)}
                 className="inline-flex items-center text-neutral-500 hover:text-neutral-900 transition-colors font-medium"
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
@@ -357,7 +357,7 @@ export default function PartnersPage() {
         </Container>
       </Section>
 
-      <Footer />
+      <BrandedDemoOrDefaultFooter />
     </div>
   );
 }

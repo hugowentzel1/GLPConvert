@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+import { isIntakeFlowPath } from "@/lib/marketing-intake-chrome-paths";
 import { useBrandTakeover } from "@/src/brand/useBrandTakeover";
 import { useCountdown } from "@/src/demo/useCountdown";
 import { usePreviewQuota } from "@/src/demo/usePreviewQuota";
@@ -12,7 +13,12 @@ import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
 import { LAUNCH_BRANDED_CTA_LABEL } from "@/lib/product-identity";
 import { INTAKE_DEMO_BANNER_DISMISS_EVENT, INTAKE_DEMO_BANNER_DISMISS_KEY } from "@/lib/intake-demo-banner-dismiss";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
-import { buildAppHomeHref, buildIntakePricingHref, buildMarketingPathHref } from "@/lib/glp-intake-nav-href";
+import {
+  buildAppHomeHref,
+  buildBrandedDemoReturnHref,
+  buildIntakePricingHref,
+  buildMarketingPathHref,
+} from "@/lib/glp-intake-nav-href";
 import { getProxiedLogoUrl } from "@/lib/logoProxy";
 
 function safeCompanyLabel(raw: string | null): string {
@@ -30,6 +36,7 @@ function safeCompanyLabel(raw: string | null): string {
  * the disclaimer line, not the top nav, matching that demo’s three links + CTA).
  */
 export default function IntakeDemoSiteHeader() {
+  const pathname = usePathname();
   const sp = useSearchParams();
   const b = useBrandTakeover();
   const countdown = useCountdown(b.expireDays || 7);
@@ -77,21 +84,25 @@ export default function IntakeDemoSiteHeader() {
     [accent],
   );
 
-  const homeHref = useMemo(() => buildAppHomeHref(sp), [sp]);
+  const homeHref = useMemo(
+    () => (marketing ? buildBrandedDemoReturnHref(sp) : buildAppHomeHref(sp)),
+    [sp, marketing],
+  );
   const pricingHref = useMemo(() => buildIntakePricingHref(sp, companyLabel), [sp, companyLabel]);
   const partnersHref = useMemo(() => buildMarketingPathHref(sp, "/partners"), [sp]);
   const supportHref = useMemo(() => buildMarketingPathHref(sp, "/support"), [sp]);
-  const privacyHref = useMemo(() => buildMarketingPathHref(sp, "/privacy"), [sp]);
-
+  /** All pages that use this header (intake, partners, privacy, …) get the same preview strip in branded demo mode. */
   const showDemoStrip = b.enabled && !stripDismissed && marketing;
   const showLaunchCta = marketing;
+  /** "Private demo…" belongs on the live intake form surface, not on static marketing/legal subpages. */
+  const showPrivateDemoDisclaimer = b.enabled && marketing && isIntakeFlowPath(pathname);
 
   const brandMainRow = (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" style={brandVarStyle}>
-      <div className="flex justify-center md:justify-between items-center h-20">
+      <div className="flex h-20 min-w-0 items-center justify-center gap-4 md:justify-between">
         <Link
           href={homeHref}
-          className="flex items-center space-x-4 hover:opacity-80 transition-opacity min-w-0"
+          className="flex min-w-0 items-center gap-4 transition-opacity hover:opacity-80 md:min-w-0 md:flex-1"
         >
           {proxiedLogoUrl ? (
             <Image
@@ -131,28 +142,31 @@ export default function IntakeDemoSiteHeader() {
         </Link>
 
         {showLaunchCta ? (
-          <nav className="hidden md:flex items-center space-x-12" aria-label="Product links">
+          <nav
+            className="relative z-10 hidden shrink-0 items-center gap-5 text-sm md:flex lg:gap-6"
+            aria-label="Product links"
+          >
             <Link
               href={pricingHref}
-              className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium"
+              className="shrink-0 font-medium text-gray-600 transition-colors hover:text-[var(--brand-primary)]"
             >
               Pricing
             </Link>
             <Link
               href={partnersHref}
-              className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium"
+              className="shrink-0 font-medium text-gray-600 transition-colors hover:text-[var(--brand-primary)]"
             >
               Partners
             </Link>
             <Link
               href={supportHref}
-              className="text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium"
+              className="shrink-0 font-medium text-gray-600 transition-colors hover:text-[var(--brand-primary)]"
             >
               Support
             </Link>
             <Link
               href={pricingHref}
-              className="btn-primary ml-12 inline-flex items-center justify-center text-sm font-semibold"
+              className="btn-primary inline-flex shrink-0 items-center justify-center px-5 py-2.5 text-sm font-semibold"
               data-intake-nav-activate
             >
               <span className="mr-3" aria-hidden>
@@ -339,36 +353,26 @@ export default function IntakeDemoSiteHeader() {
 
           <div className="border-t border-gray-200/30 bg-white">{brandMainRow}</div>
 
-          <div className="border-t border-gray-100 bg-gray-50/50" data-intake-private-demo-disclaimer>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
-              <p className="text-xs text-gray-500 text-center">
-                Private demo for <span className="text-gray-600 font-medium">{b.brand || companyLabel}</span>. Not
-                affiliated.{" "}
-                <Link
-                  href={privacyHref}
-                  className="font-medium text-gray-600 underline underline-offset-2 transition-colors hover:text-[var(--brand-primary)]"
-                >
-                  Privacy
-                </Link>
-              </p>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div>
-          {brandMainRow}
-          {b.enabled && marketing && stripDismissed ? (
+          {showPrivateDemoDisclaimer ? (
             <div className="border-t border-gray-100 bg-gray-50/50" data-intake-private-demo-disclaimer>
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
                 <p className="text-xs text-gray-500 text-center">
                   Private demo for <span className="text-gray-600 font-medium">{b.brand || companyLabel}</span>. Not
-                  affiliated.{" "}
-                  <Link
-                    href={privacyHref}
-                    className="font-medium text-gray-600 underline underline-offset-2 transition-colors hover:text-[var(--brand-primary)]"
-                  >
-                    Privacy
-                  </Link>
+                  affiliated.
+                </p>
+              </div>
+            </div>
+          ) : null}
+        </div>
+      ) : (
+        <div>
+          {brandMainRow}
+          {showPrivateDemoDisclaimer ? (
+            <div className="border-t border-gray-100 bg-gray-50/50" data-intake-private-demo-disclaimer>
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
+                <p className="text-xs text-gray-500 text-center">
+                  Private demo for <span className="text-gray-600 font-medium">{b.brand || companyLabel}</span>. Not
+                  affiliated.
                 </p>
               </div>
             </div>

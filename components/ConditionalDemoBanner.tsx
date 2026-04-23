@@ -3,6 +3,7 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import { isDemoFromSearch } from "@/lib/isDemo";
+import { isMarketingIntakeChromePath } from "@/lib/marketing-intake-chrome-paths";
 
 const DemoBanner = dynamic(() => import("@/src/demo/DemoChrome").then(mod => ({ default: mod.DemoBanner })), {
   ssr: false,
@@ -36,8 +37,8 @@ export default function ConditionalDemoBanner() {
   // Customer dashboard / activation (post-pay): no "Activate on your domain" etc.
   if (pathname === '/c' || pathname?.startsWith('/c/')) return null;
 
-  // GLP intake uses its own demo disclaimer + header (avoid duplicate chrome)
-  if (pathname === '/intake' || pathname?.startsWith('/intake/')) return null;
+  // GLP intake and marketing subpages (partners, pricing, …) use `IntakeDemoSiteHeader` — no global strip
+  if (isMarketingIntakeChromePath(pathname)) return null;
 
   // Don't show banner on legal/regulatory pages
   if (noBannerPages.some(page => pathname?.startsWith(page))) {

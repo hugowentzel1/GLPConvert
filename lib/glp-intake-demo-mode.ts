@@ -1,6 +1,10 @@
 export const INTAKE_DEMO_EXAMPLE_HREF =
   "http://localhost:3000/intake?company=Sunspire+Weight+Clinic&demo=1&logo=https%3A%2F%2Fexample.com%2Flogo.png" as const;
 
+/** Green brand tint + logo via Clearbit (`domain=`) — same-origin path; prefix your origin for sharing. */
+export const INTAKE_DEMO_GREEN_LOGO_PATH =
+  "/intake?demo=1&company=Verdant%20Clinic&domain=wholefoodsmarket.com&brandColor=%23047857" as const;
+
 type IntakePageSearchParams = Readonly<
   Record<string, string | string[] | undefined> | undefined
 >;

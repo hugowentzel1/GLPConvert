@@ -148,8 +148,11 @@ export default function SharedNavigation() {
   return (
     <header className="bg-white border-b border-gray-200/30 shadow-sm" data-testid="main-site-nav">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-center md:justify-between items-center h-20">
-          <Link href={homeHref} className="flex items-center space-x-4 hover:opacity-80 transition-opacity">
+        <div className="flex h-20 min-w-0 items-center justify-center gap-4 md:justify-between">
+          <Link
+            href={homeHref}
+            className="flex min-w-0 items-center gap-4 transition-opacity hover:opacity-80 md:min-w-0 md:flex-1"
+          >
             {b.enabled && proxiedLogoUrl ? (
               <Image
                 src={proxiedLogoUrl}
@@ -175,8 +178,8 @@ export default function SharedNavigation() {
                 </span>
               </div>
             )}
-            <div>
-              <h1 className="text-2xl font-black text-[var(--brand-primary)]">
+            <div className="min-w-0 text-left">
+              <h1 className="truncate text-2xl font-black text-[var(--brand-primary)]">
                 {navTitle}
               </h1>
               <p className="text-xs font-semibold text-gray-500 tracking-widest uppercase">
@@ -186,32 +189,32 @@ export default function SharedNavigation() {
           </Link>
           
           <nav
-            className="hidden md:flex items-center text-sm"
+            className="hidden shrink-0 text-sm md:flex"
             aria-label={isDemo ? "Demo navigation" : "Site links"}
           >
             {isDemo ? (
-              <div className="flex items-center space-x-12">
+              <div className="flex items-center gap-5 lg:gap-6">
                 <Link
                   href={toPath("/pricing")}
-                  className="font-medium text-gray-600 transition-colors hover:text-[var(--brand-primary)]"
+                  className="shrink-0 font-medium text-gray-600 transition-colors hover:text-[var(--brand-primary)]"
                 >
                   Pricing
                 </Link>
                 <Link
                   href={toPath("/partners")}
-                  className="font-medium text-gray-600 transition-colors hover:text-[var(--brand-primary)]"
+                  className="shrink-0 font-medium text-gray-600 transition-colors hover:text-[var(--brand-primary)]"
                 >
                   Partners
                 </Link>
                 <Link
                   href={toPath("/support")}
-                  className="font-medium text-gray-600 transition-colors hover:text-[var(--brand-primary)]"
+                  className="shrink-0 font-medium text-gray-600 transition-colors hover:text-[var(--brand-primary)]"
                 >
                   Support
                 </Link>
                 <Link
                   href={pricingHref}
-                  className="btn-primary ml-12 inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold"
+                  className="btn-primary inline-flex shrink-0 items-center justify-center px-5 py-2.5 text-sm font-semibold"
                   data-demo-nav-activate
                   data-intake-nav-activate
                 >

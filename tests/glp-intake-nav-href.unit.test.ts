@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   buildAppHomeHref,
+  buildBrandedDemoReturnHref,
   buildIntakePricingHref,
   buildIntakeSelfHref,
   buildMarketingHomeHref,
@@ -17,6 +18,19 @@ describe("glp-intake-nav-href", () => {
     expect(buildAppHomeHref(new URLSearchParams("demo=1&x=2"))).toBe("/?demo=1&x=2");
     expect(buildAppHomeHref(new URLSearchParams("token=ab"))).toBe("/paid?token=ab");
     expect(buildAppHomeHref(new URLSearchParams())).toBe("/paid");
+  });
+
+  it("buildBrandedDemoReturnHref sends branded query back to /intake", () => {
+    const branded = new URLSearchParams("company=Acme%20Clinic&demo=1");
+    expect(buildBrandedDemoReturnHref(branded)).toBe(`/intake?${branded.toString()}`);
+    const companyOnly = new URLSearchParams("company=Sunspire");
+    expect(buildBrandedDemoReturnHref(companyOnly)).toBe("/intake?company=Sunspire");
+  });
+
+  it("buildBrandedDemoReturnHref paid-style falls back to buildAppHomeHref", () => {
+    expect(buildBrandedDemoReturnHref(new URLSearchParams("handle=tenant&token=1"))).toBe(
+      "/paid?handle=tenant&token=1",
+    );
   });
 
   it("buildIntakePricingHref sets company and keeps params", () => {

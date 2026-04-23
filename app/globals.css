@@ -200,6 +200,44 @@ a.intake-nav-activate:hover::before {
   }
 }
 
+/* Subtle “sparkle” speculars on step-2 journey chart (overlay; respects reduced motion) */
+@media (prefers-reduced-motion: no-preference) {
+  .glp-intake-chart-sparkle-layer {
+    mix-blend-mode: soft-light;
+    background-image: radial-gradient(
+        circle 18% at 10% 32%,
+        rgba(255, 255, 255, 0.45) 0%,
+        transparent 65%
+      ),
+      radial-gradient(circle 12% at 86% 48%, rgba(255, 255, 255, 0.35) 0%, transparent 60%),
+      radial-gradient(circle 14% at 44% 82%, rgba(255, 255, 255, 0.3) 0%, transparent 58%);
+    animation: glp-intake-sparkle-twinkle 7.5s ease-in-out infinite;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glp-intake-chart-sparkle-layer {
+    opacity: 0.12;
+    animation: none;
+  }
+}
+@keyframes glp-intake-sparkle-twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    filter: blur(0);
+  }
+  40% {
+    opacity: 0.5;
+  }
+  55% {
+    opacity: 0.35;
+  }
+  70% {
+    opacity: 0.55;
+    filter: blur(0.2px);
+  }
+}
+
 /* Fast Check: Disable transitions/animations for stability */
 [data-testid="footer"] * { 
   transition: none !important; 

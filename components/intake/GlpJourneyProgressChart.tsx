@@ -132,6 +132,12 @@ export default function GlpJourneyProgressChart({
         >
           <div className="glp-intake-chart-lux-shimmer h-full w-full" />
         </div>
+        {!compact ? (
+          <div
+            className="glp-intake-chart-sparkle-layer pointer-events-none absolute inset-0 z-[18] overflow-hidden rounded-xl sm:rounded-2xl [mask-image:linear-gradient(180deg,black_0%,black_90%,transparent_100%)]"
+            aria-hidden
+          />
+        ) : null}
         <div className="relative z-10 h-full w-full rounded-xl sm:rounded-2xl">
           <ResponsiveContainer
             className="relative h-full w-full"
@@ -184,6 +190,7 @@ export default function GlpJourneyProgressChart({
                 <Label
                   angle={-90}
                   position="insideLeft"
+                  dx={-12}
                   style={{ fontSize: 11, fill: "#64748b", fontWeight: 600, textAnchor: "middle" }}
                 >
                   Toward your stated goal

@@ -2,6 +2,8 @@
  * Intake / marketing — preserve full query (UTMs, branding, demo) on navigation.
  */
 
+import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
+
 /** Works with `useSearchParams()` (ReadonlyURLSearchParams) and `URLSearchParams`. */
 type SearchLike = { toString(): string; get(name: string): string | null } | null;
 
@@ -19,6 +21,20 @@ export function buildAppHomeHref(sp: SearchLike): string {
     return q ? `/?${q}` : "/";
   }
   return q ? `/paid?${q}` : "/paid";
+}
+
+/**
+ * “Back to home” for legal/marketing: branded cold-email / demo flow returns to the same intake URL with
+ * full query; otherwise `buildAppHomeHref`.
+ */
+export function buildBrandedDemoReturnHref(sp: SearchLike): string {
+  if (!sp) return "/";
+  const q = sp.toString();
+  const usp = new URLSearchParams(sp.toString());
+  if (isIntakeBrandedMarketingMode(usp)) {
+    return q ? `/intake?${q}` : "/intake";
+  }
+  return buildAppHomeHref(sp);
 }
 
 export function buildIntakeSelfHref(sp: SearchLike): string {

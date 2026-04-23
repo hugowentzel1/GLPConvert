@@ -385,7 +385,7 @@ export default function GlpSimulationFunnel() {
     try {
       await fetch("/api/events/log", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content": "application/json" },
         body: JSON.stringify({ companyHandle: tenantSlug, type, metadata }),
       });
     } catch {
@@ -423,6 +423,12 @@ export default function GlpSimulationFunnel() {
       setBuilding(false);
       void logEvent("simulation_completed", { input, output, demo: isDemoMode });
       setStep(2);
+      requestAnimationFrame(() => {
+        document.querySelector<HTMLElement>("[data-flow-step=\"2\"]")?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      });
     }, transitionMs);
   }
 
@@ -540,7 +546,6 @@ export default function GlpSimulationFunnel() {
               className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-6 rounded-2xl bg-gradient-to-b from-white via-white to-slate-50/95 px-6 py-12 backdrop-blur-[4px]"
               data-building-overlay
             >
-              {/* Same spinner pattern as report loading (`app/report/page.tsx` solar report): brand on alternating quadrants */}
               <div
                 className="mx-auto h-16 w-16 shrink-0 animate-spin rounded-full border-4"
                 style={{ borderColor: `${brandFill} transparent ${brandFill} transparent` }}
@@ -693,6 +698,7 @@ export default function GlpSimulationFunnel() {
               onClick={onContinueFromInput}
               className={`${glpIntakeUi.primaryBtn} w-full`}
               style={{ backgroundColor: brandFill }}
+              data-intake-continue
             >
               Continue
             </button>

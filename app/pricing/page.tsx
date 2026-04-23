@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import Footer from '@/components/Footer';
+import BrandedDemoOrDefaultFooter from '@/components/intake/BrandedDemoOrDefaultFooter';
 import Container from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { Card } from '@/components/ui/Card';
 import { PRODUCT_NAME } from '@/lib/product-identity';
-import { buildAppHomeHref, buildMarketingPathHref } from '@/lib/glp-intake-nav-href';
+import { buildBrandedDemoReturnHref, buildMarketingPathHref } from '@/lib/glp-intake-nav-href';
 import { buildStripeCheckoutClientPayload } from '@/lib/stripe-checkout-client';
 
 export default function PricingPage() {
@@ -57,7 +57,7 @@ export default function PricingPage() {
         <Container>
           <div className="space-y-10">
             <div>
-              <Link href={buildAppHomeHref(searchParams)} className="inline-flex items-center text-sm text-neutral-600 hover:text-neutral-900">
+              <Link href={buildBrandedDemoReturnHref(searchParams)} className="inline-flex items-center text-sm text-neutral-600 hover:text-neutral-900">
                 ← Back to Home
               </Link>
             </div>
@@ -141,7 +141,7 @@ export default function PricingPage() {
           </div>
         </Container>
       </Section>
-      <Footer />
+      <BrandedDemoOrDefaultFooter />
     </div>
   );
 }

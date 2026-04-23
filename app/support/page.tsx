@@ -6,11 +6,11 @@ import Container from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { Stack } from '@/components/layout/Stack';
 import { Card } from '@/components/ui/Card';
-import Footer from '@/components/Footer';
+import BrandedDemoOrDefaultFooter from '@/components/intake/BrandedDemoOrDefaultFooter';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
-import { SUPPORT_EMAIL } from '@/lib/product-identity';
-import { buildAppHomeHref, buildMarketingPathHref } from '@/lib/glp-intake-nav-href';
+import { PRODUCT_NAME, SUPPORT_EMAIL } from '@/lib/product-identity';
+import { buildBrandedDemoReturnHref, buildMarketingPathHref } from '@/lib/glp-intake-nav-href';
 
 export default function SupportPage() {
   const searchParams = useSearchParams();
@@ -104,7 +104,7 @@ export default function SupportPage() {
             {/* Back Button */}
             <div className="mb-10 sm:mb-12">
               <Link
-                href={buildAppHomeHref(searchParams)}
+                href={buildBrandedDemoReturnHref(searchParams)}
                 className="inline-flex items-center text-neutral-500 hover:text-neutral-900 transition-colors font-medium"
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
@@ -114,27 +114,40 @@ export default function SupportPage() {
               </Link>
             </div>
             <p className="text-xs text-neutral-500 -mt-2 mb-8 max-w-2xl leading-relaxed text-center sm:text-left">
-              For regulated health or advertising questions, U.S. clinics often reference{" "}
+              For compliance context, U.S. clinics often reference the{" "}
               <a
                 className="text-neutral-700 underline"
                 href="https://www.hhs.gov/hipaa/index.html"
                 target="_blank"
                 rel="noreferrer"
               >
-                HHS (HIPAA)
-              </a>{" "}
-              and{" "}
+                HHS HIPAA hub
+              </a>
+              , the{" "}
               <a
                 className="text-neutral-700 underline"
                 href="https://www.ftc.gov/business-guidance/resources/health-products-compliance"
                 target="_blank"
                 rel="noreferrer"
               >
-                FTC health-products guidance
+                FTC health-products business guidance
               </a>
-              . Product policies:{" "}
+              , and the{" "}
+              <a
+                className="text-neutral-700 underline"
+                href="https://www.nist.gov/cyberframework"
+                target="_blank"
+                rel="noreferrer"
+              >
+                NIST Cybersecurity Framework
+              </a>{" "}
+              (security posture). {PRODUCT_NAME} product policies:{" "}
               <Link href={buildMarketingPathHref(searchParams, "/privacy")} className="text-neutral-700 underline">
                 Privacy
+              </Link>{" "}
+              ·{" "}
+              <Link href={buildMarketingPathHref(searchParams, "/legal/terms")} className="text-neutral-700 underline">
+                Terms
               </Link>
               .
             </p>
@@ -431,7 +444,7 @@ export default function SupportPage() {
         </Container>
       </Section>
 
-      <Footer />
+      <BrandedDemoOrDefaultFooter />
     </div>
   );
 }

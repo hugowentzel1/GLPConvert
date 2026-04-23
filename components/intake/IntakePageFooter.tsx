@@ -1,11 +1,20 @@
+"use client";
+
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { buildMarketingPathHref } from "@/lib/glp-intake-nav-href";
 import { PARENT_COMPANY_LEGAL_NAME, PRODUCT_NAME, SUPPORT_EMAIL } from "@/lib/product-identity";
 
 /**
  * Intake footer: minimum visible legal + vendor line low in hierarchy.
+ * Preserves full query (demo, UTM, branding) on in-app links.
  */
 export default function IntakePageFooter() {
   const year = new Date().getFullYear();
+  const sp = useSearchParams();
+  const terms = buildMarketingPathHref(sp, "/legal/terms");
+  const privacy = buildMarketingPathHref(sp, "/privacy");
+  const contact = buildMarketingPathHref(sp, "/contact");
 
   return (
     <footer
@@ -26,13 +35,13 @@ export default function IntakePageFooter() {
         className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[11px] font-medium text-slate-500"
         aria-label="Legal and support"
       >
-        <Link href="/legal/terms" className="hover:text-slate-800">
+        <Link href={terms} className="hover:text-slate-800">
           Terms
         </Link>
-        <Link href="/legal/privacy" className="hover:text-slate-800">
+        <Link href={privacy} className="hover:text-slate-800">
           Privacy
         </Link>
-        <Link href="/contact" className="hover:text-slate-800">
+        <Link href={contact} className="hover:text-slate-800">
           Contact
         </Link>
         <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:text-slate-800">

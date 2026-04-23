@@ -23,12 +23,8 @@ test.use({
 });
 
 /**
- * Intake funnel hydrates inside Suspense; the Continue button can paint before React binds onClick.
- * Retry until step 2 appears so E2E matches real user timing (avoids flaky first click).
- */
-/**
- * Continue can paint before React binds onClick (Suspense/hydration). Retry click until step 2 appears;
- * inner timeout must cover max `transition_ms` used in tests (e.g. 10s demo + building overlay).
+ * Intake funnel hydrates inside Suspense; Continue can paint before React binds onClick.
+ * Retry click until step 2 appears (matches real user timing; avoids flaky first click).
  */
 async function clickIntakeContinueUntilTransition(page: import("@playwright/test").Page) {
   const continueBtn = page.locator('[data-flow-step="1"]').getByRole("button", { name: /^continue$/i });
@@ -188,14 +184,8 @@ test.describe("GLPConvert branded E2E (visual)", () => {
     ).toBeVisible({ timeout: 20000 });
     await page.screenshot({ path: testInfo.outputPath("visual-A1-intake-input.png"), fullPage: true });
 
-    const continueBtn = page.locator('[data-flow-step="1"]').getByRole("button", { name: /^continue$/i });
-    await expect(continueBtn).toBeVisible({ timeout: 20000 });
-    await expect(async () => {
-      await continueBtn.click({ force: true });
-      await expect(page.locator("[data-building-overlay]")).toBeVisible({ timeout: 10000 });
-    }).toPass({ timeout: 30000 });
-    await page.screenshot({ path: testInfo.outputPath("visual-A2-building.png"), fullPage: true });
-    await expect(page.locator('[data-flow-step="2"]')).toBeVisible({ timeout: 35000 });
+    await clickIntakeContinueUntilTransition(page);
+    await page.screenshot({ path: testInfo.outputPath("visual-A2-step2.png"), fullPage: true });
     await expect(page.getByText(/Step 2 of 5/i)).toBeVisible();
     await expect(page.locator('[data-flow-step="2"]').getByRole("heading", { name: /your path preview/i })).toBeVisible();
     await expect(
