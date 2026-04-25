@@ -12,6 +12,13 @@ import {
 import { PRODUCT_NAME } from "@/lib/product-identity";
 import type { Metadata } from "next";
 
+/**
+ * Intake is per-visitor: copy, branding, logo, color, and CTA targets are all driven by
+ * `?company=`, `?brand=`, `?logo=`, UTMs, etc. Force dynamic SSR so Vercel never caches a
+ * stale prerendered HTML at the edge — every cold-email click should see the *current* build.
+ */
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: `Intake — ${PRODUCT_NAME}`,
   description:
