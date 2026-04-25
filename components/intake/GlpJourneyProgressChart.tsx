@@ -210,14 +210,18 @@ export default function GlpJourneyProgressChart({
       >
         {!compact ? (
           <>
-            {/* Desktop vertical label — rendered first so `.first()` selectors at md+ hit the visible one.
-                Container is now narrow (just enough for the rotated 11px text + a hair of gutter), so the
-                graph fills almost the full card width and reads as substantial. */}
-            <div
-              className="hidden shrink-0 self-stretch flex-col items-center justify-center border-slate-200/80 pr-1 text-center md:flex md:w-[1.75rem] md:border-r md:pr-2 lg:w-[2rem]"
-            >
+            {/* Desktop vertical Y caption.
+             *
+             * Symmetric horizontal gutter (`mx-3` = 12px on each side of the rotated text)
+             * mirrors the symmetric *vertical* padding around the X caption below — so the
+             * caption visually breathes equally on both sides of itself, and the gap between
+             * card-edge↔caption is the same as caption↔chart. No vertical divider — the
+             * caption itself is the boundary, and the divider was creating an asymmetric
+             * visual weight on the right side.
+             */}
+            <div className="hidden shrink-0 self-stretch flex-col items-center justify-center md:flex">
               <p
-                className="text-center [writing-mode:vertical-rl] rotate-180"
+                className="mx-3 text-center [writing-mode:vertical-rl] rotate-180"
                 style={axisCaptionStyle}
                 data-results-chart-y-label
               >
@@ -443,7 +447,7 @@ export default function GlpJourneyProgressChart({
       </div>
       {!compact ? (
         <p
-          className="mx-auto mt-3 w-full text-center"
+          className="mx-auto mt-3 mb-3 w-full text-center"
           style={axisCaptionStyle}
           data-results-chart-x-label
         >
@@ -451,7 +455,7 @@ export default function GlpJourneyProgressChart({
         </p>
       ) : null}
       {!compact ? (
-        <p className="mt-4 border-t border-slate-100 px-1 text-center text-[11px] leading-relaxed text-slate-500 sm:px-2">
+        <p className="border-t border-slate-100 px-1 pt-3 text-center text-[11px] leading-relaxed text-slate-500 sm:px-2">
           Last checkpoint shown: {last?.label} at ~{last?.progress}% toward your stated goal (example only).
         </p>
       ) : null}

@@ -87,18 +87,43 @@ export const glpIntakeUi = {
     "inline-flex w-full min-w-0 flex-1 items-center justify-center rounded-xl border-2 border-slate-200 bg-white px-5 py-[0.875rem] text-sm font-semibold text-slate-800 shadow-sm transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-0.5 hover:scale-[1.02] hover:border-slate-300 hover:bg-slate-50/80 hover:shadow-md active:scale-[0.99] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:hover:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900/15 focus-visible:ring-offset-2 min-h-[52px] sm:max-w-md sm:min-w-[10rem]",
 
   /**
-   * Step 2 summary cards — SaaS-style hierarchy: overline (eyebrow) → headline / metric → body → footnote.
-   * References: Stripe / Linear metric tiles; Material “headline + supporting text”.
+   * Step 2 summary tiles — three-row metric cards (Stripe Dashboard, Linear Insights, Material 3
+   * "stat tile"): per-tile *category* overline → single dominant headline value → consistent
+   * supporting line → footer disclaimer. Every tile shares the same vertical rhythm so all three
+   * read as a single comparative scan, not a "long card / metric card / metric card" mismatch.
+   *
+   * References: Stripe Dashboard metric tiles; Linear Insights cards; Material 3 "stat tile";
+   * IBM Carbon "tile patterns" — tile titles & primary values must share size and color across
+   * the row to support visual scanning.
    */
   resultsSummaryCard:
-    "flex min-h-[248px] flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_2px_24px_rgba(15,23,42,0.07)] ring-1 ring-slate-900/[0.05] sm:min-h-[260px] sm:p-6",
-  resultsSummaryOverline: "text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500",
-  resultsSummaryCardTitle: "mt-2 text-lg font-semibold tracking-tight text-slate-900 sm:text-xl",
-  resultsSummaryBody: "text-sm font-normal leading-relaxed text-slate-600 sm:text-[15px]",
-  resultsSummaryMetric: "text-2xl font-semibold tabular-nums tracking-tight text-slate-900 sm:text-[1.65rem]",
-  resultsSummaryMeta: "mt-auto border-t border-slate-100 pt-3 text-xs font-normal leading-relaxed text-slate-500",
-  /** Primary block under title — equal min-height so footnotes align across columns */
-  resultsSummaryPrimaryBlock: "mt-3 min-h-[6.75rem] flex-1",
+    "flex min-h-[200px] flex-col rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_2px_24px_rgba(15,23,42,0.07)] ring-1 ring-slate-900/[0.05] sm:min-h-[212px] sm:p-6",
+  resultsSummaryOverline:
+    "text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500",
+  /**
+   * Primary value (number OR short text) — uniform size/weight/color across all 3 tiles.
+   *
+   * Sized responsively because the parent column is `max-w-2xl` (~672px) and at md+
+   * the 3-tile grid gives each tile only ~130–180px of usable width. A flat 1.65rem
+   * headline causes "$149–$699 /mo" and "GLP-1 injectable" to wrap awkwardly. We step
+   * down to ~1.125rem at md (3-col kicks in) and ~1.25rem at lg.
+   *
+   * `min-h-[3.25rem]` reserves the vertical space of *two lines* even when the headline
+   * is a single line — so all 3 tiles share an identical visual hierarchy and the
+   * supporting line / footer always align horizontally across the row (Material 3
+   * stat-tile rule: "consistent baseline within a comparison row").
+   */
+  resultsSummaryHeadline:
+    "mt-3 min-h-[3.25rem] text-[1.5rem] font-semibold leading-[1.15] tracking-tight text-slate-900 tabular-nums sm:text-[1.65rem] md:min-h-[3rem] md:text-[1.125rem] lg:min-h-[3.5rem] lg:text-[1.375rem]",
+  /** Optional inline unit ("/mo", "weeks") — inline next to headline, smaller, muted */
+  resultsSummaryHeadlineUnit:
+    "ml-1 text-sm font-medium text-slate-500 md:text-[0.7rem] lg:text-sm",
+  /** Single supporting line under headline — same weight & color everywhere */
+  resultsSummarySupport:
+    "mt-2 text-sm leading-relaxed text-slate-600",
+  /** Footer disclaimer — consistent voice/length, divider above */
+  resultsSummaryMeta:
+    "mt-auto border-t border-slate-100 pt-3 text-xs leading-relaxed text-slate-500",
 
   /** Step 2 results: generous vertical rhythm (M3-style section spacing) */
   resultsStack: "space-y-12 md:space-y-14",

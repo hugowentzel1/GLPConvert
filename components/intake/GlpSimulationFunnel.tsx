@@ -796,39 +796,64 @@ export default function GlpSimulationFunnel() {
             </div>
           ) : null}
 
-          <div
-            className="grid w-full gap-5 md:grid-cols-3 md:items-stretch md:gap-6"
-            data-results-summary
-          >
-            <div className={glpIntakeUi.resultsSummaryCard}>
-              <p className={glpIntakeUi.resultsSummaryOverline}>At a glance</p>
-              <p className={glpIntakeUi.resultsSummaryCardTitle}>Expected path</p>
-              <div className={glpIntakeUi.resultsSummaryPrimaryBlock}>
-                <p className={glpIntakeUi.resultsSummaryBody}>{output.pathLabel}</p>
+          {/**
+           * Step 2 "At a glance" tiles — three uniform stat cards (Stripe Dashboard / Linear
+           * Insights / Material 3 stat-tile pattern). Each tile shares the *exact* same
+           * three-row rhythm: per-tile category overline → single dominant headline value →
+           * one-line supporting copy → footer disclaimer. Using the *same* visual hierarchy
+           * across all 3 tiles makes the row scannable; previously Card 1 carried a body
+           * sentence while Cards 2-3 carried metrics, which broke comparative scanning.
+           *
+           * The path headline is derived from `medPath` (instead of the long `pathLabel`
+           * sentence) so it sits at the same visual weight as the timeline / cost numbers.
+           */}
+          {(() => {
+            const pathHeadline =
+              input.medPath === "tirzepatide"
+                ? "Dual-action injectable"
+                : input.medPath === "semaglutide"
+                  ? "GLP-1 injectable"
+                  : input.medPath === "oral_path"
+                    ? "Oral-first plan"
+                    : "Set in consult";
+            return (
+              <div
+                className="grid w-full gap-5 md:grid-cols-3 md:items-stretch md:gap-6"
+                data-results-summary
+              >
+                <div className={glpIntakeUi.resultsSummaryCard}>
+                  <p className={glpIntakeUi.resultsSummaryOverline}>Path</p>
+                  <p className={glpIntakeUi.resultsSummaryHeadline}>{pathHeadline}</p>
+                  <p className={glpIntakeUi.resultsSummarySupport}>
+                    Selected direction — confirmed in consult.
+                  </p>
+                  <p className={glpIntakeUi.resultsSummaryMeta}>Framing only — not a prescription.</p>
+                </div>
+                <div className={glpIntakeUi.resultsSummaryCard}>
+                  <p className={glpIntakeUi.resultsSummaryOverline}>Timeline</p>
+                  <p className={glpIntakeUi.resultsSummaryHeadline}>
+                    ~{output.weeksToGoal}
+                    <span className={glpIntakeUi.resultsSummaryHeadlineUnit}>weeks</span>
+                  </p>
+                  <p className={glpIntakeUi.resultsSummarySupport}>
+                    Modeled checkpoint — your pace may vary.
+                  </p>
+                  <p className={glpIntakeUi.resultsSummaryMeta}>Illustrative — not a guarantee.</p>
+                </div>
+                <div className={glpIntakeUi.resultsSummaryCard}>
+                  <p className={glpIntakeUi.resultsSummaryOverline}>Monthly cost</p>
+                  <p className={glpIntakeUi.resultsSummaryHeadline}>
+                    ${output.monthlyCostLow}–${output.monthlyCostHigh}
+                    <span className={glpIntakeUi.resultsSummaryHeadlineUnit}>/mo</span>
+                  </p>
+                  <p className={glpIntakeUi.resultsSummarySupport}>
+                    Typical range discussed with this clinic.
+                  </p>
+                  <p className={glpIntakeUi.resultsSummaryMeta}>Educational — not a quote.</p>
+                </div>
               </div>
-              <p className={glpIntakeUi.resultsSummaryMeta}>Framing only — your provider sets the plan.</p>
-            </div>
-            <div className={glpIntakeUi.resultsSummaryCard}>
-              <p className={glpIntakeUi.resultsSummaryOverline}>At a glance</p>
-              <p className={glpIntakeUi.resultsSummaryCardTitle}>Illustrative timeline</p>
-              <div className={glpIntakeUi.resultsSummaryPrimaryBlock}>
-                <p className={glpIntakeUi.resultsSummaryMetric}>{output.weeksToGoal}</p>
-                <p className="mt-2 text-xs font-medium uppercase tracking-wide text-slate-400">weeks (illustrative)</p>
-              </div>
-              <p className={glpIntakeUi.resultsSummaryMeta}>weeks discussed · individual results vary</p>
-            </div>
-            <div className={glpIntakeUi.resultsSummaryCard}>
-              <p className={glpIntakeUi.resultsSummaryOverline}>At a glance</p>
-              <p className={glpIntakeUi.resultsSummaryCardTitle}>Monthly cost band</p>
-              <div className={glpIntakeUi.resultsSummaryPrimaryBlock}>
-                <p className={glpIntakeUi.resultsSummaryMetric}>
-                  ${output.monthlyCostLow}–${output.monthlyCostHigh}
-                  <span className="text-base font-medium text-slate-500"> /mo</span>
-                </p>
-              </div>
-              <p className={glpIntakeUi.resultsSummaryMeta}>Educational — not a quote</p>
-            </div>
-          </div>
+            );
+          })()}
 
           <div className={glpIntakeUi.resultsSectionRule} data-results-path>
             <p className={`${glpIntakeUi.kicker} mb-2`}>Path</p>
