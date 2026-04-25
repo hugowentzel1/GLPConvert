@@ -1,12 +1,13 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import MarketingLegalShell from "@/components/legal/MarketingLegalShell";
 import { buildMarketingPathHref } from "@/lib/glp-intake-nav-href";
 import { PARENT_COMPANY_LEGAL_NAME, PRODUCT_NAME, SUPPORT_EMAIL } from "@/lib/product-identity";
 import { useSearchParams } from "next/navigation";
 
-export default function PrivacyPage() {
+function PrivacyContent() {
   const searchParams = useSearchParams();
   const updated = new Date().toLocaleDateString("en-US", { dateStyle: "long" });
   return (
@@ -330,5 +331,13 @@ export default function PrivacyPage() {
         <em>We may update this policy; the &ldquo;Last updated&rdquo; line reflects material revisions.</em>
       </p>
     </MarketingLegalShell>
+  );
+}
+
+export default function PrivacyPage() {
+  return (
+    <Suspense fallback={<div className="min-h-[50vh] bg-slate-50" aria-label="Loading" />}>
+      <PrivacyContent />
+    </Suspense>
   );
 }

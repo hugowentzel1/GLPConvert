@@ -203,12 +203,12 @@ export default function SupportPage() {
                   <h3 className="text-lg font-semibold text-neutral-900">Documentation</h3>
                   <p className="text-sm text-gray-600">Setup guides & tutorials</p>
                   <p className="text-xs text-gray-500">Self-service resources</p>
-                  <a 
-                    href="#"
-                    className="inline-block text-sm text-gray-500 hover:text-gray-600 font-medium"
+                  <Link
+                    href={buildMarketingPathHref(searchParams, "/docs/setup")}
+                    className="inline-block text-sm text-brand-600 hover:text-brand-700 font-medium"
                   >
                     View Documentation
-                  </a>
+                  </Link>
                 </div>
               </Card>
 
@@ -223,12 +223,12 @@ export default function SupportPage() {
                   <h3 className="text-lg font-semibold text-neutral-900">System Status</h3>
                   <p className="text-sm text-gray-600">Service uptime</p>
                   <p className="text-xs text-gray-500 font-medium">All systems operational</p>
-                  <a 
-                    href="#"
-                    className="inline-block text-sm text-gray-600 hover:text-gray-700 font-medium"
+                  <Link
+                    href={buildMarketingPathHref(searchParams, "/status")}
+                    className="inline-block text-sm text-brand-600 hover:text-brand-700 font-medium"
                   >
                     Check Status
-                  </a>
+                  </Link>
                 </div>
               </Card>
             </div>

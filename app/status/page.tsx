@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { buildBrandedDemoReturnHref } from '@/lib/glp-intake-nav-href';
 import { PRODUCT_NAME, SUPPORT_EMAIL } from '@/lib/product-identity';
 
 interface HealthService {
@@ -15,11 +16,12 @@ interface HealthService {
 interface HealthConfig {
   supabase?: boolean;
   stripe?: boolean;
-  nrel?: boolean;
-  eia?: boolean;
   geocoding?: boolean;
   resend?: boolean;
   google_places?: boolean;
+  /** Legacy keys still emitted by `/api/health` for backwards compatibility — unused by GLPConvert. */
+  nrel?: boolean;
+  eia?: boolean;
 }
 
 interface HealthStatus {
@@ -49,16 +51,20 @@ interface SyntheticResults {
   lastUpdated?: string;
 }
 
+/**
+ * Friendly labels for the current GLPConvert dependency surface. `/api/health` only returns
+ * services with environment variables configured, so legacy solar-era labels are intentionally
+ * omitted here — unrecognized services fall back to a raw key, keeping the page honest.
+ */
 const SERVICE_LABELS: Record<string, { title: string; desc: string }> = {
-  supabase: { title: 'Supabase', desc: 'Data storage — tenants & leads' },
-  stripe: { title: 'Stripe', desc: 'Payments — checkout & webhooks' },
-  nrel: { title: 'NREL PVWatts', desc: 'Solar production — quotes' },
-  eia: { title: 'EIA', desc: 'Utility rates — electricity data' },
-  google_geocoding: { title: 'Google Geocoding', desc: 'Address lookup (server)' },
-  google_places: { title: 'Google Places', desc: 'Address autocomplete (client)' },
-  resend: { title: 'Resend', desc: 'Email — lead alerts & delivery' },
+  supabase: { title: 'Supabase', desc: 'Data storage — tenants, leads & intake records' },
+  stripe: { title: 'Stripe', desc: 'Payments — Checkout & subscription webhooks' },
+  google_geocoding: { title: 'Google Geocoding', desc: 'Clinic address lookup (server)' },
+  google_places: { title: 'Google Places', desc: 'Clinic address autocomplete (client)' },
+  resend: { title: 'Resend', desc: 'Transactional email — lead alerts & receipts' },
+  postmark: { title: 'Postmark', desc: 'Transactional email — lead alerts & receipts' },
   vercel_kv: { title: 'Vercel KV (Upstash)', desc: 'DLQ, webhook idempotency, rate limiting' },
-  usgs_3dep: { title: 'USGS 3DEP Elevation', desc: 'Shading / terrain — solar shade analysis' },
+  sentry: { title: 'Sentry', desc: 'Error reporting & performance monitoring' },
 };
 
 export default function StatusPage() {
@@ -271,7 +277,7 @@ export default function StatusPage() {
           <div className="px-6 py-4 bg-slate-50 border-b border-slate-200">
             <p className="text-lg font-semibold text-slate-900">Everything {PRODUCT_NAME} depends on (checked live)</p>
             <p className="text-sm text-slate-500 mt-0.5">
-              Data (Supabase), payments (Stripe), quotes (NREL + EIA), address (Google Geocoding + Places), email (Resend), storage (Vercel KV), shading (USGS 3DEP). Each row is probed by <code className="text-xs bg-slate-100 px-1 rounded">/api/health</code> — only services with env vars set appear. This covers every API in the quote/lead/payment path. See <code className="text-xs bg-slate-100 px-1 rounded">docs/API-HEALTH-COVERAGE.md</code> for the full route list.
+              Data (Supabase), payments (Stripe), address (Google Geocoding + Places), transactional email (Resend / Postmark), edge storage (Vercel KV), and error reporting (Sentry). Each row is probed by <code className="text-xs bg-slate-100 px-1 rounded">/api/health</code> — only services with env vars set in this environment appear.
             </p>
           </div>
           <div className="divide-y divide-slate-200" data-testid="status-service-list">
@@ -455,7 +461,7 @@ export default function StatusPage() {
             Daily check: UptimeRobot, this page, Sentry — alerts to {SUPPORT_EMAIL}
           </p>
           <p className="text-sm text-slate-600 mb-2">
-            <code className="text-xs bg-slate-100 px-1 rounded">/api/health</code> probes every API (Supabase, Stripe, NREL, EIA, Google Geocoding/Places, Resend, Vercel KV, USGS 3DEP). See <code className="text-xs bg-slate-100 px-1 rounded">docs/API-HEALTH-COVERAGE.md</code>.
+            <code className="text-xs bg-slate-100 px-1 rounded">/api/health</code> probes every API in the lead / payment / email path (Supabase, Stripe, Google Geocoding/Places, Resend, Vercel KV, Sentry).
           </p>
           <ul className="text-sm text-slate-600 list-disc list-inside space-y-1">
             <li>
@@ -480,11 +486,7 @@ export default function StatusPage() {
 
         <div className="text-center">
           <Link
-            href={
-              searchParams?.get('demo')
-                ? `/?${searchParams?.toString() || ''}`
-                : `/paid?${searchParams?.toString() || ''}`
-            }
+            href={buildBrandedDemoReturnHref(searchParams)}
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-slate-700 hover:bg-slate-800"
           >
             ← Back to Home

@@ -1,34 +1,22 @@
 'use client';
 
+import Link from 'next/link';
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
-import SharedNavigation from '@/components/SharedNavigation';
-import Footer from '@/components/Footer';
+import BrandedDemoOrDefaultFooter from '@/components/intake/BrandedDemoOrDefaultFooter';
+import { buildBrandedDemoReturnHref } from '@/lib/glp-intake-nav-href';
 
-export default function MethodologyPage() {
+function MethodologyContent() {
   const searchParams = useSearchParams();
   const b = useBrandTakeover();
-
-  // Function to create URLs with preserved parameters
-  const createUrlWithParams = (path: string) => {
-    const params = new URLSearchParams();
-    if (searchParams?.get("company")) params.set("company", searchParams?.get("company") || "");
-    if (searchParams?.get("brandColor")) params.set("brandColor", searchParams?.get("brandColor") || "");
-    if (searchParams?.get("logo")) params.set("logo", searchParams?.get("logo") || "");
-    if (searchParams?.get("primary")) params.set("primary", searchParams?.get("primary") || "");
-    if (searchParams?.get("demo")) params.set("demo", searchParams?.get("demo") || "");
-    
-    const queryString = params.toString();
-    return queryString ? `${path}?${queryString}` : path;
-  };
+  const homeHref = buildBrandedDemoReturnHref(searchParams);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-gray-100 font-inter">
-      {/* Set CSS variable for consistent brand colors */}
+      {/* Brand color CSS var (header is injected by the root layout, not in-page). */}
       <style>{`:root{--brand-primary:${b.primary};}`}</style>
-      
-      <SharedNavigation />
-      
+
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
@@ -137,17 +125,25 @@ export default function MethodologyPage() {
         </div>
 
         <div className="text-center mt-12">
-          <a
-            href={createUrlWithParams("/")}
+          <Link
+            href={homeHref}
             className="inline-flex items-center px-6 py-3 rounded-xl font-semibold text-white transition-colors"
             style={{ backgroundColor: b.primary }}
           >
             ← Back to Home
-          </a>
+          </Link>
         </div>
       </main>
-      
-      <Footer />
+
+      <BrandedDemoOrDefaultFooter />
     </div>
+  );
+}
+
+export default function MethodologyPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50" aria-label="Loading" />}>
+      <MethodologyContent />
+    </Suspense>
   );
 }

@@ -23,14 +23,39 @@ function ContactForm() {
     setFormData((f) => ({ ...f, message: decodeURIComponent(subject) }));
   }, [searchParams]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Contact form submitted:", formData);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: "", email: "", phone: "", message: "" });
-    }, 3000);
+    setSubmitting(true);
+    setSubmitError(null);
+    /**
+     * Try a real backend first (`/api/contact`). If that's not deployed or fails, fall back to a
+     * `mailto:` to `SUPPORT_EMAIL` so messages aren't silently swallowed (was previously console.log only).
+     */
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) throw new Error(`status ${res.status}`);
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({ name: "", email: "", phone: "", message: "" });
+      }, 4000);
+    } catch {
+      const subject = encodeURIComponent(`Contact from ${formData.name || "site visitor"}`);
+      const body = encodeURIComponent(
+        `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\n${formData.message}`,
+      );
+      window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${subject}&body=${body}`;
+      setSubmitError("Opening your email app to send the message directly to our team.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -122,10 +147,14 @@ function ContactForm() {
               </div>
               <button
                 type="submit"
-                className="w-full rounded-lg bg-slate-900 py-3 text-sm font-semibold text-white shadow transition hover:bg-slate-800"
+                disabled={submitting}
+                className="w-full rounded-lg bg-slate-900 py-3 text-sm font-semibold text-white shadow transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-70"
               >
-                Send message
+                {submitting ? "Sending…" : "Send message"}
               </button>
+              {submitError ? (
+                <p className="mt-2 text-center text-xs text-slate-500">{submitError}</p>
+              ) : null}
             </form>
           )}
         </div>

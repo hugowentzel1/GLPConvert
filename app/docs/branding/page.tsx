@@ -1,19 +1,24 @@
 "use client";
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import { useSearchParams } from 'next/navigation';
 import Container from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { Stack } from '@/components/layout/Stack';
 import { Card } from '@/components/ui/Card';
-import Footer from '@/components/Footer';
+import BrandedDemoOrDefaultFooter from '@/components/intake/BrandedDemoOrDefaultFooter';
+import { buildBrandedDemoReturnHref, buildMarketingPathHref } from '@/lib/glp-intake-nav-href';
+import { PRODUCT_NAME, SUPPORT_EMAIL } from '@/lib/product-identity';
 
-export default function BrandingCustomizationPage() {
+function BrandingCustomizationContent() {
   const b = useBrandTakeover();
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState("colors");
+  const homeHref = buildBrandedDemoReturnHref(searchParams);
+  const supportHref = buildMarketingPathHref(searchParams, "/support");
 
   return (
     <div 
@@ -25,25 +30,25 @@ export default function BrandingCustomizationPage() {
           <Stack>
             {/* Back Button */}
             <div className="mb-8">
-              <a 
-                href={searchParams?.get('demo') ? `/?${searchParams?.toString()}` : `/paid?${searchParams?.toString()}`} 
+              <Link
+                href={homeHref}
                 className="inline-flex items-center text-neutral-500 hover:text-neutral-900 transition-colors font-medium"
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
-                Back to Home
-              </a>
+                Back to home
+              </Link>
             </div>
 
             {/* Hero Block */}
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6">
-                Branding Customization
+                Branding & customization
               </h1>
               <p className="text-lg md:text-xl text-neutral-700 max-w-3xl mx-auto">
-                Complete white-label customization for your solar intelligence platform. 
-                Make it truly yours with your colors, logo, and domain.
+                Complete white-label customization for your {PRODUCT_NAME} pre-consult site.
+                Your colors, your logo, your domain.
               </p>
             </div>
 
@@ -111,10 +116,10 @@ export default function BrandingCustomizationPage() {
                         <h3 className="text-xl font-semibold text-neutral-900 mb-4">Color Examples</h3>
                         <div className="grid grid-cols-2 gap-4">
                           {[
-                            { name: "Tesla Red", color: "#CC0000" },
-                            { name: "Google Blue", color: "#4285F4" },
-                            { name: "Solar Orange", color: "#FF6B35" },
-                            { name: "Green Energy", color: "#00A651" }
+                            { name: "Clinic Teal", color: "#0FA3A3" },
+                            { name: "Wellness Green", color: "#16A34A" },
+                            { name: "Trust Blue", color: "#2563EB" },
+                            { name: "Warm Coral", color: "#E0625E" }
                           ].map((example) => (
                             <div key={example.name} className="text-center">
                               <div 
@@ -191,7 +196,7 @@ export default function BrandingCustomizationPage() {
                             />
                           ) : (
                             <div className="w-16 h-16 bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-lg flex items-center justify-center">
-                              <span className="text-neutral-900 font-bold text-lg">☀️</span>
+                              <span className="text-neutral-900 font-bold text-lg">{(b.brand?.[0] || "G").toUpperCase()}</span>
                             </div>
                           )}
                           <div>
@@ -232,11 +237,11 @@ export default function BrandingCustomizationPage() {
                         <p className="text-sm text-neutral-600 mb-4">
                           Contact support for custom logo setup
                         </p>
-                        <a 
-                          href="mailto:support@getsunspire.com"
+                        <a
+                          href={`mailto:${SUPPORT_EMAIL}`}
                           className="text-[var(--brand-primary)] hover:underline text-sm"
                         >
-                          support@getsunspire.com
+                          {SUPPORT_EMAIL}
                         </a>
                       </div>
                     </div>
@@ -250,13 +255,14 @@ export default function BrandingCustomizationPage() {
                     <h2 className="text-2xl font-bold text-neutral-900 mb-6">Domain Setup</h2>
                     
                     <div className="bg-gradient-to-r from-[var(--brand-primary)] to-white p-6 rounded-lg mb-8">
-                      <h3 className="text-xl font-semibold text-neutral-900 mb-4">White-Label Domain</h3>
+                      <h3 className="text-xl font-semibold text-neutral-900 mb-4">White-label domain</h3>
                       <p className="text-neutral-600 mb-4">
-                        Your solar intelligence tool will be available on your own domain, completely white-labeled.
+                        Your branded {PRODUCT_NAME} pre-consult site will be available on your own
+                        domain or subdomain, completely white-labeled.
                       </p>
                       <div className="bg-white/80 p-4 rounded-lg">
                         <p className="font-mono text-sm">
-                          https://your-domain.com/solar-quote
+                          https://intake.your-clinic.com
                         </p>
                       </div>
                     </div>
@@ -363,18 +369,18 @@ export default function BrandingCustomizationPage() {
                         Need help with advanced customization? Our team can implement any design requirements.
                       </p>
                       <div className="flex flex-col sm:flex-row gap-4">
-                        <a 
-                          href="mailto:support@getsunspire.com"
+                        <a
+                          href={`mailto:${SUPPORT_EMAIL}`}
                           className="inline-flex items-center px-6 py-3 bg-white text-[var(--brand-primary)] rounded-lg font-semibold hover:bg-neutral-50 transition-colors"
                         >
-                          Contact Support
+                          Contact support
                         </a>
-                        <a 
-                          href="/support"
+                        <Link
+                          href={supportHref}
                           className="inline-flex items-center px-6 py-3 border border-white text-white rounded-lg font-semibold hover:bg-white/10 transition-colors"
                         >
-                          Create Ticket
-                        </a>
+                          Create ticket
+                        </Link>
                       </div>
                     </div>
                   </Card>
@@ -384,18 +390,26 @@ export default function BrandingCustomizationPage() {
             
             {/* Back to Support */}
             <div className="mt-12 text-center">
-              <a
-                href={searchParams?.toString() ? `/support?${searchParams.toString()}` : '/support'}
+              <Link
+                href={supportHref}
                 className="inline-flex items-center px-6 py-3 text-neutral-600 hover:text-neutral-900 transition-colors"
               >
-                ← Back to Support
-              </a>
+                ← Back to support
+              </Link>
             </div>
           </Stack>
         </Container>
       </Section>
 
-      <Footer />
+      <BrandedDemoOrDefaultFooter />
     </div>
+  );
+}
+
+export default function BrandingCustomizationPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50" aria-label="Loading" />}>
+      <BrandingCustomizationContent />
+    </Suspense>
   );
 }

@@ -1,138 +1,194 @@
 "use client";
 
+import { Suspense } from "react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import Footer from "@/components/Footer";
-import { buildBrandedDemoReturnHref } from "@/lib/glp-intake-nav-href";
+import BrandedDemoOrDefaultFooter from "@/components/intake/BrandedDemoOrDefaultFooter";
+import {
+  buildBrandedDemoReturnHref,
+  buildMarketingPathHref,
+} from "@/lib/glp-intake-nav-href";
 import { PRODUCT_NAME, SUPPORT_EMAIL } from "@/lib/product-identity";
 
-export default function TermsPage() {
+/**
+ * Short-form Terms of Service summary. The canonical, fully-detailed Terms live at
+ * `/legal/terms` (uses `MarketingLegalShell`); this `/terms` URL is preserved for inbound and
+ * legacy links and links out to the long form.
+ */
+function TermsContent() {
   const searchParams = useSearchParams();
+  const homeHref = buildBrandedDemoReturnHref(searchParams);
+  const refundHref = buildMarketingPathHref(searchParams, "/legal/refund");
+  const longFormHref = buildMarketingPathHref(searchParams, "/legal/terms");
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 font-inter">
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Back to Home Button */}
         <div className="mb-8">
-          <a
-            href={buildBrandedDemoReturnHref(searchParams)}
+          <Link
+            href={homeHref}
             className="inline-flex items-center text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium"
           >
             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            Back to Home
-          </a>
+            Back to home
+          </Link>
         </div>
 
         <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-200/50 shadow-lg">
-          <h1 className="text-4xl font-black text-gray-900 mb-8 text-center">
-            Terms of Service
-          </h1>
+          <h1 className="text-4xl font-black text-gray-900 mb-4 text-center">Terms of Service</h1>
+          <p className="text-center text-sm text-slate-500 mb-8">
+            Plain-language summary. The full agreement is at{" "}
+            <Link href={longFormHref} className="font-medium text-slate-800 underline decoration-slate-300 underline-offset-2 hover:decoration-slate-500">
+              /legal/terms
+            </Link>
+            .
+          </p>
 
           <div className="prose prose-lg max-w-none">
-
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Acceptance of Terms</h2>
               <p className="text-gray-600 mb-4">
-                By accessing and using {PRODUCT_NAME}, you accept and agree to be bound by these terms.
+                By accessing and using {PRODUCT_NAME}, you accept and agree to be bound by these
+                Terms and the canonical{" "}
+                <Link href={longFormHref} className="text-[var(--brand-primary)] hover:underline">
+                  long-form Terms of Service
+                </Link>
+                .
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Description of Service</h2>
               <p className="text-gray-600 mb-4">
-                {PRODUCT_NAME} provides intake, recommendation, and booking conversion software for clinics. It is not an EMR, telehealth infrastructure, or prescribing software.
+                {PRODUCT_NAME} provides intake, recommendation, and booking-conversion software
+                for clinics. It is <strong>not</strong> an EMR, telehealth platform, or
+                prescribing software. Licensed clinicians at the operating clinic make all
+                treatment decisions.
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">3. User Accounts</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Accounts</h2>
               <p className="text-gray-600 mb-4">
-                You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account. You must notify us immediately of any unauthorized use of your account.
+                You are responsible for maintaining the confidentiality of your account
+                credentials and for all activity under your account. Notify us immediately of any
+                unauthorized use.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Acceptable Use</h2>
               <p className="text-gray-600 mb-4">
-                You agree not to use the service for any unlawful purpose or in any way that could damage, disable, overburden, or impair the service. You must not attempt to gain unauthorized access to any part of the service.
+                Do not use the service for unlawful purposes, to overburden infrastructure, or to
+                make deceptive or unsubstantiated health claims.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Payment Terms</h2>
               <p className="text-gray-600 mb-4">
-                Our service is billed on a monthly basis with a one-time setup fee. All fees are non-refundable except as provided in our refund policy. We reserve the right to change our pricing with 30 days notice.
+                {PRODUCT_NAME} bills monthly with a one-time setup fee. Subscription fees are
+                cancel-anytime and non-refundable except where required by law. Pricing changes
+                are announced 30 days in advance.
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 id="refunds" className="text-2xl font-bold text-gray-900 mb-4">6. Refunds & Guarantee</h2>
-        <p className="text-gray-600 mb-4" id="guarantee">
-          We guarantee your branded deployment setup begins within 24 hours of purchase. If onboarding is not initiated as promised, you may request a <a href="/legal/refund" className="text-[var(--brand-primary)] hover:underline">refund of the one-time setup fee</a> within 7 days by emailing <strong>{SUPPORT_EMAIL}</strong>. Subscription fees are cancel-anytime and non-refundable except where required by law.
-        </p>
-        <p className="text-gray-600">
-          For complete details, see our <a href="/legal/refund" className="text-[var(--brand-primary)] hover:underline">Refund Policy</a>.
-        </p>
-            </section>
-
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Data and Privacy</h2>
-              <p className="text-gray-600 mb-4">
-                Your data is protected by our Privacy Policy and security measures. We use industry-standard encryption and SOC 2-aligned controls to protect your information. You retain ownership of your data.
+              <h2 id="refunds" className="text-2xl font-bold text-gray-900 mb-4">6. Refunds &amp; Guarantee</h2>
+              <p className="text-gray-600 mb-4" id="guarantee">
+                We guarantee your branded deployment goes live within 24 hours of purchase. If
+                onboarding is not initiated as promised, you may request a{" "}
+                <Link href={refundHref} className="text-[var(--brand-primary)] hover:underline">
+                  refund of the one-time setup fee
+                </Link>{" "}
+                within 7 days by emailing <strong>{SUPPORT_EMAIL}</strong>.
+              </p>
+              <p className="text-gray-600">
+                For full refund details, see our{" "}
+                <Link href={refundHref} className="text-[var(--brand-primary)] hover:underline">
+                  Refund Policy
+                </Link>
+                .
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Intellectual Property</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Data &amp; Privacy</h2>
               <p className="text-gray-600 mb-4">
-                The service and its original content, features, and functionality are owned by Wellspire LLC and are protected by applicable intellectual property laws.
+                Your data is protected by our Privacy Policy and security measures. We use
+                industry-standard encryption and maintain HIPAA-aware controls for clinic
+                customers. You retain ownership of your data.
               </p>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3 mt-6">Medical/Clinical Scope Boundary</h3>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Intellectual Property &amp; Clinical Scope</h2>
               <p className="text-gray-600 mb-4">
-                {PRODUCT_NAME} does not provide medical advice, diagnosis, dosing decisions, or eligibility determinations. A licensed provider determines final clinical eligibility.
+                The service and its original content, features, and functionality are owned by
+                Wellspire LLC. {PRODUCT_NAME} does not provide medical advice, diagnosis, dosing
+                decisions, or eligibility determinations.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Limitation of Liability</h2>
               <p className="text-gray-600 mb-4">
-                In no event shall Wellspire LLC be liable for indirect, incidental, special, consequential, or punitive damages, including loss of profits, data, or goodwill.
+                To the maximum extent permitted by law, Wellspire LLC is not liable for indirect,
+                incidental, special, consequential, or punitive damages.
               </p>
             </section>
 
             <section className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Termination</h2>
               <p className="text-gray-600 mb-4">
-                You may terminate your account at any time by contacting our support team. We may terminate or suspend your account immediately, without prior notice, for any reason whatsoever.
+                You may cancel your account at any time. We may suspend or terminate accounts for
+                breach, non-payment, or risk to the platform.
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Changes to Terms</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Changes</h2>
               <p className="text-gray-600 mb-4">
-                We reserve the right to modify or replace these terms at any time. If a revision is material, we will provide at least 30 days notice prior to any new terms taking effect.
+                We will provide at least 30 days&apos; notice of material changes via in-product
+                banner or email.
               </p>
             </section>
 
             <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Contact Information</h2>
-              <p className="text-gray-600 mb-4">
-                If you have any questions about these Terms of Service, please contact us at:
-              </p>
+              <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Contact</h2>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-gray-700">
-                  <strong>Phone:</strong> <a href="tel:+14047702672" className="hover:underline">+1 (404) 770-2672</a><br />
-                  <strong>Support:</strong> <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:underline">{SUPPORT_EMAIL}</a><br />
-                  <strong>Billing:</strong> <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:underline">{SUPPORT_EMAIL}</a><br />
-                  <strong>Address:</strong> 1700 Northside Drive Suite A7 #5164 Atlanta, GA 30318<br />
+                  <strong>Support:</strong>{" "}
+                  <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:underline">
+                    {SUPPORT_EMAIL}
+                  </a>
+                  <br />
+                  <strong>Address:</strong> Wellspire LLC · 1700 Northside Drive, Suite A7 #5164,
+                  Atlanta, GA 30318, USA
                 </p>
               </div>
+              <p className="mt-4 text-sm text-gray-500">
+                For the full agreement, see{" "}
+                <Link href={longFormHref} className="text-[var(--brand-primary)] hover:underline">
+                  /legal/terms
+                </Link>
+                .
+              </p>
             </section>
           </div>
         </div>
       </main>
-      <Footer />
+      <BrandedDemoOrDefaultFooter />
     </div>
+  );
+}
+
+export default function TermsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50" aria-label="Loading" />}>
+      <TermsContent />
+    </Suspense>
   );
 }

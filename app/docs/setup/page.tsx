@@ -1,20 +1,24 @@
 "use client";
 
+import { Suspense } from "react";
+import Link from "next/link";
 import { useBrandTakeover } from "@/src/brand/useBrandTakeover";
 import { useSearchParams } from "next/navigation";
-import Footer from "@/components/Footer";
+import BrandedDemoOrDefaultFooter from "@/components/intake/BrandedDemoOrDefaultFooter";
+import { buildBrandedDemoReturnHref } from "@/lib/glp-intake-nav-href";
 
-export default function SetupGuidePage() {
+function SetupGuideContent() {
   const b = useBrandTakeover();
   const searchParams = useSearchParams();
+  const homeHref = buildBrandedDemoReturnHref(searchParams);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 font-inter">
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Back to Home Button */}
         <div className="mb-8">
-          <a
-            href={searchParams?.get('demo') ? `/?${searchParams?.toString()}` : `/paid?${searchParams?.toString()}`}
+          <Link
+            href={homeHref}
             className="inline-flex items-center text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium"
           >
             <svg
@@ -30,8 +34,8 @@ export default function SetupGuidePage() {
                 d="M15 19l-7-7 7-7"
               />
             </svg>
-            Back to Home
-          </a>
+            Back to home
+          </Link>
         </div>
 
         <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-200/50 shadow-lg">
@@ -438,16 +442,24 @@ export default function SetupGuidePage() {
           
           {/* Back to Support */}
           <div className="mt-12 text-center">
-            <a
+            <Link
               href={searchParams?.toString() ? `/support?${searchParams.toString()}` : '/support'}
               className="inline-flex items-center px-6 py-3 text-neutral-600 hover:text-neutral-900 transition-colors"
             >
-              ← Back to Support
-            </a>
+              ← Back to support
+            </Link>
           </div>
         </div>
       </main>
-      <Footer />
+      <BrandedDemoOrDefaultFooter />
     </div>
+  );
+}
+
+export default function SetupGuidePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50" aria-label="Loading" />}>
+      <SetupGuideContent />
+    </Suspense>
   );
 }

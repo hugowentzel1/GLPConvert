@@ -8,6 +8,7 @@ import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
 import { buildIntakePricingHref } from "@/lib/glp-intake-nav-href";
 import { LAUNCH_BRANDED_CTA_LABEL } from "@/lib/product-identity";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
+import { getAccessibleBrandFill } from "@/lib/glp-intake-brand-contrast";
 
 const DEFAULT_DEMO_ACCENT = "#0f172a";
 
@@ -152,7 +153,11 @@ function IntakePageHeaderInner() {
   const prefersReducedMotion = reduceMotion ?? false;
   const companyLabel = safeCompanyLabel(sp?.get("company") ?? null);
   const { logoUrl, primaryHex } = useMemo(() => parseGlpIntakeQueryBranding(sp), [sp]);
-  const accent = primaryHex || DEFAULT_DEMO_ACCENT;
+  /**
+   * `?brand=` is user-controlled — guard the CTA against AA contrast failures (slate-900 fallback
+   * keeps text readable on white). Same helper used inside `GlpSimulationFunnel`.
+   */
+  const accent = useMemo(() => getAccessibleBrandFill(primaryHex || DEFAULT_DEMO_ACCENT), [primaryHex]);
   const heroPricingHref = useMemo(() => buildIntakePricingHref(sp, companyLabel), [sp, companyLabel]);
 
   return (
@@ -172,11 +177,11 @@ function IntakePageHeaderInner() {
               </div>
 
               <p className="mx-auto mt-4 max-w-md text-pretty text-sm leading-relaxed text-slate-600 sm:mt-5 sm:text-[15px]">
-                Clicks get lost to abandoned intakes, no-shows, and calendar friction—while ad spend and staff time
-                don&apos;t come back. This path is built for{" "}
-                <span className="font-medium text-slate-800">{companyLabel}</span>: your brand, your book link, more
-                booked consults from the same traffic so revenue stays in-house. General information only; your team owns
-                care decisions.
+                Right now, paid clicks for{" "}
+                <span className="font-medium text-slate-800">{companyLabel}</span> leak revenue at every step —
+                abandoned intakes, no-shows, missed callbacks. This branded path closes the gap: your logo, your book
+                link, more consults from the same ad spend, more revenue kept in-house. Educational tool only; your
+                team owns care decisions.
               </p>
               <div className="mt-4 flex w-full justify-center sm:mt-5">
                 <DemoHeaderActions
@@ -189,11 +194,11 @@ function IntakePageHeaderInner() {
 
               <div className="mt-5 w-full space-y-4 border-t border-slate-100 pt-5 text-center sm:mt-6 sm:pt-6">
                 <h1 className="text-pretty text-lg font-bold leading-snug tracking-tight text-slate-900 sm:text-xl">
-                  From paid click to your book link—less leakage, more consults
+                  Stop leaking paid clicks. Turn the same traffic into more booked consults.
                 </h1>
                 <p className="mx-auto max-w-md text-sm leading-relaxed text-slate-600">
-                  Short branded path, then your schedule link. You keep margin, trust, and the relationship. Not medical
-                  advice.
+                  Short branded path, then your scheduling link. Same ad spend, more booked revenue — and the patient
+                  relationship stays yours. Not medical advice.
                 </p>
               </div>
             </>

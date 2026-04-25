@@ -6,9 +6,7 @@ import {
   Area,
   AreaChart,
   CartesianGrid,
-  Label,
   Line,
-  ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -42,6 +40,35 @@ export default function GlpJourneyProgressChart({
 
   const gid = useId().replace(/:/g, "");
   const gradId = `glpJourneyGrad-${gid}`;
+  const glowId = `glpJourneyGlow-${gid}`;
+  const sheenId = `glpJourneySheen-${gid}`;
+  const lineGradId = `glpJourneyLine-${gid}`;
+  /** Brand-tinted "data pulse" gradient — a fast-traveling brand-color streak that runs across the line on a 3.6s loop. New post-mount premium touch. */
+  const pulseId = `glpJourneyPulse-${gid}`;
+
+  /** Defer the chart paint until after mount so users never see a "lonely gray line" before the area animates in. */
+  const [revealed, setRevealed] = useState(false);
+  useEffect(() => {
+    const id = window.setTimeout(() => setRevealed(true), 60);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  /**
+   * Defer all decorative passes (glow line, white sheen, brand pulse) until *after* the area
+   * animation completes. Without this, the non-animated overlays (`isAnimationActive=false`)
+   * paint instantly while the area is still drawing in, creating a visible "static line on the
+   * right" flash that looked unfinished. Aux layers also gate the new "brand pulse" pass.
+   */
+  const [auxRevealed, setAuxRevealed] = useState(false);
+  useEffect(() => {
+    if (!revealed) return;
+    if (!animate) {
+      setAuxRevealed(true);
+      return;
+    }
+    const id = window.setTimeout(() => setAuxRevealed(true), 2500);
+    return () => window.clearTimeout(id);
+  }, [revealed, animate]);
 
   const domain = useMemo((): [number, number] => [0, 100], []);
 
@@ -109,9 +136,10 @@ export default function GlpJourneyProgressChart({
   const legendStartPair = first?.label === "Start" ? "Month 0" : (first?.label ?? "Month 0");
 
   /**
-   * Exact match for the x-axis `<Label style={{ fontSize: 11, fill: "#64748b", fontWeight: 600 }}>`
-   * — HTML uses `color` instead of SVG `fill`, and we inherit the document font so the two
-   * captions visually read as the same pair of axis labels.
+   * Both axis captions ("Toward your stated goal" / "Time (months from start)") now render
+   * through the *same* HTML path with the *same* `axisCaptionStyle`, so they're visually
+   * identical (SVG `<Label>` and HTML text don't share font metrics, which was making the
+   * Y caption read larger than the X one).
    */
   const axisCaptionStyle: CSSProperties = {
     fontSize: 11,
@@ -151,23 +179,29 @@ export default function GlpJourneyProgressChart({
             Each point is a modeled checkpoint — not a promise. Vertical axis: share of your goal; horizontal: months
             from start. Your provider sets the real pace.
           </p>
-          <div className="mx-auto mt-4 flex max-w-md flex-col items-center gap-2.5 text-[11px] leading-relaxed text-slate-600 sm:mt-5 sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-6 sm:gap-y-2">
-            <span className="inline-flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-slate-300" aria-hidden />
-              Start · {legendStartPair}
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <span
-                className="h-2 w-2 rounded-full shadow-sm ring-2 ring-white"
-                style={{ backgroundColor: brandFill }}
-                aria-hidden
-              />
-              Modeled path
-            </span>
-            <span className="inline-flex items-center gap-2">
-              <span className="h-0.5 w-2 rounded-full bg-slate-200" aria-hidden />
-              100% = stated goal
-            </span>
+          {/**
+           * Legend pills are explicitly centered as a single inline-flex group with a tight
+           * gap so they read as one cluster — not three items spread to the card edges.
+           */}
+          <div className="mt-4 flex w-full justify-center sm:mt-5">
+            <div className="inline-flex max-w-full flex-col items-center gap-2 text-[11px] leading-relaxed text-slate-600 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-x-5 sm:gap-y-2">
+              <span className="inline-flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-slate-300" aria-hidden />
+                Start · {legendStartPair}
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <span
+                  className="h-2 w-2 rounded-full shadow-sm ring-2 ring-white"
+                  style={{ backgroundColor: brandFill }}
+                  aria-hidden
+                />
+                Modeled path
+              </span>
+              <span className="inline-flex items-center gap-2">
+                <span className="h-0.5 w-2 rounded-full bg-slate-200" aria-hidden />
+                100% = stated goal
+              </span>
+            </div>
           </div>
         </div>
       ) : null}
@@ -177,10 +211,10 @@ export default function GlpJourneyProgressChart({
         {!compact ? (
           <>
             {/* Desktop vertical label — rendered first so `.first()` selectors at md+ hit the visible one.
-                `self-stretch` lets the label container fill the flex-row height so the vertical text
-                centers naturally alongside the plot area (between the graph and the outer card). */}
+                Container is now narrow (just enough for the rotated 11px text + a hair of gutter), so the
+                graph fills almost the full card width and reads as substantial. */}
             <div
-              className="hidden shrink-0 self-stretch flex-col items-center justify-center border-slate-200/80 pr-1 text-center md:flex md:w-[4.5rem] md:border-r md:pr-3 lg:w-[5rem]"
+              className="hidden shrink-0 self-stretch flex-col items-center justify-center border-slate-200/80 pr-1 text-center md:flex md:w-[1.75rem] md:border-r md:pr-2 lg:w-[2rem]"
             >
               <p
                 className="text-center [writing-mode:vertical-rl] rotate-180"
@@ -234,32 +268,68 @@ export default function GlpJourneyProgressChart({
                   <stop offset="45%" stopColor={brandFill} stopOpacity={0.22} />
                   <stop offset="100%" stopColor={brandFill} stopOpacity={0.04} />
                 </linearGradient>
+                {/* Soft brand-tinted glow under the line, like a luminous neon edge. */}
+                <filter id={glowId} x="-10%" y="-30%" width="120%" height="160%">
+                  <feGaussianBlur stdDeviation="3.2" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                {/* Brand-tinted "sheen" gradient that travels across the line on a 5.6s loop — only when motion is allowed. */}
+                <linearGradient id={lineGradId} x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor={brandFill} stopOpacity={0.85} />
+                  <stop offset="50%" stopColor={brandFill} stopOpacity={1} />
+                  <stop offset="100%" stopColor={brandFill} stopOpacity={0.85} />
+                </linearGradient>
+                <linearGradient id={sheenId} x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#ffffff" stopOpacity="0">
+                    {animate ? (
+                      <animate attributeName="offset" values="-0.4;1.0" dur="5.6s" repeatCount="indefinite" />
+                    ) : null}
+                  </stop>
+                  <stop offset="0.05" stopColor="#ffffff" stopOpacity="0.85">
+                    {animate ? (
+                      <animate attributeName="offset" values="-0.35;1.05" dur="5.6s" repeatCount="indefinite" />
+                    ) : null}
+                  </stop>
+                  <stop offset="0.1" stopColor="#ffffff" stopOpacity="0">
+                    {animate ? (
+                      <animate attributeName="offset" values="-0.3;1.1" dur="5.6s" repeatCount="indefinite" />
+                    ) : null}
+                  </stop>
+                </linearGradient>
+                {/* Brand-tinted "data pulse" gradient — fast, narrow, repeating; offset by 1.8s vs. the white sheen so the two passes never collide. */}
+                <linearGradient id={pulseId} x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor={brandFill} stopOpacity="0">
+                    {animate ? (
+                      <animate attributeName="offset" values="-0.3;1.0" dur="3.6s" begin="1.8s" repeatCount="indefinite" />
+                    ) : null}
+                  </stop>
+                  <stop offset="0.04" stopColor={brandFill} stopOpacity="0.95">
+                    {animate ? (
+                      <animate attributeName="offset" values="-0.26;1.04" dur="3.6s" begin="1.8s" repeatCount="indefinite" />
+                    ) : null}
+                  </stop>
+                  <stop offset="0.08" stopColor={brandFill} stopOpacity="0">
+                    {animate ? (
+                      <animate attributeName="offset" values="-0.22;1.08" dur="3.6s" begin="1.8s" repeatCount="indefinite" />
+                    ) : null}
+                  </stop>
+                </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 6" vertical={false} stroke="#e2e8f0" />
-              <ReferenceLine
-                y={100}
-                stroke="#cbd5e1"
-                strokeDasharray="5 5"
-                strokeWidth={1}
-                ifOverflow="visible"
-              />
+              {/* Very subtle grid — almost invisible until the eye fixates. No solo dashed reference line. */}
+              <CartesianGrid strokeDasharray="2 6" vertical={false} stroke="rgba(15,23,42,0.05)" />
               <XAxis
                 dataKey="label"
                 tick={{ fontSize: 10, fill: "#64748b" }}
                 axisLine={false}
                 tickLine={false}
                 interval="preserveStartEnd"
-                height={44}
+                height={28}
                 tickMargin={6}
-              >
-                <Label
-                  position="bottom"
-                  offset={0}
-                  style={{ fontSize: 11, fill: "#64748b", fontWeight: 600 }}
-                >
-                  Time (months from start)
-                </Label>
-              </XAxis>
+              />
+              {/* X-axis caption is rendered as HTML below the chart so it visually matches the rotated Y caption pixel-for-pixel. */}
               <YAxis
                 domain={domain}
                 tick={{ fontSize: 10, fill: "#64748b" }}
@@ -268,54 +338,118 @@ export default function GlpJourneyProgressChart({
                 tickFormatter={(v) => `${v}%`}
                 width={40}
               />
+              {/**
+               * Custom tooltip content avoids the duplicate-row problem caused by overlay series
+               * (glow + sheen + brand-pulse all share `dataKey="progress"`). We pick the first
+               * payload row and render exactly one summary line.
+               */}
               <Tooltip
-                contentStyle={{
-                  borderRadius: 12,
-                  border: "1px solid #e2e8f0",
-                  fontSize: 12,
-                  boxShadow: "0 12px 32px rgba(15,23,42,0.12)",
+                cursor={{ stroke: "rgba(15,23,42,0.15)", strokeDasharray: "3 3" }}
+                content={({ active, payload, label }) => {
+                  if (!active || !payload || payload.length === 0) return null;
+                  const value = payload[0]?.value;
+                  if (typeof value !== "number") return null;
+                  return (
+                    <div
+                      style={{
+                        borderRadius: 12,
+                        border: "1px solid #e2e8f0",
+                        background: "#fff",
+                        fontSize: 12,
+                        boxShadow: "0 12px 32px rgba(15,23,42,0.12)",
+                        padding: "8px 10px",
+                        lineHeight: 1.35,
+                        color: "#0f172a",
+                      }}
+                    >
+                      <div style={{ fontWeight: 600, marginBottom: 2 }}>{label}</div>
+                      <div style={{ color: "#475569" }}>
+                        Modeled momentum:{" "}
+                        <span style={{ color: brandFill, fontWeight: 600 }}>{value}%</span>{" "}
+                        of stated goal (illustrative)
+                      </div>
+                    </div>
+                  );
                 }}
-                formatter={(value: number) => [
-                  `${value}% of your stated goal (illustrative)`,
-                  "Modeled momentum",
-                ]}
-                labelFormatter={(label) => `${label}`}
               />
-              {!compact ? (
+              {revealed && auxRevealed && !compact ? (
                 <Line
                   type="monotone"
                   dataKey="progress"
                   stroke={brandFill}
-                  strokeWidth={8}
+                  strokeWidth={10}
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeOpacity={0.12}
+                  strokeOpacity={0.16}
                   dot={false}
-                  isAnimationActive={animate}
-                  animationDuration={animate ? 2400 : 0}
-                  animationEasing="ease-in-out"
+                  isAnimationActive={false}
+                  filter={`url(#${glowId})`}
                   name="glow"
                 />
               ) : null}
-              <Area
-                type="monotone"
-                dataKey="progress"
-                stroke={brandFill}
-                strokeWidth={2.75}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                fill={`url(#${gradId})`}
-                isAnimationActive={animate}
-                animationDuration={animate ? 2400 : 0}
-                animationEasing="ease-in-out"
-                activeDot={{ r: 6, strokeWidth: 2, stroke: "#fff" }}
-                dot={areaDot as never}
-              />
+              {revealed ? (
+                <Area
+                  type="monotone"
+                  dataKey="progress"
+                  stroke={brandFill}
+                  strokeWidth={2.75}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill={`url(#${gradId})`}
+                  isAnimationActive={animate}
+                  animationDuration={animate ? 2400 : 0}
+                  animationEasing="ease-in-out"
+                  activeDot={{ r: 6, strokeWidth: 2, stroke: "#fff" }}
+                  dot={areaDot as never}
+                />
+              ) : null}
+              {/* Premium sheen overlay — a thin white highlight that slides across the line on a 5.6s loop. Gated until area finishes drawing in to avoid the static "tail" flash. */}
+              {revealed && auxRevealed && animate && !compact ? (
+                <Line
+                  type="monotone"
+                  dataKey="progress"
+                  stroke={`url(#${sheenId})`}
+                  strokeWidth={4}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  dot={false}
+                  isAnimationActive={false}
+                  name="sheen"
+                />
+              ) : null}
+              {/**
+               * NEW: brand-tinted "data pulse" layer — a fast, brand-color streak that runs
+               * left-to-right across the line on a 3.6s loop after the area has finished
+               * drawing. Reads as a "live data" / momentum signal layered on top of the white
+               * sheen, without competing with it (different timing + color).
+               */}
+              {revealed && auxRevealed && animate && !compact ? (
+                <Line
+                  type="monotone"
+                  dataKey="progress"
+                  stroke={`url(#${pulseId})`}
+                  strokeWidth={3}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  dot={false}
+                  isAnimationActive={false}
+                  name="pulse"
+                />
+              ) : null}
             </AreaChart>
           </ResponsiveContainer>
         </div>
       </div>
       </div>
+      {!compact ? (
+        <p
+          className="mx-auto mt-3 w-full text-center"
+          style={axisCaptionStyle}
+          data-results-chart-x-label
+        >
+          Time (months from start)
+        </p>
+      ) : null}
       {!compact ? (
         <p className="mt-4 border-t border-slate-100 px-1 text-center text-[11px] leading-relaxed text-slate-500 sm:px-2">
           Last checkpoint shown: {last?.label} at ~{last?.progress}% toward your stated goal (example only).

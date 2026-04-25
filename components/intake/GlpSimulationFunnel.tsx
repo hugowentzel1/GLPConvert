@@ -11,6 +11,8 @@ import { resolveGlpTenantSlug } from "@/lib/glp-tenant-slug";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
+import { buildIntakePricingHref, buildBrandedDemoReturnHref } from "@/lib/glp-intake-nav-href";
+import { getAccessibleBrandFill } from "@/lib/glp-intake-brand-contrast";
 
 type TenantIntakePublicJson = {
   ok?: boolean;
@@ -278,7 +280,12 @@ export default function GlpSimulationFunnel() {
     [sp],
   );
   const effectiveLogo = logoFromQuery || publicCfg?.logoUrl || null;
-  const brandFill = primaryHex || publicCfg?.brandColor || DEFAULT_BRAND;
+  /**
+   * `?brand=` is user-controlled (cold-email URL) — guard against low-contrast values that would
+   * fail WCAG AA on the primary white-text CTAs. See `lib/glp-intake-brand-contrast.ts`.
+   */
+  const rawBrand = primaryHex || publicCfg?.brandColor || DEFAULT_BRAND;
+  const brandFill = getAccessibleBrandFill(rawBrand);
   const effectiveSecondary = secondaryFromQuery || publicCfg?.brandColorSecondary || null;
   const [step, setStep] = useState<FlowStep>(1);
   const [input, setInput] = useState<SimInput>({
@@ -582,9 +589,10 @@ export default function GlpSimulationFunnel() {
           ) : null}
           <header className={glpIntakeUi.stackSm}>
             <p className={glpIntakeUi.kicker}>Step 1</p>
-            <h2 className={glpIntakeUi.titleLg}>Start your intake preview</h2>
+            <h2 className={glpIntakeUi.titleLg}>Tell us the basics</h2>
             <p className={glpIntakeUi.body}>
-              A few basics to preview timing, typical ranges, and what patients often want clear before they book.
+              Five quick fields. You&apos;ll see a clear preview of timing, typical ranges, and your next step on the
+              very next page.
             </p>
             <p className={`${glpIntakeUi.bodyMuted} text-xs`}>
               General information only — your provider makes treatment decisions.
@@ -774,7 +782,8 @@ export default function GlpSimulationFunnel() {
               <h2 className={`${glpIntakeUi.titleLg} mt-2 md:text-[1.65rem]`}>Your path preview</h2>
               <p className="mt-2 text-sm font-medium text-slate-700">{company}</p>
               <p className="mx-auto mt-4 max-w-2xl text-sm font-normal leading-relaxed text-slate-600 sm:mx-0 md:text-[15px] md:leading-relaxed">
-                What many people review before a visit — not a diagnosis, guarantee, or medical advice.
+                Here&apos;s what most patients want to see before they book — illustrative only, not a diagnosis,
+                quote, or medical advice.
               </p>
             </div>
           </header>
@@ -965,6 +974,7 @@ export default function GlpSimulationFunnel() {
                 monthlySessions={demoTraffic}
                 brandPrimary={brandFill}
                 brandSecondary={effectiveSecondary}
+                pricingHref={buildIntakePricingHref(sp, company)}
               />
             </div>
           ) : null}
@@ -1028,7 +1038,7 @@ export default function GlpSimulationFunnel() {
 
           <div className={glpIntakeUi.readinessStack}>
             <fieldset className="space-y-0 border-0 p-0 m-0 min-w-0">
-              <legend className={glpIntakeUi.legendLabel}>Comfortable with this general monthly range?</legend>
+              <legend className={glpIntakeUi.legendLabel}>Is this monthly range comfortable for you?</legend>
               <div className={glpIntakeUi.segmentGrid3}>
                 {(
                   [
@@ -1050,7 +1060,7 @@ export default function GlpSimulationFunnel() {
               </div>
             </fieldset>
             <fieldset className="space-y-0 border-0 p-0 m-0 min-w-0">
-              <legend className={glpIntakeUi.legendLabel}>Hoping to start soon?</legend>
+              <legend className={glpIntakeUi.legendLabel}>How soon are you hoping to start?</legend>
               <div className={glpIntakeUi.segmentGrid3}>
                 {(
                   [
@@ -1307,7 +1317,7 @@ export default function GlpSimulationFunnel() {
             General information only, not medical advice. A licensed provider will confirm next steps.
           </p>
           <a
-            href="/"
+            href={buildBrandedDemoReturnHref(sp)}
             className="inline-flex text-sm font-semibold text-slate-700 underline decoration-slate-300 underline-offset-4 transition hover:text-slate-900"
           >
             Back to home

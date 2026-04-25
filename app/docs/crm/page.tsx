@@ -1,48 +1,52 @@
 "use client";
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useBrandTakeover } from '@/src/brand/useBrandTakeover';
 import { useSearchParams } from 'next/navigation';
 import Container from '@/components/layout/Container';
 import { Section } from '@/components/layout/Section';
 import { Stack } from '@/components/layout/Stack';
 import { Card } from '@/components/ui/Card';
-import Footer from '@/components/Footer';
+import BrandedDemoOrDefaultFooter from '@/components/intake/BrandedDemoOrDefaultFooter';
+import { buildBrandedDemoReturnHref, buildMarketingPathHref } from '@/lib/glp-intake-nav-href';
+import { PRODUCT_NAME, SUPPORT_EMAIL } from '@/lib/product-identity';
 import Link from 'next/link';
 
-export default function CRMGuidesPage() {
+function CRMGuidesContent() {
   const b = useBrandTakeover();
   const searchParams = useSearchParams();
   const [showAllIntegrations, setShowAllIntegrations] = useState(false);
+  const homeHref = buildBrandedDemoReturnHref(searchParams);
+  const supportHref = buildMarketingPathHref(searchParams, "/support");
 
   const primaryIntegrations = [
     {
       id: "hubspot",
       name: "HubSpot",
-      description: "Connect your solar tool with HubSpot CRM for seamless lead management and automation.",
+      description: `Send ${PRODUCT_NAME} intake leads to HubSpot CRM in real time for follow-up sequences and pipeline tracking.`,
       icon: "H",
       brandColor: "#FF7A59",
       href: "/docs/crm/hubspot",
-      features: ["Contact Management", "Deal Tracking", "Email Automation", "Lead Scoring"]
+      features: ["Contact creation", "Deal tracking", "Email sequences", "Lead scoring"]
     },
     {
       id: "salesforce",
       name: "Salesforce",
-      description: "Integrate with Salesforce CRM to track leads, opportunities, and customer data.",
+      description: `Push ${PRODUCT_NAME} intake responses to Salesforce as Leads or Cases for your existing patient acquisition workflows.`,
       icon: "S",
       brandColor: "#00A1E0",
       href: "/docs/crm/salesforce",
-      features: ["Lead Management", "Opportunity Tracking", "Custom Objects", "Workflow Automation"]
+      features: ["Lead management", "Opportunity tracking", "Custom objects", "Workflow automation"]
     },
     {
       id: "airtable",
       name: "Airtable (external only)",
       description:
-        "No in-app Airtable sync. Leads live in Supabase; use CRM webhooks or your own tools if you want Airtable.",
+        "No in-app Airtable sync. Leads live in our database; use a CRM webhook or your own tools if you want Airtable.",
       icon: "A",
       brandColor: "#18BFFF",
       href: "/docs/crm/airtable",
-      features: ["Supabase is source of truth", "Webhook to your stack", "Optional manual export"],
+      features: ["Database is source of truth", "Webhook to your stack", "Optional manual export"],
     },
   ];
 
@@ -53,13 +57,13 @@ export default function CRMGuidesPage() {
       description: "Visual sales pipeline management with automated follow-ups and deal tracking.",
       icon: "P",
       brandColor: "#FF7A59",
-      features: ["Sales Pipeline", "Activity Tracking", "Email Integration", "Reporting"]
+      features: ["Sales pipeline", "Activity tracking", "Email integration", "Reporting"]
     },
     {
       id: "zapier",
       name: "Zapier (optional)",
       description:
-        "Optional third-party automation. Sunspire does not require Zapier; prefer the native CRM webhook on your dashboard.",
+        `Optional third-party automation. ${PRODUCT_NAME} does not require Zapier; prefer the native CRM webhook on your dashboard.`,
       icon: "Z",
       brandColor: "#FF4A00",
       features: ["Optional", "Not required", "Use webhooks first", "5000+ apps if needed"],
@@ -100,25 +104,25 @@ export default function CRMGuidesPage() {
           <Stack>
             {/* Back Button */}
             <div className="mb-8">
-              <Link 
-                href={searchParams?.get('demo') ? `/?${searchParams?.toString()}` : `/paid?${searchParams?.toString()}`} 
+              <Link
+                href={homeHref}
                 className="inline-flex items-center text-neutral-500 hover:text-neutral-900 transition-colors font-medium"
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
-                Back to Home
+                Back to home
               </Link>
             </div>
 
             {/* Hero Block */}
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6">
-                CRM Integration Guides
+                CRM integration guides
               </h1>
               <p className="text-lg md:text-xl text-neutral-700 max-w-3xl mx-auto">
-                Connect your solar intelligence tool with your favorite CRM platform. 
-                We support all major CRMs and can build custom integrations.
+                Connect {PRODUCT_NAME} with your CRM so every intake lead flows into the same
+                pipeline your team already runs.
               </p>
             </div>
 
@@ -208,18 +212,18 @@ export default function CRMGuidesPage() {
                         </div>
                         {integration.id === 'custom' ? (
                           <a
-                            href="mailto:support@getsunspire.com?subject=Custom CRM Integration Request"
+                            href={`mailto:${SUPPORT_EMAIL}?subject=Custom%20CRM%20Integration%20Request`}
                             className="inline-block w-full py-2 px-4 bg-neutral-100 text-neutral-700 rounded-lg font-medium hover:bg-neutral-200 transition-colors text-center text-sm"
                           >
-                            Contact Support
+                            Contact support
                           </a>
                         ) : (
-                          <a
-                            href="/support"
+                          <Link
+                            href={supportHref}
                             className="inline-block w-full py-2 px-4 bg-neutral-100 text-neutral-700 rounded-lg font-medium hover:bg-neutral-200 transition-colors text-center text-sm"
                           >
-                            Request Integration
-                          </a>
+                            Request integration
+                          </Link>
                         )}
                       </div>
                     </Card>
@@ -267,10 +271,10 @@ export default function CRMGuidesPage() {
                 
                 <div className="text-center">
                   <a
-                    href="mailto:support@getsunspire.com?subject=Custom CRM Integration Request"
+                    href={`mailto:${SUPPORT_EMAIL}?subject=Custom%20CRM%20Integration%20Request`}
                     className="inline-flex items-center justify-center px-8 py-4 bg-[var(--brand-primary)] text-white rounded-lg font-semibold hover:opacity-90 transition-colors text-lg w-full max-w-lg"
                   >
-                    Request Custom Integration
+                    Request custom integration
                   </a>
                 </div>
               </div>
@@ -279,17 +283,25 @@ export default function CRMGuidesPage() {
             {/* Back to Support */}
             <div className="mt-12 text-center">
               <Link
-                href={searchParams?.toString() ? `/support?${searchParams.toString()}` : '/support'}
+                href={supportHref}
                 className="inline-flex items-center px-6 py-3 text-neutral-600 hover:text-neutral-900 transition-colors"
               >
-                ← Back to Support
+                ← Back to support
               </Link>
             </div>
           </Stack>
         </Container>
       </Section>
 
-      <Footer />
+      <BrandedDemoOrDefaultFooter />
     </div>
+  );
+}
+
+export default function CRMGuidesPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-50" aria-label="Loading" />}>
+      <CRMGuidesContent />
+    </Suspense>
   );
 }
