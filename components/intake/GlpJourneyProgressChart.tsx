@@ -212,16 +212,19 @@ export default function GlpJourneyProgressChart({
           <>
             {/* Desktop vertical Y caption.
              *
-             * Symmetric horizontal gutter (`mx-3` = 12px on each side of the rotated text)
-             * mirrors the symmetric *vertical* padding around the X caption below — so the
-             * caption visually breathes equally on both sides of itself, and the gap between
-             * card-edge↔caption is the same as caption↔chart. No vertical divider — the
-             * caption itself is the boundary, and the divider was creating an asymmetric
-             * visual weight on the right side.
+             * The chart card has `sm:px-6` (24px) horizontal padding. Without
+             * adjustment, the rotated caption sits ~36px from the card's left
+             * edge — visually too much dead air. We pull the caption container
+             * left with a negative margin (`md:-ml-3 lg:-ml-4`) so the caption
+             * starts ~8–12px from the card edge. The *right* margin on the
+             * rotated text (`mr-3` = 12px) preserves breathing room between the
+             * caption and the chart, matching the X caption's symmetric vertical
+             * padding (mt-3 / mb-3) below. Result: tight on the card edge,
+             * generous next to the chart — same numeric gutter as the X axis.
              */}
-            <div className="hidden shrink-0 self-stretch flex-col items-center justify-center md:flex">
+            <div className="hidden shrink-0 self-stretch flex-col items-center justify-center md:-ml-3 md:flex lg:-ml-4">
               <p
-                className="mx-3 text-center [writing-mode:vertical-rl] rotate-180"
+                className="ml-0 mr-3 text-center [writing-mode:vertical-rl] rotate-180"
                 style={axisCaptionStyle}
                 data-results-chart-y-label
               >

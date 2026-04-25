@@ -127,13 +127,43 @@ export const glpIntakeUi = {
 
   /** Step 2 results: generous vertical rhythm (M3-style section spacing) */
   resultsStack: "space-y-12 md:space-y-14",
+  /**
+   * Section divider used to anchor each major content block on step 2 (Path / Expectations
+   * / Investment / Owner panels). A `slate-200/80` border is more visible than the
+   * previous `slate-100` (~3% gray) — picks up cleanly on white cards without feeling
+   * heavy. Same border is used by `formNavRowRule` so the final button row reads as
+   * the *last* section of the page, not a different element.
+   */
   resultsSectionRule:
-    "border-t border-slate-100 pt-11 mt-11 first:mt-0 first:border-0 first:pt-0 md:pt-12 md:mt-12",
+    "border-t border-slate-200/80 pt-11 mt-11 first:mt-0 first:border-0 first:pt-0 md:pt-12 md:mt-12",
+
+  /**
+   * Step 2 content card — shared style for Path & Expectations cards so they read as
+   * the same component (previously: Path used p-6 + heavier shadow + hover lift, while
+   * Expectations used p-5 sm:p-6 + lighter shadow and no hover, breaking the row's
+   * visual rhythm). Single source of truth for surface, padding, and motion across
+   * both grids.
+   */
+  resultsContentCard:
+    "flex flex-col rounded-2xl border border-slate-200/90 bg-white p-5 shadow-[0_2px_8px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.04] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)] sm:p-6",
+  /** Per-card eyebrow (e.g. "Weeks 1–4", "Early") — same uppercase 11px overline */
+  resultsCardEyebrow:
+    "text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500",
+  /** Per-card sub-headline (e.g. "Getting oriented", "Routine settles in") */
+  resultsCardTitle:
+    "mt-2 text-sm font-semibold leading-snug tracking-tight text-slate-900",
+  /** Per-card description body */
+  resultsCardDescription:
+    "mt-2 text-sm leading-relaxed text-slate-600",
 
   formActions: "flex w-full min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-end sm:gap-3",
   formNavRow: "mt-8 flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
+  /**
+   * Form nav row with a top divider — same border weight as `resultsSectionRule` so
+   * the nav row reads as the closing section of the page, not a separate element.
+   */
   formNavRowRule:
-    "mt-8 flex flex-col gap-3 border-t border-slate-100 pt-8 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
+    "mt-8 flex flex-col gap-3 border-t border-slate-200/80 pt-8 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
 
   chip: "rounded-full bg-slate-100 px-3.5 py-1 text-xs font-medium text-slate-700",
   sectionRule:

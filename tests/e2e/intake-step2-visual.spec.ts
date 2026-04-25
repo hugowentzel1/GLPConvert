@@ -72,6 +72,20 @@ test("intake step 2 — chart axis spacing + at-a-glance tiles look consistent",
     expect(paragraphs, `tile ${i} should have 4 stacked <p> rows`).toBe(4);
   }
 
+  // ---- PATH & EXPECTATIONS share the same card structure ----
+  const pathCards = page.locator("[data-results-path] .grid > div");
+  const expectationCards = page.locator("[data-results-expectations] .grid > div");
+  await expect(pathCards).toHaveCount(3);
+  await expect(expectationCards).toHaveCount(3);
+
+  // Each card in both grids should have 3 rows: eyebrow, sub-headline title, description
+  for (let i = 0; i < 3; i++) {
+    const pCount = await pathCards.nth(i).locator(":scope > p").count();
+    const eCount = await expectationCards.nth(i).locator(":scope > p").count();
+    expect(pCount, `path card ${i} should have 3 <p> rows`).toBe(3);
+    expect(eCount, `expectations card ${i} should have 3 <p> rows (eyebrow + title + description)`).toBe(3);
+  }
+
   // ---- SCREENSHOTS for visual eyeball ----
   await page.locator("[data-results-chart]").screenshot({
     path: "screenshots-step2/01-chart.png",
@@ -83,4 +97,32 @@ test("intake step 2 — chart axis spacing + at-a-glance tiles look consistent",
     path: "screenshots-step2/03-full-step2.png",
     timeout: 30000,
   });
+  // Path + Expectations side-by-side region for visual comparison
+  await page.locator("[data-results-path]").screenshot({
+    path: "screenshots-step2/04-path.png",
+  });
+  await page.locator("[data-results-expectations]").screenshot({
+    path: "screenshots-step2/05-expectations.png",
+  });
+  // Bottom-of-page spacing audit: owner panels → FAQ → disclaimer → nav
+  const owner = page.locator("[data-results-owner]");
+  if (await owner.count()) {
+    await owner.screenshot({ path: "screenshots-step2/06-owner.png" });
+  }
+  await page.locator("[data-results-faq]").scrollIntoViewIfNeeded();
+  await page.waitForTimeout(150);
+  // capture a tall slice from owner-panels through nav buttons
+  const ownerBox = (await owner.first().boundingBox()) ?? null;
+  const navBox = (await page.locator("[data-results-nav]").first().boundingBox()) ?? null;
+  if (ownerBox && navBox) {
+    await page.screenshot({
+      path: "screenshots-step2/07-bottom-flow.png",
+      clip: {
+        x: 0,
+        y: Math.max(0, ownerBox.y - 16),
+        width: page.viewportSize()?.width ?? 1280,
+        height: navBox.y + navBox.height + 24 - (ownerBox.y - 16),
+      },
+    });
+  }
 });

@@ -855,20 +855,21 @@ export default function GlpSimulationFunnel() {
             );
           })()}
 
+          {/**
+           * Path & Expectations now share one card component (`resultsContentCard`) and
+           * one structural pattern — eyebrow → sub-headline → description — so both
+           * 3-card grids read as the same SaaS rhythm. Previously Expectations only had
+           * eyebrow + body which made it look like a "cheaper" version of the Path row.
+           */}
           <div className={glpIntakeUi.resultsSectionRule} data-results-path>
             <p className={`${glpIntakeUi.kicker} mb-2`}>Path</p>
             <h3 className={`${glpIntakeUi.titleMd} mb-6`}>What usually happens next</h3>
             <div className="grid gap-6 md:grid-cols-3 md:gap-7">
-              {output.phasePlan.map((p, idx) => (
-                <div
-                  key={p.phase}
-                  className={`flex flex-col rounded-2xl border border-slate-200/90 bg-white/90 p-6 shadow-[0_2px_8px_rgba(15,23,42,0.04)] ring-1 ring-slate-900/[0.03] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_28px_rgba(15,23,42,0.08)] ${
-                    idx === 1 ? "ring-1 ring-slate-900/[0.07] md:scale-[1.02]" : ""
-                  }`}
-                >
-                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{p.weeks}</p>
-                  <p className="mt-2 text-sm font-semibold text-slate-900">{p.phase}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-600">{p.focus}</p>
+              {output.phasePlan.map((p) => (
+                <div key={p.phase} className={glpIntakeUi.resultsContentCard}>
+                  <p className={glpIntakeUi.resultsCardEyebrow}>{p.weeks}</p>
+                  <p className={glpIntakeUi.resultsCardTitle}>{p.phase}</p>
+                  <p className={glpIntakeUi.resultsCardDescription}>{p.focus}</p>
                 </div>
               ))}
             </div>
@@ -881,25 +882,29 @@ export default function GlpSimulationFunnel() {
               {(
                 [
                   {
-                    t: "Early",
-                    d: "Routine and appetite often shift first; your provider sets how fast things move.",
+                    eyebrow: "Early",
+                    title: "Routine settles in",
+                    description:
+                      "Appetite and daily rhythm often shift first; your provider sets the pace.",
                   },
                   {
-                    t: "Middle",
-                    d: "Check-ins continue; plans adjust — this is normal, not a setback.",
+                    eyebrow: "Middle",
+                    title: "Plans get adjusted",
+                    description:
+                      "Check-ins continue and plans adapt — this is normal, not a setback.",
                   },
                   {
-                    t: "Ongoing",
-                    d: "Habits and follow-through matter; support is part of the long game.",
+                    eyebrow: "Ongoing",
+                    title: "Habits hold the gains",
+                    description:
+                      "Long-term follow-through matters; support is part of the long game.",
                   },
                 ] as const
-              ).map(({ t, d }) => (
-                <div
-                  key={t}
-                  className="rounded-2xl border border-slate-200/90 bg-white p-5 shadow-[0_1px_3px_rgba(15,23,42,0.04)] sm:p-6"
-                >
-                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">{t}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-700">{d}</p>
+              ).map(({ eyebrow, title, description }) => (
+                <div key={eyebrow} className={glpIntakeUi.resultsContentCard}>
+                  <p className={glpIntakeUi.resultsCardEyebrow}>{eyebrow}</p>
+                  <p className={glpIntakeUi.resultsCardTitle}>{title}</p>
+                  <p className={glpIntakeUi.resultsCardDescription}>{description}</p>
                 </div>
               ))}
             </div>
@@ -992,8 +997,16 @@ export default function GlpSimulationFunnel() {
             </div>
           </details>
 
+          {/**
+           * Owner-only preview block — renders only in demo mode. Wrapped with
+           * `resultsSectionRule` (same divider as Path / Expectations / Investment)
+           * so the owner section reads as another anchored section, not a stray
+           * panel grafted onto the bottom. Spacing above is fully managed by the
+           * parent `resultsStack` + the section rule's `mt-11 pt-11` (~92px) for
+           * consistent rhythm with the other section breaks.
+           */}
           {isDemoMode ? (
-            <div className="border-t border-slate-100 pt-8 mt-8">
+            <div className={glpIntakeUi.resultsSectionRule} data-results-owner>
               <GlpDemoOwnerPanels
                 companyName={company}
                 monthlySessions={demoTraffic}
@@ -1004,7 +1017,10 @@ export default function GlpSimulationFunnel() {
             </div>
           ) : null}
 
-          <details className="rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 shadow-sm transition-shadow open:shadow-md">
+          <details
+            className="rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 shadow-sm transition-shadow open:shadow-md"
+            data-results-faq
+          >
             <summary className="cursor-pointer list-none text-xs font-semibold text-slate-600 [&::-webkit-details-marker]:hidden">
               Common questions
             </summary>
@@ -1026,11 +1042,11 @@ export default function GlpSimulationFunnel() {
             </dl>
           </details>
 
-          <p className={`${glpIntakeUi.bodyMuted} pt-1 text-center text-[11px]`}>
+          <p className={`${glpIntakeUi.bodyMuted} text-center text-[11px]`}>
             General information — not medical advice. Your provider decides treatment.
           </p>
 
-          <div className={glpIntakeUi.formNavRowRule}>
+          <div className={glpIntakeUi.formNavRowRule} data-results-nav>
             <button type="button" className={glpIntakeUi.backBtn} onClick={goBack}>
               Previous
             </button>
