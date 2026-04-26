@@ -329,7 +329,7 @@ export default function GlpSimulationFunnel() {
   outputRef.current = output;
 
   /** Step 1 "building" → step 2 delay; must not live in a useEffect (deps can clear the timeout). */
-  const step1To2TimerRef = useRef<ReturnType<typeof window.setTimeout> | null>(null);
+  const step1To2TimerRef = useRef<number | null>(null);
   useEffect(() => {
     return () => {
       if (step1To2TimerRef.current != null) {

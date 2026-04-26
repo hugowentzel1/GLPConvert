@@ -128,11 +128,9 @@ export default function GlpJourneyProgressChart({
     [brandFill, lastIndex, animate],
   );
 
-  if (points.length < 2) return null;
-
   const compact = variant === "compact";
-  const last = points[points.length - 1];
-  const first = points[0];
+  const lastPointSafe = points.length > 0 ? points[points.length - 1] : undefined;
+  const firstPointSafe = points.length > 0 ? points[0] : undefined;
   /**
    * "Final-checkpoint" payoff chip — counts up from 0 → last.progress once the
    * area animation completes, then settles. Inspired by Stripe Climate's annual
@@ -140,6 +138,10 @@ export default function GlpJourneyProgressChart({
    * payoff that rewards the user for watching the chart draw, communicates the
    * model's destination, and adds perceived precision without competing with
    * the existing line motion.
+   *
+   * NOTE: hooks must run on every render (no early returns above this line),
+   * so we read the final progress from `lastPointSafe?.progress` rather than
+   * gating on `points.length >= 2`.
    */
   const [counterValue, setCounterValue] = useState(0);
   useEffect(() => {
@@ -149,10 +151,10 @@ export default function GlpJourneyProgressChart({
       return;
     }
     if (!animate) {
-      setCounterValue(last?.progress ?? 0);
+      setCounterValue(lastPointSafe?.progress ?? 0);
       return;
     }
-    const target = last?.progress ?? 0;
+    const target = lastPointSafe?.progress ?? 0;
     const startedAt = performance.now();
     const duration = 1100;
     let frame = 0;
@@ -164,7 +166,12 @@ export default function GlpJourneyProgressChart({
     };
     frame = window.requestAnimationFrame(tick);
     return () => window.cancelAnimationFrame(frame);
-  }, [auxRevealed, animate, last?.progress, compact]);
+  }, [auxRevealed, animate, lastPointSafe?.progress, compact]);
+
+  if (points.length < 2) return null;
+
+  const last = lastPointSafe!;
+  const first = firstPointSafe!;
   const legendStartPair = first?.label === "Start" ? "Month 0" : (first?.label ?? "Month 0");
 
   /**
