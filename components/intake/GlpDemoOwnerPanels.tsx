@@ -100,16 +100,35 @@ export default function GlpDemoOwnerPanels({
             Cold clicks bounce before a clear next step. Cost and timing stay fuzzy, and consults stall at the form.
           </p>
         </div>
-        <div className={`relative overflow-hidden ${OWNER_PANEL_SURFACE}`}>
-          <span
-            className="pointer-events-none absolute inset-x-0 top-0 h-[2px]"
-            style={{ backgroundColor: brandPrimary }}
-            aria-hidden
-          />
-          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-600">With GLPConvert</p>
+        {/**
+         * "With GLPConvert" payoff card. Buyer pass 5 feedback: the
+         * brand-color top accent bar read as "extra noise" — both columns
+         * already use the same `OWNER_PANEL_SURFACE` token, and the
+         * differentiation is now carried by a small brand-color check icon
+         * next to the eyebrow + the slightly bolder body text. Same Stripe
+         * Pricing / Linear Plans / Vercel "winner card" pattern (mark with
+         * a subtle iconographic cue, not a heavy chrome bar).
+         */}
+        <div className={OWNER_PANEL_SURFACE}>
+          <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-600">
+            <svg
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="h-3.5 w-3.5 shrink-0"
+              style={{ color: brandPrimary }}
+              aria-hidden
+            >
+              <path
+                fillRule="evenodd"
+                d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.07 7.142a1 1 0 0 1-1.42.006l-3.93-3.93a1 1 0 1 1 1.414-1.414l3.215 3.214 6.37-6.426a1 1 0 0 1 1.415-.006Z"
+                clipRule="evenodd"
+              />
+            </svg>
+            With GLPConvert
+          </p>
           <p className="mt-2 text-sm leading-relaxed text-slate-800">
-            Short branded path with clear ranges, then your scheduling link — same traffic, less leakage, more booked
-            consults.
+            Same paid traffic, fewer dropped intakes. Patients finish a branded path that ends at your scheduling link —
+            so consults arrive primed, not cold.
           </p>
         </div>
       </div>

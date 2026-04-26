@@ -1060,18 +1060,26 @@ export default function GlpSimulationFunnel() {
                         key={tile.label}
                         className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4"
                       >
+                        {/**
+                         * Brand-filled icon chip — matches the numbered phase
+                         * chips in the "Path preview" milestone strip above
+                         * (white glyph on company-color disc + soft white
+                         * ring + drop shadow), so the page reads as one
+                         * branded surface family instead of two separate
+                         * iconography systems. Stripe Atlas / Linear /
+                         * Vercel Pricing all reuse a single icon-chip token
+                         * across every section of a single page.
+                         */}
                         <span
-                          className="inline-flex h-8 w-8 items-center justify-center rounded-lg"
-                          style={{
-                            backgroundColor: `color-mix(in srgb, ${brandFill} 12%, white)`,
-                          }}
+                          className="relative inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-sm ring-2 ring-white"
+                          style={{ backgroundColor: brandFill }}
                           aria-hidden
                         >
                           <svg
                             viewBox="0 0 24 24"
                             fill="none"
-                            stroke={brandFill}
-                            strokeWidth={1.7}
+                            stroke="#ffffff"
+                            strokeWidth={1.85}
                             className="h-4 w-4"
                           >
                             {tile.icon}
