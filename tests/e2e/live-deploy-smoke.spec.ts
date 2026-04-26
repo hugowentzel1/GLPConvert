@@ -16,7 +16,7 @@ test.describe("live deploy smoke", () => {
     expect(bg.toLowerCase()).not.toContain("rgb(15, 23, 42)");
   });
 
-  test("/intake step 2 renders momentum chart + owner preview (no floating checkpoint chip)", async ({ page }) => {
+  test("/intake step 2 renders unified surfaces + final-checkpoint chip", async ({ page }) => {
     await page.goto(`${LIVE}/intake?company=Sunspire+Weight+Clinic&primary=%23146EF5&demo=1&_v=${Date.now()}`, { waitUntil: "networkidle" });
     await page.getByLabel(/Current weight/i).first().fill("220");
     await page.getByLabel(/Goal weight/i).first().fill("180");
@@ -24,9 +24,9 @@ test.describe("live deploy smoke", () => {
     const next = page.getByRole("button", { name: /continue/i }).first();
     await next.click();
     await page.waitForTimeout(3500);
-    await expect(page.locator("[data-results-chart]")).toBeVisible({ timeout: 15_000 });
-    await expect(page.locator("[data-results-chart-final-chip]")).toHaveCount(0);
-    await expect(page.getByText(/Activate for Sunspire Weight Clinic/i).first()).toBeVisible();
+    const chip = page.locator("[data-results-chart-final-chip]");
+    await expect(chip).toBeVisible({ timeout: 15_000 });
+    await expect(chip).toContainText(/Modeled checkpoint/);
   });
 
   test("/support has Send Message mailto + brand-styled disclaimer at bottom", async ({ page }) => {

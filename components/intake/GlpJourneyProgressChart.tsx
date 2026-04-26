@@ -129,11 +129,49 @@ export default function GlpJourneyProgressChart({
   );
 
   const compact = variant === "compact";
+  const lastPointSafe = points.length > 0 ? points[points.length - 1] : undefined;
+  const firstPointSafe = points.length > 0 ? points[0] : undefined;
+  /**
+   * "Final-checkpoint" payoff chip — counts up from 0 → last.progress once the
+   * area animation completes, then settles. Inspired by Stripe Climate's annual
+   * commitment counter and Linear Insights' "current state" chip: a short, calm
+   * payoff that rewards the user for watching the chart draw, communicates the
+   * model's destination, and adds perceived precision without competing with
+   * the existing line motion.
+   *
+   * NOTE: hooks must run on every render (no early returns above this line),
+   * so we read the final progress from `lastPointSafe?.progress` rather than
+   * gating on `points.length >= 2`.
+   */
+  const [counterValue, setCounterValue] = useState(0);
+  useEffect(() => {
+    if (compact) return;
+    if (!auxRevealed) {
+      setCounterValue(0);
+      return;
+    }
+    if (!animate) {
+      setCounterValue(lastPointSafe?.progress ?? 0);
+      return;
+    }
+    const target = lastPointSafe?.progress ?? 0;
+    const startedAt = performance.now();
+    const duration = 1100;
+    let frame = 0;
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - startedAt) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setCounterValue(Math.round(target * eased));
+      if (t < 1) frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [auxRevealed, animate, lastPointSafe?.progress, compact]);
 
   if (points.length < 2) return null;
 
-  const last = points[points.length - 1];
-  const first = points[0];
+  const last = lastPointSafe!;
+  const first = firstPointSafe!;
   const legendStartPair = first?.label === "Start" ? "Month 0" : (first?.label ?? "Month 0");
 
   /**
@@ -169,7 +207,7 @@ export default function GlpJourneyProgressChart({
       />
 
       {!compact ? (
-        <div className="mb-5 space-y-2 px-2 text-center sm:mb-6 sm:space-y-2.5 sm:px-3">
+        <div className="mb-6 space-y-2 px-2 text-center sm:mb-7 sm:space-y-2.5 sm:px-3">
           <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
             Momentum snapshot (illustrative)
           </p>
@@ -207,23 +245,32 @@ export default function GlpJourneyProgressChart({
         </div>
       ) : null}
       <div
-        className={`${compact ? "" : "flex min-w-0 flex-col gap-2 md:flex-row md:items-stretch md:gap-2.5"}`}
+        className={`${compact ? "" : "flex min-w-0 flex-col gap-3 md:flex-row md:items-stretch md:gap-0"}`}
       >
         {!compact ? (
           <>
-            {/* Y caption: `gap-2.5` centers the label in the channel between the card padding and
-                the plot (matches X caption rhythm below). Avoid negative margins so the label is
-                not pushed away from the chart. */}
-            <div className="hidden w-[2.25rem] shrink-0 self-stretch flex-col items-center justify-center sm:w-[2.5rem] md:flex">
+            {/* Desktop vertical Y caption.
+             *
+             * The chart card has `sm:px-6` (24px) horizontal padding. Without
+             * adjustment, the rotated caption sits ~36px from the card's left
+             * edge — visually too much dead air. We pull the caption container
+             * left with a negative margin (`md:-ml-3 lg:-ml-4`) so the caption
+             * starts ~8–12px from the card edge. The *right* margin on the
+             * rotated text (`mr-3` = 12px) preserves breathing room between the
+             * caption and the chart, matching the X caption's symmetric vertical
+             * padding (mt-3 / mb-3) below. Result: tight on the card edge,
+             * generous next to the chart — same numeric gutter as the X axis.
+             */}
+            <div className="hidden shrink-0 self-stretch flex-col items-center justify-center md:-ml-3 md:flex lg:-ml-4">
               <p
-                className="text-center [writing-mode:vertical-rl] rotate-180"
+                className="ml-0 mr-3 text-center [writing-mode:vertical-rl] rotate-180"
                 style={axisCaptionStyle}
                 data-results-chart-y-label
               >
                 Toward your stated goal
               </p>
             </div>
-            <div className="flex justify-center px-1 pb-0.5 md:hidden">
+            <div className="flex justify-center px-1 md:hidden">
               <p
                 className="max-w-[14rem] text-center"
                 style={axisCaptionStyle}
@@ -246,6 +293,24 @@ export default function GlpJourneyProgressChart({
         >
           <div className="glp-intake-chart-lux-shimmer h-full w-full" />
         </div>
+        {!compact ? (
+          <div
+            className={`pointer-events-none absolute right-2 top-2 z-30 inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 bg-white/95 px-2.5 py-1 text-[11px] font-semibold tabular-nums text-slate-800 shadow-[0_4px_14px_rgba(15,23,42,0.08)] ring-1 ring-slate-900/[0.04] backdrop-blur-sm transition-all duration-500 ease-out sm:right-3 sm:top-3 ${
+              auxRevealed ? "translate-y-0 opacity-100" : "-translate-y-1 opacity-0"
+            }`}
+            style={{ color: brandFill }}
+            aria-hidden
+            data-results-chart-final-chip
+          >
+            <span
+              className="h-1.5 w-1.5 rounded-full"
+              style={{ backgroundColor: brandFill }}
+              aria-hidden
+            />
+            <span className="text-slate-500 font-medium">Modeled checkpoint</span>
+            <span style={{ color: brandFill }}>{counterValue}%</span>
+          </div>
+        ) : null}
         {!compact ? (
           <div
             className="glp-intake-chart-sparkle-layer pointer-events-none absolute inset-0 z-[18] overflow-hidden rounded-xl sm:rounded-2xl [mask-image:linear-gradient(180deg,black_0%,black_90%,transparent_100%)]"
@@ -442,7 +507,7 @@ export default function GlpJourneyProgressChart({
       </div>
       {!compact ? (
         <p
-          className="mx-auto mt-2.5 w-full text-center"
+          className="mx-auto mt-3 mb-3 w-full text-center"
           style={axisCaptionStyle}
           data-results-chart-x-label
         >
@@ -450,7 +515,7 @@ export default function GlpJourneyProgressChart({
         </p>
       ) : null}
       {!compact ? (
-        <p className="mt-1 border-t border-slate-200/85 px-1 pt-3 text-center text-[11px] leading-relaxed text-slate-500 sm:px-2">
+        <p className="border-t border-slate-100 px-1 pt-3 text-center text-[11px] leading-relaxed text-slate-500 sm:px-2">
           Last checkpoint shown: {last?.label} at ~{last?.progress}% toward your stated goal (example only).
         </p>
       ) : null}

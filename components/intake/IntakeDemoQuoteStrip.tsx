@@ -26,7 +26,7 @@ export default function IntakeDemoQuoteStrip() {
           className={`flex h-full min-h-0 flex-col space-y-4 ${glpIntakeUi.intakeHeroShell} p-5 sm:space-y-5 sm:p-6`}
           data-testid="intake-demo-testimonial-card"
         >
-          <blockquote className="flex min-h-0 flex-1 flex-col justify-start border-l-2 border-slate-300/90 pl-4 text-left">
+          <blockquote className="flex min-h-0 flex-1 flex-col justify-start border-l-2 border-slate-200 pl-4 text-left">
             <p className="text-[15px] leading-relaxed text-slate-800 sm:text-[16px] sm:leading-[1.65]">
               &ldquo;{q.quote}&rdquo;
             </p>
@@ -38,7 +38,7 @@ export default function IntakeDemoQuoteStrip() {
               exactly centered between them regardless of how the role/org text wraps.
               ─ avatar ─ (mt-3.5) ─ name ─ (mt-3.5) ─ role/org ─
             */}
-            <div className="flex w-full shrink-0 flex-col items-center border-t border-slate-300/80 pt-4 text-center sm:pt-5">
+            <div className="flex w-full shrink-0 flex-col items-center border-t border-slate-100 pt-4 text-center sm:pt-5">
               <div
                 className="flex shrink-0 justify-center"
                 style={{ ["--brand-primary" as string]: accent } as CSSProperties}

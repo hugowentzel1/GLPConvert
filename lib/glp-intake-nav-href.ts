@@ -50,13 +50,6 @@ export function buildIntakePricingHref(sp: SearchLike, companyLabel: string): st
   return `/pricing?${q.toString()}`;
 }
 
-export function buildIntakeSupportHref(sp: SearchLike, companyLabel: string): string {
-  const q = new URLSearchParams(sp?.toString() ?? "");
-  const label = companyLabel.trim() || "Your clinic";
-  q.set("company", label);
-  return `/support?${q.toString()}`;
-}
-
 /** Preserve current query (UTMs, demo, branding) for marketing site links (sunspire-style header). */
 export function buildMarketingPathHref(sp: SearchLike, path: string): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;

@@ -11,7 +11,7 @@ import { resolveGlpTenantSlug } from "@/lib/glp-tenant-slug";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
-import { buildIntakePricingHref, buildIntakeSupportHref, buildBrandedDemoReturnHref } from "@/lib/glp-intake-nav-href";
+import { buildIntakePricingHref, buildBrandedDemoReturnHref } from "@/lib/glp-intake-nav-href";
 import { getAccessibleBrandFill } from "@/lib/glp-intake-brand-contrast";
 
 type TenantIntakePublicJson = {
@@ -667,7 +667,7 @@ export default function GlpSimulationFunnel() {
             </div>
           </div>
 
-          <div className="mt-8 border-t border-slate-300/80 pt-8">
+          <div className="mt-8 border-t border-slate-100 pt-8">
             <p className="mb-5 block text-sm font-medium text-slate-700">Additional preferences (optional)</p>
             <details className="rounded-2xl border border-slate-200/90 bg-slate-50/60 px-4 py-4 open:bg-white open:shadow-sm">
             <summary className="cursor-pointer list-none text-sm font-semibold text-slate-800 [&::-webkit-details-marker]:hidden">
@@ -717,23 +717,20 @@ export default function GlpSimulationFunnel() {
           </details>
           </div>
 
-          <div className={`${glpIntakeUi.formNavRowRule} w-full`}>
-            <div className="hidden min-h-[52px] shrink-0 sm:block sm:w-[11rem]" aria-hidden />
-            <div className={glpIntakeUi.formActions}>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  onContinueFromInput();
-                }}
-                className={`${glpIntakeUi.primaryBtn} ${building ? "pointer-events-none opacity-90" : ""}`}
-                style={{ backgroundColor: brandFill }}
-                data-intake-continue
-              >
-                Continue
-              </button>
-            </div>
+          <div className="mt-8 w-full border-t border-slate-100 pt-8">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onContinueFromInput();
+              }}
+              className={`${glpIntakeUi.primaryBtn} w-full ${building ? "pointer-events-none opacity-90" : ""}`}
+              style={{ backgroundColor: brandFill }}
+              data-intake-continue
+            >
+              Continue
+            </button>
           </div>
         </section>
       )}
@@ -1019,7 +1016,6 @@ export default function GlpSimulationFunnel() {
                 brandPrimary={brandFill}
                 brandSecondary={effectiveSecondary}
                 pricingHref={buildIntakePricingHref(sp, company)}
-                supportHref={buildIntakeSupportHref(sp, company)}
               />
             </div>
           ) : null}
