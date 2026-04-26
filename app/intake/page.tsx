@@ -42,7 +42,7 @@ export default function IntakePage({
       <IntakePageHeader />
       {demo ? (
         <div
-          className="w-full border-t border-slate-200/50 pt-10 pb-6 md:pt-12 md:pb-8"
+          className="w-full border-t border-slate-300/80 pt-10 pb-6 md:pt-12 md:pb-8"
           data-intake-demo-social-proof
         >
           <IntakeDemoQuoteStrip />
