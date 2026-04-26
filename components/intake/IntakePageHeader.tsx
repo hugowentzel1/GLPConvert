@@ -192,7 +192,7 @@ function IntakePageHeaderInner() {
                 />
               </div>
 
-              <div className="mt-5 w-full space-y-4 border-t border-slate-100 pt-5 text-center sm:mt-6 sm:pt-6">
+              <div className="mt-5 w-full space-y-4 border-t border-slate-300/80 pt-5 text-center sm:mt-6 sm:pt-6">
                 <h1 className="text-pretty text-lg font-bold leading-snug tracking-tight text-slate-900 sm:text-xl">
                   Stop leaking paid clicks. Turn the same traffic into more booked consults.
                 </h1>

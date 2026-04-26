@@ -419,7 +419,22 @@ export async function upsertLead(leadData: {
   utm_campaign?: string;
 }): Promise<{ success: boolean; error?: string }> {
   try {
-    const tenant = await findTenantByHandle(leadData.tenantSlug);
+    /**
+     * Cold-email demos arrive with `?company=Sunspire+Weight+Clinic` → tenantSlug
+     * `sunspire-weight-clinic`, which usually has no provisioned row in the
+     * tenants table yet (clinics are only inserted after a paid signup). Without
+     * a fallback the lead save returns `{ success: false }` → the UI shows
+     * "Could not save right now. Please try again." Fall back to the
+     * platform-owned `glpconvert` tenant (always provisioned) so demo leads
+     * still land in the GLPConvert workspace and we never lose the conversion.
+     */
+    let tenant = await findTenantByHandle(leadData.tenantSlug);
+    if (!tenant?.id && (leadData.vertical ?? "glp") === "glp") {
+      logger.info(
+        `Lead tenant '${leadData.tenantSlug}' not provisioned — falling back to 'glpconvert' for GLP demo lead`,
+      );
+      tenant = await findTenantByHandle("glpconvert");
+    }
     if (!tenant?.id) return { success: false, error: "Tenant not found" };
     const fields: Record<string, unknown> = {
       name: leadData.name,

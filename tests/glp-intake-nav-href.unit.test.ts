@@ -4,6 +4,7 @@ import {
   buildBrandedDemoReturnHref,
   buildIntakePricingHref,
   buildIntakeSelfHref,
+  buildIntakeSupportHref,
   buildMarketingHomeHref,
   buildMarketingPathHref,
 } from "@/lib/glp-intake-nav-href";
@@ -47,6 +48,21 @@ describe("glp-intake-nav-href", () => {
     const sp = new URLSearchParams("a=1");
     expect(buildIntakeSelfHref(sp)).toBe("/intake?a=1");
     expect(buildIntakeSelfHref(null)).toBe("/intake");
+  });
+
+  it("buildIntakeSupportHref preserves attribution and sets company", () => {
+    const sp = new URLSearchParams("demo=1&utm_source=cold-email&handle=glp");
+    const href = buildIntakeSupportHref(sp, "Sunspire Weight Clinic");
+    expect(href.startsWith("/support?")).toBe(true);
+    const q = new URLSearchParams(href.slice("/support?".length));
+    expect(q.get("company")).toBe("Sunspire Weight Clinic");
+    expect(q.get("demo")).toBe("1");
+    expect(q.get("utm_source")).toBe("cold-email");
+    expect(q.get("handle")).toBe("glp");
+  });
+
+  it("buildIntakeSupportHref falls back to 'Your clinic' when company is empty", () => {
+    expect(buildIntakeSupportHref(new URLSearchParams(), "  ")).toBe("/support?company=Your+clinic");
   });
 
   it("buildMarketingPathHref appends current query to path", () => {

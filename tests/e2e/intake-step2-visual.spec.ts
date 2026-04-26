@@ -32,9 +32,15 @@ test("intake step 2 — chart axis spacing + at-a-glance tiles look consistent",
 
   const continueBtn = page.locator("[data-intake-continue]");
   await expect(continueBtn).toBeVisible({ timeout: 30000 });
-  await continueBtn.click();
-
-  await expect(page.locator('[data-flow-step="2"]')).toBeVisible({ timeout: 20000 });
+  /**
+   * React can mount the button before its onClick handler is bound. Retry the
+   * click + step-2 visibility assertion together so we wait through hydration
+   * without flake. (Playwright `toPass` is the recommended pattern for this.)
+   */
+  await expect(async () => {
+    await continueBtn.click({ timeout: 5000 });
+    await expect(page.locator('[data-flow-step="2"]')).toBeVisible({ timeout: 6000 });
+  }).toPass({ timeout: 30000 });
   // Wait for chart to render
   await expect(page.locator("[data-results-chart]")).toBeVisible({ timeout: 20000 });
   // Allow for animations to finalize

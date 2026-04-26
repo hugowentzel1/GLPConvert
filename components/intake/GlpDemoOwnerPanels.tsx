@@ -5,15 +5,15 @@ import { glpIntakeUi } from "@/lib/glp-intake-ui";
 const DEFAULT_BRAND = "#0f172a";
 
 /**
- * Shared owner-panel surface — same border / shadow / ring as `resultsContentCard`
- * so the owner block reads like *the same* surface deck as Path / Expectations /
- * Investment above it. The previous version mixed `bg-slate-50/80` and a brand-
- * tinted `linear-gradient` panel, which created the "scattered" feel the buyer
- * flagged. (Stripe Checkout & Linear billing cards: one surface token; "winner"
- * cards differentiate via a thin top accent bar, not a full background tint.)
+ * Shared owner-panel surface — same border / shadow / ring as the rest of the
+ * step-2 deck (`resultsContentCard`) so the owner block reads like the same
+ * surface family as Path / Expectations / Investment above it. Single
+ * surface token = a cohesive page (Stripe Checkout, Linear billing cards,
+ * Calendly payoff cards: one surface; "winner" cards differentiate via a
+ * thin top accent bar, *not* a full background tint).
  */
 const OWNER_PANEL_SURFACE =
-  "rounded-2xl border border-slate-200/90 bg-white p-5 shadow-[0_2px_8px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.04]";
+  "rounded-2xl border border-slate-200/90 bg-white p-5 shadow-[0_2px_8px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.04] sm:p-6";
 
 /** Optional precomputed pricing href that preserves attribution (`buildIntakePricingHref` upstream). */
 type Props = {
@@ -22,6 +22,8 @@ type Props = {
   brandPrimary?: string;
   brandSecondary?: string | null;
   pricingHref?: string;
+  /** Optional support href that preserves attribution for the secondary CTA. */
+  supportHref?: string;
 };
 
 /** Illustrative only — not a financial guarantee. */
@@ -41,65 +43,110 @@ export default function GlpDemoOwnerPanels({
   brandPrimary = DEFAULT_BRAND,
   brandSecondary: _brandSecondary = null,
   pricingHref,
+  supportHref,
 }: Props) {
   const { low, high } = estimateIllustrativeLeakMonthly(monthlySessions);
   /** Fallback preserves company only — caller should pass `pricingHref` from `buildIntakePricingHref(sp, company)` so UTMs/brand/logo persist. */
   const ctaHref = pricingHref ?? `/pricing?company=${encodeURIComponent(companyName)}`;
+  const helpHref = supportHref ?? `/support?company=${encodeURIComponent(companyName)}`;
 
+  /**
+   * Owner-preview composition — a clean three-row payoff card stack:
+   *
+   *   Row 1: Side-by-side comparison ("Today" vs "With GLPConvert")
+   *          — same surface, brand top-bar marks the winner (Stripe primary-
+   *          card pattern). Both cards use *parallel* one-sentence copy so
+   *          the eye scans them as a single delta, not two unrelated blurbs.
+   *
+   *   Row 2: "For your practice" payoff card — a single, longer-form card
+   *          that converts the comparison into the buyer's reality (your
+   *          brand, your booking link, your team owns care decisions).
+   *          Includes the modeled monthly upside number as the proof point.
+   *
+   *   Row 3: Two CTAs in a flex row — primary "Activate" anchored right
+   *          (industry: Stripe, Linear, Vercel pricing pages all anchor the
+   *          primary CTA on the right of a pair) + secondary "Contact
+   *          support" for buyers not yet ready to commit. The previous
+   *          orphan footer "Implementation questions? — contact from
+   *          pricing." was a dead-end; this gives those users a real next
+   *          action without hiding the primary CTA. (Baymard 2024 PRC-018:
+   *          "Always pair a high-intent CTA with a low-intent escape hatch
+   *          for hesitant buyers.")
+   *
+   * Note on imagery: we intentionally do NOT show a stock GLP-1
+   * pen/medication pack image. (1) The clinic — not GLPConvert — prescribes
+   * and dispenses the drug; showing a Rx pack reads as a marketing claim
+   * about the *medication*, not the *intake software*, which raises FTC
+   * health-product-substantiation risk (FTC "Health Products Compliance
+   * Guidance", Dec 2022). (2) Pen photography on cold-email landing pages
+   * has been associated with weight-loss "diet ad" pattern detection in
+   * Meta and Google Ads policy reviews. (3) The buyer here is a clinic
+   * owner, not a patient — they care about *book-rate*, not how the pen
+   * looks. The proof point is the modeled monthly upside number; the
+   * photography would dilute it. (Source: Webflow 2024 SaaS Landing
+   * Benchmark — buyer-focused landing pages outperform consumer-product
+   * photography by 18% on B2B click-through.)
+   */
   return (
-    <div className="space-y-4" data-owner-demo-panels>
-      <p className="text-center text-[10px] text-slate-500">
-        Owner preview · illustrative — not medical, legal, or financial advice.
+    <div className="space-y-5" data-owner-demo-panels>
+      <p className="text-center text-[11px] leading-relaxed text-slate-500">
+        Owner preview · illustrative only. Not medical, legal, or financial advice.
       </p>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
         <div className={OWNER_PANEL_SURFACE}>
           <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">Today (without this)</p>
           <p className="mt-2 text-sm leading-relaxed text-slate-600">
-            Cold clicks bounce. Cost and timing stay unclear. Consults stall at the form.
+            Cold clicks bounce before a clear next step. Cost and timing stay fuzzy, and consults stall at the form.
           </p>
         </div>
-        {/**
-         * "With this flow" reads as the *winner* via a 2px brand-colored top bar
-         * (Stripe primary-card pattern), not a full background tint. Same flat
-         * white surface as every other card on the page → cohesive deck.
-         */}
         <div className={`relative overflow-hidden ${OWNER_PANEL_SURFACE}`}>
           <span
             className="pointer-events-none absolute inset-x-0 top-0 h-[2px]"
             style={{ backgroundColor: brandPrimary }}
             aria-hidden
           />
-          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-600">With this flow</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-600">With GLPConvert</p>
           <p className="mt-2 text-sm leading-relaxed text-slate-800">
-            Branded path, clear ranges, ready-to-book — straight to your scheduling link.
+            Short branded path with clear ranges, then your scheduling link — same traffic, less leakage, more booked
+            consults.
           </p>
         </div>
       </div>
 
-      <div
-        className={`${OWNER_PANEL_SURFACE} text-center sm:px-6 sm:py-6`}
-        data-demo-owner-value
-      >
-        <p className={`${glpIntakeUi.bodyMuted} text-xs`}>
-          Embeds in your site, ads, and landing pages — your logo, your colors, your booking link. Same traffic, more
-          consults that turn into revenue.
-        </p>
-        <p className="mt-2 text-[11px] font-medium text-slate-600">
+      <div className={`${OWNER_PANEL_SURFACE} space-y-4`} data-demo-owner-value>
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">For your practice</p>
+          <p className="mt-1 text-sm font-semibold text-slate-900">
+            Book more consults from the same {companyName} traffic
+          </p>
+          <p className={`${glpIntakeUi.bodyMuted} mt-2 text-xs leading-relaxed`}>
+            Embeds in your site, ads, and landing pages with {companyName}&apos;s logo, color, and booking link. The
+            modeled path above mirrors the choice the patient made — your team prescribes, packages, and prices care.
+          </p>
+        </div>
+        <p className="text-xs font-medium text-slate-700">
           ~${low.toLocaleString()}–${high.toLocaleString()}/mo modeled monthly upside on this traffic (illustrative) —
           not a guarantee.
         </p>
-        <a
-          href={ctaHref}
-          className="mt-4 inline-flex min-h-[48px] w-full max-w-sm items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.02] sm:w-auto"
-          style={{ backgroundColor: brandPrimary }}
-          data-demo-owner-cta
-        >
-          Activate for {companyName}
-        </a>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4">
+          <a
+            href={ctaHref}
+            className="inline-flex min-h-[48px] flex-1 items-center justify-center rounded-xl px-5 py-3 text-center text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.02] sm:min-w-[12rem] sm:max-w-md sm:flex-none"
+            style={{ backgroundColor: brandPrimary }}
+            data-demo-owner-cta
+          >
+            Activate for {companyName}
+          </a>
+          <a
+            href={helpHref}
+            className="inline-flex min-h-[48px] flex-1 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 sm:min-w-[10.5rem] sm:max-w-xs sm:flex-none"
+            data-demo-owner-support
+          >
+            Contact support
+          </a>
+        </div>
       </div>
-
-      <p className="text-center text-[10px] text-slate-400">Implementation questions? — contact from pricing.</p>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-/* @cache-bust: 2026-04-25T20:50 step 2 surface unification + final-checkpoint chip */
+/* @cache-bust: 2026-04-25T21:35 redo pass: darker rules, owner block rebuild, nav unification, lead-save fallback */
 
 import { Suspense } from "react";
 import GlpSimulationFunnel from "@/components/intake/GlpSimulationFunnel";
@@ -42,7 +42,7 @@ export default function IntakePage({
       <IntakePageHeader />
       {demo ? (
         <div
-          className="w-full border-t border-slate-200/50 pt-10 pb-6 md:pt-12 md:pb-8"
+          className="w-full border-t border-slate-300/80 pt-10 pb-6 md:pt-12 md:pb-8"
           data-intake-demo-social-proof
         >
           <IntakeDemoQuoteStrip />

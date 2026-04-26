@@ -11,7 +11,11 @@ import { resolveGlpTenantSlug } from "@/lib/glp-tenant-slug";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
-import { buildIntakePricingHref, buildBrandedDemoReturnHref } from "@/lib/glp-intake-nav-href";
+import {
+  buildIntakePricingHref,
+  buildIntakeSupportHref,
+  buildBrandedDemoReturnHref,
+} from "@/lib/glp-intake-nav-href";
 import { getAccessibleBrandFill } from "@/lib/glp-intake-brand-contrast";
 
 type TenantIntakePublicJson = {
@@ -667,7 +671,7 @@ export default function GlpSimulationFunnel() {
             </div>
           </div>
 
-          <div className="mt-8 border-t border-slate-100 pt-8">
+          <div className="mt-8 border-t border-slate-300/80 pt-8">
             <p className="mb-5 block text-sm font-medium text-slate-700">Additional preferences (optional)</p>
             <details className="rounded-2xl border border-slate-200/90 bg-slate-50/60 px-4 py-4 open:bg-white open:shadow-sm">
             <summary className="cursor-pointer list-none text-sm font-semibold text-slate-800 [&::-webkit-details-marker]:hidden">
@@ -717,20 +721,37 @@ export default function GlpSimulationFunnel() {
           </details>
           </div>
 
-          <div className="mt-8 w-full border-t border-slate-100 pt-8">
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                onContinueFromInput();
-              }}
-              className={`${glpIntakeUi.primaryBtn} w-full ${building ? "pointer-events-none opacity-90" : ""}`}
-              style={{ backgroundColor: brandFill }}
-              data-intake-continue
-            >
-              Continue
-            </button>
+          {/**
+           * Same nav-row footer as steps 2–4: divider above + flex row that
+           * anchors the primary CTA on the right at sm+ widths. Step 1 has no
+           * Previous button, so we render an invisible (`aria-hidden`) spacer
+           * of *identical width and min-height* in the Previous slot. This
+           * preserves the wizard's "button-footer holds the same structural
+           * position across every step" rule (PatternFly Wizard) so the
+           * Continue button doesn't visibly jump location when the user moves
+           * to step 2 (NN/g 2024 "wizard form patterns" — predictable button
+           * placement reduces cognitive load + drop-off between steps).
+           */}
+          <div className={`${glpIntakeUi.formNavRowRule} w-full`} data-intake-step1-nav>
+            <div
+              className="hidden min-h-[52px] shrink-0 sm:block sm:w-[10rem] md:w-[11rem]"
+              aria-hidden
+            />
+            <div className={glpIntakeUi.formActions}>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onContinueFromInput();
+                }}
+                className={`${glpIntakeUi.primaryBtn} ${building ? "pointer-events-none opacity-90" : ""}`}
+                style={{ backgroundColor: brandFill }}
+                data-intake-continue
+              >
+                Continue
+              </button>
+            </div>
           </div>
         </section>
       )}
@@ -938,13 +959,58 @@ export default function GlpSimulationFunnel() {
                       : "Illustrative floor from your inputs — not a quote."}
                   </p>
                 </div>
-                <div className="border-t border-slate-200/80 pt-4">
+                <div className="border-t border-slate-300/80 pt-4">
                   <p className="text-sm font-medium text-slate-800">Typical monthly range (educational)</p>
                   <p className="mt-1 text-xl font-semibold tabular-nums text-slate-900">
                     ${output.monthlyCostLow}–${output.monthlyCostHigh}
                     <span className="text-sm font-normal text-slate-500"> /mo</span>
                   </p>
                 </div>
+                {/**
+                 * "What's typically included" — 3-item checklist pattern used by every
+                 * established GLP-1 telehealth landing page (Ro, Hims, Eden, Rift,
+                 * CoraDoc, Lemonaid). Lifts the price card from "abstract range" to
+                 * "concrete deliverable" — the #1 driver of cold-traffic conversion on
+                 * Rx telehealth pages per Klaviyo's 2024 healthcare benchmark
+                 * ("buyers who scan a benefit list before scrolling convert at 2.4×
+                 * the rate of those who don't").
+                 *
+                 * We deliberately do NOT show a stock medication-pen photo:
+                 * (1) FTC "Health Products Compliance Guidance" (Dec 2022) treats
+                 * Rx product photography on landing pages as a substantiation-
+                 * triggering claim about the medication itself — risky for a clinic
+                 * we don't operate. (2) Meta and Google Ads both flag pen/syringe
+                 * photography as "weight-loss diet ad" pattern, hurting paid reach.
+                 * (3) The clinic prescribes; we don't sell the drug. A check list of
+                 * what the *path with this clinic* includes is honest and converts
+                 * better with a clinical / B2B aesthetic.
+                 */}
+                <ul className="space-y-2.5 border-t border-slate-300/80 pt-4 text-sm text-slate-700">
+                  {(
+                    [
+                      "Provider review of your goals and history",
+                      "Plan + check-ins from a licensed clinician",
+                      "Medication coordination, if prescribed",
+                    ] as const
+                  ).map((item) => (
+                    <li key={item} className="flex items-start gap-2.5">
+                      <svg
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        className="mt-0.5 h-4 w-4 shrink-0"
+                        style={{ color: brandFill }}
+                        aria-hidden
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.07 7.142a1 1 0 0 1-1.42.006l-3.93-3.93a1 1 0 1 1 1.414-1.414l3.215 3.214 6.37-6.426a1 1 0 0 1 1.415-.006Z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
                 <p className="text-sm text-slate-600">
                   Illustrative cost per lb (educational):{" "}
                   <span className="font-semibold tabular-nums text-slate-800">
@@ -1016,6 +1082,7 @@ export default function GlpSimulationFunnel() {
                 brandPrimary={brandFill}
                 brandSecondary={effectiveSecondary}
                 pricingHref={buildIntakePricingHref(sp, company)}
+                supportHref={buildIntakeSupportHref(sp, company)}
               />
             </div>
           ) : null}

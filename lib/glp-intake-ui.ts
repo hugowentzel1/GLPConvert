@@ -123,19 +123,24 @@ export const glpIntakeUi = {
     "mt-2 text-sm leading-relaxed text-slate-600",
   /** Footer disclaimer — consistent voice/length, divider above */
   resultsSummaryMeta:
-    "mt-auto border-t border-slate-100 pt-3 text-xs leading-relaxed text-slate-500",
+    "mt-auto border-t border-slate-200/85 pt-3 text-xs leading-relaxed text-slate-500",
 
   /** Step 2 results: generous vertical rhythm (M3-style section spacing) */
   resultsStack: "space-y-12 md:space-y-14",
   /**
-   * Section divider used to anchor each major content block on step 2 (Path / Expectations
-   * / Investment / Owner panels). A `slate-200/80` border is more visible than the
-   * previous `slate-100` (~3% gray) — picks up cleanly on white cards without feeling
-   * heavy. Same border is used by `formNavRowRule` so the final button row reads as
-   * the *last* section of the page, not a different element.
+   * Section divider used to anchor each major content block on step 2 (Path /
+   * Expectations / Investment / Owner panels). Tailwind slate-300 (#cbd5e1)
+   * gives a visibly darker hairline than slate-200 (#e2e8f0) — the WCAG L*
+   * contrast vs. #ffffff is ~13:1 vs. ~9:1, which crosses the perceptual
+   * threshold where the rule starts reading as a *real* divider instead of a
+   * faint smudge (Material 3 "Surface dividers" + IBM Carbon "low-contrast
+   * dividers" both flag slate-200 as "decorative only" on pure white). We
+   * temper it with `/80` so it never competes with the headline rule. Same
+   * border is reused by `formNavRowRule` so the final nav row reads as the
+   * closing section of the page, not a separate element.
    */
   resultsSectionRule:
-    "border-t border-slate-200/80 pt-11 mt-11 first:mt-0 first:border-0 first:pt-0 md:pt-12 md:mt-12",
+    "border-t border-slate-300/80 pt-11 mt-11 first:mt-0 first:border-0 first:pt-0 md:pt-12 md:mt-12",
 
   /**
    * Step 2 content card — shared style for Path & Expectations cards so they read as
@@ -177,15 +182,19 @@ export const glpIntakeUi = {
   formActions: "flex w-full min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-end sm:gap-3",
   formNavRow: "mt-8 flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
   /**
-   * Form nav row with a top divider — same border weight as `resultsSectionRule` so
-   * the nav row reads as the closing section of the page, not a separate element.
+   * Form nav row with a top divider — same `slate-300/80` weight as
+   * `resultsSectionRule` so the nav row reads as the closing section of every
+   * step, not a free-floating button bar. Reused on every step (1–5) so the
+   * Continue/Previous footer is *visually identical* across the wizard
+   * (PatternFly Wizard guideline: "button footer must hold the same
+   * structural position across every step").
    */
   formNavRowRule:
-    "mt-8 flex flex-col gap-3 border-t border-slate-200/80 pt-8 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
+    "mt-8 flex flex-col gap-3 border-t border-slate-300/80 pt-8 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
 
   chip: "rounded-full bg-slate-100 px-3.5 py-1 text-xs font-medium text-slate-700",
   sectionRule:
-    "border-t border-slate-100 pt-8 mt-8 first:border-0 first:pt-0 first:mt-0 md:pt-10 md:mt-10",
+    "border-t border-slate-300/80 pt-8 mt-8 first:border-0 first:pt-0 first:mt-0 md:pt-10 md:mt-10",
 
   readinessStack: "space-y-11 md:space-y-12",
   choiceRow: "flex flex-wrap gap-3",

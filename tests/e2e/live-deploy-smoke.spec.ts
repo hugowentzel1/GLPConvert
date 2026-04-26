@@ -16,7 +16,7 @@ test.describe("live deploy smoke", () => {
     expect(bg.toLowerCase()).not.toContain("rgb(15, 23, 42)");
   });
 
-  test("/intake step 2 renders unified surfaces + final-checkpoint chip", async ({ page }) => {
+  test("/intake step 2 renders chart, owner CTAs, no always-on checkpoint chip", async ({ page }) => {
     await page.goto(`${LIVE}/intake?company=Sunspire+Weight+Clinic&primary=%23146EF5&demo=1&_v=${Date.now()}`, { waitUntil: "networkidle" });
     await page.getByLabel(/Current weight/i).first().fill("220");
     await page.getByLabel(/Goal weight/i).first().fill("180");
@@ -24,9 +24,15 @@ test.describe("live deploy smoke", () => {
     const next = page.getByRole("button", { name: /continue/i }).first();
     await next.click();
     await page.waitForTimeout(3500);
-    const chip = page.locator("[data-results-chart-final-chip]");
-    await expect(chip).toBeVisible({ timeout: 15_000 });
-    await expect(chip).toContainText(/Modeled checkpoint/);
+    /** Chart still renders (sanity). */
+    await expect(page.locator("[data-results-chart]").first()).toBeVisible({ timeout: 15_000 });
+    /** Always-on "Modeled checkpoint X%" chip must be gone (now lives only in tooltip / summary tile). */
+    await expect(page.locator("[data-results-chart-final-chip]")).toHaveCount(0);
+    /** New owner-block primary + secondary CTAs both present. */
+    await expect(page.locator("[data-demo-owner-cta]").first()).toBeVisible();
+    await expect(page.locator("[data-demo-owner-cta]").first()).toContainText(/Activate for Sunspire Weight Clinic/);
+    await expect(page.locator("[data-demo-owner-support]").first()).toBeVisible();
+    await expect(page.locator("[data-demo-owner-support]").first()).toContainText(/Contact support/i);
   });
 
   test("/support has Send Message mailto + brand-styled disclaimer at bottom", async ({ page }) => {

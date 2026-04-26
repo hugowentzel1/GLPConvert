@@ -50,6 +50,21 @@ export function buildIntakePricingHref(sp: SearchLike, companyLabel: string): st
   return `/pricing?${q.toString()}`;
 }
 
+/**
+ * Build a `/support` href that preserves UTMs/branding/demo so the buyer
+ * lands on a support page that still shows the same brand context. Used
+ * by the owner-preview "Contact support" secondary CTA on step 2 — replaces
+ * the previous orphan footer line "Implementation questions? — contact from
+ * pricing." which was a dead-end for buyers who weren't ready to click the
+ * primary "Activate" CTA but still wanted to ask a question.
+ */
+export function buildIntakeSupportHref(sp: SearchLike, companyLabel: string): string {
+  const q = new URLSearchParams(sp?.toString() ?? "");
+  const label = companyLabel.trim() || "Your clinic";
+  q.set("company", label);
+  return `/support?${q.toString()}`;
+}
+
 /** Preserve current query (UTMs, demo, branding) for marketing site links (sunspire-style header). */
 export function buildMarketingPathHref(sp: SearchLike, path: string): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
