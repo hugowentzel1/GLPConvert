@@ -18,11 +18,12 @@ test.describe("live deploy smoke", () => {
 
   test("/intake step 2 renders unified surfaces + final-checkpoint chip", async ({ page }) => {
     await page.goto(`${LIVE}/intake?company=Sunspire+Weight+Clinic&primary=%23146EF5&demo=1&_v=${Date.now()}`, { waitUntil: "networkidle" });
-    const goalInput = page.getByLabel(/clients per month/i).first();
-    await goalInput.fill("180");
+    await page.getByLabel(/Current weight/i).first().fill("220");
+    await page.getByLabel(/Goal weight/i).first().fill("180");
+    await page.getByLabel(/Height/i).first().fill("66");
     const next = page.getByRole("button", { name: /continue/i }).first();
     await next.click();
-    await page.waitForTimeout(2500);
+    await page.waitForTimeout(3500);
     const chip = page.locator("[data-results-chart-final-chip]");
     await expect(chip).toBeVisible({ timeout: 15_000 });
     await expect(chip).toContainText(/Modeled checkpoint/);
