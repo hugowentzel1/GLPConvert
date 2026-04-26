@@ -238,6 +238,57 @@ a.intake-nav-activate:hover::before {
   }
 }
 
+/**
+ * Signature one-shot reveal scan — Apple Keynote chart-reveal / Linear changelog /
+ * Vercel Analytics first-load pattern. A brand-tinted vertical band sweeps across
+ * the chart exactly once on mount while the area animation draws in, giving the
+ * appearance of the line being painted by the scan. After it completes the layer
+ * stays invisible (`forwards`) so it never competes with the looping animations.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .glp-intake-chart-reveal-scan {
+    --glp-scan-color: rgb(20, 110, 245);
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      transparent 38%,
+      color-mix(in srgb, var(--glp-scan-color) 24%, transparent) 47%,
+      color-mix(in srgb, var(--glp-scan-color) 55%, transparent) 50%,
+      color-mix(in srgb, var(--glp-scan-color) 24%, transparent) 53%,
+      transparent 62%,
+      transparent 100%
+    );
+    background-size: 250% 100%;
+    background-position: -120% 0;
+    background-repeat: no-repeat;
+    mix-blend-mode: screen;
+    opacity: 0;
+    animation: glp-intake-chart-reveal-scan 1.7s cubic-bezier(0.22, 1, 0.36, 1) 0.12s 1 forwards;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glp-intake-chart-reveal-scan {
+    opacity: 0;
+    animation: none;
+  }
+}
+@keyframes glp-intake-chart-reveal-scan {
+  0% {
+    background-position: -120% 0;
+    opacity: 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    background-position: 220% 0;
+    opacity: 0;
+  }
+}
+
 /* Fast Check: Disable transitions/animations for stability */
 [data-testid="footer"] * { 
   transition: none !important; 

@@ -2,13 +2,29 @@ import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/src/lib/stripe";
 import { checkRateLimit } from "@/src/lib/ratelimit";
 
-// Helper function to extract client IP
 function getClientIP(request: NextRequest): string {
   return (
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
     request.headers.get("x-real-ip") ||
     "unknown"
   );
+}
+
+/**
+ * `automatic_tax: { enabled: true }` requires a valid head office address +
+ * Stripe Tax registrations in the Stripe dashboard. If those aren't
+ * configured (default for new accounts), Stripe rejects the entire
+ * checkout session with `"You must have a valid head office address to
+ * enable automatic tax calculation"` and the buyer gets an `Unable to
+ * start checkout` toast — every CTA fails silently. Make it opt-in so
+ * checkout works out of the box: only enable automatic tax when the org
+ * has explicitly set `STRIPE_AUTOMATIC_TAX=1` in env. Cold-email demos
+ * that go straight to Stripe Checkout without a meeting MUST work
+ * end-to-end on day one.
+ */
+function shouldEnableAutomaticTax(): boolean {
+  const flag = (process.env.STRIPE_AUTOMATIC_TAX ?? "").trim().toLowerCase();
+  return flag === "1" || flag === "true" || flag === "yes" || flag === "on";
 }
 
 export async function POST(req: NextRequest) {
@@ -138,7 +154,7 @@ export async function POST(req: NextRequest) {
       cancel_url: cancel_url || `${base}/?canceled=1&company=${encodeURIComponent(company || '')}`,
       customer_email: email || undefined,
       allow_promotion_codes: true,
-      automatic_tax: { enabled: true },
+      automatic_tax: { enabled: shouldEnableAutomaticTax() },
     });
 
     console.log(`✅ Stripe checkout session created: ${checkoutSession.id} (mode: ${checkoutSession.livemode ? 'live' : 'test'})`);
@@ -281,7 +297,7 @@ export async function GET(req: NextRequest) {
       cancel_url: cancel_url || `${base}/?canceled=1&company=${encodeURIComponent(company || '')}`,
       customer_email: email || undefined,
       allow_promotion_codes: true,
-      automatic_tax: { enabled: true },
+      automatic_tax: { enabled: shouldEnableAutomaticTax() },
     });
 
     console.log(`✅ Stripe checkout session created: ${checkoutSession.id} (mode: ${checkoutSession.livemode ? 'live' : 'test'})`);

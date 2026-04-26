@@ -64,4 +64,66 @@ test.describe("live deploy smoke", () => {
     await expect(page.getByText(/Branded subdomain/i).first()).toBeVisible({ timeout: 15_000 });
     await expect(page.getByText(/Recommended/i).first()).toBeVisible();
   });
+
+  test("/api/support-ticket accepts a valid ticket and returns ok", async ({ request }) => {
+    const res = await request.post(`${LIVE}/api/support-ticket`, {
+      headers: { "Content-Type": "application/json" },
+      data: {
+        subject: "live smoke ticket — ignore",
+        email: "smoke-test@example.com",
+        message: "Live deploy smoke test ticket. Safe to ignore.",
+        priority: "normal",
+      },
+    });
+    expect(res.status(), `expected 200, got ${res.status()} ${await res.text()}`).toBe(200);
+    const body = (await res.json()) as { ok?: boolean; delivered?: boolean; message?: string };
+    expect(body.ok, "support ticket POST did not return ok").toBe(true);
+    expect(typeof body.delivered).toBe("boolean");
+    expect(body.message).toBeTruthy();
+  });
+
+  test("/api/stripe/create-checkout-session returns a valid Stripe URL", async ({ request }) => {
+    const res = await request.post(`${LIVE}/api/stripe/create-checkout-session`, {
+      headers: { "Content-Type": "application/json" },
+      data: {
+        plan: "starter",
+        company: "Sunspire Weight Clinic",
+        tenant_handle: "glpconvert",
+        utm_source: "smoke",
+        utm_medium: "playwright",
+        utm_campaign: "live-deploy-smoke",
+        cancel_url: `${LIVE}/pricing`,
+        client_reference_id: `smoke_${Date.now()}`,
+      },
+    });
+    /**
+     * If this is 500 with `automatic tax / valid head office address`, the
+     * Stripe Tax setting was re-enabled without dashboard config — the
+     * automatic_tax flag must remain opt-in via STRIPE_AUTOMATIC_TAX.
+     */
+    expect(res.status(), `expected 2xx, got ${res.status()} ${await res.text()}`).toBe(200);
+    const body = (await res.json()) as { url?: string; sessionId?: string; livemode?: boolean };
+    expect(body.url, "missing checkout url in response").toBeTruthy();
+    expect(body.url!).toMatch(/^https:\/\/checkout\.stripe\.com\//);
+    expect(body.sessionId, "missing sessionId in response").toBeTruthy();
+  });
+
+  test("intake owner-block 'Activate' CTA routes to /pricing with attribution", async ({ page }) => {
+    await page.goto(
+      `${LIVE}/intake?company=Sunspire+Weight+Clinic&primary=%23146EF5&demo=1&utm_source=cold-email&_v=${Date.now()}`,
+      { waitUntil: "networkidle" },
+    );
+    await page.getByLabel(/Current weight/i).first().fill("220");
+    await page.getByLabel(/Goal weight/i).first().fill("180");
+    await page.getByLabel(/Height/i).first().fill("66");
+    await page.getByRole("button", { name: /continue/i }).first().click();
+    await page.waitForTimeout(3500);
+    const cta = page.locator("[data-demo-owner-cta]").first();
+    await expect(cta).toBeVisible({ timeout: 15_000 });
+    const href = await cta.getAttribute("href");
+    expect(href, "owner CTA missing href").toBeTruthy();
+    expect(href!).toContain("/pricing?");
+    expect(href!).toContain("company=Sunspire");
+    expect(href!).toContain("utm_source=cold-email");
+  });
 });

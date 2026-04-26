@@ -279,6 +279,34 @@ export default function GlpJourneyProgressChart({
             aria-hidden
           />
         ) : null}
+        {/**
+         * NEW signature premium moment — a brand-tinted vertical "scan line" that
+         * sweeps left→right across the chart exactly once when the area starts
+         * drawing in. The Apple Keynote chart-reveal / Linear changelog / Vercel
+         * Analytics first-load pattern: a single, one-shot reveal sweep that
+         * communicates "we just computed this for you" without adding another
+         * looping animation that would compete with the brand pulse / sheen /
+         * sparkle layers.
+         *
+         * - Triggered at `revealed` (mount + 60ms) so it lands while the area
+         *   is drawing in (2.4s), giving the appearance of "the line is being
+         *   painted by the scan".
+         * - Pure CSS animation with `animation-iteration-count: 1` — fires
+         *   exactly once, then the layer becomes invisible (no perpetual
+         *   distraction).
+         * - Brand-color stop with `mix-blend-mode: screen` so it brightens
+         *   over the existing line without obscuring data.
+         * - Honors `prefers-reduced-motion: reduce` (CSS media query keeps
+         *   the layer fully transparent).
+         */}
+        {!compact && revealed ? (
+          <div
+            className="glp-intake-chart-reveal-scan pointer-events-none absolute inset-0 z-[19] overflow-hidden rounded-xl sm:rounded-2xl"
+            style={{ ["--glp-scan-color" as string]: brandFill }}
+            aria-hidden
+            data-results-chart-scan
+          />
+        ) : null}
         <div className="relative z-10 h-full w-full rounded-xl sm:rounded-2xl">
           <ResponsiveContainer
             className="relative h-full w-full"

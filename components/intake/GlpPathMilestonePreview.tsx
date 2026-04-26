@@ -21,7 +21,16 @@ export default function GlpPathMilestonePreview({
   return (
     <motion.div
       data-results-milestones
-      className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-b from-white to-slate-50/80 px-5 py-7 shadow-[0_2px_12px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/[0.04] sm:px-7 sm:py-8 md:px-8"
+      /**
+       * Flat-white surface to match every other card on step 2 (`resultsContentCard`,
+       * `resultsContentCardLg`, `resultsSummaryCard`, `resultsDetailsCard`). Previous
+       * version used `bg-gradient-to-b from-white to-slate-50/80`, which made this
+       * one card read as "the gradient one" while every other card on the page was
+       * flat — i.e. the "scattered shading" the buyer flagged. Stripe / Linear /
+       * Vercel pricing decks all use a single surface token so cards read as one
+       * cohesive composition (NN/g 2024 "Visual Hierarchy & Consistency").
+       */
+      className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white px-5 py-7 shadow-[0_2px_12px_rgba(15,23,42,0.06)] ring-1 ring-slate-900/[0.04] sm:px-7 sm:py-8 md:px-8"
       initial={reduceMotion ? false : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}

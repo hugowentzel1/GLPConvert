@@ -41,14 +41,33 @@ export default function SupportPage() {
       });
       
       if (!response.ok) {
-        // Fallback to mailto
+        /**
+         * Server-side error — fall back to a pre-filled mailto so the buyer
+         * never hits a dead end. Prevents the "I sent it and got nothing"
+         * trust collapse on a contact form (NN/g 2024 form-feedback rule).
+         */
         const subject = encodeURIComponent(formData.subject);
-        const body = encodeURIComponent(`From: ${formData.email}\nPriority: ${formData.priority}\n\n${formData.message}`);
+        const body = encodeURIComponent(
+          `From: ${formData.email}\nPriority: ${formData.priority}\n\n${formData.message}`,
+        );
         window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${subject}&body=${body}`;
         throw new Error('Failed to submit support ticket');
       }
-      
-      alert('Support ticket created! We\'ll respond within 24 hours (or 4 hours for high priority tickets).');
+
+      /**
+       * Differentiate `delivered: true` (Resend/SMTP succeeded) vs `delivered:
+       * false` (server received the ticket, but no email transport configured
+       * — ticket is logged in Vercel logs only). Show an honest message in
+       * the second case so the buyer knows they should also email directly
+       * for time-sensitive items.
+       */
+      const result = (await response.json().catch(() => ({}))) as { delivered?: boolean };
+      const delivered = result.delivered === true;
+      alert(
+        delivered
+          ? "Support ticket created! We'll respond within 24 hours (or 4 hours for high priority tickets)."
+          : `Got it — your ticket was received. For the fastest response email ${SUPPORT_EMAIL} directly with the same details.`,
+      );
       setFormData({
         name: '',
         email: '',
