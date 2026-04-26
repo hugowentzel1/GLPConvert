@@ -1,5 +1,7 @@
 'use client';
 
+/* @cache-bust: 2026-04-25T20:50 brand-color start setup CTA + price on button */
+
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';

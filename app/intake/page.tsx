@@ -1,3 +1,5 @@
+/* @cache-bust: 2026-04-25T20:50 step 2 surface unification + final-checkpoint chip */
+
 import { Suspense } from "react";
 import GlpSimulationFunnel from "@/components/intake/GlpSimulationFunnel";
 import AttributionPixels from "@/components/attribution/AttributionPixels";
