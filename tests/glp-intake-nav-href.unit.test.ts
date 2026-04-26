@@ -3,6 +3,7 @@ import {
   buildAppHomeHref,
   buildBrandedDemoReturnHref,
   buildIntakePricingHref,
+  buildIntakeSupportHref,
   buildIntakeSelfHref,
   buildMarketingHomeHref,
   buildMarketingPathHref,
@@ -41,6 +42,15 @@ describe("glp-intake-nav-href", () => {
     expect(q.get("company")).toBe("Acme");
     expect(q.get("demo")).toBe("1");
     expect(q.get("handle")).toBe("glp");
+  });
+
+  it("buildIntakeSupportHref sets company and keeps params", () => {
+    const sp = new URLSearchParams("demo=1&handle=glp");
+    const href = buildIntakeSupportHref(sp, "Acme");
+    expect(href.startsWith("/support?")).toBe(true);
+    const q = new URLSearchParams(href.slice("/support?".length));
+    expect(q.get("company")).toBe("Acme");
+    expect(q.get("demo")).toBe("1");
   });
 
   it("buildIntakeSelfHref", () => {

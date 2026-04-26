@@ -92,7 +92,7 @@ export default function IntakeTrustStrip() {
     <div
       data-intake-trust
       data-testid="intake-trust-strip"
-      className="mx-auto mb-8 w-full max-w-4xl border-b border-slate-100/90 pb-8"
+      className="mx-auto mb-8 w-full max-w-4xl border-b border-slate-300/80 pb-8"
       aria-label="Trust and privacy signals"
     >
       <div className={`${glpIntakeUi.intakeHeroShell} bg-white/95 px-4 py-5 backdrop-blur-[2px] sm:px-6 sm:py-6`}>

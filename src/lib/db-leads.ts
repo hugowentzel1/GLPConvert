@@ -419,7 +419,11 @@ export async function upsertLead(leadData: {
   utm_campaign?: string;
 }): Promise<{ success: boolean; error?: string }> {
   try {
-    const tenant = await findTenantByHandle(leadData.tenantSlug);
+    let tenant = await findTenantByHandle(leadData.tenantSlug);
+    /** Cold-email demos use `company Sunspire Weight Clinic` → slug `sunspire-weight-clinic` which often has no row yet. */
+    if (!tenant?.id && leadData.vertical === "glp") {
+      tenant = await findTenantByHandle("glpconvert");
+    }
     if (!tenant?.id) return { success: false, error: "Tenant not found" };
     const fields: Record<string, unknown> = {
       name: leadData.name,

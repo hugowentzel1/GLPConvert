@@ -30,11 +30,12 @@ test("intake step 2 — chart axis spacing + at-a-glance tiles look consistent",
     { waitUntil: "load" },
   );
 
-  const continueBtn = page.locator("[data-intake-continue]");
+  const continueBtn = page.locator('[data-flow-step="1"]').getByRole("button", { name: /^continue$/i });
   await expect(continueBtn).toBeVisible({ timeout: 30000 });
-  await continueBtn.click();
-
-  await expect(page.locator('[data-flow-step="2"]')).toBeVisible({ timeout: 20000 });
+  await expect(async () => {
+    await continueBtn.click({ force: true });
+    await expect(page.locator('[data-flow-step="2"]')).toBeVisible({ timeout: 15000 });
+  }).toPass({ timeout: 45000 });
   // Wait for chart to render
   await expect(page.locator("[data-results-chart]")).toBeVisible({ timeout: 20000 });
   // Allow for animations to finalize

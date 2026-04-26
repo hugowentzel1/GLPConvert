@@ -135,7 +135,7 @@ export const glpIntakeUi = {
    * the *last* section of the page, not a different element.
    */
   resultsSectionRule:
-    "border-t border-slate-200/80 pt-11 mt-11 first:mt-0 first:border-0 first:pt-0 md:pt-12 md:mt-12",
+    "border-t border-slate-300/80 pt-11 mt-11 first:mt-0 first:border-0 first:pt-0 md:pt-12 md:mt-12",
 
   /**
    * Step 2 content card — shared style for Path & Expectations cards so they read as
@@ -181,11 +181,11 @@ export const glpIntakeUi = {
    * the nav row reads as the closing section of the page, not a separate element.
    */
   formNavRowRule:
-    "mt-8 flex flex-col gap-3 border-t border-slate-200/80 pt-8 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
+    "mt-8 flex flex-col gap-3 border-t border-slate-300/80 pt-8 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
 
   chip: "rounded-full bg-slate-100 px-3.5 py-1 text-xs font-medium text-slate-700",
   sectionRule:
-    "border-t border-slate-100 pt-8 mt-8 first:border-0 first:pt-0 first:mt-0 md:pt-10 md:mt-10",
+    "border-t border-slate-300/80 pt-8 mt-8 first:border-0 first:pt-0 first:mt-0 md:pt-10 md:mt-10",
 
   readinessStack: "space-y-11 md:space-y-12",
   choiceRow: "flex flex-wrap gap-3",
