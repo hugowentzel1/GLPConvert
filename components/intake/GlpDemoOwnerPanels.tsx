@@ -114,8 +114,25 @@ export default function GlpDemoOwnerPanels({
         </div>
       </div>
 
-      <div className={`${OWNER_PANEL_SURFACE} space-y-4`} data-demo-owner-value>
-        <div>
+      <div
+        className={`${OWNER_PANEL_SURFACE} relative space-y-4 overflow-hidden`}
+        data-demo-owner-value
+      >
+        {/**
+         * Subtle brand-tinted radial accent in the upper-right corner — the
+         * Linear Insights / Vercel Analytics "premium card" pattern: hint of
+         * brand color on an otherwise flat-white surface so the payoff card
+         * reads as the *winner* of the page without resorting to a heavy
+         * gradient or background tint that breaks visual rhythm with the rest
+         * of the deck. Rendered at low alpha so it never competes with the
+         * headline copy or the CTA.
+         */}
+        <span
+          className="pointer-events-none absolute -top-12 -right-16 h-44 w-44 rounded-full opacity-[0.10] blur-2xl"
+          style={{ backgroundColor: brandPrimary }}
+          aria-hidden
+        />
+        <div className="relative">
           <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">For your practice</p>
           <p className="mt-1 text-sm font-semibold text-slate-900">
             Book more consults from the same {companyName} traffic
@@ -125,11 +142,11 @@ export default function GlpDemoOwnerPanels({
             modeled path above mirrors the choice the patient made — your team prescribes, packages, and prices care.
           </p>
         </div>
-        <p className="text-xs font-medium text-slate-700">
+        <p className="relative text-xs font-medium text-slate-700">
           ~${low.toLocaleString()}–${high.toLocaleString()}/mo modeled monthly upside on this traffic (illustrative) —
           not a guarantee.
         </p>
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4">
+        <div className="relative flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4">
           <a
             href={ctaHref}
             className="inline-flex min-h-[48px] flex-1 items-center justify-center rounded-xl px-5 py-3 text-center text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.02] sm:min-w-[12rem] sm:max-w-md sm:flex-none"
