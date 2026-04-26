@@ -913,13 +913,16 @@ export default function GlpSimulationFunnel() {
           <div className={glpIntakeUi.resultsSectionRule} data-results-pricing>
             <p className={`${glpIntakeUi.kicker} mb-2`}>Investment</p>
             <h3 className={`${glpIntakeUi.titleMd} mb-5`}>Price clarity</h3>
-            <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-br from-white via-slate-50/90 to-slate-100/50 p-6 shadow-inner ring-1 ring-slate-900/[0.04] md:p-7">
-              <div
-                className="pointer-events-none absolute -right-8 top-0 h-28 w-28 rounded-full opacity-[0.08] blur-2xl"
-                style={{ backgroundColor: brandFill }}
-                aria-hidden
-              />
-              <div className="relative z-[1] space-y-4">
+            {/**
+             * Pricing card uses the SAME flat-white surface as Path / Expectations
+             * (`resultsContentCardLg`). The previous version layered a brand-tinted
+             * blur glow + a multi-stop gradient + an inset shadow, which made it
+             * read as a different "thing" than every other card on the page —
+             * exactly the "scattered" effect the buyer flagged. Stripe Checkout
+             * and Linear billing cards are flat white for the same reason.
+             */}
+            <div className={`${glpIntakeUi.resultsContentCardLg} relative overflow-hidden`}>
+              <div className="space-y-4">
                 <div>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">Starts around</p>
                   <p className="mt-1 text-3xl font-bold tracking-tight text-slate-900 tabular-nums md:text-[2rem]">
@@ -965,7 +968,7 @@ export default function GlpSimulationFunnel() {
 
           <details
             data-results-trajectory
-            className="group rounded-2xl border border-slate-200/90 bg-slate-50/40 px-4 py-3 shadow-sm open:bg-white open:shadow-md"
+            className={glpIntakeUi.resultsDetailsCard}
           >
             <summary className="cursor-pointer list-none text-sm font-semibold text-slate-700 transition hover:text-slate-900 [&::-webkit-details-marker]:hidden">
               <span className="inline-flex items-center gap-2">
@@ -1018,7 +1021,7 @@ export default function GlpSimulationFunnel() {
           ) : null}
 
           <details
-            className="rounded-xl border border-slate-200 bg-slate-50/80 px-4 py-3 shadow-sm transition-shadow open:shadow-md"
+            className={glpIntakeUi.resultsDetailsCard}
             data-results-faq
           >
             <summary className="cursor-pointer list-none text-xs font-semibold text-slate-600 [&::-webkit-details-marker]:hidden">

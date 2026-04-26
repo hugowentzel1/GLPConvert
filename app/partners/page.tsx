@@ -100,18 +100,6 @@ export default function PartnersPage() {
                 Back to Home
               </Link>
             </div>
-            <p className="text-xs text-neutral-500 -mt-2 mb-8 max-w-2xl leading-relaxed">
-              Partner terms are governed by our{" "}
-              <Link href={buildMarketingPathHref(searchParams, "/legal/terms")} className="text-neutral-700 underline">
-                Terms
-              </Link>{" "}
-              and{" "}
-              <Link href={buildMarketingPathHref(searchParams, "/privacy")} className="text-neutral-700 underline">
-                Privacy
-              </Link>
-              . Payouts and eligibility are confirmed in writing after approval.
-            </p>
-
             {/* Hero Block */}
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6">
@@ -355,6 +343,29 @@ export default function PartnersPage() {
               </div>
             </div>
           </Stack>
+
+          {/**
+           * Partner program disclaimer — relocated from the page top to a
+           * pre-footer compliance note. Standard SaaS partner-program pattern
+           * (Stripe Partners, Atlassian Marketplace, HubSpot Solutions Partner,
+           * Vercel Partner program): hero + offer leads, formal terms + payout
+           * ratification disclosed near the footer where buyers expect to find
+           * legal context, not above the headline. (NN/g 2024 "Form Disclaimer
+           * Placement" — disclaimers above the fold reduce continuation rates;
+           * the same content at the foot of the page is read by the audience
+           * that needs it without taxing top-of-page comprehension.)
+           */}
+          <p className="mx-auto mt-12 max-w-2xl text-center text-xs leading-relaxed text-neutral-500">
+            Partner terms are governed by our{" "}
+            <Link href={buildMarketingPathHref(searchParams, "/legal/terms")} className="text-neutral-700 underline">
+              Terms
+            </Link>{" "}
+            and{" "}
+            <Link href={buildMarketingPathHref(searchParams, "/privacy")} className="text-neutral-700 underline">
+              Privacy
+            </Link>
+            . Payouts and eligibility are confirmed in writing after approval.
+          </p>
         </Container>
       </Section>
 

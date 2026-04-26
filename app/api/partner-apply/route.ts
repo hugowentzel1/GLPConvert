@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import { SUPPORT_EMAIL } from "@/lib/product-identity";
 
-// Simple in-memory rate limiting
+const FROM_HOST_FALLBACK = "glp-convert.vercel.app";
+function fromAddress(): string {
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL?.replace(/^https?:\/\//, "");
+  return `no-reply@${appUrl || FROM_HOST_FALLBACK}`;
+}
+
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
 function checkRateLimit(ip: string): boolean {
@@ -41,21 +47,25 @@ export async function POST(req: NextRequest) {
   
   try {
     const body = await req.json();
-    const { company, name, email, phone, experience, message } = body;
-    
-    // Validate required fields
+    /**
+     * The Partners form posts a single `note` field that already concatenates
+     * Phone + Client Range + free-text message (see `app/partners/page.tsx`).
+     * `experience` is accepted only for backwards compatibility with older
+     * test fixtures; new submissions use `note`.
+     */
+    const { company, name, email, phone, experience, note, message } = body;
+
     if (!company || !name || !email) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
-    
-    // Email validation
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
     }
-    
-    // Prepare email content
+
     const emailSubject = `New Partner Application – ${company}`;
+    const detail = note ?? message ?? "No additional details provided";
     const emailBody = `
 New Partner Application Received
 
@@ -63,10 +73,9 @@ Company: ${company}
 Name: ${name}
 Email: ${email}
 Phone: ${phone || 'Not provided'}
-Solar Companies: ${experience || 'Not specified'}
-
-Message:
-${message || 'No message provided'}
+Notes (client range / message):
+${detail}
+${experience ? `\nLegacy "experience" field: ${experience}` : ''}
 
 ---
 Submitted at: ${new Date().toISOString()}
@@ -86,8 +95,9 @@ IP: ${clientIP}
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            from: `no-reply@${process.env.NEXT_PUBLIC_APP_URL?.replace('https://', '') || 'sunspire-web-app.vercel.app'}`,
-            to: ['support@getsunspire.com'],
+            from: fromAddress(),
+            to: [SUPPORT_EMAIL],
+            replyTo: email,
             subject: emailSubject,
             text: emailBody,
           }),
@@ -109,7 +119,7 @@ IP: ${clientIP}
       try {
         const nodemailer = require('nodemailer');
         
-        const transporter = nodemailer.createTransporter({
+        const transporter = nodemailer.createTransport({
           host: process.env.SMTP_HOST,
           port: parseInt(process.env.SMTP_PORT || '587'),
           secure: process.env.SMTP_SECURE === 'true',
@@ -118,10 +128,11 @@ IP: ${clientIP}
             pass: process.env.SMTP_PASS,
           },
         });
-        
+
         await transporter.sendMail({
           from: process.env.SMTP_USER,
-          to: 'support@getsunspire.com',
+          to: SUPPORT_EMAIL,
+          replyTo: email,
           subject: emailSubject,
           text: emailBody,
         });
@@ -141,8 +152,8 @@ IP: ${clientIP}
         name,
         email,
         phone,
+        note: detail,
         experience,
-        message,
         timestamp: new Date().toISOString(),
         ip: clientIP,
       });

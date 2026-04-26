@@ -156,6 +156,24 @@ export const glpIntakeUi = {
   resultsCardDescription:
     "mt-2 text-sm leading-relaxed text-slate-600",
 
+  /**
+   * Step 2 large content surface — same flat-white aesthetic as `resultsContentCard`
+   * (border, ring, shadow, hover) but with extra padding for blocks that hold a
+   * structured stack of sub-rows (Investment / Price clarity, Owner value strip).
+   * Stripe Checkout, Linear payment cards, and Calendly payoff cards all use *one*
+   * surface token so the page reads as a single composition instead of a deck of
+   * mismatched tints. (NN/g 2024 "Visual Hierarchy & Consistency".)
+   */
+  resultsContentCardLg:
+    "rounded-2xl border border-slate-200/90 bg-white p-6 shadow-[0_2px_8px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.04] sm:p-7 md:p-8",
+  /**
+   * Collapsible detail surface (Trajectory checkpoints, Common questions). Same
+   * border weight as `resultsContentCard` so the closed state reads like the rest
+   * of the deck; opens with a light shadow lift to signal interactivity.
+   */
+  resultsDetailsCard:
+    "group rounded-2xl border border-slate-200/90 bg-white px-5 py-4 shadow-[0_1px_3px_rgba(15,23,42,0.04)] ring-1 ring-slate-900/[0.04] transition-shadow open:shadow-[0_8px_24px_rgba(15,23,42,0.07)]",
+
   formActions: "flex w-full min-w-0 flex-1 flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-end sm:gap-3",
   formNavRow: "mt-8 flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
   /**

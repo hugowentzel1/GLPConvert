@@ -1,6 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
+import { SUPPORT_EMAIL } from "@/lib/product-identity";
 
-// Simple in-memory rate limiting
+/**
+ * Hostname used in the outbound `From:` header when delivering via Resend.
+ * Falls back to the live Vercel host until DNS for `glpconvert.com` is wired
+ * (so DKIM still succeeds in the meantime). The recipient inbox is the public
+ * support address — single source of truth in `lib/product-identity`.
+ */
+const FROM_HOST_FALLBACK = "glp-convert.vercel.app";
+function fromAddress(): string {
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL?.replace(/^https?:\/\//, "");
+  return `no-reply@${appUrl || FROM_HOST_FALLBACK}`;
+}
+
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
 function checkRateLimit(ip: string): boolean {
@@ -85,8 +97,8 @@ IP: ${clientIP}
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            from: `no-reply@${process.env.NEXT_PUBLIC_APP_URL?.replace('https://', '') || 'sunspire-web-app.vercel.app'}`,
-            to: ['support@getsunspire.com'],
+            from: fromAddress(),
+            to: [SUPPORT_EMAIL],
             replyTo: email,
             subject: emailSubject,
             text: emailBody,
@@ -121,7 +133,7 @@ IP: ${clientIP}
         
         await transporter.sendMail({
           from: process.env.SMTP_USER,
-          to: 'support@getsunspire.com',
+          to: SUPPORT_EMAIL,
           replyTo: email,
           subject: emailSubject,
           text: emailBody,

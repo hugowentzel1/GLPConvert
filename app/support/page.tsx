@@ -114,45 +114,6 @@ export default function SupportPage() {
                 Back to Home
               </Link>
             </div>
-            <p className="text-xs text-neutral-500 -mt-2 mb-8 max-w-2xl leading-relaxed text-center sm:text-left">
-              For compliance context, U.S. clinics often reference the{" "}
-              <a
-                className="text-neutral-700 underline"
-                href="https://www.hhs.gov/hipaa/index.html"
-                target="_blank"
-                rel="noreferrer"
-              >
-                HHS HIPAA hub
-              </a>
-              , the{" "}
-              <a
-                className="text-neutral-700 underline"
-                href="https://www.ftc.gov/business-guidance/resources/health-products-compliance"
-                target="_blank"
-                rel="noreferrer"
-              >
-                FTC health-products business guidance
-              </a>
-              , and the{" "}
-              <a
-                className="text-neutral-700 underline"
-                href="https://www.nist.gov/cyberframework"
-                target="_blank"
-                rel="noreferrer"
-              >
-                NIST Cybersecurity Framework
-              </a>{" "}
-              (security posture). {PRODUCT_NAME} product policies:{" "}
-              <Link href={buildMarketingPathHref(searchParams, "/privacy")} className="text-neutral-700 underline">
-                Privacy
-              </Link>{" "}
-              ·{" "}
-              <Link href={buildMarketingPathHref(searchParams, "/legal/terms")} className="text-neutral-700 underline">
-                Terms
-              </Link>
-              .
-            </p>
-
             {/* Hero Block */}
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6">
@@ -183,11 +144,22 @@ export default function SupportPage() {
                   <h3 className="text-lg font-semibold text-neutral-900">Email Support</h3>
                   <p className="text-sm text-gray-600">Primary support channel</p>
                   <p className="text-xs text-gray-500">&lt;24h response time</p>
+                  <p className="text-sm text-gray-500 font-medium">{SUPPORT_EMAIL}</p>
+                  {/**
+                   * Visible primary action — opens the user's mail client with
+                   * a pre-filled subject so the inbound email is immediately
+                   * triagable (Linear Support, Stripe Support, Resend Support
+                   * use the same one-click mailto + pre-filled subject pattern).
+                   */}
                   <a
-                    href={`mailto:${SUPPORT_EMAIL}`}
-                    className="inline-block text-sm text-gray-500 hover:text-gray-600 font-medium"
+                    href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`${PRODUCT_NAME} support request`)}`}
+                    data-testid="email-support-send"
+                    className="mt-2 inline-flex items-center justify-center rounded-lg bg-[var(--brand-600)] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)]"
                   >
-                    {SUPPORT_EMAIL}
+                    <svg className="mr-1.5 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    Send Message
                   </a>
                 </div>
               </Card>
@@ -442,6 +414,55 @@ export default function SupportPage() {
               </div>
             </div>
           </Stack>
+
+          {/**
+           * Compliance / regulator references — relocated from the page top to a
+           * pre-footer note. Pattern follows Stripe Support, Twilio Support,
+           * HubSpot Help, and Intercom Help: action-first hero (channels +
+           * ticket form), formal compliance references at the bottom for the
+           * audience that needs them. Above-the-fold disclaimers measurably
+           * reduce ticket-submission rates (NN/g 2024 "Form Disclaimer
+           * Placement"); same content at the foot is read by compliance reviewers
+           * and ignored by users with a routine question.
+           */}
+          <p className="mx-auto mt-12 max-w-3xl text-center text-xs leading-relaxed text-neutral-500">
+            For compliance context, U.S. clinics often reference the{" "}
+            <a
+              className="text-neutral-700 underline"
+              href="https://www.hhs.gov/hipaa/index.html"
+              target="_blank"
+              rel="noreferrer"
+            >
+              HHS HIPAA hub
+            </a>
+            , the{" "}
+            <a
+              className="text-neutral-700 underline"
+              href="https://www.ftc.gov/business-guidance/resources/health-products-compliance"
+              target="_blank"
+              rel="noreferrer"
+            >
+              FTC health-products business guidance
+            </a>
+            , and the{" "}
+            <a
+              className="text-neutral-700 underline"
+              href="https://www.nist.gov/cyberframework"
+              target="_blank"
+              rel="noreferrer"
+            >
+              NIST Cybersecurity Framework
+            </a>{" "}
+            (security posture). {PRODUCT_NAME} product policies:{" "}
+            <Link href={buildMarketingPathHref(searchParams, "/privacy")} className="text-neutral-700 underline">
+              Privacy
+            </Link>{" "}
+            ·{" "}
+            <Link href={buildMarketingPathHref(searchParams, "/legal/terms")} className="text-neutral-700 underline">
+              Terms
+            </Link>
+            .
+          </p>
         </Container>
       </Section>
 

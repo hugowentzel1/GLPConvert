@@ -133,6 +133,38 @@ export default function GlpJourneyProgressChart({
   const compact = variant === "compact";
   const last = points[points.length - 1];
   const first = points[0];
+  /**
+   * "Final-checkpoint" payoff chip — counts up from 0 → last.progress once the
+   * area animation completes, then settles. Inspired by Stripe Climate's annual
+   * commitment counter and Linear Insights' "current state" chip: a short, calm
+   * payoff that rewards the user for watching the chart draw, communicates the
+   * model's destination, and adds perceived precision without competing with
+   * the existing line motion.
+   */
+  const [counterValue, setCounterValue] = useState(0);
+  useEffect(() => {
+    if (compact) return;
+    if (!auxRevealed) {
+      setCounterValue(0);
+      return;
+    }
+    if (!animate) {
+      setCounterValue(last?.progress ?? 0);
+      return;
+    }
+    const target = last?.progress ?? 0;
+    const startedAt = performance.now();
+    const duration = 1100;
+    let frame = 0;
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - startedAt) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setCounterValue(Math.round(target * eased));
+      if (t < 1) frame = window.requestAnimationFrame(tick);
+    };
+    frame = window.requestAnimationFrame(tick);
+    return () => window.cancelAnimationFrame(frame);
+  }, [auxRevealed, animate, last?.progress, compact]);
   const legendStartPair = first?.label === "Start" ? "Month 0" : (first?.label ?? "Month 0");
 
   /**
@@ -156,10 +188,10 @@ export default function GlpJourneyProgressChart({
       initial={animate && !compact ? { opacity: 0, y: 8 } : false}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className={`glp-intake-chart-card relative w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-gradient-to-b from-white via-white to-slate-50/90 ring-1 ring-slate-900/[0.04] ${
+      className={`glp-intake-chart-card relative w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-white ring-1 ring-slate-900/[0.04] ${
         compact
           ? "px-3 pb-3 pt-4 shadow-sm sm:px-4"
-          : "px-4 pb-5 pt-6 shadow-[0_12px_40px_-16px_rgba(15,23,42,0.12)] sm:px-6 sm:pb-6 sm:pt-7"
+          : "px-4 pb-5 pt-6 shadow-[0_2px_8px_rgba(15,23,42,0.05),0_12px_40px_-16px_rgba(15,23,42,0.12)] sm:px-6 sm:pb-6 sm:pt-7"
       }`}
     >
       <div
@@ -254,6 +286,24 @@ export default function GlpJourneyProgressChart({
         >
           <div className="glp-intake-chart-lux-shimmer h-full w-full" />
         </div>
+        {!compact ? (
+          <div
+            className={`pointer-events-none absolute right-2 top-2 z-30 inline-flex items-center gap-1.5 rounded-full border border-slate-200/90 bg-white/95 px-2.5 py-1 text-[11px] font-semibold tabular-nums text-slate-800 shadow-[0_4px_14px_rgba(15,23,42,0.08)] ring-1 ring-slate-900/[0.04] backdrop-blur-sm transition-all duration-500 ease-out sm:right-3 sm:top-3 ${
+              auxRevealed ? "translate-y-0 opacity-100" : "-translate-y-1 opacity-0"
+            }`}
+            style={{ color: brandFill }}
+            aria-hidden
+            data-results-chart-final-chip
+          >
+            <span
+              className="h-1.5 w-1.5 rounded-full"
+              style={{ backgroundColor: brandFill }}
+              aria-hidden
+            />
+            <span className="text-slate-500 font-medium">Modeled checkpoint</span>
+            <span style={{ color: brandFill }}>{counterValue}%</span>
+          </div>
+        ) : null}
         {!compact ? (
           <div
             className="glp-intake-chart-sparkle-layer pointer-events-none absolute inset-0 z-[18] overflow-hidden rounded-xl sm:rounded-2xl [mask-image:linear-gradient(180deg,black_0%,black_90%,transparent_100%)]"

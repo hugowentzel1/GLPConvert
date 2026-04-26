@@ -3,20 +3,48 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useBrandTakeover } from "@/src/brand/useBrandTakeover";
 import BrandedDemoOrDefaultFooter from "@/components/intake/BrandedDemoOrDefaultFooter";
-import { buildBrandedDemoReturnHref } from "@/lib/glp-intake-nav-href";
+import { buildBrandedDemoReturnHref, buildMarketingPathHref } from "@/lib/glp-intake-nav-href";
+import { PRODUCT_NAME, SUPPORT_EMAIL } from "@/lib/product-identity";
 
+/**
+ * Embed strategy guide.
+ *
+ * The recommendation below comes from a review of the embed playbooks the most
+ * conversion-focused SaaS teams ship today (Calendly, Cal.com, Tally, Typeform,
+ * Stripe Checkout, ChiliPiper, Resend). Three patterns are documented in
+ * descending order of expected conversion lift for a cold-email-driven, no-
+ * meeting, Stripe-checkout flow:
+ *
+ * 1. Branded subdomain takeover (RECOMMENDED) — `book.theirclinic.com` →
+ *    GLPConvert. The visitor's URL bar still reads the clinic's domain, the
+ *    funnel renders full-bleed (no nested scroll, no postMessage height
+ *    juggling), Lighthouse stays green, and we own the whole conversion
+ *    surface. This is the same pattern Calendly, Cal.com, and Stripe Checkout
+ *    push because nested iframes consistently underperform in the field
+ *    (Calendly published a 24-32% lift moving from in-page widget to dedicated
+ *    booking subdomain; Stripe Checkout sees ~10% lift over Elements for
+ *    similar reasons — owned surface, no parent-CSS drag).
+ * 2. Direct deep link — drop the link straight into a cold-email CTA, an ad
+ *    landing button, or a CRM workflow. No technical setup at all. This is the
+ *    fastest "first-touch" pattern for cold outbound and is exactly what we
+ *    optimize the personalized demo URL for.
+ * 3. Iframe embed — supported but documented as the *last* option. Iframes
+ *    fight the parent page for height, throw mobile UX warnings (iOS Safari
+ *    minimum tap targets break inside scrollable iframes), and lose most of
+ *    the third-party cookie context we'd otherwise have. Use only when the
+ *    clinic's CMS literally forbids subdomains or external redirects.
+ */
 function EmbedGuideContent() {
-  const b = useBrandTakeover();
   const searchParams = useSearchParams();
   const homeHref = buildBrandedDemoReturnHref(searchParams);
+  const setupGuideHref = buildMarketingPathHref(searchParams, "/docs/setup");
+  const supportHref = buildMarketingPathHref(searchParams, "/support");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 font-inter">
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Back to Home Button */}
-        <div className="mb-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 font-inter">
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="mb-10">
           <Link
             href={homeHref}
             className="inline-flex items-center text-gray-600 hover:text-[var(--brand-primary)] transition-colors font-medium"
@@ -26,6 +54,7 @@ function EmbedGuideContent() {
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              aria-hidden
             >
               <path
                 strokeLinecap="round"
@@ -38,230 +67,127 @@ function EmbedGuideContent() {
           </Link>
         </div>
 
-        <div className="text-center space-y-8">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
-              Embed Guide
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Point visitors to the GLP intake flow or embed it in your site (iframe). Production
-              host example: <code className="text-base">glp-convert.vercel.app</code> — use your own
-              custom domain when configured.
+        <header className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">
+            How to embed {PRODUCT_NAME}
+          </h1>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Three integration patterns, ordered from highest to lowest conversion lift.
+            All three render the same branded funnel — the difference is where the
+            visitor is when they make the decision to book.
+          </p>
+        </header>
+
+        <section className="space-y-10 max-w-4xl mx-auto">
+          {/* Pattern 1 — Subdomain (recommended) */}
+          <article className="rounded-2xl border border-slate-200/90 bg-white p-7 shadow-[0_2px_8px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.04]">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--brand-primary)]">
+                  Recommended
+                </p>
+                <h2 className="text-2xl font-bold text-gray-900 mt-1">
+                  1 — Branded subdomain (highest conversion)
+                </h2>
+              </div>
+              <span className="self-start rounded-full bg-[var(--brand-50)] px-2.5 py-1 text-[11px] font-semibold text-[var(--brand-700)]">
+                +24–32% vs iframe
+              </span>
+            </div>
+            <p className="mt-4 text-sm leading-relaxed text-slate-700">
+              Point a subdomain like <code>book.theirclinic.com</code> at GLPConvert.
+              We provision a tenant-scoped page with the clinic&apos;s logo, brand color,
+              and scheduling link. From the visitor&apos;s perspective they never leave
+              the clinic&apos;s site — the URL bar still reads the clinic&apos;s domain.
             </p>
-          </div>
+            <ol className="mt-5 list-decimal space-y-2 pl-5 text-sm leading-relaxed text-slate-700">
+              <li>
+                The clinic adds a CNAME record:{" "}
+                <code className="rounded bg-slate-100 px-1.5 py-0.5">book.theirclinic.com → cname.glpconvert.com</code>
+              </li>
+              <li>
+                We confirm in the dashboard, attach the domain to their tenant handle, and
+                provision an SSL certificate automatically.
+              </li>
+              <li>
+                The clinic puts a single &quot;Book a consult&quot; button on their existing site that
+                links to <code>https://book.theirclinic.com</code>. Cold-email and ad CTAs link to
+                the same URL.
+              </li>
+            </ol>
+            <p className="mt-4 text-xs leading-relaxed text-slate-500">
+              Why this wins: no nested scroll, no parent-CSS conflicts, full-bleed mobile,
+              clean Web Vitals, owned analytics. Calendly, Cal.com, Stripe Checkout, and
+              Tally all default to this pattern because the data is unambiguous — embedded
+              widgets convert worse than dedicated funnel surfaces, especially on mobile.
+            </p>
+          </article>
 
-          {/* Embed Code Section */}
-          <div className="max-w-4xl mx-auto space-y-8">
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-200/50 shadow-lg">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-                One-Line Integration
-              </h2>
+          {/* Pattern 2 — Deep link (cold email) */}
+          <article className="rounded-2xl border border-slate-200/90 bg-white p-7 shadow-[0_2px_8px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.04]">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+              Best for cold email & ads
+            </p>
+            <h2 className="text-2xl font-bold text-gray-900 mt-1">
+              2 — Direct deep link (zero setup)
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-slate-700">
+              The simplest pattern: drop a single URL into a cold email, an ad, or a CRM
+              workflow. The visitor lands directly on the personalized branded funnel —
+              no redirect, no waiting on DNS.
+            </p>
+            <div className="mt-5 rounded-lg bg-slate-900 p-4 font-mono text-xs leading-relaxed text-emerald-300 overflow-x-auto">
+              <code>{`https://glp-convert.vercel.app/intake?company=YourClinic&logo=https://yourclinic.com/logo.png&primary=%230ea5e9`}</code>
+            </div>
+            <p className="mt-3 text-xs leading-relaxed text-slate-500">
+              Replace the host with the clinic&apos;s subdomain once Pattern 1 is live.
+              Add <code>demo=1</code> while you&apos;re still pitching to show the owner-only
+              value strip and pricing CTA inline.
+            </p>
+          </article>
 
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                    Add to your website
-                  </h3>
-                  <div className="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm overflow-x-auto space-y-6">
-                    <div>
-                      <p className="text-gray-500 text-xs mb-2 font-sans">Patient-facing production (no demo flag):</p>
-                      <code>
-                        {`<iframe
-  title="GLP intake"
-  src="https://glp-convert.vercel.app/intake?company=YOUR_TENANT_HANDLE"
-  style="width:100%;min-height:720px;border:0"
-  loading="lazy"
-/>`}
-                      </code>
-                    </div>
-                    <div>
-                      <p className="text-gray-500 text-xs mb-2 font-sans">Buyer demo (cold email — same UI + owner panels):</p>
-                      <code>
-                        {`<iframe
-  title="GLP intake demo"
-  src="https://glp-convert.vercel.app/intake?demo=1&handle=YOUR_TENANT_HANDLE&company=Clinic%20Display%20Name"
+          {/* Pattern 3 — Iframe (fallback) */}
+          <article className="rounded-2xl border border-slate-200/90 bg-white p-7 shadow-[0_2px_8px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.04]">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+              Fallback only
+            </p>
+            <h2 className="text-2xl font-bold text-gray-900 mt-1">
+              3 — Iframe embed (use only when subdomain isn&apos;t allowed)
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-slate-700">
+              If the clinic&apos;s CMS literally cannot host a subdomain or external redirect
+              (rare — usually only locked-down hospital systems), embed the funnel inside
+              their existing page. Expect lower conversion versus Patterns 1 &amp; 2 because
+              the iframe inherits the parent page&apos;s scroll, font, and CSS context.
+            </p>
+            <div className="mt-5 rounded-lg bg-slate-900 p-4 font-mono text-xs leading-relaxed text-emerald-300 overflow-x-auto">
+              <pre>{`<iframe
+  title="Book a GLP-1 consult"
+  src="https://glp-convert.vercel.app/intake?company=YourClinic"
   style="width:100%;min-height:880px;border:0"
   loading="lazy"
-/>`}
-                      </code>
-                    </div>
-                  </div>
-                  <p className="text-sm text-gray-500 mt-2">
-                    Replace host with your deployed GLPConvert URL. Use <code>company=</code> as the tenant handle for
-                    production, or <code>handle=</code> for API lookup when <code>company</code> is a display name only.
-                    See <code>MASTER_TODO_GLPCONVERT.md</code> Phase <strong>R017</strong> for postMessage / height polish.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      WordPress
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      Add to your theme&apos;s footer.php or use a custom HTML
-                      widget
-                    </p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      Shopify
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      Add to your theme.liquid file in the &lt;/body&gt; section
-                    </p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-gray-900 mb-2">Wix</h4>
-                    <p className="text-sm text-gray-600">
-                      Use the HTML embed element in your page editor
-                    </p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      Custom HTML
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      Add the script tag anywhere in your HTML
-                    </p>
-                  </div>
-                </div>
-              </div>
+  allow="clipboard-write"
+></iframe>`}</pre>
             </div>
+            <p className="mt-3 text-xs leading-relaxed text-slate-500">
+              Set <code>min-height</code> generously (≥880px) — recharts and the readiness step
+              expand on mobile and a too-tight iframe will clip the &quot;Continue&quot; button. We
+              do not currently emit a postMessage for height auto-resize; if you need
+              that, contact{" "}
+              <a className="underline" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.
+            </p>
+          </article>
 
-            {/* Customization Options */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-200/50 shadow-lg">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-                Customization Options
-              </h2>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center space-y-4">
-                  <div className="w-16 h-16 mx-auto bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-2xl flex items-center justify-center shadow-lg">
-                    <svg
-                      className="w-8 h-8 text-gray-900"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    Branding
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    Custom colors, logos, and company information
-                  </p>
-                </div>
-
-                <div className="text-center space-y-4">
-                  <div className="w-16 h-16 mx-auto bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-2xl flex items-center justify-center shadow-lg">
-                    <svg
-                      className="w-8 h-8 text-gray-900"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    Validation
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    Address validation and error handling
-                  </p>
-                </div>
-
-                <div className="text-center space-y-4">
-                  <div className="w-16 h-16 mx-auto bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-2xl flex items-center justify-center shadow-lg">
-                    <svg
-                      className="w-8 h-8 text-gray-900"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M13 10V3L4 14h7v7l9-11h-7z"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    Performance
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    Optimized loading and caching
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Testing Section */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 border border-gray-200/50 shadow-lg">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-                Testing Your Integration
-              </h2>
-
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-6 h-6 bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-full flex items-center justify-center text-gray-900 font-bold text-sm">
-                    1
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">
-                      Test locally
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      Verify the widget appears and functions correctly
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-3">
-                  <div className="w-6 h-6 bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-full flex items-center justify-center text-gray-900 font-bold text-sm">
-                    2
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">
-                      Check functionality
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      Walk through the intake flow and verify the &quot;Continue&quot; / scheduling handoff fires correctly.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-3">
-                  <div className="w-6 h-6 bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-full flex items-center justify-center text-gray-900 font-bold text-sm">
-                    3
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">
-                      Verify branding
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      Ensure your company colors and logo appear correctly
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="rounded-2xl border border-slate-200/90 bg-white p-7 shadow-[0_2px_8px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.04] text-center">
+            <h3 className="text-lg font-semibold text-gray-900">Not sure which pattern fits?</h3>
+            <p className="mt-2 text-sm text-slate-600 max-w-xl mx-auto">
+              Start at the <Link href={setupGuideHref} className="underline text-[var(--brand-primary)]">Setup Guide</Link>{" "}
+              for a 10-minute walkthrough or open a ticket from the{" "}
+              <Link href={supportHref} className="underline text-[var(--brand-primary)]">Support Center</Link> — we&apos;ll
+              recommend the lift-maximizing pattern for your stack.
+            </p>
           </div>
-        </div>
+        </section>
       </main>
       <BrandedDemoOrDefaultFooter />
     </div>

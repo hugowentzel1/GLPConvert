@@ -72,11 +72,20 @@ export default function PricingPage() {
               <p className="text-sm text-neutral-500">
                 This software supports educational and booking workflows only. Not medical advice.
               </p>
+              {/**
+               * Primary CTA uses the active brand color (not slate-black) so a
+               * branded clinic preview never sees a generic black button on a
+               * branded page. Contrast is enforced by the WCAG-AA brand tokens
+               * (`--brand-600` darkens lighter brands automatically). Pattern
+               * follows Stripe Checkout, Linear, Notion: primary action ALWAYS
+               * carries the active brand fill — no neutral fallback in flow.
+               */}
               <button
                 onClick={handleStartSetup}
-                className="inline-flex items-center justify-center rounded-lg bg-slate-900 px-6 py-3 text-white font-semibold hover:bg-slate-800"
+                data-testid="pricing-start-setup"
+                className="inline-flex items-center justify-center rounded-lg bg-[var(--brand-600)] px-6 py-3 text-white font-semibold shadow-md transition hover:brightness-[1.05] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)]"
               >
-                Start setup
+                Start setup — $399 today, then $99/mo
               </button>
             </div>
 
