@@ -67,21 +67,18 @@ export default function GlpJourneyProgressChart({
   }, []);
 
   /**
-   * Defer all decorative passes (glow line, white sheen, brand pulse) until *after* the area
-   * animation completes. Without this, the non-animated overlays (`isAnimationActive=false`)
-   * paint instantly while the area is still drawing in, creating a visible "static line on the
-   * right" flash that looked unfinished. Aux layers also gate the new "brand pulse" pass.
+   * Decorative passes (glow halo, brand-color "sheen", brand "data pulse") now
+   * paint at the *same instant* as the area, so the line already carries its
+   * full final boldness, brand color saturation, and stroke thickness from
+   * frame one. Apple Keynote / Linear changelog / Stripe Dashboard reveals all
+   * paint the FINAL stroke weight from frame 1 and let the *left-to-right
+   * sweep* be the animation, not the styling. Buyer feedback: previously the
+   * line looked "thin / bare" for ~2.5s then thickened — a "loading flash"
+   * that hurt the premium feel. The static overlays sit *under* the
+   * area-fill mask so the right-side "tail" reads as part of the modeled path
+   * (correct visualization-design read) rather than as a glitch.
    */
-  const [auxRevealed, setAuxRevealed] = useState(false);
-  useEffect(() => {
-    if (!revealed) return;
-    if (!animate) {
-      setAuxRevealed(true);
-      return;
-    }
-    const id = window.setTimeout(() => setAuxRevealed(true), 2500);
-    return () => window.clearTimeout(id);
-  }, [revealed, animate]);
+  const auxRevealed = revealed;
 
   const domain = useMemo((): [number, number] => [0, 100], []);
 
@@ -188,7 +185,7 @@ export default function GlpJourneyProgressChart({
       }`}
     >
       <div
-        className="absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-slate-300/80 to-transparent"
+        className="absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-slate-200 to-transparent"
         aria-hidden
       />
 
@@ -505,7 +502,7 @@ export default function GlpJourneyProgressChart({
         </p>
       ) : null}
       {!compact ? (
-        <p className="mt-3 border-t border-slate-300/80 px-1 pt-3 text-center text-[11px] leading-relaxed text-slate-500 sm:px-2">
+        <p className="mt-3 border-t border-slate-200 px-1 pt-3 text-center text-[11px] leading-relaxed text-slate-500 sm:px-2">
           Last checkpoint shown: {last?.label} at ~{last?.progress}% toward your stated goal (example only).
         </p>
       ) : null}

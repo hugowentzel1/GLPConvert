@@ -38,7 +38,7 @@ export default function IntakeDemoQuoteStrip() {
               exactly centered between them regardless of how the role/org text wraps.
               ─ avatar ─ (mt-3.5) ─ name ─ (mt-3.5) ─ role/org ─
             */}
-            <div className="flex w-full shrink-0 flex-col items-center border-t border-slate-300/80 pt-4 text-center sm:pt-5">
+            <div className="flex w-full shrink-0 flex-col items-center border-t border-slate-200 pt-4 text-center sm:pt-5">
               <div
                 className="flex shrink-0 justify-center"
                 style={{ ["--brand-primary" as string]: accent } as CSSProperties}

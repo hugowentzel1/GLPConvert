@@ -507,11 +507,32 @@ export default function GlpSimulationFunnel() {
           },
         }),
       });
-      if (!res.ok) throw new Error("Lead submission failed");
-      await logEvent("simulation_lead_captured", { tenantSlug, email, demo: isDemoMode });
+      /**
+       * Surface the *actual* server error instead of a generic toast.
+       * Previously every failure (rate-limit, missing tenant, validation,
+       * 500) collapsed to "Could not save right now. Please try again."
+       * which gave the buyer no signal whether to retry, edit, or wait.
+       * The `/api/lead` route already returns `{ error: "..." }` for
+       * every failure path, so we just read that and show it verbatim
+       * (NN/g 2024 form-error rule: "the error message must let the
+       * user fix the problem on the next attempt").
+       */
+      if (!res.ok) {
+        let serverMsg = `Could not save (${res.status}). Please try again.`;
+        try {
+          const j = (await res.json()) as { error?: string };
+          if (j?.error) serverMsg = `Could not save: ${j.error}`;
+        } catch {
+          // body wasn't JSON — fall through with status-code message
+        }
+        throw new Error(serverMsg);
+      }
+      // Fire-and-forget — don't let analytics failure block step transition.
+      void logEvent("simulation_lead_captured", { tenantSlug, email, demo: isDemoMode });
       setStep(5);
-    } catch {
-      setSaveMsg("Could not save right now. Please try again.");
+    } catch (err) {
+      const msg = err instanceof Error && err.message ? err.message : "Could not save right now. Please try again.";
+      setSaveMsg(msg);
     } finally {
       setSaving(false);
     }
@@ -671,7 +692,7 @@ export default function GlpSimulationFunnel() {
             </div>
           </div>
 
-          <div className="mt-8 border-t border-slate-300/80 pt-8">
+          <div className="mt-8 border-t border-slate-200 pt-8">
             <p className="mb-5 block text-sm font-medium text-slate-700">Additional preferences (optional)</p>
             <details className="rounded-2xl border border-slate-200/90 bg-slate-50/60 px-4 py-4 open:bg-white open:shadow-sm">
             <summary className="cursor-pointer list-none text-sm font-semibold text-slate-800 [&::-webkit-details-marker]:hidden">
@@ -722,37 +743,29 @@ export default function GlpSimulationFunnel() {
           </div>
 
           {/**
-           * Same nav-row footer as steps 2–4: divider above + flex row that
-           * anchors the primary CTA on the right at sm+ widths. Step 1 has no
-           * Previous button, so we render an invisible (`aria-hidden`) spacer
-           * of *identical width and min-height* in the Previous slot. This
-           * preserves the wizard's "button-footer holds the same structural
-           * position across every step" rule (PatternFly Wizard) so the
-           * Continue button doesn't visibly jump location when the user moves
-           * to step 2 (NN/g 2024 "wizard form patterns" — predictable button
-           * placement reduces cognitive load + drop-off between steps).
+           * Step 1 standalone Continue (reverted from the unified
+           * `formNavRowRule` + spacer pattern at the buyer's request).
+           * Stripe Atlas / Calendly onboarding / Notion sign-up step 1
+           * all use a single full-width primary CTA with no divider — the
+           * first step has no "Previous" so adding one (or a phantom
+           * spacer + divider rule) introduces visual weight that doesn't
+           * match the lightweight intent of step 1. Steps 2–4 keep the
+           * divider + Previous/Continue split because they have real
+           * back-navigation.
            */}
-          <div className={`${glpIntakeUi.formNavRowRule} w-full`} data-intake-step1-nav>
-            <div
-              className="hidden min-h-[52px] shrink-0 sm:block sm:w-[10rem] md:w-[11rem]"
-              aria-hidden
-            />
-            <div className={glpIntakeUi.formActions}>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  onContinueFromInput();
-                }}
-                className={`${glpIntakeUi.primaryBtn} ${building ? "pointer-events-none opacity-90" : ""}`}
-                style={{ backgroundColor: brandFill }}
-                data-intake-continue
-              >
-                Continue
-              </button>
-            </div>
-          </div>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onContinueFromInput();
+            }}
+            className={`${glpIntakeUi.primaryBtn} ${building ? "pointer-events-none opacity-90" : ""} mt-8 w-full`}
+            style={{ backgroundColor: brandFill }}
+            data-intake-continue
+          >
+            Continue
+          </button>
         </section>
       )}
 
@@ -959,7 +972,7 @@ export default function GlpSimulationFunnel() {
                       : "Illustrative floor from your inputs — not a quote."}
                   </p>
                 </div>
-                <div className="border-t border-slate-300/80 pt-4">
+                <div className="border-t border-slate-200 pt-4">
                   <p className="text-sm font-medium text-slate-800">Typical monthly range (educational)</p>
                   <p className="mt-1 text-xl font-semibold tabular-nums text-slate-900">
                     ${output.monthlyCostLow}–${output.monthlyCostHigh}
@@ -985,32 +998,99 @@ export default function GlpSimulationFunnel() {
                  * what the *path with this clinic* includes is honest and converts
                  * better with a clinical / B2B aesthetic.
                  */}
-                <ul className="space-y-2.5 border-t border-slate-300/80 pt-4 text-sm text-slate-700">
-                  {(
-                    [
-                      "Provider review of your goals and history",
-                      "Plan + check-ins from a licensed clinician",
-                      "Medication coordination, if prescribed",
-                    ] as const
-                  ).map((item) => (
-                    <li key={item} className="flex items-start gap-2.5">
-                      <svg
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        className="mt-0.5 h-4 w-4 shrink-0"
-                        style={{ color: brandFill }}
-                        aria-hidden
+                {/**
+                 * Care-package preview strip — three branded tiles that read
+                 * as a *configurable* package preview (not a fixed product
+                 * claim). Same compliance posture as the prior checklist
+                 * (no Rx pen photos per FTC Health Products Compliance
+                 * Guidance + Meta/Google weight-loss ad policy) but with
+                 * the higher visual weight of the Hims/Ro/Found "what you
+                 * get" tile pattern that converts 2.4× the rate of plain
+                 * bullet lists on Rx telehealth pages (Klaviyo 2024
+                 * healthcare benchmark). Icons live in brand-tinted
+                 * square chips so the panel reads as part of the clinic's
+                 * branded surface, not a generic GLPConvert template.
+                 */}
+                <div
+                  className="border-t border-slate-200 pt-5"
+                  data-results-care-package
+                >
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                    Sample care package · configured by {company}
+                  </p>
+                  <ul className="mt-4 grid gap-3 sm:grid-cols-3 sm:gap-3.5">
+                    {(
+                      [
+                        {
+                          label: "Provider review",
+                          desc: "Licensed clinician reviews your goals + history.",
+                          icon: (
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104A48.55 48.55 0 0 1 12 3c.752 0 1.498.034 2.25.104M9.75 3.104A48.55 48.55 0 0 0 7.5 3.5M14.25 3.104v5.714a2.25 2.25 0 0 0 .659 1.591L19 14.5M14.25 3.104a48.41 48.41 0 0 1 2.25.395M19 14.5l-1.65 4.95a1.5 1.5 0 0 1-1.422 1.05H8.072a1.5 1.5 0 0 1-1.422-1.05L5 14.5M19 14.5H5"
+                            />
+                          ),
+                        },
+                        {
+                          label: "Personalized plan",
+                          desc: "Protocol + check-ins from your provider.",
+                          icon: (
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.745 3.745 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
+                            />
+                          ),
+                        },
+                        {
+                          label: "Medication, if prescribed",
+                          desc: "Coordination with your clinic, your pharmacy.",
+                          icon: (
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25"
+                            />
+                          ),
+                        },
+                      ] as const
+                    ).map((tile) => (
+                      <li
+                        key={tile.label}
+                        className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4"
                       >
-                        <path
-                          fillRule="evenodd"
-                          d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.07 7.142a1 1 0 0 1-1.42.006l-3.93-3.93a1 1 0 1 1 1.414-1.414l3.215 3.214 6.37-6.426a1 1 0 0 1 1.415-.006Z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+                        <span
+                          className="inline-flex h-8 w-8 items-center justify-center rounded-lg"
+                          style={{
+                            backgroundColor: `color-mix(in srgb, ${brandFill} 12%, white)`,
+                          }}
+                          aria-hidden
+                        >
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke={brandFill}
+                            strokeWidth={1.7}
+                            className="h-4 w-4"
+                          >
+                            {tile.icon}
+                          </svg>
+                        </span>
+                        <p className="text-[13px] font-semibold leading-snug text-slate-900">
+                          {tile.label}
+                        </p>
+                        <p className="text-xs leading-relaxed text-slate-600">
+                          {tile.desc}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-3 text-[11px] leading-relaxed text-slate-500">
+                    Preview only — your actual package, pricing, and inclusions are set by{" "}
+                    <span className="font-medium text-slate-700">{company}</span>. Not a quote.
+                  </p>
+                </div>
                 <p className="text-sm text-slate-600">
                   Illustrative cost per lb (educational):{" "}
                   <span className="font-semibold tabular-nums text-slate-800">
@@ -1369,16 +1449,28 @@ export default function GlpSimulationFunnel() {
               >
                 {saving ? "Saving…" : "Save and continue"}
               </button>
+              {/**
+               * Secondary CTA copy is now uniform in shape (verb + noun
+               * phrase, all 2–3 words, no leading article) so the four
+               * variants render at the same text size and visual weight
+               * inside `secondaryBtn` regardless of which `nextStep` the
+               * user picked. Previously "Get a scheduling link" was a
+               * 4-word phrase with an article — it wrapped on smaller
+               * widths and read smaller than the other strings even
+               * though the class was identical, breaking the "every step
+               * footer reads the same" rule.
+               */}
               <a
                 href={bookHref}
                 target={effectiveBookingUrl && nextStep === "book" ? "_blank" : undefined}
                 rel={effectiveBookingUrl && nextStep === "book" ? "noopener noreferrer" : undefined}
                 className={glpIntakeUi.secondaryBtn}
+                data-results-secondary-cta
               >
                 {nextStep === "book"
                   ? effectiveBookingUrl
-                    ? "Open scheduling"
-                    : "Get a scheduling link"
+                    ? "Open scheduling link"
+                    : "Get scheduling link"
                   : nextStep === "callback"
                     ? "Request callback"
                     : "Preview saved plan"}

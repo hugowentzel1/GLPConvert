@@ -123,24 +123,23 @@ export const glpIntakeUi = {
     "mt-2 text-sm leading-relaxed text-slate-600",
   /** Footer disclaimer — consistent voice/length, divider above */
   resultsSummaryMeta:
-    "mt-auto border-t border-slate-200/85 pt-3 text-xs leading-relaxed text-slate-500",
+    "mt-auto border-t border-slate-200/70 pt-3 text-xs leading-relaxed text-slate-500",
 
   /** Step 2 results: generous vertical rhythm (M3-style section spacing) */
   resultsStack: "space-y-12 md:space-y-14",
   /**
-   * Section divider used to anchor each major content block on step 2 (Path /
-   * Expectations / Investment / Owner panels). Tailwind slate-300 (#cbd5e1)
-   * gives a visibly darker hairline than slate-200 (#e2e8f0) — the WCAG L*
-   * contrast vs. #ffffff is ~13:1 vs. ~9:1, which crosses the perceptual
-   * threshold where the rule starts reading as a *real* divider instead of a
-   * faint smudge (Material 3 "Surface dividers" + IBM Carbon "low-contrast
-   * dividers" both flag slate-200 as "decorative only" on pure white). We
-   * temper it with `/80` so it never competes with the headline rule. Same
-   * border is reused by `formNavRowRule` so the final nav row reads as the
-   * closing section of the page, not a separate element.
+   * Section divider weight (revised after buyer pass 4 feedback): the prior
+   * `slate-300/80` read as too dark — it competed with the section
+   * headlines for visual weight. The original `slate-100` was too faint to
+   * register as a real divider. We landed on `slate-200` (#e2e8f0) at full
+   * opacity — visibly more present than slate-100 but lighter than
+   * slate-300/80, the "soft hairline" weight Material 3 and IBM Carbon
+   * actually recommend for primary section separators on white. Same
+   * border is reused by `formNavRowRule` so the closing nav row reads as
+   * a section break, not a separate element.
    */
   resultsSectionRule:
-    "border-t border-slate-300/80 pt-11 mt-11 first:mt-0 first:border-0 first:pt-0 md:pt-12 md:mt-12",
+    "border-t border-slate-200 pt-11 mt-11 first:mt-0 first:border-0 first:pt-0 md:pt-12 md:mt-12",
 
   /**
    * Step 2 content card — shared style for Path & Expectations cards so they read as
@@ -190,11 +189,11 @@ export const glpIntakeUi = {
    * structural position across every step").
    */
   formNavRowRule:
-    "mt-8 flex flex-col gap-3 border-t border-slate-300/80 pt-8 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
+    "mt-8 flex flex-col gap-3 border-t border-slate-200 pt-8 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4",
 
   chip: "rounded-full bg-slate-100 px-3.5 py-1 text-xs font-medium text-slate-700",
   sectionRule:
-    "border-t border-slate-300/80 pt-8 mt-8 first:border-0 first:pt-0 first:mt-0 md:pt-10 md:mt-10",
+    "border-t border-slate-200 pt-8 mt-8 first:border-0 first:pt-0 first:mt-0 md:pt-10 md:mt-10",
 
   readinessStack: "space-y-11 md:space-y-12",
   choiceRow: "flex flex-wrap gap-3",
