@@ -19,14 +19,13 @@ export default function IntakePatientViewBanner() {
   return (
     <aside
       data-intake-patient-view-banner
-      className="rounded-lg border border-slate-200/70 bg-slate-50/70 px-4 py-2.5 text-center text-[13px] leading-snug text-slate-600 sm:text-left"
+      className="text-center text-[10.5px] font-medium uppercase tracking-[0.16em] text-slate-400"
     >
-      <p>
-        <span className="font-semibold text-slate-900">You&apos;re previewing the patient view</span>
-        <span aria-hidden className="mx-1.5 text-slate-300">·</span>
-        <span>the same path leads see when you drop the link or embed on your site.</span>
-        <span className="ml-1 text-slate-500">Owner dashboard (leads, settings, embed, branded URL) opens after checkout.</span>
-      </p>
+      Patient view
+      <span aria-hidden className="mx-1.5 text-slate-300">·</span>
+      same path leads see
+      <span aria-hidden className="mx-1.5 text-slate-300">·</span>
+      owner dashboard opens after checkout
     </aside>
   );
 }
