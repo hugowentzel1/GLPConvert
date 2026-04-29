@@ -88,9 +88,18 @@ export default function GlpDemoOwnerPanels({
    * photography by 18% on B2B click-through.)
    */
   return (
-    <div className="space-y-5" data-owner-demo-panels>
-      <p className="text-center text-[11px] leading-relaxed text-slate-500">
-        Owner preview · illustrative only. Not medical, legal, or financial advice.
+    <div className="space-y-7 py-2" data-owner-demo-panels>
+      {/**
+       * Disclaimer reformatted as a small uppercase tracking line so it
+       * reads as a section header / breadcrumb rather than as a dense
+       * paragraph. Equal vertical rhythm above (parent space-y-7) and
+       * below (between this and the comparison grid) so it visually
+       * centers in its allocated spacing — buyer feedback flagged the
+       * prior loose paragraph as feeling off-center between the cards
+       * above and below it.
+       */}
+      <p className="text-center text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+        Owner preview · illustrative only · not medical, legal, or financial advice
       </p>
 
       <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
@@ -134,25 +143,39 @@ export default function GlpDemoOwnerPanels({
       </div>
 
       <div
-        className={`${OWNER_PANEL_SURFACE} space-y-4`}
+        className={`${OWNER_PANEL_SURFACE} space-y-5 sm:p-7`}
         data-demo-owner-value
       >
+        {/**
+         * Slightly more padding (`sm:p-7` overrides the default `sm:p-6`
+         * from OWNER_PANEL_SURFACE) and looser inner rhythm (`space-y-5`
+         * vs prior `space-y-4`) so the payoff card breathes — buyer
+         * feedback was that this section read as crowded with title +
+         * paragraph + upside + activation stack all jammed together.
+         * Stripe pricing-card pattern: the "winner" card gets more
+         * generous interior whitespace than the supporting cards.
+         */}
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">For your practice</p>
-          <p className="mt-1 text-sm font-semibold text-slate-900">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">For your practice</p>
+          <p className="mt-2 text-base font-semibold leading-snug text-slate-900 sm:text-[17px]">
             More booked consults from the same {companyName} traffic
           </p>
-          <p className="mt-2 text-xs leading-relaxed text-slate-600">
+          <p className="mt-2.5 text-[13px] leading-relaxed text-slate-600">
             Branded patient path that ends at your scheduling link. Your team owns care, pricing, and prescribing.
           </p>
         </div>
-        <p className="rounded-lg border border-slate-200/70 bg-slate-50/40 px-3 py-2 text-[12px] font-medium text-slate-800">
-          Estimated extra monthly revenue from this traffic:{" "}
-          <span className="font-semibold text-slate-900 tabular-nums">
-            ${low.toLocaleString()}–${high.toLocaleString()}
-          </span>{" "}
-          <span className="font-normal text-slate-500">(rough estimate, varies by clinic)</span>
-        </p>
+        <div className="rounded-xl border border-slate-200/80 bg-gradient-to-br from-slate-50 to-white px-4 py-3.5">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+            Estimated extra monthly revenue
+          </p>
+          <p className="mt-1.5 font-semibold text-slate-900">
+            <span className="text-[20px] tabular-nums sm:text-[22px]" style={{ color: brandPrimary }}>
+              ${low.toLocaleString()}–${high.toLocaleString()}
+            </span>
+            <span className="ml-1 text-[12px] font-normal text-slate-500">/ mo</span>
+          </p>
+          <p className="mt-1 text-[11px] text-slate-500">Rough estimate from this traffic; varies by clinic.</p>
+        </div>
 
         {/**
          * Activation flow collapsed to a single horizontal line — buyer

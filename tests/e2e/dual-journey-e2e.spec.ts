@@ -55,7 +55,11 @@ test.describe("dual journey end-to-end", () => {
     // Care package preview is present and labeled with company
     const carePackage = page.locator("[data-results-care-package]").first();
     await expect(carePackage).toBeVisible();
-    await expect(carePackage).toContainText(`configured by ${COMPANY}`);
+    // Demo header reframed from "configured by {company}" to "Example of
+    // what {company} could offer" — buyer feedback was the prior wording
+    // implied real config existed in demo mode (it doesn't).
+    await expect(carePackage).toContainText(COMPANY);
+    await expect(carePackage).toContainText(/example/i);
 
     // Click owner CTA — lands on /pricing with attribution preserved
     await Promise.all([page.waitForURL(/\/pricing\?/, { timeout: 15_000 }), ownerCta.click()]);
