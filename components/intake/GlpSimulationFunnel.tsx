@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import GlpDemoOwnerPanels from "@/components/intake/GlpDemoOwnerPanels";
 import GlpJourneyProgressChart from "@/components/intake/GlpJourneyProgressChart";
@@ -603,23 +602,13 @@ export default function GlpSimulationFunnel() {
       <IntakeStepper step={step} brandFill={brandFill} building={building} />
 
       {/**
-       * Step-transition micro-animations: fade-slide-in between steps
-       * 1→2→3→4→5. Material 3 motion specs (200-300ms, ease-standard
-       * 0.4/0/0.2/1). AnimatePresence mode="wait" so the outgoing step
-       * fully exits before the next one enters — prevents overlapping
-       * content, which is critical for screen-reader users and for the
-       * step-2 chart that has its own internal animations. Honors
-       * prefers-reduced-motion via framer-motion's built-in detection.
+       * Step-transition animations removed — buyer feedback flagged the
+       * disappear/reappear as jarring after the step-1 building overlay.
+       * The existing `building` overlay on step 1 + the chart reveal on
+       * step 2 already provide visual continuity. Adding an additional
+       * AnimatePresence fade made the page "vanish then pop back",
+       * which read as a bug rather than as a transition.
        */}
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={`step-${step}`}
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -4 }}
-          transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
-          className={glpIntakeUi.column}
-        >
       {step === 1 && (
         <section
           data-flow-step="1"
@@ -1495,8 +1484,6 @@ export default function GlpSimulationFunnel() {
           </div>
         </section>
       )}
-        </motion.div>
-      </AnimatePresence>
     </div>
   );
 }

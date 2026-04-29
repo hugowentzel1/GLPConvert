@@ -98,23 +98,34 @@ export default function GlpDemoOwnerPanels({
    * photography by 18% on B2B click-through.)
    */
   return (
-    <div className="space-y-7 py-2" data-owner-demo-panels>
+    <div className="space-y-7 py-4" data-owner-demo-panels>
       {/**
-       * Disclaimer reformatted as a small uppercase tracking line so it
-       * reads as a section header / breadcrumb rather than as a dense
-       * paragraph. Equal vertical rhythm above (parent space-y-7) and
-       * below (between this and the comparison grid) so it visually
-       * centers in its allocated spacing — buyer feedback flagged the
-       * prior loose paragraph as feeling off-center between the cards
-       * above and below it.
+       * Disclaimer with proper breathing room (py-4 wrapper + py-2.5
+       * around the text). Now reads as a deliberate section header
+       * rather than a stuck-on label. Slightly bolder slate-500 (up
+       * from slate-400) so it's actually readable at a glance.
        */}
-      <p className="text-center text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+      <p className="py-2.5 text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
         Owner preview · illustrative only · not medical, legal, or financial advice
       </p>
 
       <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
         <div className={OWNER_PANEL_SURFACE}>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">Today (without this)</p>
+          <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+            <svg
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="h-3.5 w-3.5 shrink-0 text-rose-500"
+              aria-hidden
+            >
+              <path
+                fillRule="evenodd"
+                d="M4.28 3.22a.75.75 0 00-1.06 1.06L8.94 10l-5.72 5.72a.75.75 0 101.06 1.06L10 11.06l5.72 5.72a.75.75 0 101.06-1.06L11.06 10l5.72-5.72a.75.75 0 00-1.06-1.06L10 8.94 4.28 3.22z"
+                clipRule="evenodd"
+              />
+            </svg>
+            Today (without this)
+          </p>
           <p className="mt-2 text-sm leading-relaxed text-slate-600">
             Cold clicks bounce before a clear next step. Cost and timing stay fuzzy, and consults stall at the form.
           </p>
@@ -165,45 +176,35 @@ export default function GlpDemoOwnerPanels({
          * Stripe pricing-card pattern: the "winner" card gets more
          * generous interior whitespace than the supporting cards.
          */}
-        <div>
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">For your practice</p>
-          <p className="mt-2 text-base font-semibold leading-snug text-slate-900 sm:text-[17px]">
-            More booked consults from the same {companyName} traffic
-          </p>
-          <p className="mt-2.5 text-[13px] leading-relaxed text-slate-600">
-            Branded patient path that ends at your scheduling link. Your team owns care, pricing, and prescribing.
-          </p>
-        </div>
-        <div className="rounded-xl border border-slate-200/80 bg-gradient-to-br from-slate-50 to-white px-4 py-3.5">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-            Estimated extra monthly revenue
-          </p>
-          <p className="mt-1.5 font-semibold text-slate-900">
-            <span className="text-[20px] tabular-nums sm:text-[22px]" style={{ color: brandPrimary }}>
+        {/**
+         * Single-block payoff: title sits directly next to the upside
+         * number so eye lands on dollar amount without a paragraph
+         * detour. Buyer feedback (3rd round): the title + supporting
+         * paragraph + separate upside callout + activation strip read
+         * as four blocks where one would do. Stripe pricing-card +
+         * Linear billing-card pattern: ONE focal block per card,
+         * everything else collapses to micro-text.
+         */}
+        <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
+          <div className="min-w-0">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">For your practice</p>
+            <p className="mt-2 text-[17px] font-semibold leading-snug text-slate-900 sm:text-[18px]">
+              More booked consults from {companyName} traffic
+            </p>
+          </div>
+          <p className="shrink-0 text-left sm:text-right">
+            <span className="text-[22px] font-semibold tabular-nums leading-none sm:text-[24px]" style={{ color: brandPrimary }}>
               ${low.toLocaleString()}–${high.toLocaleString()}
             </span>
-            <span className="ml-1 text-[12px] font-normal text-slate-500">/ mo</span>
+            <span className="ml-1 text-[12px] font-medium text-slate-500">/ mo est.</span>
           </p>
-          <p className="mt-1 text-[11px] text-slate-500">Rough estimate from this traffic; varies by clinic.</p>
         </div>
 
-        {/**
-         * Activation flow collapsed to a single horizontal line — buyer
-         * feedback flagged the 3-card grid as "way too crowded" alongside
-         * the title, paragraph, modeled-upside line, and CTAs. The same
-         * three commitments are still surfaced (branded URL, drop-in
-         * placement, three-channel lead delivery) so the test selectors
-         * `data-demo-owner-activation-flow` + the literal phrases
-         * "Branded URL", "Drop into your funnel", "three ways" still
-         * pass. Tufte data-ink ratio + NN/g 2024 "remove visual noise
-         * from supporting elements" — the activation steps are
-         * supporting info, not the headline.
-         */}
         <p
-          className="rounded-lg border border-slate-200/70 bg-slate-50/60 px-3 py-2 text-[11px] leading-snug text-slate-600"
+          className="text-[11px] leading-snug text-slate-500"
           data-demo-owner-activation-flow
         >
-          <span className="font-semibold text-slate-900">Branded URL in ~10 min</span>
+          <span className="font-semibold text-slate-700">Branded URL in ~10 min</span>
           <span aria-hidden className="mx-1.5 text-slate-300">·</span>
           <span>Drop into your funnel</span>
           <span aria-hidden className="mx-1.5 text-slate-300">·</span>
