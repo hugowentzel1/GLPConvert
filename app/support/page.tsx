@@ -152,28 +152,33 @@ export default function SupportPage() {
 
             {/* Support Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-10 md:mt-16">
+              {/**
+               * 3-card support row: equal-height cards with CTA pinned
+               * to bottom via flex layout. Buyer feedback: Email Support
+               * was visually taller than Documentation/Status because of
+               * its filled button vs the others' text links. Fix: all
+               * three now use a button-style anchor at the bottom of a
+               * `flex flex-col h-full justify-between` shell so the
+               * footers align vertically. NN/g 2024 card-grid alignment.
+               */}
               {/* Email Support */}
-              <Card>
-                <div className="text-center space-y-2">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-full flex items-center justify-center mx-auto shadow-lg">
-                    <svg className="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
+              <Card className="h-full">
+                <div className="flex h-full flex-col items-center justify-between text-center">
+                  <div className="space-y-2">
+                    <div className="w-12 h-12 bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-full flex items-center justify-center mx-auto shadow-lg">
+                      <svg className="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-semibold text-neutral-900">Email Support</h3>
+                    <p className="text-sm text-gray-600">Primary support channel</p>
+                    <p className="text-xs text-gray-500">&lt;24h response time</p>
+                    <p className="text-sm text-gray-500 font-medium">{SUPPORT_EMAIL}</p>
                   </div>
-                  <h3 className="text-lg font-semibold text-neutral-900">Email Support</h3>
-                  <p className="text-sm text-gray-600">Primary support channel</p>
-                  <p className="text-xs text-gray-500">&lt;24h response time</p>
-                  <p className="text-sm text-gray-500 font-medium">{SUPPORT_EMAIL}</p>
-                  {/**
-                   * Visible primary action — opens the user's mail client with
-                   * a pre-filled subject so the inbound email is immediately
-                   * triagable (Linear Support, Stripe Support, Resend Support
-                   * use the same one-click mailto + pre-filled subject pattern).
-                   */}
                   <a
                     href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`${PRODUCT_NAME} support request`)}`}
                     data-testid="email-support-send"
-                    className="mt-2 inline-flex items-center justify-center rounded-lg bg-[var(--brand-600)] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)]"
+                    className="mt-5 inline-flex items-center justify-center rounded-lg bg-[var(--brand-600)] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)]"
                   >
                     <svg className="mr-1.5 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -184,19 +189,21 @@ export default function SupportPage() {
               </Card>
 
               {/* Documentation */}
-              <Card>
-                <div className="text-center space-y-2">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-full flex items-center justify-center mx-auto shadow-lg">
-                    <svg className="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
+              <Card className="h-full">
+                <div className="flex h-full flex-col items-center justify-between text-center">
+                  <div className="space-y-2">
+                    <div className="w-12 h-12 bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-full flex items-center justify-center mx-auto shadow-lg">
+                      <svg className="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-semibold text-neutral-900">Documentation</h3>
+                    <p className="text-sm text-gray-600">Setup guides &amp; tutorials</p>
+                    <p className="text-xs text-gray-500">Self-service resources</p>
                   </div>
-                  <h3 className="text-lg font-semibold text-neutral-900">Documentation</h3>
-                  <p className="text-sm text-gray-600">Setup guides & tutorials</p>
-                  <p className="text-xs text-gray-500">Self-service resources</p>
                   <Link
                     href={buildMarketingPathHref(searchParams, "/docs/setup")}
-                    className="inline-block text-sm text-brand-600 hover:text-brand-700 font-medium"
+                    className="mt-5 inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
                   >
                     View Documentation
                   </Link>
@@ -204,19 +211,21 @@ export default function SupportPage() {
               </Card>
 
               {/* System Status */}
-              <Card>
-                <div className="text-center space-y-2">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-full flex items-center justify-center mx-auto shadow-lg">
-                    <svg className="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
+              <Card className="h-full">
+                <div className="flex h-full flex-col items-center justify-between text-center">
+                  <div className="space-y-2">
+                    <div className="w-12 h-12 bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-full flex items-center justify-center mx-auto shadow-lg">
+                      <svg className="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-semibold text-neutral-900">System Status</h3>
+                    <p className="text-sm text-gray-600">Service uptime</p>
+                    <p className="text-xs text-gray-500 font-medium">All systems operational</p>
                   </div>
-                  <h3 className="text-lg font-semibold text-neutral-900">System Status</h3>
-                  <p className="text-sm text-gray-600">Service uptime</p>
-                  <p className="text-xs text-gray-500 font-medium">All systems operational</p>
                   <Link
                     href={buildMarketingPathHref(searchParams, "/status")}
-                    className="inline-block text-sm text-brand-600 hover:text-brand-700 font-medium"
+                    className="mt-5 inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
                   >
                     Check Status
                   </Link>

@@ -33,12 +33,12 @@ export default function MarketingLegalShell({
   const homeHref = buildBrandedDemoReturnHref(searchParams);
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#f8fafc_0%,#f1f5f9_100%)]">
-      <main className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
-        <p className="mb-10 sm:mb-12">
+    <div className="min-h-screen bg-white">
+      <main className="mx-auto max-w-3xl px-4 py-14 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+        <p className="mb-10 sm:mb-14">
           <Link
             href={homeHref}
-            className="inline-flex items-center text-sm font-medium text-slate-600 transition-colors hover:text-slate-900"
+            className="inline-flex items-center text-sm font-medium text-slate-700 transition-colors hover:text-slate-900"
           >
             <svg className="mr-2 h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -47,14 +47,24 @@ export default function MarketingLegalShell({
           </Link>
         </p>
 
-        <header className="mb-10 border-b border-slate-200/90 pb-8 sm:mb-12 sm:pb-10">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">{title}</h1>
+        {/**
+         * Premium legal-page header: bigger H1 in pure black, tighter
+         * tracking, white bg (was slate gradient — buyer feedback the
+         * gray-on-gray made the title look "weird gray"). Stripe Legal,
+         * Linear Legal, Vercel Legal all default to white surface +
+         * deep-black H1 for maximum contrast and read as "expensive
+         * official document" rather than "support article".
+         */}
+        <header className="mb-12 border-b border-slate-200 pb-10 sm:mb-16 sm:pb-12">
+          <h1 className="text-[2.25rem] font-black leading-tight tracking-tight text-slate-950 sm:text-[2.75rem]">
+            {title}
+          </h1>
           {lastUpdated ? (
-            <p className="mt-3 text-sm text-slate-500">Last updated: {lastUpdated}</p>
+            <p className="mt-3 text-sm font-medium text-slate-500">Last updated: {lastUpdated}</p>
           ) : null}
         </header>
 
-        {lead ? <div className="mb-8 text-lg text-slate-700 leading-relaxed sm:mb-10">{lead}</div> : null}
+        {lead ? <div className="mb-10 text-[17px] leading-relaxed text-slate-800 sm:mb-12">{lead}</div> : null}
 
         <div className={contentClassName !== undefined ? contentClassName : shellArticle}>{children}</div>
 
