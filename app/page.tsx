@@ -295,7 +295,7 @@ function HomeContent() {
                     className="text-4xl sm:text-5xl md:text-[2.75rem] font-semibold tracking-tight text-slate-900 leading-[1.15] max-w-3xl mx-auto text-pretty"
                     data-testid="home-demo-headline"
                   >
-                    Turn the GLP-1 clicks you already buy into booked consults—without a sales call.
+                    {b.brand ? `${b.brand} — turn` : "Turn"} the GLP-1 clicks you already buy into booked consults, without a sales call.
                   </h1>
 
                   <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed text-pretty">
