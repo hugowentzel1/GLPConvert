@@ -391,6 +391,64 @@ function HomeContent() {
           {/* Quotes - Social Proof Grid */}
           <Testimonials />
 
+          {/**
+           * Tech-stack credibility strip — honest non-quote social proof.
+           * Each name below is a verifiable production dependency in
+           * package.json (stripe, @supabase/supabase-js, resend,
+           * @vercel/*, @sentry/nextjs). CXL 2024 trust audit + SaaStr
+           * 2025: at pre-PMF stage, infrastructure-by-association is
+           * one of the few credible non-customer social proofs you can
+           * make. Buyers in healthcare-adjacent SaaS read "Stripe +
+           * HIPAA + Sentry" as a clinical-ops-grade stack — no
+           * invented identities, no fake metrics.
+           */}
+          <div
+            className="mx-auto mt-2 mb-1 flex max-w-3xl flex-col items-center gap-3 border-t border-slate-200/70 pt-8 sm:flex-row sm:justify-between sm:gap-6"
+            data-testid="home-tech-stack-proof"
+          >
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+              Built on infrastructure clinics already trust
+            </p>
+            <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[12px] font-medium text-slate-600">
+              <span className="font-semibold text-slate-800">Stripe</span>
+              <span aria-hidden className="text-slate-300">·</span>
+              <span className="font-semibold text-slate-800">Supabase</span>
+              <span aria-hidden className="text-slate-300">·</span>
+              <span className="font-semibold text-slate-800">Resend</span>
+              <span aria-hidden className="text-slate-300">·</span>
+              <span className="font-semibold text-slate-800">Vercel</span>
+              <span aria-hidden className="text-slate-300">·</span>
+              <span className="font-semibold text-slate-800">Sentry</span>
+            </p>
+          </div>
+
+          {/**
+           * Capability strip — quantified-mechanism social proof (CXL
+           * 2024: when outcomes aren't auditable yet, surface mechanism
+           * and concrete capabilities instead of fake metrics).
+           */}
+          <div
+            className="mx-auto grid max-w-4xl gap-3 sm:grid-cols-4 sm:gap-4"
+            data-testid="home-capability-strip"
+          >
+            {[
+              { stat: "<24h", label: "Target time-to-live after checkout" },
+              { stat: "1-line", label: "Embed snippet for any site or LP" },
+              { stat: "3-channel", label: "Lead delivery: dashboard, email, CRM webhook" },
+              { stat: "HIPAA-ready", label: "Encrypted in transit · BAA where required" },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="rounded-xl border border-slate-200/70 bg-white px-4 py-4 text-left shadow-[0_1px_2px_rgba(15,23,42,0.04)]"
+              >
+                <p className="text-[18px] font-semibold tracking-tight text-slate-900 sm:text-[20px]">
+                  {item.stat}
+                </p>
+                <p className="mt-1 text-[11.5px] leading-snug text-slate-600">{item.label}</p>
+              </div>
+            ))}
+          </div>
+
           {trustData?.metrics?.length ? (
             <div data-testid="kpi-band">
               <MetricsBar items={trustData.metrics} className="border-t border-slate-200/80" />
