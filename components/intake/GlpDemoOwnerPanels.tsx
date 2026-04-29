@@ -140,62 +140,42 @@ export default function GlpDemoOwnerPanels({
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">For your practice</p>
           <p className="mt-1 text-sm font-semibold text-slate-900">
-            Book more consults from the same {companyName} traffic
+            More booked consults from the same {companyName} traffic
           </p>
-          <p className={`${glpIntakeUi.bodyMuted} mt-2 text-xs leading-relaxed`}>
-            Embeds in your site, ads, and landing pages with {companyName}&apos;s logo, color, and booking link. The
-            modeled path above mirrors the choice the patient made — your team prescribes, packages, and prices care.
+          <p className="mt-2 text-xs leading-relaxed text-slate-600">
+            Branded patient path that ends at your scheduling link. Your team owns care, pricing, and prescribing.
           </p>
         </div>
-        <p className="text-xs font-medium text-slate-700">
-          ~${low.toLocaleString()}–${high.toLocaleString()}/mo modeled monthly upside on this traffic (illustrative) —
-          not a guarantee.
+        <p className="rounded-lg border border-slate-200/70 bg-slate-50/40 px-3 py-2 text-[12px] font-medium text-slate-800">
+          Estimated extra monthly revenue from this traffic:{" "}
+          <span className="font-semibold text-slate-900 tabular-nums">
+            ${low.toLocaleString()}–${high.toLocaleString()}
+          </span>{" "}
+          <span className="font-normal text-slate-500">(rough estimate, varies by clinic)</span>
         </p>
 
         {/**
-         * "How activation works" 3-step strip — explicit answer to the
-         * #1 cold-email-buyer objection: "what do I have to *do* after I
-         * click checkout?" We show the literal three-step path (email
-         * with branded URL → drop into your funnel → leads to dashboard
-         * + CRM webhook + email). Pattern follows the post-purchase
-         * "trust strip" used by Stripe Atlas, Mercury, and Webflow
-         * onboarding pages — buyers convert measurably better when the
-         * activation flow is visible *before* they pay (Webflow 2024
-         * SaaS Landing Benchmark, +11% checkout completion).
+         * Activation flow collapsed to a single horizontal line — buyer
+         * feedback flagged the 3-card grid as "way too crowded" alongside
+         * the title, paragraph, modeled-upside line, and CTAs. The same
+         * three commitments are still surfaced (branded URL, drop-in
+         * placement, three-channel lead delivery) so the test selectors
+         * `data-demo-owner-activation-flow` + the literal phrases
+         * "Branded URL", "Drop into your funnel", "three ways" still
+         * pass. Tufte data-ink ratio + NN/g 2024 "remove visual noise
+         * from supporting elements" — the activation steps are
+         * supporting info, not the headline.
          */}
-        <div className="grid gap-2 rounded-xl border border-slate-200/85 bg-slate-50/60 p-3 sm:grid-cols-3" data-demo-owner-activation-flow>
-          {[
-            {
-              step: "1",
-              title: "Branded URL in 10 min",
-              detail: "We email your hosted funnel + iframe snippet right after checkout.",
-            },
-            {
-              step: "2",
-              title: "Drop into your funnel",
-              detail: "Cold email, ad, existing site, or a subdomain like book.yourclinic.com.",
-            },
-            {
-              step: "3",
-              title: "Leads, three ways",
-              detail: "Dashboard, your inbox, and your CRM webhook — every lead, automatically.",
-            },
-          ].map((it) => (
-            <div key={it.step} className="flex items-start gap-2.5">
-              <span
-                className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white"
-                style={{ backgroundColor: brandPrimary }}
-                aria-hidden
-              >
-                {it.step}
-              </span>
-              <div>
-                <p className="text-[11px] font-semibold leading-snug text-slate-900">{it.title}</p>
-                <p className="text-[11px] leading-snug text-slate-600">{it.detail}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <p
+          className="rounded-lg border border-slate-200/70 bg-slate-50/60 px-3 py-2 text-[11px] leading-snug text-slate-600"
+          data-demo-owner-activation-flow
+        >
+          <span className="font-semibold text-slate-900">Branded URL in ~10 min</span>
+          <span aria-hidden className="mx-1.5 text-slate-300">·</span>
+          <span>Drop into your funnel</span>
+          <span aria-hidden className="mx-1.5 text-slate-300">·</span>
+          <span>Leads three ways (dashboard + email + CRM)</span>
+        </p>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4">
           <a
