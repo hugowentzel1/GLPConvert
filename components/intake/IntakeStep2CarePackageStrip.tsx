@@ -85,14 +85,14 @@ export default function IntakeStep2CarePackageStrip({
       ) : (
         <>
           <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-            Sample care package · configured by {company}
+            Example of what {company} could offer
           </p>
           <ul className="mt-4 grid gap-3 sm:grid-cols-3 sm:gap-3.5">
             {(
               [
                 {
                   label: "Provider review",
-                  desc: "Licensed clinician reviews your goals + history.",
+                  desc: "A clinician reviews your goals.",
                   icon: (
                     <path
                       strokeLinecap="round"
@@ -103,7 +103,7 @@ export default function IntakeStep2CarePackageStrip({
                 },
                 {
                   label: "Personalized plan",
-                  desc: "Protocol + check-ins from your provider.",
+                  desc: "Protocol and check-ins.",
                   icon: (
                     <path
                       strokeLinecap="round"
@@ -114,7 +114,7 @@ export default function IntakeStep2CarePackageStrip({
                 },
                 {
                   label: "Medication, if prescribed",
-                  desc: "Coordination with your clinic, your pharmacy.",
+                  desc: "Coordinated with your pharmacy.",
                   icon: (
                     <path
                       strokeLinecap="round"
@@ -127,7 +127,7 @@ export default function IntakeStep2CarePackageStrip({
             ).map((tile) => (
               <li
                 key={tile.label}
-                className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4"
+                className="flex flex-col items-center gap-2 rounded-xl border border-slate-200 bg-white p-3.5 text-center sm:p-4"
               >
                 <span
                   className="relative inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-sm ring-2 ring-white"
@@ -149,9 +149,9 @@ export default function IntakeStep2CarePackageStrip({
               </li>
             ))}
           </ul>
-          <p className="mt-3 text-[11px] leading-relaxed text-slate-500">
-            Preview only — your actual package, pricing, and inclusions are set by{" "}
-            <span className="font-medium text-slate-700">{company}</span>. Not a quote.
+          <p className="mt-3 text-center text-[11px] leading-relaxed text-slate-500">
+            Example only — actual package and pricing set by{" "}
+            <span className="font-medium text-slate-700">{company}</span>.
           </p>
         </>
       )}
