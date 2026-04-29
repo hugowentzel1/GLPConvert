@@ -264,6 +264,34 @@ function HomeContent() {
                     </Link>
                     ).
                   </p>
+                  {/**
+                   * Founder note — honest pre-PMF social proof. SaaStr Jan 2025
+                   * "Pre-PMF Trust" + Lemkin: at sub-$1M ARR a real founder
+                   * signature with direct contact outperforms vague "trusted by"
+                   * logos. The buyer is being asked to self-serve into a
+                   * healthcare-adjacent SaaS off a cold-email demo link — the
+                   * accountability cue ("a real person built this and replies")
+                   * is the credibility unlock. No invented identities; one real
+                   * founder, route to existing /contact.
+                   */}
+                  <div
+                    className="mx-auto mt-6 flex max-w-md items-center justify-center gap-3 border-t border-slate-100 pt-5"
+                    data-testid="home-demo-founder-note"
+                  >
+                    <div
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-100 text-[11px] font-bold text-slate-700"
+                      aria-hidden
+                    >
+                      HW
+                    </div>
+                    <p className="text-left text-sm leading-snug text-slate-600">
+                      Built by <strong className="font-semibold text-slate-900">Hugo Wentzel</strong>, solo founder.{" "}
+                      <Link href="/contact" className="font-medium underline underline-offset-2 hover:text-slate-900">
+                        Email me directly
+                      </Link>{" "}
+                      with anything.
+                    </p>
+                  </div>
                   <PartnerSummaryCopy brandName={b.brand || "Your clinic"} />
                 </div>
               </div>
