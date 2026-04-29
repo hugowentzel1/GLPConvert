@@ -794,19 +794,19 @@ export default function GlpSimulationFunnel() {
         >
           <div
             data-results-trust-strip
-            className="flex flex-col items-center gap-3.5 rounded-xl border border-slate-200/90 bg-slate-50/60 px-5 py-4 text-center shadow-sm sm:flex-row sm:justify-center sm:gap-5 sm:py-4"
+            className="flex flex-col items-center justify-center gap-2.5 pb-1 text-center sm:flex-row sm:gap-4"
           >
             {effectiveLogo ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={effectiveLogo}
                 alt=""
-                className="h-7 w-auto max-w-[100px] shrink-0 object-contain sm:h-8 sm:max-w-[120px]"
+                className="h-6 w-auto max-w-[96px] shrink-0 object-contain sm:h-7 sm:max-w-[112px]"
                 loading="lazy"
               />
             ) : (
               <div
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-[11px] font-bold text-white shadow-sm"
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[10px] font-bold text-white"
                 style={{ backgroundColor: brandFill }}
                 aria-hidden
               >
@@ -819,8 +819,12 @@ export default function GlpSimulationFunnel() {
                   .toUpperCase() || "?"}
               </div>
             )}
-            <p className="max-w-xl text-xs leading-relaxed text-slate-500 sm:text-left sm:text-[13px]">
-              {trustChips.join(" · ")}
+            <p className="inline-flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+              <span>{trustChips[0]}</span>
+              <span aria-hidden className="text-slate-300">·</span>
+              <span>{trustChips[1]}</span>
+              <span aria-hidden className="text-slate-300">·</span>
+              <span>{trustChips[2]}</span>
             </p>
           </div>
 
@@ -846,10 +850,6 @@ export default function GlpSimulationFunnel() {
                 points={journeyProgressPoints}
                 brandFill={brandFill}
                 variant="default"
-                goalChip={{
-                  label: `Goal · ${input.goalWeight} lbs`,
-                  sublabel: `modeled ~${Math.max(2, Math.ceil(output.weeksToGoal / 4))} mo`,
-                }}
               />
             </div>
           ) : null}
@@ -1366,7 +1366,7 @@ export default function GlpSimulationFunnel() {
             </span>
           </label>
           {consentHint && !consent ? (
-            <p className="-mt-1 text-sm font-medium text-amber-800" role="status" data-intake-consent-hint>
+            <p className="-mt-1 text-sm font-medium text-red-600" role="status" data-intake-consent-hint>
               Please tick the consent box above to continue.
             </p>
           ) : null}
@@ -1386,31 +1386,38 @@ export default function GlpSimulationFunnel() {
                 {saving ? "Saving…" : "Save and continue"}
               </button>
               {/**
-               * Secondary CTA copy is now uniform in shape (verb + noun
-               * phrase, all 2–3 words, no leading article) so the four
-               * variants render at the same text size and visual weight
-               * inside `secondaryBtn` regardless of which `nextStep` the
-               * user picked. Previously "Get a scheduling link" was a
-               * 4-word phrase with an article — it wrapped on smaller
-               * widths and read smaller than the other strings even
-               * though the class was identical, breaking the "every step
-               * footer reads the same" rule.
+               * Demo mode: hide the secondary CTA. In demo there's no real
+               * scheduling URL / clinic backend, so the legacy "Get
+               * scheduling link" labels routed to /contact, which read as
+               * misleading to cold-email buyers ("button promised X,
+               * delivered Y"). One primary action — Save and continue —
+               * keeps the demo flow tight (Reforge 2025 PLG-demo
+               * teardowns: demonstrate the primary path, don't multi-CTA).
+               *
+               * Paid mode: keep the secondary as a true escape hatch
+               * (open the configured booking link, request a callback,
+               * or preview the saved plan). All three route to real
+               * destinations.
                */}
-              <a
-                href={bookHref}
-                target={effectiveBookingUrl && nextStep === "book" ? "_blank" : undefined}
-                rel={effectiveBookingUrl && nextStep === "book" ? "noopener noreferrer" : undefined}
-                className={glpIntakeUi.secondaryBtn}
-                data-results-secondary-cta
-              >
-                {nextStep === "book"
-                  ? effectiveBookingUrl
-                    ? "Open scheduling link"
-                    : "Get scheduling link"
-                  : nextStep === "callback"
-                    ? "Request callback"
-                    : "Preview saved plan"}
-              </a>
+              {!isDemoMode || nextStep === "save_only" ? (
+                <a
+                  href={bookHref}
+                  target={effectiveBookingUrl && nextStep === "book" ? "_blank" : undefined}
+                  rel={effectiveBookingUrl && nextStep === "book" ? "noopener noreferrer" : undefined}
+                  className={glpIntakeUi.secondaryBtn}
+                  data-results-secondary-cta
+                >
+                  {nextStep === "book"
+                    ? effectiveBookingUrl
+                      ? "Open scheduling link"
+                      : "Get scheduling link"
+                    : nextStep === "callback"
+                      ? "Request callback"
+                      : isDemoMode
+                        ? "Preview saved plan"
+                        : "Preview saved plan"}
+                </a>
+              ) : null}
             </div>
           </div>
           {saveMsg ? <p className="text-sm font-medium text-red-600">{saveMsg}</p> : null}
