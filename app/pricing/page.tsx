@@ -65,6 +65,9 @@ export default function PricingPage() {
             </div>
 
             <div className="text-center space-y-4">
+              <p className="text-sm text-neutral-500">
+                <span className="line-through decoration-neutral-400/70">Custom-built clinic intake: $8,000–$15,000 + dev cycles</span>
+              </p>
               <h1 className="text-4xl md:text-5xl font-black text-neutral-900">
                 $99/mo + $399 setup
               </h1>
@@ -82,13 +85,22 @@ export default function PricingPage() {
                * follows Stripe Checkout, Linear, Notion: primary action ALWAYS
                * carries the active brand fill — no neutral fallback in flow.
                */}
-              <button
-                onClick={handleStartSetup}
-                data-testid="pricing-start-setup"
-                className="inline-flex items-center justify-center rounded-lg bg-[var(--brand-600)] px-6 py-3 text-white font-semibold shadow-md transition hover:brightness-[1.05] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)]"
-              >
-                Start setup — $399 today, then $99/mo
-              </button>
+              <div className="flex flex-col items-center gap-3 pt-2">
+                <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+                  <span>HIPAA-ready posture</span>
+                  <span aria-hidden className="text-neutral-300">·</span>
+                  <span>BAAs where required</span>
+                  <span aria-hidden className="text-neutral-300">·</span>
+                  <span>Encrypted in transit</span>
+                </p>
+                <button
+                  onClick={handleStartSetup}
+                  data-testid="pricing-start-setup"
+                  className="inline-flex items-center justify-center rounded-lg bg-[var(--brand-600)] px-6 py-3 text-white font-semibold shadow-md transition hover:brightness-[1.05] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)]"
+                >
+                  Start setup — $399 today, then $99/mo
+                </button>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
