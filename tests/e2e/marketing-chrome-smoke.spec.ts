@@ -52,9 +52,9 @@ test.describe("Marketing chrome (Chromium)", () => {
   }
 
   test("home shows pilot social proof cards with full names (verbatim hero quotes)", async ({ page }) => {
-    await page.goto(`/?${DEMO}`, { waitUntil: "domcontentloaded" });
+    await page.goto(`/?${DEMO}`, { waitUntil: "load" });
     const section = page.locator('[data-testid="demo-testimonials"]');
-    await section.waitFor({ state: "visible", timeout: 45000 });
+    await expect(section).toBeVisible({ timeout: 25000 });
     await expect(section.getByText("Jordan Mercer", { exact: true })).toBeVisible();
     await expect(section.getByText("Priya Krishnan", { exact: true })).toBeVisible();
     await expect(section.getByText("Marcus Ellison", { exact: true })).toBeVisible();
