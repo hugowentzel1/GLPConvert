@@ -13,7 +13,7 @@ type Quote = {
 const QUOTES: Quote[] = [
   {
     quote:
-      "Our ‘interested in GLP-1s’ clicks used to die on a generic form. Now people self-educate on process and typical monthly bands before they book—we see fewer no-shows and less price shock.",
+      "Our ‘interested in GLP-1s’ clicks used to die on a generic form. Patients now self-educate on process and pricing before they book — fewer no-shows, less price shock.",
     name: "Jordan M.",
     role: "Owner",
     orgLine: "Boutique med spa, Southwest US",
@@ -21,7 +21,7 @@ const QUOTES: Quote[] = [
   },
   {
     quote:
-      "We white-label the intake on a dedicated lander and in our main site embed. Same flow everywhere; leads land in HubSpot with readiness tags. That alone made the pilot easy to justify.",
+      "We white-label the intake on a dedicated lander and embed it on our site. Same flow everywhere; leads land in HubSpot with readiness tags — easy pilot to justify.",
     name: "Priya K.",
     role: "Growth lead",
     orgLine: "Multi-state telehealth clinic",
@@ -29,7 +29,7 @@ const QUOTES: Quote[] = [
   },
   {
     quote:
-      "Buyers open the personalized demo link and immediately get that it could sit on their domain. Demo-to-checkout was the whole pitch—we didn’t need a deck.",
+      "Buyers open the personalized demo link and immediately see what it would look like on their own domain. Demo-to-checkout was the whole pitch — we didn’t need a deck.",
     name: "Chris L.",
     role: "Founder",
     orgLine: "B2B SaaS (agency resale partner)",
@@ -37,7 +37,7 @@ const QUOTES: Quote[] = [
   },
   {
     quote:
-      "Patients aren’t asking ‘what is semaglutide’ in the first five minutes anymore—they’ve already scanned the path overview. Consults feel more serious.",
+      "Patients aren’t asking ‘what is semaglutide’ in the first five minutes anymore — they’ve already scanned the path overview before they book. Consults feel more serious and prepared.",
     name: "Taylor S.",
     role: "Clinical ops",
     orgLine: "Regional weight-loss program",
