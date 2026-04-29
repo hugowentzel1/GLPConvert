@@ -228,16 +228,15 @@ export default function GlpJourneyProgressChart({
       />
 
       {!compact ? (
-        <div className="mb-6 space-y-2 px-2 text-center sm:mb-7 sm:space-y-2.5 sm:px-3">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
-            Momentum snapshot (illustrative)
+        <div className="mb-6 space-y-3 px-2 text-center sm:mb-7 sm:px-3">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
+            Modeled momentum
           </p>
-          <p className="text-lg font-semibold leading-snug tracking-tight text-slate-900 sm:text-xl">
-            How progress toward your stated goal can build over time
-          </p>
-          <p className="mx-auto max-w-lg text-sm font-normal leading-relaxed text-slate-600 sm:text-[15px] sm:leading-relaxed">
-            Each point is a modeled checkpoint — not a promise. Vertical axis: share of your goal; horizontal: months
-            from start. Your provider sets the real pace.
+          <h3 className="mx-auto max-w-md text-[1.35rem] font-semibold leading-tight tracking-tight text-slate-900 sm:text-[1.55rem]">
+            Your modeled path to the goal
+          </h3>
+          <p className="mx-auto max-w-md text-[13px] leading-relaxed text-slate-500 sm:text-sm">
+            Each checkpoint is illustrative — your provider sets the real pace.
           </p>
           {/**
            * Legend pills are explicitly centered as a single inline-flex group with a tight
@@ -540,9 +539,20 @@ export default function GlpJourneyProgressChart({
         </p>
       ) : null}
       {!compact ? (
-        <p className="mt-3 border-t border-slate-200 px-1 pt-3 text-center text-[11px] leading-relaxed text-slate-500 sm:px-2">
-          Last checkpoint shown: {last?.label} at <span className="tabular-nums" data-results-chart-live-pct>~{points.length >= 2 ? displayPct : 0}%</span> toward your stated goal (example only).
-        </p>
+        <div className="mx-auto mt-5 flex w-full max-w-md items-center justify-center gap-2.5 rounded-full border border-slate-200/70 bg-slate-50/60 px-4 py-2 text-center text-[11px] leading-snug text-slate-600 sm:text-[12px]">
+          <span
+            className="inline-block h-1.5 w-1.5 rounded-full"
+            style={{ backgroundColor: brandFill }}
+            aria-hidden
+          />
+          <span>
+            {last?.label} ·{" "}
+            <span className="font-semibold tabular-nums text-slate-900" data-results-chart-live-pct>
+              ~{points.length >= 2 ? displayPct : 0}%
+            </span>{" "}
+            of stated goal · example only
+          </span>
+        </div>
       ) : null}
     </motion.div>
   );

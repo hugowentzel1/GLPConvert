@@ -72,6 +72,6 @@ test.describe("Marketing chrome (Chromium)", () => {
     await expect(
       page.locator("[data-results-chart-y-label]").getByText(/Toward your stated goal/i).first(),
     ).toBeVisible();
-    await expect(page.getByText(/How progress toward your stated goal can build/i).first()).toBeVisible();
+    await expect(page.getByText(/Your modeled path to the goal/i).first()).toBeVisible();
   });
 });
