@@ -187,6 +187,7 @@ test.describe("backend persistence + booking + packages (pass 7)", () => {
     await expect(chip).toBeAttached({ timeout: 15_000 });
     await expect(chip).toContainText(/Goal · 180 lbs/);
     await expect(chip).toContainText(/modeled ~\d+ mo/);
+    await expect(chip.locator("[data-results-chart-live-pct]")).toContainText(/~\d+%/);
     /** And it must reach opacity-100 within a few seconds. */
     await expect(async () => {
       const op = await chip.evaluate((el) => Number(getComputedStyle(el as HTMLElement).opacity));

@@ -14,6 +14,8 @@ test.describe("live deploy smoke", () => {
     const bg = await cta.evaluate((el) => getComputedStyle(el).backgroundColor);
     console.log("Start setup bg:", bg);
     expect(bg.toLowerCase()).not.toContain("rgb(15, 23, 42)");
+    await expect(page.getByText(/Risk reversal/i).first()).toBeVisible();
+    await expect(page.getByText(/multi-year lock-in/i).first()).toBeVisible();
   });
 
   test("/intake step 2 renders chart, owner CTAs, no always-on checkpoint chip", async ({ page }) => {
@@ -23,7 +25,9 @@ test.describe("live deploy smoke", () => {
     await page.getByLabel(/Height/i).first().fill("66");
     const next = page.getByRole("button", { name: /continue/i }).first();
     await next.click();
-    await page.waitForTimeout(3500);
+    await page.waitForTimeout(2500);
+    /** Patient-view orientation strip for cold-email demos (pass 8). */
+    await expect(page.locator("[data-intake-patient-view-banner]").first()).toBeVisible({ timeout: 5000 });
     /** Chart still renders (sanity). */
     await expect(page.locator("[data-results-chart]").first()).toBeVisible({ timeout: 15_000 });
     /** Always-on "Modeled checkpoint X%" chip must be gone (now lives only in tooltip / summary tile). */
@@ -117,7 +121,7 @@ test.describe("live deploy smoke", () => {
     await page.getByLabel(/Goal weight/i).first().fill("180");
     await page.getByLabel(/Height/i).first().fill("66");
     await page.getByRole("button", { name: /continue/i }).first().click();
-    await page.waitForTimeout(3500);
+    await page.waitForTimeout(2500);
     const cta = page.locator("[data-demo-owner-cta]").first();
     await expect(cta).toBeVisible({ timeout: 15_000 });
     const href = await cta.getAttribute("href");

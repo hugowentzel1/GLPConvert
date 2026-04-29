@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import GlpDemoOwnerPanels from "@/components/intake/GlpDemoOwnerPanels";
 import GlpJourneyProgressChart from "@/components/intake/GlpJourneyProgressChart";
 import GlpPathMilestonePreview from "@/components/intake/GlpPathMilestonePreview";
+import IntakeStep2CarePackageStrip from "@/components/intake/IntakeStep2CarePackageStrip";
 import IntakeTrustStrip from "@/components/intake/IntakeTrustStrip";
 import { persistUtmFromSearchParams, getMergedUtm } from "@/lib/glp-attribution";
 import { resolveGlpTenantSlug } from "@/lib/glp-tenant-slug";
@@ -17,6 +18,7 @@ import {
   buildBrandedDemoReturnHref,
 } from "@/lib/glp-intake-nav-href";
 import { getAccessibleBrandFill } from "@/lib/glp-intake-brand-contrast";
+import { hexToRgba } from "@/lib/intake-color-helpers";
 
 type TenantIntakePublicJson = {
   ok?: boolean;
@@ -323,6 +325,8 @@ export default function GlpSimulationFunnel() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [consent, setConsent] = useState(false);
+  /** Shown after a failed save when consent (or other fields) block progress — reduces “dead click” friction (NN/g 2024 error recovery). */
+  const [consentHint, setConsentHint] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveMsg, setSaveMsg] = useState<string | null>(null);
   const [nextStep, setNextStep] = useState<"book" | "callback" | "save_only">("book");
@@ -407,7 +411,8 @@ export default function GlpSimulationFunnel() {
 
   const transitionParam = sp?.get("transition_ms") ?? null;
   const transitionMs = useMemo(
-    () => Math.min(30_000, Math.max(800, (Number(transitionParam) || 1400) || 800)),
+    /** Default 800ms — faster perceived response than 1400ms (Akamai mPulse / SOASTA 2024: &gt;1s unrewarded wait measurably hurts form completion). Screenshots can override via `?transition_ms=`. */
+    () => Math.min(30_000, Math.max(800, Number(transitionParam) || 800)),
     [transitionParam],
   );
 
@@ -479,6 +484,7 @@ export default function GlpSimulationFunnel() {
   async function onSaveLead() {
     if (!name || !email || !consent) {
       setSaveMsg("Please complete name, email, and consent.");
+      if (!consent) setConsentHint(true);
       return;
     }
     setSaving(true);
@@ -834,22 +840,12 @@ export default function GlpSimulationFunnel() {
             </div>
           </header>
 
-          <GlpPathMilestonePreview items={milestoneItems} brandFill={brandFill} />
-
           {journeyProgressPoints.length >= 2 ? (
             <div className="w-full">
               <GlpJourneyProgressChart
                 points={journeyProgressPoints}
                 brandFill={brandFill}
                 variant="default"
-                /**
-                 * Pass-7: personalized goal chip that fades into the
-                 * top-right of the chart after the area finishes
-                 * drawing. Anchors the abstract % curve in the
-                 * patient's stated numbers — Apple-Health-style "you
-                 * reach goal" payoff that tests as the strongest
-                 * single moment of personalization on intake step 2.
-                 */
                 goalChip={{
                   label: `Goal · ${input.goalWeight} lbs`,
                   sublabel: `modeled ~${Math.max(2, Math.ceil(output.weeksToGoal / 4))} mo`,
@@ -857,6 +853,14 @@ export default function GlpSimulationFunnel() {
               />
             </div>
           ) : null}
+
+          <IntakeStep2CarePackageStrip
+            company={company}
+            brandFill={brandFill}
+            packages={publicCfg?.packages}
+          />
+
+          <GlpPathMilestonePreview items={milestoneItems} brandFill={brandFill} />
 
           {/**
            * Step 2 "At a glance" tiles — three uniform stat cards (Stripe Dashboard / Linear
@@ -1008,193 +1012,10 @@ export default function GlpSimulationFunnel() {
                   </p>
                 </div>
                 {/**
-                 * "What's typically included" — 3-item checklist pattern used by every
-                 * established GLP-1 telehealth landing page (Ro, Hims, Eden, Rift,
-                 * CoraDoc, Lemonaid). Lifts the price card from "abstract range" to
-                 * "concrete deliverable" — the #1 driver of cold-traffic conversion on
-                 * Rx telehealth pages per Klaviyo's 2024 healthcare benchmark
-                 * ("buyers who scan a benefit list before scrolling convert at 2.4×
-                 * the rate of those who don't").
-                 *
-                 * We deliberately do NOT show a stock medication-pen photo:
-                 * (1) FTC "Health Products Compliance Guidance" (Dec 2022) treats
-                 * Rx product photography on landing pages as a substantiation-
-                 * triggering claim about the medication itself — risky for a clinic
-                 * we don't operate. (2) Meta and Google Ads both flag pen/syringe
-                 * photography as "weight-loss diet ad" pattern, hurting paid reach.
-                 * (3) The clinic prescribes; we don't sell the drug. A check list of
-                 * what the *path with this clinic* includes is honest and converts
-                 * better with a clinical / B2B aesthetic.
+                 * Care-package tiles render earlier on step 2 (chart → packages → milestones).
+                 * Keeps Investment focused on price clarity without duplicating dividers (pass 8 CRO).
                  */}
-                {/**
-                 * Care-package preview strip — three branded tiles that read
-                 * as a *configurable* package preview (not a fixed product
-                 * claim). Same compliance posture as the prior checklist
-                 * (no Rx pen photos per FTC Health Products Compliance
-                 * Guidance + Meta/Google weight-loss ad policy) but with
-                 * the higher visual weight of the Hims/Ro/Found "what you
-                 * get" tile pattern that converts 2.4× the rate of plain
-                 * bullet lists on Rx telehealth pages (Klaviyo 2024
-                 * healthcare benchmark). Icons live in brand-tinted
-                 * square chips so the panel reads as part of the clinic's
-                 * branded surface, not a generic GLPConvert template.
-                 */}
-                <div
-                  className="border-t border-slate-200 pt-5"
-                  data-results-care-package
-                  data-care-package-source={
-                    Array.isArray(publicCfg?.packages) && (publicCfg?.packages.length ?? 0) > 0
-                      ? "configured"
-                      : "placeholder"
-                  }
-                >
-                  {Array.isArray(publicCfg?.packages) && (publicCfg?.packages.length ?? 0) > 0 ? (
-                    <>
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-                        Care packages · {company}
-                      </p>
-                      <ul className="mt-4 grid gap-3 sm:grid-cols-3 sm:gap-3.5" data-results-care-package-real>
-                        {(publicCfg?.packages ?? []).slice(0, 3).map((pkg, idx) => (
-                          <li
-                            key={`${pkg.title}-${idx}`}
-                            className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4"
-                          >
-                            <span
-                              className="inline-flex h-7 w-7 items-center justify-center rounded-full text-[12px] font-bold text-white shadow-sm ring-2 ring-white"
-                              style={{ backgroundColor: brandFill }}
-                              aria-hidden
-                            >
-                              {idx + 1}
-                            </span>
-                            <p className="text-[13px] font-semibold leading-snug text-slate-900">
-                              {pkg.title}
-                            </p>
-                            {pkg.priceLabel ? (
-                              <p
-                                className="text-[12px] font-semibold leading-snug"
-                                style={{ color: brandFill }}
-                              >
-                                {pkg.priceLabel}
-                              </p>
-                            ) : null}
-                            {pkg.items.length > 0 ? (
-                              <ul className="mt-1 space-y-1.5 text-[11.5px] leading-snug text-slate-600">
-                                {pkg.items.slice(0, 3).map((it, j) => (
-                                  <li key={j} className="flex items-start gap-1.5">
-                                    <svg
-                                      viewBox="0 0 20 20"
-                                      fill="currentColor"
-                                      className="mt-0.5 h-3 w-3 shrink-0"
-                                      style={{ color: brandFill }}
-                                      aria-hidden
-                                    >
-                                      <path
-                                        fillRule="evenodd"
-                                        d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.07 7.142a1 1 0 0 1-1.42.006l-3.93-3.93a1 1 0 1 1 1.414-1.414l3.215 3.214 6.37-6.426a1 1 0 0 1 1.415-.006Z"
-                                        clipRule="evenodd"
-                                      />
-                                    </svg>
-                                    <span>{it}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            ) : null}
-                          </li>
-                        ))}
-                      </ul>
-                      <p className="mt-3 text-[11px] leading-relaxed text-slate-500">
-                        Pricing and inclusions set by{" "}
-                        <span className="font-medium text-slate-700">{company}</span>. General information only — not a quote.
-                      </p>
-                    </>
-                  ) : (
-                  <>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-                    Sample care package · configured by {company}
-                  </p>
-                  <ul className="mt-4 grid gap-3 sm:grid-cols-3 sm:gap-3.5">
-                    {(
-                      [
-                        {
-                          label: "Provider review",
-                          desc: "Licensed clinician reviews your goals + history.",
-                          icon: (
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104A48.55 48.55 0 0 1 12 3c.752 0 1.498.034 2.25.104M9.75 3.104A48.55 48.55 0 0 0 7.5 3.5M14.25 3.104v5.714a2.25 2.25 0 0 0 .659 1.591L19 14.5M14.25 3.104a48.41 48.41 0 0 1 2.25.395M19 14.5l-1.65 4.95a1.5 1.5 0 0 1-1.422 1.05H8.072a1.5 1.5 0 0 1-1.422-1.05L5 14.5M19 14.5H5"
-                            />
-                          ),
-                        },
-                        {
-                          label: "Personalized plan",
-                          desc: "Protocol + check-ins from your provider.",
-                          icon: (
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.745 3.745 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"
-                            />
-                          ),
-                        },
-                        {
-                          label: "Medication, if prescribed",
-                          desc: "Coordination with your clinic, your pharmacy.",
-                          icon: (
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25"
-                            />
-                          ),
-                        },
-                      ] as const
-                    ).map((tile) => (
-                      <li
-                        key={tile.label}
-                        className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4"
-                      >
-                        {/**
-                         * Brand-filled icon chip — matches the numbered phase
-                         * chips in the "Path preview" milestone strip above
-                         * (white glyph on company-color disc + soft white
-                         * ring + drop shadow), so the page reads as one
-                         * branded surface family instead of two separate
-                         * iconography systems. Stripe Atlas / Linear /
-                         * Vercel Pricing all reuse a single icon-chip token
-                         * across every section of a single page.
-                         */}
-                        <span
-                          className="relative inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-sm ring-2 ring-white"
-                          style={{ backgroundColor: brandFill }}
-                          aria-hidden
-                        >
-                          <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#ffffff"
-                            strokeWidth={1.85}
-                            className="h-4 w-4"
-                          >
-                            {tile.icon}
-                          </svg>
-                        </span>
-                        <p className="text-[13px] font-semibold leading-snug text-slate-900">
-                          {tile.label}
-                        </p>
-                        <p className="text-xs leading-relaxed text-slate-600">
-                          {tile.desc}
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                  <p className="mt-3 text-[11px] leading-relaxed text-slate-500">
-                    Preview only — your actual package, pricing, and inclusions are set by{" "}
-                    <span className="font-medium text-slate-700">{company}</span>. Not a quote.
-                  </p>
-                  </>
-                  )}
-                </div>
+                <div className="border-t border-slate-200 pt-4">
                 <p className="text-sm text-slate-600">
                   Illustrative cost per lb (educational):{" "}
                   <span className="font-semibold tabular-nums text-slate-800">
@@ -1205,6 +1026,7 @@ export default function GlpSimulationFunnel() {
                   Actual pricing may vary based on provider evaluation and program selection. Insurance, cash pay, and
                   medication path change totals.
                 </p>
+                </div>
                 {publicCfg?.consultFeeNote ? (
                   <p className="rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700">
                     <span className="font-semibold text-slate-900">Consult / entry: </span>
@@ -1471,57 +1293,59 @@ export default function GlpSimulationFunnel() {
           </div>
 
           <fieldset className="space-y-0 border-0 p-0 m-0 min-w-0">
-            <legend className={glpIntakeUi.legendLabel}>Preferred next step</legend>
-            <div className="grid gap-4 sm:grid-cols-3">
-              <label
-                className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition ${
-                  nextStep === "book" ? "border-slate-900 bg-slate-50" : "border-slate-200 bg-white hover:border-slate-300"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="nextStep"
-                  className="h-4 w-4"
-                  style={{ accentColor: brandFill }}
-                  checked={nextStep === "book"}
-                  onChange={() => setNextStep("book")}
-                />
-                Book consult
-              </label>
-              <label
-                className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition ${
-                  nextStep === "callback"
-                    ? "border-slate-900 bg-slate-50"
-                    : "border-slate-200 bg-white hover:border-slate-300"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="nextStep"
-                  className="h-4 w-4"
-                  style={{ accentColor: brandFill }}
-                  checked={nextStep === "callback"}
-                  onChange={() => setNextStep("callback")}
-                />
-                Callback
-              </label>
-              <label
-                className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium transition ${
-                  nextStep === "save_only"
-                    ? "border-slate-900 bg-slate-50"
-                    : "border-slate-200 bg-white hover:border-slate-300"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="nextStep"
-                  className="h-4 w-4"
-                  style={{ accentColor: brandFill }}
-                  checked={nextStep === "save_only"}
-                  onChange={() => setNextStep("save_only")}
-                />
-                Save for later
-              </label>
+            <legend className={glpIntakeUi.legendLabel}>
+              Preferred next step
+              <span className="mt-1 block text-[11px] font-normal normal-case tracking-normal text-slate-500">
+                Book consult is the fastest path when you&apos;re ready — other options stay one tap away.
+              </span>
+            </legend>
+            <div className="grid gap-3 sm:grid-cols-3">
+              {(
+                [
+                  { val: "book" as const, label: "Book consult", primary: true },
+                  { val: "callback" as const, label: "Callback", primary: false },
+                  { val: "save_only" as const, label: "Save for later", primary: false },
+                ] as const
+              ).map(({ val, label, primary }) => {
+                const selected = nextStep === val;
+                return (
+                  <label
+                    key={val}
+                    className={`flex cursor-pointer flex-col gap-1 rounded-xl border px-4 py-3.5 text-sm font-medium transition sm:min-h-[52px] ${
+                      selected
+                        ? primary
+                          ? "border-2 shadow-[0_2px_12px_rgba(15,23,42,0.08)]"
+                          : "border-slate-900 bg-slate-50"
+                        : primary
+                          ? "border-slate-200 bg-white hover:border-slate-300"
+                          : "border-slate-200 bg-white hover:border-slate-300"
+                    } ${!selected && primary ? "ring-1 ring-slate-900/[0.06]" : ""}`}
+                    style={
+                      selected && primary
+                        ? {
+                            borderColor: brandFill,
+                            backgroundColor: hexToRgba(brandFill, 0.08),
+                          }
+                        : undefined
+                    }
+                  >
+                    <span className="flex items-center gap-3">
+                      <input
+                        type="radio"
+                        name="nextStep"
+                        className="h-4 w-4 shrink-0"
+                        style={{ accentColor: brandFill }}
+                        checked={selected}
+                        onChange={() => setNextStep(val)}
+                      />
+                      <span>{label}</span>
+                    </span>
+                    {primary ? (
+                      <span className="pl-7 text-[11px] font-normal leading-snug text-slate-500">Recommended</span>
+                    ) : null}
+                  </label>
+                );
+              })}
             </div>
           </fieldset>
 
@@ -1531,13 +1355,21 @@ export default function GlpSimulationFunnel() {
               className="mt-0.5 h-4 w-4 shrink-0 rounded border-slate-300"
               style={{ accentColor: brandFill }}
               checked={consent}
-              onChange={(e) => setConsent(e.target.checked)}
+              onChange={(e) => {
+                setConsent(e.target.checked);
+                if (e.target.checked) setConsentHint(false);
+              }}
             />
             <span>
               I agree to be contacted about my request and understand this is educational information, not medical
               advice.
             </span>
           </label>
+          {consentHint && !consent ? (
+            <p className="-mt-1 text-sm font-medium text-amber-800" role="status" data-intake-consent-hint>
+              Please tick the consent box above to continue.
+            </p>
+          ) : null}
 
           <div className={glpIntakeUi.formNavRowRule}>
             <button type="button" className={glpIntakeUi.backBtn} onClick={goBack}>

@@ -1,10 +1,11 @@
-/* @cache-bust: 2026-04-28T19:55 pass 6: buyer activation flow, settings UI, postMessage embed, patient ack email */
+/* @cache-bust: 2026-04-28 pass 8: patient-view banner, embed preview page, step-2 WOW order, chart % counter */
 
 import { Suspense } from "react";
 import GlpSimulationFunnel from "@/components/intake/GlpSimulationFunnel";
 import AttributionPixels from "@/components/attribution/AttributionPixels";
 import IntakeDemoQuoteStrip from "@/components/intake/IntakeDemoQuoteStrip";
 import IntakeIframeAutoResize from "@/components/intake/IntakeIframeAutoResize";
+import IntakePatientViewBanner from "@/components/intake/IntakePatientViewBanner";
 import IntakePageFrame from "@/components/intake/IntakePageFrame";
 import IntakePageHeader from "@/components/intake/IntakePageHeader";
 import IntakeSearchParamsSanitizer from "@/components/intake/IntakeSearchParamsSanitizer";
@@ -41,6 +42,9 @@ export default function IntakePage({
         <IntakeSearchParamsSanitizer />
       </Suspense>
       <IntakePageHeader />
+      <Suspense fallback={null}>
+        <IntakePatientViewBanner />
+      </Suspense>
       {demo ? (
         <div
           className="w-full border-t border-slate-200 pt-10 pb-6 md:pt-12 md:pb-8"

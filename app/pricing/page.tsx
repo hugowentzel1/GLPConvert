@@ -113,6 +113,29 @@ export default function PricingPage() {
               </Card>
             </div>
 
+            <Card className="border-emerald-200/80 bg-gradient-to-br from-emerald-50/80 to-white">
+              <h2 className="text-lg font-bold text-slate-900 mb-2">Risk reversal (typical PLG trust bar)</h2>
+              <ul className="space-y-2 text-slate-700 text-sm leading-relaxed">
+                <li>
+                  <strong className="text-slate-900">Your data, your export:</strong> download leads from your
+                  dashboard whenever you need them — you&apos;re not locked out of your own pipeline.
+                </li>
+                <li>
+                  <strong className="text-slate-900">No multi-year lock-in:</strong> subscription billed monthly;
+                  cancel when you like. (Exact terms in{" "}
+                  <Link href={buildMarketingPathHref(searchParams, "/legal/terms")} className="underline">
+                    Terms
+                  </Link>
+                  .)
+                </li>
+                <li>
+                  <strong className="text-slate-900">Vs. stitching Calendly + a generic form:</strong> those tools book
+                  time slots — they don&apos;t carry GLP-1-specific clarity, price framing, and a single path to your
+                  scheduling link the way this funnel does (B2B SaaS category-entry framing, 2025).
+                </li>
+              </ul>
+            </Card>
+
             <p className="text-center text-xs text-neutral-500 max-w-2xl mx-auto leading-relaxed">
               Payments: checkout runs on{" "}
               <a

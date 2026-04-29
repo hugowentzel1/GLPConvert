@@ -59,7 +59,7 @@ export default function GlpPathMilestonePreview({
           {items.map((m, i) => (
             <li key={m.title} className="relative flex flex-col items-center text-center">
               <span
-                className="relative z-[1] flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white shadow-md ring-4 ring-white"
+                className="relative z-[1] flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white shadow-md ring-4 ring-white"
                 style={{ backgroundColor: brandFill }}
                 aria-hidden
               >

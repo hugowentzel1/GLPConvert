@@ -152,4 +152,29 @@ test.describe("buyer activation, embed + settings (pass 6)", () => {
     expect(Array.isArray(heights)).toBe(true);
     expect((heights as number[])[0]).toBeGreaterThan(100);
   });
+
+  test("intake demo shows patient-view orientation banner (pass 8)", async ({ page }) => {
+    const intakeUrl = `${LIVE}/intake?company=${encodeURIComponent(COMPANY)}&primary=%23146EF5&demo=1`;
+    await page.goto(intakeUrl, { waitUntil: "networkidle" });
+    const banner = page.locator("[data-intake-patient-view-banner]").first();
+    await expect(banner).toBeVisible({ timeout: 12_000 });
+    await expect(banner).toContainText(/Patient view/i);
+    await expect(banner).toContainText(/same path leads see/i);
+  });
+
+  test("/preview shows sample clinic chrome + intake iframe", async ({ page }) => {
+    await page.goto(`${LIVE}/preview?company=${encodeURIComponent(COMPANY)}&primary=%23146EF5`, {
+      waitUntil: "networkidle",
+    });
+    await expect(page.locator("[data-preview-embed-page]").first()).toBeVisible({ timeout: 15_000 });
+    const frame = page.frameLocator("#glpconvert-preview-frame");
+    await expect(frame.locator("[data-flow-step='1']").first()).toBeVisible({ timeout: 60_000 });
+  });
+
+  test("/docs/embed links to live embedded preview", async ({ page }) => {
+    await page.goto(`${LIVE}/docs/embed`, { waitUntil: "networkidle" });
+    const link = page.getByRole("link", { name: /live embedded preview/i });
+    await expect(link).toBeVisible();
+    await expect(link).toHaveAttribute("href", /\/preview/);
+  });
 });

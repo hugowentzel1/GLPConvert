@@ -90,6 +90,44 @@ export default function GlpJourneyProgressChart({
   }, [goalChip, animate]);
 
   /**
+   * Reveal-scan runs once per browser tab session only — repeat step-2 visits
+   * in the same session skip it (pass 8 clutter reduction; Tufte data-ink).
+   */
+  const [showRevealScan, setShowRevealScan] = useState<boolean | null>(null);
+  useEffect(() => {
+    try {
+      const seen = sessionStorage.getItem("glp_intake_chart_reveal_scan");
+      setShowRevealScan(!seen);
+      if (!seen) sessionStorage.setItem("glp_intake_chart_reveal_scan", "1");
+    } catch {
+      setShowRevealScan(true);
+    }
+  }, []);
+
+  /** Animated % ticker — syncs to the 2.4s area draw (Stripe / data-viz “count-up” payoff without extra chart layers). */
+  const targetProgressPct = points.length >= 2 ? (points[points.length - 1]?.progress ?? 0) : 0;
+  const [displayPct, setDisplayPct] = useState(0);
+  useEffect(() => {
+    if (points.length < 2) return;
+    if (!revealed || !animate) {
+      setDisplayPct(targetProgressPct);
+      return;
+    }
+    setDisplayPct(0);
+    const dur = 2400;
+    const t0 = performance.now();
+    let raf = 0;
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - t0) / dur);
+      const eased = t * t * (3 - 2 * t);
+      setDisplayPct(Math.round(eased * targetProgressPct));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [revealed, targetProgressPct, animate, points.length]);
+
+  /**
    * Decorative passes (glow halo, brand-color "sheen", brand "data pulse") now
    * paint at the *same instant* as the area, so the line already carries its
    * full final boldness, brand color saturation, and stroke thickness from
@@ -244,6 +282,9 @@ export default function GlpJourneyProgressChart({
               clipRule="evenodd"
             />
           </svg>
+          <span className="tabular-nums text-slate-600" data-results-chart-live-pct>
+            ~{points.length >= 2 ? displayPct : 0}%
+          </span>
           <span>{goalChip.label}</span>
           {goalChip.sublabel ? (
             <span className="font-normal text-slate-500">· {goalChip.sublabel}</span>
@@ -358,7 +399,7 @@ export default function GlpJourneyProgressChart({
          * - Honors `prefers-reduced-motion: reduce` (CSS media query keeps
          *   the layer fully transparent).
          */}
-        {!compact && revealed ? (
+        {!compact && revealed && showRevealScan === true ? (
           <div
             className="glp-intake-chart-reveal-scan pointer-events-none absolute inset-0 z-[19] overflow-hidden rounded-xl sm:rounded-2xl"
             style={{ ["--glp-scan-color" as string]: brandFill }}

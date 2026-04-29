@@ -76,6 +76,19 @@ function EmbedGuideContent() {
             All three render the same branded funnel — the difference is where the
             visitor is when they make the decision to book.
           </p>
+          <p className="mt-5 text-sm text-gray-600 max-w-2xl mx-auto">
+            <Link
+              href={buildMarketingPathHref(searchParams, "/preview")}
+              className="font-semibold text-[var(--brand-primary)] underline underline-offset-4 hover:opacity-90"
+            >
+              See a live embedded preview
+            </Link>
+            <span className="text-gray-500">
+              {" "}
+              — sample clinic page with your funnel in an iframe (OpenView / ProfitWell &quot;show don&apos;t tell&quot;
+              self-serve pattern).
+            </span>
+          </p>
         </header>
 
         <section className="space-y-10 max-w-4xl mx-auto">
