@@ -556,8 +556,6 @@ export default function GlpSimulationFunnel() {
     }
   }
 
-  const trustChips = ["Educational estimate", "Provider review required", "No obligation"];
-
   const bookHref =
     nextStep === "book"
       ? effectiveBookingUrl || "/contact"
@@ -792,42 +790,6 @@ export default function GlpSimulationFunnel() {
           data-flow-step="2"
           className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} ${glpIntakeUi.resultsStack}`}
         >
-          <div
-            data-results-trust-strip
-            className="flex flex-col items-center justify-center gap-2.5 pb-1 text-center sm:flex-row sm:gap-4"
-          >
-            {effectiveLogo ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={effectiveLogo}
-                alt=""
-                className="h-6 w-auto max-w-[96px] shrink-0 object-contain sm:h-7 sm:max-w-[112px]"
-                loading="lazy"
-              />
-            ) : (
-              <div
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg text-[10px] font-bold text-white"
-                style={{ backgroundColor: brandFill }}
-                aria-hidden
-              >
-                {company
-                  .split(/\s+/)
-                  .filter(Boolean)
-                  .map((w) => w[0])
-                  .join("")
-                  .slice(0, 2)
-                  .toUpperCase() || "?"}
-              </div>
-            )}
-            <p className="inline-flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-              <span>{trustChips[0]}</span>
-              <span aria-hidden className="text-slate-300">·</span>
-              <span>{trustChips[1]}</span>
-              <span aria-hidden className="text-slate-300">·</span>
-              <span>{trustChips[2]}</span>
-            </p>
-          </div>
-
           <header className={`${glpIntakeUi.panelInCard} text-center sm:text-left`}>
             <div
               className="absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-slate-300/70 to-transparent"
@@ -838,8 +800,8 @@ export default function GlpSimulationFunnel() {
               <h2 className={`${glpIntakeUi.titleLg} mt-2 md:text-[1.65rem]`}>Your path preview</h2>
               <p className="mt-2 text-sm font-medium text-slate-700">{company}</p>
               <p className="mx-auto mt-4 max-w-2xl text-sm font-normal leading-relaxed text-slate-600 sm:mx-0 md:text-[15px] md:leading-relaxed">
-                Here&apos;s what most patients want to see before they book — illustrative only, not a diagnosis,
-                quote, or medical advice.
+                What most patients want to see before booking — educational only, not a diagnosis or quote.
+                Your provider sets the actual plan; no obligation to book.
               </p>
             </div>
           </header>
@@ -1427,44 +1389,58 @@ export default function GlpSimulationFunnel() {
       {step === 5 && (
         <section
           data-flow-step="5"
-          className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} text-center ${glpIntakeUi.stackMd} bg-gradient-to-b from-slate-50/90 to-white`}
+          className={`${glpIntakeUi.card} text-center bg-gradient-to-b from-slate-50/90 to-white px-6 py-12 sm:px-10 sm:py-14`}
         >
+          {/**
+           * Premium step-5 hierarchy: brand-tinted halo around the
+           * checkmark, generous vertical breathing room between blocks,
+           * single primary action when applicable. Material 3 +
+           * Stripe Checkout success-state pattern: celebrate the
+           * completion (large icon + headline), then collapse to one
+           * obvious next step. Buyer feedback flagged the prior layout
+           * as "too simple / cheap" — the issue was uniform spacing
+           * with no visual rhythm, not lack of content.
+           */}
           <div
-            className="mx-auto flex h-14 w-14 items-center justify-center rounded-full text-2xl text-white shadow-md"
-            style={{ backgroundColor: brandFill }}
+            className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-full text-2xl text-white shadow-[0_8px_28px_-6px_rgba(15,23,42,0.18)] ring-8"
+            style={{ backgroundColor: brandFill, ["--tw-ring-color" as string]: `${brandFill}1a` }}
             aria-hidden
           >
             ✓
           </div>
-          <div className={glpIntakeUi.stackSm}>
-            <p className={glpIntakeUi.kicker}>Step 5</p>
-            <h2 className={glpIntakeUi.titleLg}>Your next step is ready</h2>
-            <p className={`${glpIntakeUi.body} mx-auto max-w-md text-slate-700`}>
+          <div className="mt-7 space-y-2.5">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
+              Step 5 of 5 · complete
+            </p>
+            <h2 className="text-[1.55rem] font-semibold tracking-tight text-slate-900 sm:text-[1.75rem]">
+              Your next step is ready
+            </h2>
+            <p className="mx-auto max-w-md text-[15px] leading-relaxed text-slate-600">
               {company} can review your plan and follow up based on the option you selected.
             </p>
-            {isDemoMode ? (
-              <p className={`${glpIntakeUi.bodyMuted} mx-auto max-w-md text-xs`}>
-                Preview: this is how the completed step appears in your branded flow.
-              </p>
-            ) : null}
           </div>
           {effectiveBookingUrl && nextStep === "book" ? (
             <a
               href={effectiveBookingUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${glpIntakeUi.primaryBtn} mx-auto block w-full max-w-sm text-center`}
+              className={`${glpIntakeUi.primaryBtn} mx-auto mt-8 block w-full max-w-sm text-center`}
               style={{ backgroundColor: brandFill }}
             >
               Open scheduling
             </a>
           ) : null}
-          <p className={`${glpIntakeUi.bodyMuted} mx-auto max-w-md`}>
+          {isDemoMode ? (
+            <p className="mx-auto mt-8 max-w-md text-[11px] uppercase tracking-[0.16em] text-slate-400">
+              Preview · this is how the completed step appears in your branded flow
+            </p>
+          ) : null}
+          <p className="mx-auto mt-6 max-w-md text-xs leading-relaxed text-slate-500">
             General information only, not medical advice. A licensed provider will confirm next steps.
           </p>
           <a
             href={buildBrandedDemoReturnHref(sp)}
-            className="inline-flex text-sm font-semibold text-slate-700 underline decoration-slate-300 underline-offset-4 transition hover:text-slate-900"
+            className="mt-8 inline-flex text-sm font-semibold text-slate-700 underline decoration-slate-300 underline-offset-4 transition hover:text-slate-900"
           >
             Back to home
           </a>
