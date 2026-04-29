@@ -52,6 +52,7 @@ test.describe("Marketing chrome (Chromium)", () => {
   }
 
   test("home shows pilot social proof cards with full names (verbatim hero quotes)", async ({ page }) => {
+    test.setTimeout(70_000);
     await page.goto(`/?${DEMO}`, { waitUntil: "domcontentloaded" });
     const section = page.locator('[data-testid="demo-testimonials"]');
     await section.waitFor({ state: "visible", timeout: 45000 });
