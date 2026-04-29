@@ -538,22 +538,15 @@ export default function GlpJourneyProgressChart({
           Time (months from start)
         </p>
       ) : null}
-      {!compact ? (
-        <div className="mx-auto mt-5 flex w-full max-w-md items-center justify-center gap-2.5 rounded-full border border-slate-200/70 bg-slate-50/60 px-4 py-2 text-center text-[11px] leading-snug text-slate-600 sm:text-[12px]">
-          <span
-            className="inline-block h-1.5 w-1.5 rounded-full"
-            style={{ backgroundColor: brandFill }}
-            aria-hidden
-          />
-          <span>
-            {last?.label} ·{" "}
-            <span className="font-semibold tabular-nums text-slate-900" data-results-chart-live-pct>
-              ~{points.length >= 2 ? displayPct : 0}%
-            </span>{" "}
-            of stated goal · example only
-          </span>
-        </div>
-      ) : null}
+      {/**
+       * Footer pill removed: chart's own halo dot at the last data point
+       * + Y-axis ticks + visible curve already communicate the final %.
+       * Repeating "Month X · ~N% · example only" below the chart was
+       * Tufte data-ink waste and read as ugly chrome (NN/g 2024
+       * dashboard guidance: remove repeating values that already appear
+       * in the chart itself). The chart's `prefers-reduced-motion`-
+       * gated halo on the last dot still anchors the eye there.
+       */}
     </motion.div>
   );
 }

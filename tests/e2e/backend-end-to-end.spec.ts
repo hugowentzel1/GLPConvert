@@ -169,7 +169,7 @@ test.describe("backend persistence + booking + packages (pass 7)", () => {
     await expect(block).toHaveAttribute("data-care-package-source", "placeholder");
   });
 
-  test("intake step 2 chart footer animates a live % toward stated goal", async ({
+  test("intake step 2 renders chart card with brand-tinted area", async ({
     page,
   }) => {
     test.setTimeout(120_000);
@@ -183,12 +183,12 @@ test.describe("backend persistence + booking + packages (pass 7)", () => {
 
     await expect(page.locator("[data-flow-step=\"2\"]").first()).toBeVisible({ timeout: 60_000 });
     /**
-     * Goal chip removed (data-ink reduction; the % already shows in the
-     * chart footer). Footer's live percent + "toward your stated goal"
-     * remains the canonical surface for that number.
+     * Chart goal chip + footer-pill both removed (Tufte data-ink
+     * reduction — the chart's halo dot at the last point + Y-axis
+     * ticks already communicate the final %). Only assert the chart
+     * card itself is present and visible now.
      */
-    const livePct = page.locator("[data-results-chart-live-pct]").first();
-    await expect(livePct).toBeAttached({ timeout: 15_000 });
-    await expect(livePct).toContainText(/~\d+%/, { timeout: 8_000 });
+    const chart = page.locator("[data-results-chart]").first();
+    await expect(chart).toBeVisible({ timeout: 15_000 });
   });
 });

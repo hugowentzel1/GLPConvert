@@ -5,7 +5,6 @@ import GlpSimulationFunnel from "@/components/intake/GlpSimulationFunnel";
 import AttributionPixels from "@/components/attribution/AttributionPixels";
 import IntakeDemoQuoteStrip from "@/components/intake/IntakeDemoQuoteStrip";
 import IntakeIframeAutoResize from "@/components/intake/IntakeIframeAutoResize";
-import IntakePatientViewBanner from "@/components/intake/IntakePatientViewBanner";
 import IntakePageFrame from "@/components/intake/IntakePageFrame";
 import IntakePageHeader from "@/components/intake/IntakePageHeader";
 import IntakeSearchParamsSanitizer from "@/components/intake/IntakeSearchParamsSanitizer";
@@ -42,9 +41,16 @@ export default function IntakePage({
         <IntakeSearchParamsSanitizer />
       </Suspense>
       <IntakePageHeader />
-      <Suspense fallback={null}>
-        <IntakePatientViewBanner />
-      </Suspense>
+      {/**
+       * Removed inline IntakePatientViewBanner. Cold-email buyers are
+       * already oriented by (a) the top demo strip with company name +
+       * countdown, (b) the IntakePageHeader showing the brand logo +
+       * "Branded intake", and (c) the explicit "Private demo for X.
+       * Not affiliated." line. CXL 2024 trust-vs-noise: stack the
+       * orientation cues, don't repeat them. The dedicated banner was
+       * the third orientation surface in the same column inch and
+       * read as visual chrome rather than as content.
+       */}
       {demo ? (
         <div
           className="w-full border-t border-slate-200 pt-10 pb-6 md:pt-12 md:pb-8"

@@ -26,9 +26,8 @@ test.describe("live deploy smoke", () => {
     const next = page.getByRole("button", { name: /continue/i }).first();
     await next.click();
     await page.waitForTimeout(2500);
-    /** Patient-view orientation strip for cold-email demos (pass 8). */
-    await expect(page.locator("[data-intake-patient-view-banner]").first()).toBeVisible({ timeout: 5000 });
-    /** Chart still renders (sanity). */
+    /** Chart still renders (sanity). Inline patient-view banner removed in
+     * favor of top demo strip + branded header (CXL 2024 trust-vs-noise). */
     await expect(page.locator("[data-results-chart]").first()).toBeVisible({ timeout: 15_000 });
     /** Always-on "Modeled checkpoint X%" chip must be gone (now lives only in tooltip / summary tile). */
     await expect(page.locator("[data-results-chart-final-chip]")).toHaveCount(0);

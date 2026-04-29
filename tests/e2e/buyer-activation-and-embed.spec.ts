@@ -153,13 +153,21 @@ test.describe("buyer activation, embed + settings (pass 6)", () => {
     expect((heights as number[])[0]).toBeGreaterThan(100);
   });
 
-  test("intake demo shows patient-view orientation banner (pass 8)", async ({ page }) => {
+  test("intake demo orients buyer via top banner + branded header", async ({ page }) => {
+    /**
+     * Inline IntakePatientViewBanner removed — orientation now provided
+     * by the top demo strip ("Preview for {company}"), the branded
+     * IntakePageHeader, and the explicit "Private demo for {company}.
+     * Not affiliated." line. CXL 2024 trust-vs-noise: stack the
+     * orientation cues, don't repeat them. Test verifies the buyer
+     * is still oriented through the remaining surfaces.
+     */
     const intakeUrl = `${LIVE}/intake?company=${encodeURIComponent(COMPANY)}&primary=%23146EF5&demo=1`;
     await page.goto(intakeUrl, { waitUntil: "networkidle" });
-    const banner = page.locator("[data-intake-patient-view-banner]").first();
-    await expect(banner).toBeVisible({ timeout: 12_000 });
-    await expect(banner).toContainText(/Patient view/i);
-    await expect(banner).toContainText(/same path leads see/i);
+    await expect(page.getByText(new RegExp(`Preview for ${COMPANY}`, "i")).first()).toBeVisible({
+      timeout: 12_000,
+    });
+    await expect(page.locator("[data-intake-site-header]").first()).toBeVisible({ timeout: 5_000 });
   });
 
   test("/preview shows sample clinic chrome + intake iframe", async ({ page }) => {
