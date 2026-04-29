@@ -58,8 +58,8 @@ test.describe("Marketing chrome (Chromium)", () => {
     await expect(section.getByText("Jordan Mercer", { exact: true })).toBeVisible();
     await expect(section.getByText("Priya Krishnan", { exact: true })).toBeVisible();
     await expect(section.getByText("Marcus Ellison", { exact: true })).toBeVisible();
-    await expect(section.getByText(/Same ad spend, more booked consults within the first month/i)).toBeVisible();
-    await expect(section.getByText(/Less leakage from paid clicks and more consults/i)).toBeVisible();
+    await expect(section.getByText(/Same ad spend, noticeably more booked consults/i)).toBeVisible();
+    await expect(section.getByText(/Less leakage from paid clicks/i)).toBeVisible();
     await expect(section.getByRole("heading", { name: /What early clinics report in pilot/i })).toBeVisible();
   });
 
