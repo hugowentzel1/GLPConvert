@@ -1030,3 +1030,102 @@ Screenshots-style detail: **`BLINDSPOT-GUIDE.md`** (“Verify Cold Email Domain 
 - [ ] **M008** — Launched + daily ops (Unibox / optional LinkedIn)  
 
 **AUTO (agent, no Instantly login):** refine **`GLPCONVERT_COLD_EMAIL_POSITIONING.md`**, demo URL patterns, landing copy, tracking — on request or as **R*** tasks; **does not** replace **M001–M008** clicks.
+
+---
+
+## Phase OUT — Cold Email + LinkedIn Outbound Launch Sequence (April 2026)
+
+> Goal: 50,000+ personalized cold emails/month + LinkedIn outbound, deliverable, with one personalized demo URL per prospect, shipping into Stripe self-serve activation. Sequenced; do in order.
+
+### Decisions (Day 0)
+
+- [ ] **OUT-D1** — Decide 12 sending-domain names (lookalikes of `glpconvert.com`, e.g. `getglpconvert.com`, `glpconvert.io`, `tryglpconvert.com`, `useglpconvert.com`, `glpconvert.co`, `glpconvertapp.com`, etc.)
+- [ ] **OUT-D2** — DO NOT rename or repurpose the existing Sunspire Google Workspace. Keep its email reputation intact for that business; spin up a fresh Workspace for GLPConvert. (Source: Google "Change your primary domain" — subscription/billing transfers but Postmaster reputation does not.)
+- [ ] **OUT-D3** — Confirm `glpconvert.com` apex stays for marketing/Stripe ONLY, never for cold sending
+
+### Phase 1 — Domains + Workspace (Days 1–2)
+
+- [ ] **OUT-1A** — Buy 12 sending domains at Cloudflare Registrar or Porkbun (~$10/yr each)
+- [ ] **OUT-1B** — Open new Google Workspace account at workspace.google.com using one new domain as primary (Business Starter, $7.20/seat/mo 2026)
+- [ ] **OUT-1C** — Admin Console → Domains → Add the other 11 as secondary domains (support.google.com/a/answer/7502379)
+- [ ] **OUT-1D** — Create 4–5 user inboxes per domain (real first names, never `sales@` or `outreach@`) → 48–60 inboxes total
+
+### Phase 2 — DNS authentication on every sending domain (Days 2–3)
+
+For each of the 12 domains (Cloudflare DNS):
+
+- [ ] **OUT-2A** — `MX @` → `smtp.google.com` priority 1 (Google retired the 5-MX setup in 2023)
+- [ ] **OUT-2B** — `SPF TXT @` → `v=spf1 include:_spf.google.com ~all`
+- [ ] **OUT-2C** — `DKIM` → Workspace Admin → Apps → Google Workspace → Gmail → Authenticate email → add the `google._domainkey` TXT record per domain
+- [ ] **OUT-2D** — `DMARC TXT _dmarc` → `v=DMARC1; p=none; rua=mailto:dmarc@glpconvert.com; pct=100; adkim=r; aspf=r`
+- [ ] **OUT-2E** — Verify each domain at mxtoolbox.com SuperTool + mail-tester.com (target 10/10)
+
+### Phase 3 — Sending tool + warmup (Day 3, then 21-day burn)
+
+- [ ] **OUT-3A** — Subscribe to **Smartlead Pro** ($94/mo 2026) — better unified inbox + reply detection than Instantly for B2B
+- [ ] **OUT-3B** — Connect all 48–60 inboxes via OAuth (Smartlead → Email Accounts → Add)
+- [ ] **OUT-3C** — Enable warmup on every inbox: ramp 5 → 40/day over 21 days, reply-rate 30%, weekend sends OFF for first 14 days
+- [ ] **OUT-3D** — Subscribe to **LinkedIn Sales Navigator Advanced** ($169/mo) on the lead-list owner account
+- [ ] **OUT-3E** — Subscribe to **Heyreach** ($79/mo/seat) for LinkedIn outbound (cloud-based, multi-account, no mass-ban events since Q3 2024 architecture rewrite)
+
+### Phase 4 — Lead sourcing + enrichment (Days 4–7)
+
+- [ ] **OUT-4A** — Apollo search: `GLP-1`, `weight loss clinic`, `medical weight loss`, `telehealth obesity` filtered to titles Owner / Medical Director / Practice Manager / Clinic Manager
+- [ ] **OUT-4B** — Export CSV: `domain, first_name, last_name, title, linkedin_url, email`
+- [ ] **OUT-4C** — Run CSV through **Brandfetch API** (~$0.02/lookup at volume) → adds `logo_url` + `brand_hex`. Brandfetch is the 2026 Clearbit replacement (Clearbit shut down public API after HubSpot acquisition Nov 2023)
+- [ ] **OUT-4D** — Fall back to **Logo.dev** ($0 free tier up to 10k/mo) for nulls
+- [ ] **OUT-4E** — Generate `demo_link` column: `https://glpconvert.com/intake?demo=1&company={{encodeURIComponent(company)}}&logo={{encodeURIComponent(logo)}}&brand={{brand_hex}}&utm_source=cold-email&utm_campaign=q2-2026`
+- [ ] **OUT-4F** — Validate emails through Smartlead's NeverBounce integration; drop anything not "valid"
+- [ ] **OUT-4G** — Enrichment cost at 50k volume: ~$2,850 one-time (Brandfetch $1,000 + Logo.dev $50 + Apollo email $1,800 bulk)
+
+### Phase 5 — Compliance setup (Day 7)
+
+- [ ] **OUT-5A** — CAN-SPAM footer in every Smartlead template: physical mailing address + `{{unsubscribe}}` Smartlead variable (one-click List-Unsubscribe header)
+- [ ] **OUT-5B** — Publish `/privacy-cold-outreach` on glpconvert.com listing data sources, GDPR Art. 6(1)(f) legitimate-interest basis, deletion email
+- [ ] **OUT-5C** — Smartlead Suppression List: import any opt-outs from prior campaigns
+- [ ] **OUT-5D** — Bounce auto-remove threshold = 4%, reply-auto-pause = ON
+- [ ] **OUT-5E** — NO tracking pixels (huge deliverability hit per Smartlead 2026 guide; also triggers EU ePrivacy consent requirements)
+- [ ] **OUT-5F** — NO shortened URLs (bit.ly auto-flagged by Gmail spam classifier)
+
+### Phase 6 — Campaign launch (Day 22, after warmup completes)
+
+- [ ] **OUT-6A** — Build 4-step Smartlead sequence:
+   - Email 1 (Day 0): observation + 1-line ask + demo link
+   - Email 2 (Day 3): "did you see this?" + demo link
+   - Email 3 (Day 7): case-study reference + demo link
+   - Email 4 (Day 14): breakup email
+- [ ] **OUT-6B** — Throttle: max 30/inbox/day, max 1 send / 90 sec / inbox
+- [ ] **OUT-6C** — Spintax both subject + first 2 sentences (Smartlead `{spin|word|word}` syntax) — Gmail's 2025 Bayesian classifier flags identical bodies across >500 sends/day per cluster
+- [ ] **OUT-6D** — Plain text only, ONE link per email, no images, no tracking pixel
+- [ ] **OUT-6E** — Pilot launch with 2,000-prospect batch first; review reply rate + bounce rate after 5 days before scaling to 50k
+
+### Phase 7 — LinkedIn parallel track (Day 22+)
+
+- [ ] **OUT-7A** — Connect 3–5 LinkedIn accounts to Heyreach (each >6mo old, >500 connections, Sales Nav active)
+- [ ] **OUT-7B** — Build campaign: Day 0 view profile → Day 1 connection request NO note → Day 2 (on accept) Soft DM 1 → Day 5 Soft DM 2 with demo link → Day 10 Soft DM 3 → Day 17 InMail to non-connected backup contacts at the same clinic
+- [ ] **OUT-7C** — 100 connection requests/week per account first month; ramp to 150/week if acceptance >25%
+- [ ] **OUT-7D** — Avoid voice notes / video messages for healthcare decision-makers (LinkedIn 2026 B2B Buyer Behavior data: 2.3× higher intrusion-rated by clinical buyers vs tech buyers)
+
+### Phase 8 — Reply handling + ongoing ops
+
+- [ ] **OUT-8A** — Smartlead unified inbox handles all 60-inbox replies in one view
+- [ ] **OUT-8B** — Forward positive-intent replies to a master `sales@glpconvert.com` Workspace inbox via Smartlead Inbox Rules
+- [ ] **OUT-8C** — Hand-reply within 4 business hours; tag intent in HubSpot Free or Notion DB
+- [ ] **OUT-8D** — Weekly: review postmaster.google.com per sending domain. If spam-rate > 0.10%, pause that domain and investigate (hard block at 0.30%, 2025 enforcement)
+- [ ] **OUT-8E** — Monthly: rotate retired inboxes, retire any inbox with reply-rate <2% over a full sequence
+
+### Steady-state cost (April 2026)
+
+| Item | Monthly | Notes |
+|---|---|---|
+| 12 sending domains | ~$10 amortized | Cloudflare/Porkbun |
+| Google Workspace × 50 inboxes | ~$360 | Business Starter $7.20/seat |
+| Smartlead Pro | $94 | unified inbox, warmup, rotation |
+| LinkedIn Sales Nav Advanced | $169 | 1 seat |
+| Heyreach | $79 × N seats | LinkedIn personas |
+| **Total ops** | **~$700–$900/mo** | |
+| Lead enrichment per 50k batch | $2,850 one-time | Brandfetch + Logo.dev + Apollo |
+
+### Sources cited
+
+Google "Email sender guidelines" (support.google.com/a/answer/81126, 2025 rev) · Google "Change your primary domain" (support.google.com/a/answer/7496474) · Yahoo Postmaster "Sender Best Practices" 2025 · Microsoft "New outbound email requirements" May 2025 · Apple Developer "Mail Privacy & Authentication" Jan 2026 · Smartlead 2026 Deliverability Guide · Apollo "State of Outbound 2026" · Heyreach 2026 LinkedIn Limits Report · EmailToolTester 2026 Deliverability Benchmark March 2026 · EDPB Guidelines 8/2020 (legitimate interest) · Brandfetch API docs · LinkedIn "B2B Buyer Behavior 2026"
