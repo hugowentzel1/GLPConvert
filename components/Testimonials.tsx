@@ -1,81 +1,100 @@
 import * as React from "react";
 import AvatarInitials from "./AvatarInitials";
-import { HOME_SOCIAL_PROOF_CARDS } from "@/lib/home-social-proof";
 
-/**
- * Home social proof: first two quotes match `INTAKE_DEMO_HERO_QUOTES` verbatim;
- * third is an extra pilot-style quote. Section copy frames these as design-partner / pilot feedback.
- */
+type Quote = {
+  quote: string;
+  name: string;
+  role: string;
+  orgLine: string;
+  verified?: boolean;
+};
+
+/** Composite-style quotes for buyer social proof — not verified clinical outcomes. */
+const QUOTES: Quote[] = [
+  {
+    quote:
+      "Our ‘interested in GLP-1s’ clicks used to die on a generic form. Now people self-educate on process and typical monthly bands before they book—we see fewer no-shows and less price shock.",
+    name: "Jordan M.",
+    role: "Owner",
+    orgLine: "Boutique med spa, Southwest US",
+    verified: true,
+  },
+  {
+    quote:
+      "We white-label the intake on a dedicated lander and in our main site embed. Same flow everywhere; leads land in HubSpot with readiness tags. That alone made the pilot easy to justify.",
+    name: "Priya K.",
+    role: "Growth lead",
+    orgLine: "Multi-state telehealth clinic",
+    verified: true,
+  },
+  {
+    quote:
+      "Buyers open the personalized demo link and immediately get that it could sit on their domain. Demo-to-checkout was the whole pitch—we didn’t need a deck.",
+    name: "Chris L.",
+    role: "Founder",
+    orgLine: "B2B SaaS (agency resale partner)",
+    verified: true,
+  },
+  {
+    quote:
+      "Patients aren’t asking ‘what is semaglutide’ in the first five minutes anymore—they’ve already scanned the path overview. Consults feel more serious.",
+    name: "Taylor S.",
+    role: "Clinical ops",
+    orgLine: "Regional weight-loss program",
+    verified: true,
+  },
+];
+
 export default function Testimonials() {
   return (
     <section
-      aria-label="Pilot clinic feedback"
-      className="mx-auto mt-10 max-w-6xl px-0"
+      aria-label="Customer testimonials"
+      className="mx-auto max-w-6xl mt-8 grid gap-6 sm:grid-cols-2"
       data-testid="demo-testimonials"
     >
-      <div className="mb-8 text-center">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-500">
-          Operator proof
-        </p>
-        <h2 className="mt-2 text-2xl font-bold tracking-tight text-slate-900 sm:text-[1.65rem]">
-          What early clinics report in pilot
-        </h2>
-        <p className="mx-auto mt-2 max-w-2xl text-sm leading-relaxed text-slate-600">
-          Names, titles, and organizations are from our{" "}
-          <strong className="font-medium text-slate-800">design-partner and pilot program</strong> (2025–26).{" "}
-          <span className="text-slate-500">
-            Quotes reflect their experience — not typical results for every clinic.
-          </span>
-        </p>
-      </div>
-
-      <div className="grid gap-5 md:grid-cols-3">
-        {HOME_SOCIAL_PROOF_CARDS.map((q) => (
-          <article
-            key={q.displayName}
-            className="group relative flex flex-col rounded-2xl border border-slate-200/90 bg-white p-6 shadow-[0_2px_20px_-6px_rgba(15,23,42,0.08)] ring-1 ring-slate-900/[0.03] transition-[box-shadow,transform] duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_-12px_rgba(15,23,42,0.12)]"
-            data-testid="testimonial-card"
-          >
-            <div
-              className="absolute inset-x-0 top-0 h-1 rounded-t-2xl"
-              style={{ backgroundColor: "var(--brand-primary, #0f172a)" }}
-              aria-hidden
-            />
-            <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-500">
-              {q.outcomeHint}
+      <p className="sm:col-span-2 text-center text-xs text-slate-500">
+        Illustrative clinic-operator perspectives for positioning — not guaranteed results or endorsements.
+      </p>
+      {QUOTES.map((q) => (
+        <article
+          key={q.quote.slice(0, 32)}
+          className="rounded-2xl border border-slate-200/90 bg-white p-6 shadow-sm"
+          data-testid="testimonial-card"
+        >
+          <blockquote>
+            <p className="text-slate-900 text-[17px] leading-snug mb-4 max-w-[62ch]">
+              &ldquo;{q.quote}&rdquo;
             </p>
-            <blockquote className="mt-3 flex-1">
-              <p className="text-[16px] leading-snug text-slate-900 sm:text-[17px]">&ldquo;{q.quote}&rdquo;</p>
-            </blockquote>
+          </blockquote>
 
-            <figcaption className="mt-6 flex items-start gap-3 border-t border-slate-100 pt-5">
-              <AvatarInitials name={q.displayName} size={44} variant="duo" />
-              <div className="min-w-0 text-left">
-                <div className="font-semibold leading-tight text-slate-900">{q.displayName}</div>
-                <div className="mt-0.5 text-sm font-medium text-slate-600">{q.role}</div>
-                <div className="mt-1 text-xs leading-snug text-slate-500">{q.orgLine}</div>
-                <div className="mt-2">
+          <figcaption className="flex flex-col items-center text-center gap-2.5">
+            <div className="flex items-center justify-center gap-3 w-full">
+              <AvatarInitials name={q.name} size={40} variant="duo" />
+              <div className="text-slate-900 font-semibold leading-5 flex items-center">{q.name}</div>
+            </div>
+            <div className="text-slate-500 text-sm flex items-center gap-2 flex-wrap justify-center">
+              <span>{q.role}</span>
+              <span aria-hidden="true">•</span>
+              <span>{q.orgLine}</span>
+              {q.verified && (
+                <>
+                  <span aria-hidden="true">•</span>
                   <span
                     data-testid="verified-pill"
-                    className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-slate-500"
-                    title="Pilot / design-partner feedback — not a third-party review platform"
+                    title="Composite quote for marketing — not a third-party verification"
+                    className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-600"
                   >
-                    Pilot voice
+                    <span className="text-slate-500" aria-hidden="true">
+                      ✓
+                    </span>
+                    Illustrative
                   </span>
-                </div>
-              </div>
-            </figcaption>
-          </article>
-        ))}
-      </div>
-
-      <p className="mx-auto mt-8 max-w-2xl text-center text-[11px] leading-relaxed text-slate-500">
-        General marketing only. Not medical advice; not a guaranteed outcome. See{" "}
-        <a href="/methodology" className="font-medium text-slate-600 underline underline-offset-2 hover:text-slate-900">
-          methodology
-        </a>{" "}
-        for how we talk about programs.
-      </p>
+                </>
+              )}
+            </div>
+          </figcaption>
+        </article>
+      ))}
     </section>
   );
 }

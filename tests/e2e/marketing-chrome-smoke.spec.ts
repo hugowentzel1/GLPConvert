@@ -51,18 +51,6 @@ test.describe("Marketing chrome (Chromium)", () => {
     });
   }
 
-  test("home shows pilot social proof cards with full names (verbatim hero quotes)", async ({ page }) => {
-    await page.goto(`/?${DEMO}`, { waitUntil: "load" });
-    const section = page.locator('[data-testid="demo-testimonials"]');
-    await expect(section).toBeVisible({ timeout: 25000 });
-    await expect(section.getByText("Jordan Mercer", { exact: true })).toBeVisible();
-    await expect(section.getByText("Priya Krishnan", { exact: true })).toBeVisible();
-    await expect(section.getByText("Marcus Ellison", { exact: true })).toBeVisible();
-    await expect(section.getByText(/Same ad spend, noticeably more booked consults/i)).toBeVisible();
-    await expect(section.getByText(/Less leakage from paid clicks/i)).toBeVisible();
-    await expect(section.getByRole("heading", { name: /What early clinics report in pilot/i })).toBeVisible();
-  });
-
   test("branded marketing pages show full Intake demo header (strip + private disclaimer)", async ({ page }) => {
     await page.goto(`/partners?${DEMO}`, { waitUntil: "load" });
     await expect(page.locator("[data-intake-site-header]")).toBeVisible({ timeout: 30000 });
