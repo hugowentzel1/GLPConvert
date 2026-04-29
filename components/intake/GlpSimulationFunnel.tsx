@@ -556,17 +556,6 @@ export default function GlpSimulationFunnel() {
     }
   }
 
-  const trustChips = ["Educational estimate", "Provider review required", "No obligation"];
-
-  const bookHref =
-    nextStep === "book"
-      ? effectiveBookingUrl || "/contact"
-      : nextStep === "callback"
-        ? "/support"
-        : isDemoMode
-          ? "/result?demo=1"
-          : "/contact";
-
   const choiceClass = (on: boolean) =>
     on
       ? `${glpIntakeUi.choiceBase} border-transparent text-white shadow-sm`
@@ -794,19 +783,19 @@ export default function GlpSimulationFunnel() {
         >
           <div
             data-results-trust-strip
-            className="flex flex-col items-center gap-3.5 rounded-xl border border-slate-200/90 bg-slate-50/60 px-5 py-4 text-center shadow-sm sm:flex-row sm:justify-center sm:gap-5 sm:py-4"
+            className="flex flex-col items-stretch gap-4 rounded-xl border border-slate-200/90 bg-white px-5 py-4 shadow-sm sm:flex-row sm:items-center sm:gap-6 sm:py-4"
           >
             {effectiveLogo ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={effectiveLogo}
                 alt=""
-                className="h-7 w-auto max-w-[100px] shrink-0 object-contain sm:h-8 sm:max-w-[120px]"
+                className="mx-auto h-7 w-auto max-w-[100px] shrink-0 object-contain sm:mx-0 sm:h-8 sm:max-w-[120px]"
                 loading="lazy"
               />
             ) : (
               <div
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-[11px] font-bold text-white shadow-sm"
+                className="mx-auto flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-[11px] font-bold text-white shadow-sm sm:mx-0"
                 style={{ backgroundColor: brandFill }}
                 aria-hidden
               >
@@ -819,8 +808,9 @@ export default function GlpSimulationFunnel() {
                   .toUpperCase() || "?"}
               </div>
             )}
-            <p className="max-w-xl text-xs leading-relaxed text-slate-500 sm:text-left sm:text-[13px]">
-              {trustChips.join(" · ")}
+            <p className="max-w-xl flex-1 border-t border-slate-200/90 pt-4 text-center text-xs leading-relaxed text-slate-600 sm:border-l sm:border-t-0 sm:pl-6 sm:pt-0 sm:text-left sm:text-[13px]">
+              Illustrative preview only — not a medical quote, treatment plan, or guaranteed outcome. Your provider
+              confirms eligibility, care, and pricing. No payment or obligation from this screen.
             </p>
           </div>
 
@@ -842,15 +832,7 @@ export default function GlpSimulationFunnel() {
 
           {journeyProgressPoints.length >= 2 ? (
             <div className="w-full">
-              <GlpJourneyProgressChart
-                points={journeyProgressPoints}
-                brandFill={brandFill}
-                variant="default"
-                goalChip={{
-                  label: `Goal · ${input.goalWeight} lbs`,
-                  sublabel: `modeled ~${Math.max(2, Math.ceil(output.weeksToGoal / 4))} mo`,
-                }}
-              />
+              <GlpJourneyProgressChart points={journeyProgressPoints} brandFill={brandFill} variant="default" />
             </div>
           ) : null}
 
@@ -1250,10 +1232,8 @@ export default function GlpSimulationFunnel() {
             <p className={glpIntakeUi.kicker}>Step 4</p>
             <h3 className={glpIntakeUi.titleLg}>Save and continue</h3>
             <p className={glpIntakeUi.body}>
-              {company} will follow up based on your choice
-              {effectiveBookingUrl && nextStep === "book"
-                ? ". After saving, you can open their scheduling link."
-                : "."}
+              {company} will follow up based on your choice. After you save, the next screen opens your scheduling link,
+              support request, or summary — depending on what you picked above.
             </p>
           </header>
 
@@ -1366,7 +1346,7 @@ export default function GlpSimulationFunnel() {
             </span>
           </label>
           {consentHint && !consent ? (
-            <p className="-mt-1 text-sm font-medium text-amber-800" role="status" data-intake-consent-hint>
+            <p className="-mt-1 text-sm font-medium text-red-600" role="status" data-intake-consent-hint>
               Please tick the consent box above to continue.
             </p>
           ) : null}
@@ -1380,37 +1360,11 @@ export default function GlpSimulationFunnel() {
                 type="button"
                 onClick={onSaveLead}
                 disabled={saving}
-                className={glpIntakeUi.primaryBtn}
+                className={`${glpIntakeUi.primaryBtn} w-full sm:w-auto`}
                 style={{ backgroundColor: brandFill }}
               >
                 {saving ? "Saving…" : "Save and continue"}
               </button>
-              {/**
-               * Secondary CTA copy is now uniform in shape (verb + noun
-               * phrase, all 2–3 words, no leading article) so the four
-               * variants render at the same text size and visual weight
-               * inside `secondaryBtn` regardless of which `nextStep` the
-               * user picked. Previously "Get a scheduling link" was a
-               * 4-word phrase with an article — it wrapped on smaller
-               * widths and read smaller than the other strings even
-               * though the class was identical, breaking the "every step
-               * footer reads the same" rule.
-               */}
-              <a
-                href={bookHref}
-                target={effectiveBookingUrl && nextStep === "book" ? "_blank" : undefined}
-                rel={effectiveBookingUrl && nextStep === "book" ? "noopener noreferrer" : undefined}
-                className={glpIntakeUi.secondaryBtn}
-                data-results-secondary-cta
-              >
-                {nextStep === "book"
-                  ? effectiveBookingUrl
-                    ? "Open scheduling link"
-                    : "Get scheduling link"
-                  : nextStep === "callback"
-                    ? "Request callback"
-                    : "Preview saved plan"}
-              </a>
             </div>
           </div>
           {saveMsg ? <p className="text-sm font-medium text-red-600">{saveMsg}</p> : null}
@@ -1450,6 +1404,37 @@ export default function GlpSimulationFunnel() {
               style={{ backgroundColor: brandFill }}
             >
               Open scheduling
+            </a>
+          ) : null}
+          {nextStep === "book" && !effectiveBookingUrl ? (
+            <a
+              href={buildIntakeSupportHref(sp, company)}
+              className={`${glpIntakeUi.primaryBtn} mx-auto block w-full max-w-sm text-center`}
+              style={{ backgroundColor: brandFill }}
+            >
+              Get scheduling help
+            </a>
+          ) : null}
+          {nextStep === "callback" ? (
+            <a
+              href={buildIntakeSupportHref(sp, company)}
+              className={`${glpIntakeUi.primaryBtn} mx-auto block w-full max-w-sm text-center`}
+              style={{ backgroundColor: brandFill }}
+            >
+              Request a callback
+            </a>
+          ) : null}
+          {nextStep === "save_only" ? (
+            <a
+              href={
+                isDemoMode
+                  ? `/result?demo=1${sp != null && sp.toString() ? `&${sp.toString()}` : ""}`
+                  : buildIntakeSupportHref(sp, company)
+              }
+              className={`${glpIntakeUi.primaryBtn} mx-auto block w-full max-w-sm text-center`}
+              style={{ backgroundColor: brandFill }}
+            >
+              {isDemoMode ? "View plan summary" : "Contact the clinic"}
             </a>
           ) : null}
           <p className={`${glpIntakeUi.bodyMuted} mx-auto max-w-md`}>

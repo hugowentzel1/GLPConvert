@@ -26,7 +26,7 @@ export default function IntakeDemoQuoteStrip() {
           className={`flex h-full min-h-0 flex-col space-y-4 ${glpIntakeUi.intakeHeroShell} p-5 sm:space-y-5 sm:p-6`}
           data-testid="intake-demo-testimonial-card"
         >
-          <blockquote className="flex min-h-0 flex-1 flex-col justify-start border-l-2 border-slate-300/90 pl-4 text-left">
+          <blockquote className="border-l-2 border-slate-300/90 pl-4 text-left self-start">
             <p className="text-[15px] leading-relaxed text-slate-800 sm:text-[16px] sm:leading-[1.65]">
               &ldquo;{q.quote}&rdquo;
             </p>

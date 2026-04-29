@@ -14,14 +14,14 @@
 export const INTAKE_DEMO_HERO_QUOTES = [
   {
     quote:
-      "Same ad spend, noticeably more booked consults inside the first month. Patients arrive primed — our team stopped repeating the basics on every call.",
+      "Same ad spend, more booked consults within the first month. Patients arrive prepared — we stopped re-teaching the basics on every consult.",
     name: "Jordan M.",
     role: "Owner",
     orgLine: "Boutique med spa, Southwest US",
   },
   {
     quote:
-      "Less leakage from paid clicks, more consults from the same traffic. Branded end-to-end with our scheduling link one tap away — and our CRM didn't move an inch.",
+      "Less leakage from paid clicks and more consults from the same traffic. Fully branded to our scheduler in one tap — our CRM setup never moved.",
     name: "Priya K.",
     role: "Growth lead",
     orgLine: "Multi-state telehealth clinic",

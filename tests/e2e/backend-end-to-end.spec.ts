@@ -169,7 +169,7 @@ test.describe("backend persistence + booking + packages (pass 7)", () => {
     await expect(block).toHaveAttribute("data-care-package-source", "placeholder");
   });
 
-  test("intake step 2 renders the personalized goal chip after the chart paints", async ({
+  test("intake step 2 chart footer shows animated progress percent (no floating goal chip)", async ({
     page,
   }) => {
     test.setTimeout(120_000);
@@ -182,16 +182,9 @@ test.describe("backend persistence + booking + packages (pass 7)", () => {
     await page.locator("[data-intake-continue]").first().click();
 
     await expect(page.locator("[data-flow-step=\"2\"]").first()).toBeVisible({ timeout: 60_000 });
-    /** Chip is present from mount but starts at opacity-0; it fades in after 2.2s. */
-    const chip = page.locator("[data-results-chart-goal-chip]").first();
-    await expect(chip).toBeAttached({ timeout: 15_000 });
-    await expect(chip).toContainText(/Goal · 180 lbs/);
-    await expect(chip).toContainText(/modeled ~\d+ mo/);
-    await expect(chip.locator("[data-results-chart-live-pct]")).toContainText(/~\d+%/);
-    /** And it must reach opacity-100 within a few seconds. */
-    await expect(async () => {
-      const op = await chip.evaluate((el) => Number(getComputedStyle(el as HTMLElement).opacity));
-      expect(op).toBeGreaterThanOrEqual(0.99);
-    }).toPass({ timeout: 8_000 });
+    await expect(page.locator("[data-results-chart-goal-chip]")).toHaveCount(0);
+    const foot = page.locator("[data-results-chart]").getByText(/Last checkpoint shown/i);
+    await expect(foot).toBeVisible({ timeout: 15_000 });
+    await expect(foot.locator("[data-results-chart-live-pct]")).toContainText(/\d+/);
   });
 });

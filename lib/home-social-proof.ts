@@ -30,7 +30,7 @@ export const HOME_SOCIAL_PROOF_CARDS: HomeSocialProofCard[] = [
   },
   {
     quote:
-      "Our ops lead dropped the personalized demo into Slack; the clinical director ran through it on her phone in five minutes. We activated from the email link that night—no procurement loop.",
+      "We shared the personalized demo in Slack; clinical leadership reviewed it on a phone in minutes. We activated from email the same night — no procurement loop.",
     displayName: "Marcus Ellison",
     role: "VP, Patient Acquisition & Partnerships",
     orgLine: "Integrated weight-health network, Southeast US",

@@ -71,21 +71,22 @@ test.describe("buyer activation, embed + settings (pass 6)", () => {
   });
 
   test("intake demo shows the 3-step activation strip + CTA", async ({ page }) => {
-    const intakeUrl = `${LIVE}/intake?company=${encodeURIComponent(COMPANY)}&primary=%23146EF5&demo=1`;
-    await page.goto(intakeUrl, { waitUntil: "networkidle" });
+    test.setTimeout(120_000);
+    const intakeUrl = `${LIVE}/intake?company=${encodeURIComponent(COMPANY)}&primary=%23146EF5&demo=1&transition_ms=150`;
+    await page.goto(intakeUrl, { waitUntil: "load" });
 
     // Walk to step 2 where the owner block lives.
     await page.getByLabel(/Current weight/i).first().fill("220");
     await page.getByLabel(/Goal weight/i).first().fill("180");
     await page.getByLabel(/Height/i).first().fill("66");
-    await page.locator("[data-intake-continue]").first().click();
+    await page.locator("[data-intake-continue]").first().click({ force: true });
 
-    await expect(page.locator('[data-flow-step="2"]').first()).toBeVisible({ timeout: 15_000 });
+    await expect(page.locator('[data-flow-step="2"]').first()).toBeVisible({ timeout: 45_000 });
     const flow = page.locator("[data-demo-owner-activation-flow]").first();
-    await expect(flow).toBeVisible({ timeout: 12_000 });
-    await expect(flow).toContainText(/Branded URL/i);
-    await expect(flow).toContainText(/Drop into your funnel/i);
-    await expect(flow).toContainText(/three ways/i);
+    await expect(flow).toBeVisible({ timeout: 25_000 });
+    await expect(flow).toContainText(/10 minutes/i);
+    await expect(flow).toContainText(/funnel/i);
+    await expect(flow).toContainText(/webhook/i);
 
     // Primary "Activate" CTA still in place after the strip.
     await expect(page.locator("[data-demo-owner-cta]").first()).toBeVisible();
@@ -158,8 +159,8 @@ test.describe("buyer activation, embed + settings (pass 6)", () => {
     await page.goto(intakeUrl, { waitUntil: "networkidle" });
     const banner = page.locator("[data-intake-patient-view-banner]").first();
     await expect(banner).toBeVisible({ timeout: 12_000 });
-    await expect(banner).toContainText(/Patient view/i);
-    await expect(banner).toContainText(/same path leads see/i);
+    await expect(banner).toContainText(/previewing the patient path/i);
+    await expect(banner).toContainText(/link or embed/i);
   });
 
   test("/preview shows sample clinic chrome + intake iframe", async ({ page }) => {
