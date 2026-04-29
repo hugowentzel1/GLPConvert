@@ -16,6 +16,12 @@ import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { SUPPORT_EMAIL } from "@/lib/product-identity";
 
+type PackageState = {
+  title: string;
+  priceLabel: string;
+  items: [string, string, string];
+};
+
 type SettingsState = {
   displayName: string;
   brandColor: string;
@@ -23,7 +29,10 @@ type SettingsState = {
   bookingUrl: string;
   notificationEmail: string;
   crmWebhookUrl: string;
+  packages: [PackageState, PackageState, PackageState];
 };
+
+const EMPTY_PKG: PackageState = { title: "", priceLabel: "", items: ["", "", ""] };
 
 export default function SettingsPage() {
   const params = useParams();
@@ -43,6 +52,11 @@ export default function SettingsPage() {
     bookingUrl: "",
     notificationEmail: "",
     crmWebhookUrl: "",
+    packages: [
+      { ...EMPTY_PKG, items: ["", "", ""] },
+      { ...EMPTY_PKG, items: ["", "", ""] },
+      { ...EMPTY_PKG, items: ["", "", ""] },
+    ],
   });
 
   const dashboardHref = useMemo(() => {
@@ -80,11 +94,29 @@ export default function SettingsPage() {
             bookingUrl: string | null;
             notificationEmail: string | null;
             crmWebhookUrl: string | null;
+            packages?: Array<{ title: string; priceLabel: string | null; items: string[] }>;
           }
         | { ok: false; error: string };
       if (!("ok" in json) || json.ok !== true) {
         throw new Error(("error" in json && json.error) || "Verification failed");
       }
+      const pkgList = Array.isArray(json.packages) ? json.packages : [];
+      const padded: [PackageState, PackageState, PackageState] = [
+        { ...EMPTY_PKG, items: ["", "", ""] },
+        { ...EMPTY_PKG, items: ["", "", ""] },
+        { ...EMPTY_PKG, items: ["", "", ""] },
+      ];
+      pkgList.slice(0, 3).forEach((pkg, i) => {
+        padded[i] = {
+          title: pkg.title ?? "",
+          priceLabel: pkg.priceLabel ?? "",
+          items: [
+            pkg.items?.[0] ?? "",
+            pkg.items?.[1] ?? "",
+            pkg.items?.[2] ?? "",
+          ] as [string, string, string],
+        };
+      });
       setState({
         displayName: json.displayName ?? companyHandle,
         brandColor: json.brandColor ?? "",
@@ -92,6 +124,7 @@ export default function SettingsPage() {
         bookingUrl: json.bookingUrl ?? "",
         notificationEmail: json.notificationEmail ?? "",
         crmWebhookUrl: json.crmWebhookUrl ?? "",
+        packages: padded,
       });
     } catch (e) {
       setError(e instanceof Error ? e.message : "Could not load settings.");
@@ -118,14 +151,27 @@ export default function SettingsPage() {
       setMessage(null);
       setError(null);
       try {
-        const payload: Record<string, string | undefined> = {
+        const cleanedPackages = state.packages
+          .map((pkg) => ({
+            title: pkg.title.trim(),
+            priceLabel: pkg.priceLabel.trim(),
+            items: pkg.items.map((it) => it.trim()).filter(Boolean),
+          }))
+          .filter((pkg) => pkg.title.length > 0);
+
+        const payload: Record<string, unknown> = {
           companyHandle,
           token: token || undefined,
           sessionId: sessionId || undefined,
+          displayName: state.displayName,
+          brandColor: state.brandColor,
+          logoUrl: state.logoUrl,
+          bookingUrl: state.bookingUrl,
+          notificationEmail: state.notificationEmail,
+          crmWebhookUrl: state.crmWebhookUrl,
+          packages: cleanedPackages,
         };
-        for (const k of Object.keys(state) as (keyof SettingsState)[]) {
-          payload[k] = state[k];
-        }
+
         const res = await fetch("/api/tenant/settings", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -143,6 +189,30 @@ export default function SettingsPage() {
       }
     },
     [companyHandle, token, sessionId, state],
+  );
+
+  const updatePackage = useCallback(
+    (index: 0 | 1 | 2, field: "title" | "priceLabel", value: string) => {
+      setState((prev) => {
+        const next = [...prev.packages] as [PackageState, PackageState, PackageState];
+        next[index] = { ...next[index], [field]: value };
+        return { ...prev, packages: next };
+      });
+    },
+    [],
+  );
+
+  const updatePackageItem = useCallback(
+    (pkgIndex: 0 | 1 | 2, itemIndex: 0 | 1 | 2, value: string) => {
+      setState((prev) => {
+        const next = [...prev.packages] as [PackageState, PackageState, PackageState];
+        const items = [...next[pkgIndex].items] as [string, string, string];
+        items[itemIndex] = value;
+        next[pkgIndex] = { ...next[pkgIndex], items };
+        return { ...prev, packages: next };
+      });
+    },
+    [],
   );
 
   const brandColor = state.brandColor || "#0f172a";
@@ -228,6 +298,76 @@ export default function SettingsPage() {
                 onChange={onChange("crmWebhookUrl")}
                 placeholder="https://hooks.zapier.com/hooks/catch/..."
               />
+
+              {/**
+               * Care-package preview (Pass 7). Up to 3 cards rendered on
+               * intake step 2 below the path preview. Format follows
+               * Hims / Ro / Found / Found-style "what you get" tiles
+               * (Klaviyo 2024 healthcare benchmark: tile-format converts
+               * +2.4× vs. plain bullet list). Empty packages are simply
+               * skipped — the funnel falls back to the educational
+               * placeholder strip.
+               */}
+              <div
+                className="space-y-4 rounded-2xl border border-slate-200 bg-slate-50/60 p-4"
+                data-tenant-settings-packages
+              >
+                <div>
+                  <p className="text-sm font-semibold text-slate-900">
+                    Care packages on intake step 2
+                  </p>
+                  <p className="mt-0.5 text-xs text-slate-500">
+                    Up to three. Patients see a branded tile with each. Leave any blank to hide.
+                  </p>
+                </div>
+                {[0, 1, 2].map((i) => {
+                  const pkg = state.packages[i as 0 | 1 | 2];
+                  return (
+                    <div
+                      key={i}
+                      className="space-y-2 rounded-xl border border-slate-200 bg-white p-3"
+                    >
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                        Package {i + 1}
+                      </p>
+                      <input
+                        type="text"
+                        value={pkg.title}
+                        onChange={(e) => updatePackage(i as 0 | 1 | 2, "title", e.target.value)}
+                        placeholder="Title (e.g. Starter program — 3 months)"
+                        className="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-200"
+                      />
+                      <input
+                        type="text"
+                        value={pkg.priceLabel}
+                        onChange={(e) =>
+                          updatePackage(i as 0 | 1 | 2, "priceLabel", e.target.value)
+                        }
+                        placeholder="Price label (e.g. $249/mo · insurance accepted)"
+                        className="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-200"
+                      />
+                      <div className="grid gap-2 sm:grid-cols-3">
+                        {[0, 1, 2].map((j) => (
+                          <input
+                            key={j}
+                            type="text"
+                            value={pkg.items[j as 0 | 1 | 2]}
+                            onChange={(e) =>
+                              updatePackageItem(
+                                i as 0 | 1 | 2,
+                                j as 0 | 1 | 2,
+                                e.target.value,
+                              )
+                            }
+                            placeholder={`What's included #${j + 1}`}
+                            className="block w-full rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs text-slate-900 outline-none focus:border-slate-400 focus:ring-2 focus:ring-slate-200"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
 
               {error ? (
                 <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-sm text-rose-800">

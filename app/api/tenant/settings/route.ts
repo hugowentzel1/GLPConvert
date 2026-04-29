@@ -65,6 +65,12 @@ export async function POST(req: NextRequest) {
       bookingUrl?: string;
       notificationEmail?: string;
       crmWebhookUrl?: string;
+      /** Pass-7: optional array of up to 3 care packages, merged into `crm_keys.packages`. */
+      packages?: Array<{
+        title?: string | null;
+        priceLabel?: string | null;
+        items?: Array<string | null> | null;
+      }>;
     };
 
     const requested = slugifyHandle(body.companyHandle ?? "");
@@ -134,14 +140,17 @@ export async function POST(req: NextRequest) {
       fields[TENANT_FIELDS.LOGO_URL] = v;
     }
 
-    if (body.bookingUrl != null) {
-      const v = String(body.bookingUrl).trim();
-      if (v.length > 0 && !isHttpsUrl(v)) {
-        return NextResponse.json(
-          { ok: false, error: "bookingUrl must be an https URL or empty" },
-          { status: 400 },
-        );
-      }
+    /**
+     * `crm_keys` is the JSON catch-all column. We merge any of
+     *   - bookingUrl  → `booking_url`
+     *   - packages    → `packages`
+     * into the existing JSON so other keys (e.g. `intake_brand_name`) are
+     * preserved. Both fields can be sent in one PATCH and end up in a
+     * single Supabase write.
+     */
+    const wantsBookingUrl = body.bookingUrl != null;
+    const wantsPackages = Array.isArray(body.packages);
+    if (wantsBookingUrl || wantsPackages) {
       const existing = await findTenantByHandle(requested);
       let merged: Record<string, unknown> = {};
       const raw = existing?.[TENANT_FIELDS.CRM_KEYS] as string | undefined;
@@ -153,7 +162,42 @@ export async function POST(req: NextRequest) {
           // fall through with empty merged
         }
       }
-      merged.booking_url = v;
+
+      if (wantsBookingUrl) {
+        const v = String(body.bookingUrl).trim();
+        if (v.length > 0 && !isHttpsUrl(v)) {
+          return NextResponse.json(
+            { ok: false, error: "bookingUrl must be an https URL or empty" },
+            { status: 400 },
+          );
+        }
+        merged.booking_url = v;
+      }
+
+      if (wantsPackages) {
+        /** Sanitize packages — at most 3, items capped at 3 each, every string trimmed + length-clamped. */
+        const sanitized: Array<{ title: string; priceLabel: string | null; items: string[] }> = [];
+        for (const entry of body.packages ?? []) {
+          if (!entry) continue;
+          const title = typeof entry.title === "string" ? entry.title.trim().slice(0, 80) : "";
+          if (!title) continue;
+          const priceLabelRaw =
+            typeof entry.priceLabel === "string" ? entry.priceLabel.trim().slice(0, 80) : "";
+          const items: string[] = [];
+          if (Array.isArray(entry.items)) {
+            for (const it of entry.items) {
+              if (typeof it !== "string") continue;
+              const t = it.trim().slice(0, 120);
+              if (t) items.push(t);
+              if (items.length >= 3) break;
+            }
+          }
+          sanitized.push({ title, priceLabel: priceLabelRaw || null, items });
+          if (sanitized.length >= 3) break;
+        }
+        merged.packages = sanitized;
+      }
+
       fields[TENANT_FIELDS.CRM_KEYS] = JSON.stringify(merged);
     }
 

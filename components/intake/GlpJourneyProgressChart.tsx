@@ -36,10 +36,24 @@ export default function GlpJourneyProgressChart({
   points,
   brandFill,
   variant = "default",
+  goalChip,
 }: {
   points: JourneyProgressPoint[];
   brandFill: string;
   variant?: "default" | "compact";
+  /**
+   * Pass-7 wow-factor: optional personalized chip rendered top-right of
+   * the chart that fades in *after* the line finishes drawing in. Reads
+   * as a clean "your goal · modeled month X" payoff line that grounds
+   * the abstract % curve in the patient's specific numbers (their goal
+   * weight + projected month-to-target). Same Apple-Health-style
+   * "you've reached your goal" moment that drives wow on personalized
+   * dashboards (Linear changelog "moment of payoff" pattern, Vercel
+   * Analytics first-paint, Notion Calendar checkmark reveal).
+   *
+   * Empty/null = no chip rendered (compact variant + non-paid intake).
+   */
+  goalChip?: { label: string; sublabel?: string | null } | null;
 }) {
   const [animate, setAnimate] = useState(true);
 
@@ -65,6 +79,15 @@ export default function GlpJourneyProgressChart({
     const id = window.setTimeout(() => setRevealed(true), 60);
     return () => window.clearTimeout(id);
   }, []);
+
+  /** Gate the goal-chip fade-in until the area-animation has had time to draw to the right edge. */
+  const [chipShown, setChipShown] = useState(false);
+  useEffect(() => {
+    if (!goalChip) return;
+    const ms = animate ? 2200 : 0;
+    const id = window.setTimeout(() => setChipShown(true), ms);
+    return () => window.clearTimeout(id);
+  }, [goalChip, animate]);
 
   /**
    * Decorative passes (glow halo, brand-color "sheen", brand "data pulse") now
@@ -188,6 +211,45 @@ export default function GlpJourneyProgressChart({
         className="absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-slate-200 to-transparent"
         aria-hidden
       />
+
+      {/**
+       * Personalized goal chip (Pass 7). Brand-tinted, fades in after
+       * the area-animation completes (2.2s default, immediate when
+       * `prefers-reduced-motion: reduce`). Positioned top-right with a
+       * generous offset so it never overlaps the headline copy.
+       *
+       * Sized to be readable at one glance but small enough to read as
+       * a chip, not a card — Apple Health "Goal reached" notification
+       * proportions. Anchors the abstract % curve to the patient's
+       * actual numbers and creates the payoff moment.
+       */}
+      {!compact && goalChip ? (
+        <div
+          className={`pointer-events-none absolute right-4 top-4 z-30 flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-semibold leading-tight shadow-[0_4px_14px_rgba(15,23,42,0.10)] ring-1 ring-slate-200 backdrop-blur transition-opacity duration-500 sm:right-6 sm:top-6 ${
+            chipShown ? "opacity-100" : "opacity-0"
+          }`}
+          style={{ color: brandFill }}
+          data-results-chart-goal-chip
+          aria-hidden={!chipShown}
+        >
+          <svg
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="h-3 w-3 shrink-0"
+            aria-hidden
+          >
+            <path
+              fillRule="evenodd"
+              d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.07 7.142a1 1 0 0 1-1.42.006l-3.93-3.93a1 1 0 1 1 1.414-1.414l3.215 3.214 6.37-6.426a1 1 0 0 1 1.415-.006Z"
+              clipRule="evenodd"
+            />
+          </svg>
+          <span>{goalChip.label}</span>
+          {goalChip.sublabel ? (
+            <span className="font-normal text-slate-500">· {goalChip.sublabel}</span>
+          ) : null}
+        </div>
+      ) : null}
 
       {!compact ? (
         <div className="mb-6 space-y-2 px-2 text-center sm:mb-7 sm:space-y-2.5 sm:px-3">

@@ -83,6 +83,8 @@ export async function POST(req: NextRequest) {
       plan: tenant[TENANT_FIELDS.PLAN] ?? null,
       paymentStatus: tenant[TENANT_FIELDS.PAYMENT_STATUS] ?? null,
       tokenEmail: payload.email ?? null,
+      /** Care packages configured by the buyer (Pass 7). */
+      packages: cfg.packages,
     });
   } catch (err) {
     console.error("[verify-magic-link] error:", err);

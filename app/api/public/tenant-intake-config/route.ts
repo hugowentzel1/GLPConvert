@@ -27,6 +27,8 @@ export async function GET(request: NextRequest) {
       pricingMonthlyHigh: cfg.pricingMonthlyHigh,
       consultFeeNote: cfg.consultFeeNote,
       paymentNote: cfg.paymentNote,
+      /** Up to 3 buyer-configured care packages (Pass 7). */
+      packages: cfg.packages,
     });
   } catch (e) {
     console.error("tenant-intake-config:", e);

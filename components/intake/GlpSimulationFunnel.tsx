@@ -29,6 +29,18 @@ type TenantIntakePublicJson = {
   pricingMonthlyHigh?: number | null;
   consultFeeNote?: string | null;
   paymentNote?: string | null;
+  /**
+   * Up to 3 buyer-configured care packages (Pass 7). When present we
+   * render *real* clinic-priced tiles on intake step 2 in the clinic's
+   * brand color; when empty, the funnel falls back to the generic
+   * "Provider review / Personalized plan / Medication, if prescribed"
+   * placeholder strip so the demo URL still has visual content.
+   */
+  packages?: Array<{
+    title: string;
+    priceLabel: string | null;
+    items: string[];
+  }>;
 };
 
 type SimInput = {
@@ -826,7 +838,23 @@ export default function GlpSimulationFunnel() {
 
           {journeyProgressPoints.length >= 2 ? (
             <div className="w-full">
-              <GlpJourneyProgressChart points={journeyProgressPoints} brandFill={brandFill} variant="default" />
+              <GlpJourneyProgressChart
+                points={journeyProgressPoints}
+                brandFill={brandFill}
+                variant="default"
+                /**
+                 * Pass-7: personalized goal chip that fades into the
+                 * top-right of the chart after the area finishes
+                 * drawing. Anchors the abstract % curve in the
+                 * patient's stated numbers — Apple-Health-style "you
+                 * reach goal" payoff that tests as the strongest
+                 * single moment of personalization on intake step 2.
+                 */
+                goalChip={{
+                  label: `Goal · ${input.goalWeight} lbs`,
+                  sublabel: `modeled ~${Math.max(2, Math.ceil(output.weeksToGoal / 4))} mo`,
+                }}
+              />
             </div>
           ) : null}
 
@@ -1014,7 +1042,73 @@ export default function GlpSimulationFunnel() {
                 <div
                   className="border-t border-slate-200 pt-5"
                   data-results-care-package
+                  data-care-package-source={
+                    Array.isArray(publicCfg?.packages) && (publicCfg?.packages.length ?? 0) > 0
+                      ? "configured"
+                      : "placeholder"
+                  }
                 >
+                  {Array.isArray(publicCfg?.packages) && (publicCfg?.packages.length ?? 0) > 0 ? (
+                    <>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                        Care packages · {company}
+                      </p>
+                      <ul className="mt-4 grid gap-3 sm:grid-cols-3 sm:gap-3.5" data-results-care-package-real>
+                        {(publicCfg?.packages ?? []).slice(0, 3).map((pkg, idx) => (
+                          <li
+                            key={`${pkg.title}-${idx}`}
+                            className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-3.5 sm:p-4"
+                          >
+                            <span
+                              className="inline-flex h-7 w-7 items-center justify-center rounded-full text-[12px] font-bold text-white shadow-sm ring-2 ring-white"
+                              style={{ backgroundColor: brandFill }}
+                              aria-hidden
+                            >
+                              {idx + 1}
+                            </span>
+                            <p className="text-[13px] font-semibold leading-snug text-slate-900">
+                              {pkg.title}
+                            </p>
+                            {pkg.priceLabel ? (
+                              <p
+                                className="text-[12px] font-semibold leading-snug"
+                                style={{ color: brandFill }}
+                              >
+                                {pkg.priceLabel}
+                              </p>
+                            ) : null}
+                            {pkg.items.length > 0 ? (
+                              <ul className="mt-1 space-y-1.5 text-[11.5px] leading-snug text-slate-600">
+                                {pkg.items.slice(0, 3).map((it, j) => (
+                                  <li key={j} className="flex items-start gap-1.5">
+                                    <svg
+                                      viewBox="0 0 20 20"
+                                      fill="currentColor"
+                                      className="mt-0.5 h-3 w-3 shrink-0"
+                                      style={{ color: brandFill }}
+                                      aria-hidden
+                                    >
+                                      <path
+                                        fillRule="evenodd"
+                                        d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.07 7.142a1 1 0 0 1-1.42.006l-3.93-3.93a1 1 0 1 1 1.414-1.414l3.215 3.214 6.37-6.426a1 1 0 0 1 1.415-.006Z"
+                                        clipRule="evenodd"
+                                      />
+                                    </svg>
+                                    <span>{it}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : null}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="mt-3 text-[11px] leading-relaxed text-slate-500">
+                        Pricing and inclusions set by{" "}
+                        <span className="font-medium text-slate-700">{company}</span>. General information only — not a quote.
+                      </p>
+                    </>
+                  ) : (
+                  <>
                   <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
                     Sample care package · configured by {company}
                   </p>
@@ -1098,6 +1192,8 @@ export default function GlpSimulationFunnel() {
                     Preview only — your actual package, pricing, and inclusions are set by{" "}
                     <span className="font-medium text-slate-700">{company}</span>. Not a quote.
                   </p>
+                  </>
+                  )}
                 </div>
                 <p className="text-sm text-slate-600">
                   Illustrative cost per lb (educational):{" "}

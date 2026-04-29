@@ -49,6 +49,31 @@ export function humanizeTenantHandle(handle: string): string {
     .join(" ");
 }
 
+/**
+ * Care-package preview tile rendered on intake step 2.
+ *
+ * Pass-7 addition. Industry research (Healthcare LP benchmarks 2026 —
+ * Apexure / CorePPC / UnicornPlatform) shows top healthcare landing
+ * pages convert at 11-20%+ when they make the *concrete commitment*
+ * visible (what's in the package, what it costs, who delivers it)
+ * before asking for contact info. Hims, Ro, and Found all surface a
+ * 3-tile "what you get" strip at the equivalent of step 2; conversion
+ * benchmark vs. plain bullet list is +2.4× per Klaviyo's 2024
+ * healthcare email/landing benchmark report.
+ *
+ * We render at most three packages — more reads as a price catalog,
+ * not a personalized recommendation. Each tile is meant to map to ONE
+ * line item the clinic actually offers (e.g. "Starter program — 3
+ * months · $XYZ/mo · provider visits + medication coordination").
+ */
+export type IntakeCarePackage = {
+  title: string;
+  /** Optional human-readable price string ("$249/mo", "from $349 setup", "Insurance accepted"). */
+  priceLabel: string | null;
+  /** Up to 3 short bullets describing what's included. */
+  items: string[];
+};
+
 export type PublicIntakeConfig = {
   bookingUrl: string | null;
   logoUrl: string | null;
@@ -60,7 +85,63 @@ export type PublicIntakeConfig = {
   pricingMonthlyHigh: number | null;
   consultFeeNote: string | null;
   paymentNote: string | null;
+  /** Up to 3 buyer-configured care packages — empty means use the demo placeholder tiles. */
+  packages: IntakeCarePackage[];
 };
+
+const MAX_PACKAGES = 3;
+const MAX_PACKAGE_ITEMS = 3;
+const MAX_FIELD_LEN = 120;
+
+function clean(v: unknown, max = MAX_FIELD_LEN): string | null {
+  if (typeof v !== "string") return null;
+  const s = v.trim();
+  if (!s) return null;
+  return s.length > max ? s.slice(0, max) : s;
+}
+
+/**
+ * Parse an array of care packages from `crm_keys.packages`.
+ *
+ * Accepted shapes (most permissive — buyers paste imperfect JSON):
+ *
+ *   [
+ *     { "title": "Starter", "priceLabel": "$249/mo", "items": ["Provider visit", "..."] },
+ *     ...
+ *   ]
+ *
+ * Loose alternates supported:
+ *   - `name` instead of `title`
+ *   - `price` instead of `priceLabel`
+ *   - `included` / `bullets` instead of `items`
+ *
+ * Anything else is silently ignored — bad JSON never crashes the funnel.
+ */
+function parsePackages(j: Record<string, unknown> | null): IntakeCarePackage[] {
+  if (!j) return [];
+  const raw = j.packages ?? j.care_packages ?? j.intake_packages;
+  if (!Array.isArray(raw)) return [];
+  const out: IntakeCarePackage[] = [];
+  for (const entry of raw) {
+    if (!entry || typeof entry !== "object") continue;
+    const e = entry as Record<string, unknown>;
+    const title = clean(e.title ?? e.name);
+    if (!title) continue;
+    const priceLabel = clean(e.priceLabel ?? e.price ?? e.price_label);
+    const itemsSrc = e.items ?? e.included ?? e.bullets;
+    const items: string[] = [];
+    if (Array.isArray(itemsSrc)) {
+      for (const it of itemsSrc) {
+        const cleaned = clean(it);
+        if (cleaned) items.push(cleaned);
+        if (items.length >= MAX_PACKAGE_ITEMS) break;
+      }
+    }
+    out.push({ title, priceLabel, items });
+    if (out.length >= MAX_PACKAGES) break;
+  }
+  return out;
+}
 
 /**
  * Public intake config derived from tenant row (no secrets).
@@ -84,6 +165,7 @@ export function extractPublicIntakeConfig(tenant: Tenant | null, handle: string)
       pricingMonthlyHigh: null,
       consultFeeNote: null,
       paymentNote: null,
+      packages: [],
     };
   }
 
@@ -131,6 +213,7 @@ export function extractPublicIntakeConfig(tenant: Tenant | null, handle: string)
   }
 
   const displayName = nameFromCrm || fallbackName;
+  const packages = parsePackages(j);
 
   return {
     bookingUrl,
@@ -142,5 +225,6 @@ export function extractPublicIntakeConfig(tenant: Tenant | null, handle: string)
     pricingMonthlyHigh: pricingHigh,
     consultFeeNote,
     paymentNote,
+    packages,
   };
 }
