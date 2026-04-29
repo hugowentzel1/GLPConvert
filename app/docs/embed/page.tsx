@@ -160,21 +160,71 @@ function EmbedGuideContent() {
               their existing page. Expect lower conversion versus Patterns 1 &amp; 2 because
               the iframe inherits the parent page&apos;s scroll, font, and CSS context.
             </p>
+            <p className="mt-3 text-sm leading-relaxed text-slate-700">
+              The iframe emits a <code>glpconvert:resize</code> postMessage on load and on
+              every height change so the host page can grow the frame to fit (no
+              double-scrollbars, no clipped Continue buttons). Drop the snippet below into
+              an HTML block, page builder, or React component:
+            </p>
             <div className="mt-5 rounded-lg bg-slate-900 p-4 font-mono text-xs leading-relaxed text-emerald-300 overflow-x-auto">
               <pre>{`<iframe
-  title="Book a GLP-1 consult"
-  src="https://glp-convert.vercel.app/intake?company=YourClinic"
+  id="glpconvert-frame"
+  title="Book a consult"
+  src="https://glp-convert.vercel.app/intake?handle=yourclinic&company=YourClinic"
   style="width:100%;min-height:880px;border:0"
   loading="lazy"
   allow="clipboard-write"
-></iframe>`}</pre>
+></iframe>
+<script>
+  window.addEventListener("message", function (e) {
+    var d = e && e.data;
+    if (d && d.type === "glpconvert:resize" && typeof d.height === "number") {
+      var f = document.getElementById("glpconvert-frame");
+      if (f) f.style.height = d.height + "px";
+    }
+  });
+</script>`}</pre>
             </div>
             <p className="mt-3 text-xs leading-relaxed text-slate-500">
-              Set <code>min-height</code> generously (≥880px) — recharts and the readiness step
-              expand on mobile and a too-tight iframe will clip the &quot;Continue&quot; button. We
-              do not currently emit a postMessage for height auto-resize; if you need
-              that, contact{" "}
+              Tip: set <code>min-height</code> as a fallback (≥880px). If you need a
+              white-glove install on a locked-down CMS, email{" "}
               <a className="underline" href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.
+            </p>
+          </article>
+
+          {/* Pattern 4 — Lead delivery (3 channels by default) */}
+          <article className="rounded-2xl border border-slate-200/90 bg-white p-7 shadow-[0_2px_8px_rgba(15,23,42,0.05)] ring-1 ring-slate-900/[0.04]">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+              How leads reach you
+            </p>
+            <h2 className="text-2xl font-bold text-gray-900 mt-1">
+              Three channels by default
+            </h2>
+            <p className="mt-4 text-sm leading-relaxed text-slate-700">
+              Every lead is delivered to your team in three places automatically — no
+              integration work for the front desk:
+            </p>
+            <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm leading-relaxed text-slate-700">
+              <li>
+                <strong>Dashboard</strong> — every lead at <code>/c/&#123;handle&#125;/leads</code>{" "}
+                with full UTM trail and the readiness flags from intake.
+              </li>
+              <li>
+                <strong>Email notification</strong> to the address you set in{" "}
+                <code>/c/&#123;handle&#125;/settings</code>. (Defaults to your Stripe email
+                until you change it.)
+              </li>
+              <li>
+                <strong>CRM webhook</strong> — paste a Zapier / Make / n8n / HubSpot URL in
+                Settings and we POST a JSON event the moment a patient submits. Idempotent;
+                retries built in.
+              </li>
+            </ol>
+            <p className="mt-4 text-xs leading-relaxed text-slate-500">
+              The patient also receives a HIPAA-safe acknowledgement email confirming we
+              received their form. No PHI, no plan/medication details — just receipt
+              confirmation, per HHS HIPAA &quot;minimum necessary&quot; and FTC Health Products
+              Guidance.
             </p>
           </article>
 

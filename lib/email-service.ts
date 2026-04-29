@@ -170,13 +170,17 @@ ${embedCode}</code>
               <!-- Next Steps -->
               <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #e5e7eb;">
                 <h3 style="color: #111827; margin: 0 0 15px 0; font-size: 18px; font-weight: 600;">
-                  📋 Next Steps:
+                  📋 Your first 10 minutes
                 </h3>
                 <ol style="color: #4b5563; font-size: 15px; line-height: 1.8; margin: 0; padding-left: 20px;">
-                  <li>Share your instant URL on social media</li>
-                  <li>Embed the funnel on your website</li>
-                  <li>(Optional) Set up custom domain</li>
-                  <li>Watch leads flow into your ${PRODUCT_NAME} dashboard!</li>
+                  <li>
+                    <strong>Configure your funnel</strong> in
+                    <a href="${appBase}/c/${company}/settings" style="color: #3b82f6; text-decoration: none;">Settings</a>
+                    — logo URL, brand color, scheduling link, lead-notification email, and your CRM webhook URL.
+                  </li>
+                  <li><strong>Drop the URL above</strong> into a cold email, an ad, your CRM workflow, or your existing site.</li>
+                  <li><strong>(Optional)</strong> Point a subdomain like <code>book.${company}.com</code> at us — see <a href="${appBase}/docs/embed" style="color: #3b82f6; text-decoration: none;">embed guide</a>.</li>
+                  <li><strong>Each new lead is delivered three ways automatically:</strong> your dashboard, your notification inbox, and your CRM webhook.</li>
                 </ol>
               </div>
 
@@ -245,11 +249,12 @@ View URLs, embed codes, and leads anytime!
 (Full key available in dashboard)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📋 NEXT STEPS:
-1. Share your instant URL
-2. Embed on your website
-3. Set up custom domain (optional)
-4. Watch leads come in!
+📋 YOUR FIRST 10 MINUTES:
+1. Configure your funnel: ${appBase}/c/${company}/settings
+   (logo, brand color, scheduling link, notification email, CRM webhook)
+2. Drop the URL above into a cold email, ad, or CRM workflow.
+3. (Optional) Point a subdomain: book.${company}.com
+4. Each new lead lands in 3 places: dashboard + notification email + CRM webhook.
 
 Questions? Reply to this email.
 
@@ -317,7 +322,7 @@ ${appBase}/support
       const info = await transporter.sendMail({
         from: ENV.SMTP_FROM || `"${PRODUCT_NAME}" <${ENV.SMTP_USER}>`,
         to: toEmail,
-        subject: `🎉 Your ${company} Solar Tool is Ready!`,
+        subject: `🎉 Your ${company} ${PRODUCT_NAME} funnel is ready!`,
         text,
         html,
       });

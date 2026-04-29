@@ -181,7 +181,6 @@ export async function handleCheckoutCompleted(session: Stripe.Checkout.Session):
     const apiKey = generateApiKey();
     const baseUrl = ENV.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
     const loginUrl = `${baseUrl}/c/${company}`;
-    const captureUrl = `${baseUrl}/v1/ingest/lead`;
 
     console.log(`[CheckoutCompleted] Tenant data:`, {
       company,
@@ -192,7 +191,33 @@ export async function handleCheckoutCompleted(session: Stripe.Checkout.Session):
       apiKeyPrefix: apiKey.substring(0, 8) + '...',
     });
 
-    // Create/update tenant in Supabase - bubble errors
+    /**
+     * Tenant provisioning at checkout time. Three buyer-flow correctness
+     * fixes vs. the prior version (Pass 6):
+     *
+     *   1. **Do NOT set `capture_url` here.** That column is the *clinic's
+     *      external CRM webhook URL* (Zapier/Make/n8n/HubSpot) used by
+     *      `/api/lead` to forward each new lead. The previous code wrote
+     *      a platform URL `${baseUrl}/v1/ingest/lead` into it, which made
+     *      every patient submission fire a webhook back to *us* instead
+     *      of the clinic's CRM. We leave it undefined so the buyer can
+     *      configure it in Settings (`/c/[handle]/settings`).
+     *
+     *   2. **Persist `subscription_id`** so downstream subscription
+     *      lifecycle events (`updated`, `deleted`, `past_due`) can
+     *      `findTenantBySubscriptionId` and update the right row.
+     *
+     *   3. **Persist `notification_email` from `customer_email`** so the
+     *      first lead that arrives after activation already has a real
+     *      "where to send the alert" address — buyers no longer need to
+     *      configure that field before they get value. They can override
+     *      it later in Settings.
+     */
+    const subscriptionId =
+      typeof session.subscription === "string"
+        ? session.subscription
+        : (session.subscription as Stripe.Subscription | null)?.id;
+
     let storageSuccess = false;
     let tenant: { id: string };
     try {
@@ -202,10 +227,15 @@ export async function handleCheckoutCompleted(session: Stripe.Checkout.Session):
         [TENANT_FIELDS.PLAN]: plan || "Starter",
         [TENANT_FIELDS.API_KEY]: apiKey,
         [TENANT_FIELDS.DOMAIN_LOGIN_URL]: loginUrl,
-        [TENANT_FIELDS.CAPTURE_URL]: captureUrl,
         [TENANT_FIELDS.PAYMENT_STATUS]: "Paid",
         [TENANT_FIELDS.STRIPE_CUSTOMER_ID]: session.customer as string,
         [TENANT_FIELDS.LAST_PAYMENT]: new Date().toISOString(),
+        ...(subscriptionId
+          ? { [TENANT_FIELDS.SUBSCRIPTION_ID]: subscriptionId }
+          : {}),
+        ...(session.customer_email
+          ? { [TENANT_FIELDS.NOTIFICATION_EMAIL]: session.customer_email }
+          : {}),
       });
       tenant = { id: result.id as string };
       storageSuccess = true;
@@ -252,14 +282,30 @@ export async function handleCheckoutCompleted(session: Stripe.Checkout.Session):
     let emailSuccess = false;
     if (session.customer_email) {
       try {
-        const instantUrl = `${baseUrl}/${company}`;
-        const customDomain = requestedDomain || `quote.${company}.com`;
-        const embedCode = `<iframe 
-  src="${instantUrl}" 
-  width="100%" 
-  height="600" 
-  frameborder="0"
-  title="${company} Solar Calculator">
+        /**
+         * Proper post-purchase URLs for the onboarding email (Pass 6).
+         * - `instantUrl` points at the **branded patient funnel** with the
+         *   tenant handle preserved so branding renders. Was previously
+         *   `${baseUrl}/${company}` which is a vanity redirect to /paid,
+         *   not the actual patient experience.
+         * - `embedCode` is now an iframe of the same intake URL with a
+         *   correct `title` and a sensible `min-height` (the funnel
+         *   expands on mobile; ≤880px clips the Continue button per the
+         *   /docs/embed guidance). Removed the legacy "Solar Calculator"
+         *   product-name string.
+         * - `dashboardUrl` and `magicLinkUrl` go to the working dashboard
+         *   path; `magicLinkUrl` is JWT-signed (verified server-side by
+         *   /api/auth/verify-magic-link in Pass 6).
+         */
+        const intakeUrl = `${baseUrl}/intake?handle=${encodeURIComponent(company)}&company=${encodeURIComponent(company)}`;
+        const instantUrl = intakeUrl;
+        const customDomain = requestedDomain || `book.${company}.com`;
+        const embedCode = `<iframe
+  title="Book a consult with ${company}"
+  src="${intakeUrl}"
+  style="width:100%;min-height:880px;border:0"
+  loading="lazy"
+  allow="clipboard-write">
 </iframe>`;
         const dashboardUrl = `${baseUrl}/c/${company}`;
         const magicLinkUrl = generateMagicLink(session.customer_email, company);

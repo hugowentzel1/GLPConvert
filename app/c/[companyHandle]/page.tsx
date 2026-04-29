@@ -1,180 +1,289 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback } from 'react';
-import { useParams, useSearchParams } from 'next/navigation';
-// Verify magic link token (client-side version)
-function verifyMagicLink(token: string): { email: string; company: string } | null {
-  try {
-    // Use atob for browser-compatible base64 decoding
-    const decoded = JSON.parse(atob(token.replace(/-/g, '+').replace(/_/g, '/')));
-    
-    // Check if token is less than 7 days old
-    const age = Date.now() - decoded.timestamp;
-    if (age > 7 * 24 * 60 * 60 * 1000) {
-      return null; // Expired
-    }
-    
-    return { email: decoded.email, company: decoded.company };
-  } catch {
-    return null;
-  }
-}
-import Link from 'next/link';
-import { SUPPORT_EMAIL } from '@/lib/product-identity';
+/**
+ * Buyer dashboard at `/c/[companyHandle]`.
+ *
+ * Pass-6 rewrite. The previous version had three correctness bugs:
+ *
+ *   1. Magic-link auth: client tried to `atob()` decode a token that
+ *      `lib/email-service.ts` was signing as a JWT — every onboarding
+ *      email led to "Invalid or expired link". We now POST the token
+ *      to `/api/auth/verify-magic-link`, which verifies the JWT
+ *      server-side and returns the tenant-scoped session payload.
+ *
+ *   2. Tenant data was hard-coded — none of it came from Supabase. We
+ *      now render real branded URL, real embed snippet, real settings
+ *      links, and stash the API key in `sessionStorage` so the
+ *      `/c/[handle]/leads` page works without manual setup.
+ *
+ *   3. Visitors without a token were silently treated as authenticated.
+ *      We now require `?token=` (magic link) OR `?session_id=` (post-
+ *      checkout success URL) and exchange either for a real session.
+ */
+
+import { useCallback, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { useParams, useSearchParams } from "next/navigation";
+import { SUPPORT_EMAIL } from "@/lib/product-identity";
+
+type DashboardSession = {
+  ok: true;
+  handle: string;
+  displayName: string;
+  apiKey: string | null;
+  brandColor: string | null;
+  logoUrl: string | null;
+  bookingUrl: string | null;
+  notificationEmail: string | null;
+  crmWebhookUrl: string | null;
+  plan: string | null;
+  paymentStatus: string | null;
+  tokenEmail: string | null;
+};
 
 export default function CompanyDashboard() {
   const params = useParams();
   const searchParams = useSearchParams();
   const companyHandle = params?.companyHandle as string;
-  const token = searchParams?.get('token');
-  
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [tenantData, setTenantData] = useState<any>(null);
+  const token = searchParams?.get("token") ?? "";
+  const sessionId = searchParams?.get("session_id") ?? "";
+
+  const [session, setSession] = useState<DashboardSession | null>(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [copiedItem, setCopiedItem] = useState<string | null>(null);
+  const [copied, setCopied] = useState<string | null>(null);
 
-  const fetchTenantData = useCallback(async () => {
-    try {
-      const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+  const baseUrl = useMemo(
+    () => (typeof window !== "undefined" ? window.location.origin : ""),
+    [],
+  );
+  const intakeUrl = useMemo(
+    () =>
+      baseUrl
+        ? `${baseUrl}/intake?handle=${encodeURIComponent(companyHandle)}&company=${encodeURIComponent(
+            session?.displayName || companyHandle,
+          )}`
+        : "",
+    [baseUrl, companyHandle, session?.displayName],
+  );
+  const embedCode = useMemo(
+    () =>
+      `<iframe
+  title="Book a consult with ${session?.displayName || companyHandle}"
+  src="${intakeUrl}"
+  style="width:100%;min-height:880px;border:0"
+  loading="lazy"
+  allow="clipboard-write">
+</iframe>`,
+    [intakeUrl, session?.displayName, companyHandle],
+  );
 
-      setTenantData({
-        company: companyHandle,
-        instantUrl: `${baseUrl}/intake?handle=${encodeURIComponent(companyHandle)}&company=${encodeURIComponent(companyHandle)}`,
-        embedCode: `<iframe src="${baseUrl}/intake?handle=${encodeURIComponent(companyHandle)}" width="100%" height="720" style="border:0" title="Intake"></iframe>`,
-        status: 'active',
-      });
-      setIsLoading(false);
-    } catch (error) {
-      console.error('Error fetching tenant data:', error);
-      setError('Failed to load tenant data');
-      setIsLoading(false);
+  const exchangeToken = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
+    /** Cached client-side session (so refresh doesn't kill the dashboard). */
+    if (!token && !sessionId) {
+      try {
+        const cached = sessionStorage.getItem(`session:${companyHandle}`);
+        if (cached) {
+          const parsed = JSON.parse(cached) as DashboardSession;
+          if (parsed?.handle === companyHandle) {
+            setSession(parsed);
+            setLoading(false);
+            return;
+          }
+        }
+      } catch {
+        // ignore parse errors
+      }
+      setError("Sign-in required. Open the magic link from your welcome email.");
+      setLoading(false);
+      return;
     }
-  }, [companyHandle]);
+
+    try {
+      const res = await fetch("/api/auth/verify-magic-link", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          token: token || undefined,
+          sessionId: sessionId || undefined,
+          companyHandle,
+        }),
+      });
+      const json = (await res.json()) as DashboardSession | { ok: false; error: string };
+      if (!("ok" in json) || json.ok !== true) {
+        throw new Error(("error" in json && json.error) || "Verification failed");
+      }
+      setSession(json);
+      try {
+        sessionStorage.setItem(`session:${companyHandle}`, JSON.stringify(json));
+        if (json.apiKey) sessionStorage.setItem(`apikey:${companyHandle}`, json.apiKey);
+        sessionStorage.setItem(`auth:${companyHandle}`, "true");
+      } catch {
+        // sessionStorage might be unavailable in some embed contexts — degrade gracefully
+      }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Could not verify your link.");
+    } finally {
+      setLoading(false);
+    }
+  }, [token, sessionId, companyHandle]);
 
   useEffect(() => {
-    // Verify magic link token
-    if (token) {
-      const verified = verifyMagicLink(token);
-      if (verified && verified.company === companyHandle) {
-        setIsAuthenticated(true);
-        // Store auth in sessionStorage
-        sessionStorage.setItem(`auth:${companyHandle}`, 'true');
-      } else {
-        console.error('Token verification failed:', { verified, companyHandle });
-        setError('Invalid or expired link');
-      }
-    } else {
-      // Check if already authenticated
-      const hasAuth = sessionStorage.getItem(`auth:${companyHandle}`);
-      if (hasAuth) {
-        setIsAuthenticated(true);
-      } else {
-        setIsAuthenticated(true);
-      }
-    }
+    void exchangeToken();
+  }, [exchangeToken]);
 
-    // Fetch tenant data
-    fetchTenantData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token, companyHandle]);
+  const copy = useCallback((text: string, key: string) => {
+    void navigator.clipboard?.writeText(text);
+    setCopied(key);
+    setTimeout(() => setCopied(null), 1800);
+  }, []);
 
-  const copyToClipboard = (text: string, itemName: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedItem(itemName);
-    setTimeout(() => setCopiedItem(null), 2000);
-  };
-
-  if (!isAuthenticated) {
+  if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
-          <div className="text-6xl mb-4">🔒</div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
-            Access Required
-          </h1>
-          <p className="text-gray-600 mb-6">
-            {error || 'Please use the magic link sent to your email to access this dashboard.'}
+      <div className="flex min-h-screen items-center justify-center bg-slate-50">
+        <div className="text-center">
+          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-b-2 border-slate-900" />
+          <p className="text-sm text-slate-600">Loading your dashboard…</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !session) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50 p-4">
+        <div className="w-full max-w-md rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-xl">
+          <h1 className="text-2xl font-bold text-slate-900">Sign-in required</h1>
+          <p className="mt-3 text-sm text-slate-600">
+            {error ?? "Open the secure link in your welcome email to access this dashboard."}
+          </p>
+          <p className="mt-3 text-xs text-slate-500">
+            Lost the email?{" "}
+            <a href={`mailto:${SUPPORT_EMAIL}`} className="font-medium text-slate-800 underline">
+              {SUPPORT_EMAIL}
+            </a>{" "}
+            can resend it.
           </p>
           <Link
             href="/"
-            className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            className="mt-6 inline-block rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-slate-800"
           >
-            Return to Home
+            Back to home
           </Link>
         </div>
       </div>
     );
   }
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading your dashboard...</p>
-        </div>
-      </div>
-    );
-  }
+  const brandColor = session.brandColor || "#0f172a";
+  const settingsHref = `/c/${companyHandle}/settings${
+    token ? `?token=${encodeURIComponent(token)}` : sessionId ? `?session_id=${encodeURIComponent(sessionId)}` : ""
+  }`;
+  const leadsHref = `/c/${companyHandle}/leads${
+    token ? `?token=${encodeURIComponent(token)}` : ""
+  }`;
 
   return (
     <div className="min-h-screen bg-slate-50 py-10">
       <div className="mx-auto max-w-3xl px-4">
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:p-8">
           <div className="flex flex-wrap items-start justify-between gap-3">
-            <div>
-              <h1 className="text-2xl font-bold tracking-tight text-slate-900">{tenantData?.company}</h1>
-              <p className="mt-1 text-sm text-slate-600">Intake overview — leads and handoffs</p>
+            <div className="flex items-center gap-3">
+              {session.logoUrl ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={session.logoUrl}
+                  alt={session.displayName}
+                  className="h-9 w-9 rounded-lg border border-slate-200 object-contain"
+                />
+              ) : (
+                <span
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-sm font-bold text-white"
+                  style={{ backgroundColor: brandColor }}
+                >
+                  {session.displayName.slice(0, 2).toUpperCase()}
+                </span>
+              )}
+              <div>
+                <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                  {session.displayName}
+                </h1>
+                <p className="mt-0.5 text-sm text-slate-600">
+                  {session.plan ? `${session.plan} · ` : ""}
+                  Branded GLPConvert funnel
+                </p>
+              </div>
             </div>
-            <span className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800">
-              {tenantData?.status}
+            <span
+              className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-800"
+              data-dashboard-status
+            >
+              {session.paymentStatus === "Paid" ? "Active" : session.paymentStatus || "Pending"}
             </span>
           </div>
 
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {(
-              [
-                ["Intake starts", "—"],
-                ["Completions", "—"],
-                ["Leads", "—"],
-                ["Bookings", "—"],
-              ] as const
-            ).map(([label, val]) => (
-              <div key={label} className="rounded-xl border border-slate-100 bg-slate-50/80 px-3 py-3">
-                <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-500">{label}</p>
-                <p className="mt-1 text-lg font-semibold tabular-nums text-slate-900">{val}</p>
-              </div>
-            ))}
+          {/* Setup checklist — drives the buyer to a green state */}
+          <div className="mt-7 rounded-xl border border-slate-200 bg-slate-50/60 p-5">
+            <h2 className="text-sm font-semibold text-slate-900">Finish setup</h2>
+            <ul className="mt-3 space-y-2 text-sm">
+              <ChecklistRow done={!!session.logoUrl} label="Add your logo URL" />
+              <ChecklistRow done={!!session.brandColor} label="Set your brand color" />
+              <ChecklistRow
+                done={!!session.bookingUrl}
+                label="Connect your scheduling link (Calendly / Acuity / etc.)"
+              />
+              <ChecklistRow
+                done={!!session.notificationEmail}
+                label="Pick where to receive lead notifications"
+              />
+              <ChecklistRow
+                done={!!session.crmWebhookUrl}
+                label="(Optional) Wire your CRM webhook"
+              />
+            </ul>
+            <Link
+              href={settingsHref}
+              className="mt-4 inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-105"
+              style={{ backgroundColor: brandColor }}
+              data-dashboard-settings-cta
+            >
+              Open settings →
+            </Link>
           </div>
-          <p className="mt-2 text-center text-[11px] text-slate-400">
-            Live counts when your tenant backend is connected. Use Leads for submissions now.
-          </p>
 
-          <div className="mt-8 rounded-xl border border-slate-200 bg-slate-50/50 p-5">
-            <h2 className="text-sm font-semibold text-slate-900">Patient intake link</h2>
-            <p className="mt-1 text-xs text-slate-600">Use on ads, landers, or email. Branding comes from your tenant settings.</p>
-            <div className="mt-3 rounded-lg border border-slate-200 bg-white p-3">
-              <code className="break-all text-xs text-slate-800">{tenantData?.instantUrl}</code>
+          {/* Patient intake URL */}
+          <div className="mt-6 rounded-xl border border-slate-200 bg-white p-5">
+            <h2 className="text-sm font-semibold text-slate-900">Your branded patient URL</h2>
+            <p className="mt-1 text-xs text-slate-600">
+              Send patients here from cold email, ads, your existing site, or your CRM workflows.
+              Branding (logo, color, scheduling link) renders automatically.
+            </p>
+            <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
+              <code className="break-all text-xs text-slate-800" data-dashboard-intake-url>
+                {intakeUrl}
+              </code>
             </div>
             <div className="mt-3 flex flex-wrap gap-2">
               <button
                 type="button"
-                onClick={() => copyToClipboard(tenantData?.instantUrl, "url")}
+                onClick={() => copy(intakeUrl, "url")}
                 className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
               >
-                {copiedItem === "url" ? "Copied" : "Copy link"}
+                {copied === "url" ? "Copied" : "Copy URL"}
               </button>
               <a
-                href={tenantData?.instantUrl}
+                href={intakeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
               >
-                Open intake
+                Preview funnel
               </a>
               <Link
-                href={`/c/${companyHandle}/leads`}
+                href={leadsHref}
                 className="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50"
               >
                 View leads
@@ -182,30 +291,82 @@ export default function CompanyDashboard() {
             </div>
           </div>
 
-          <details className="mt-6 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm">
-            <summary className="cursor-pointer font-semibold text-slate-800">Embed on your site</summary>
-            <p className="mt-2 text-xs text-slate-600">Paste into an HTML block. Adjust height to fit your layout.</p>
-            <pre className="mt-2 max-h-40 overflow-auto rounded-lg bg-slate-900 p-3 text-[11px] text-emerald-300">
-              {tenantData?.embedCode}
+          {/* Embed snippet */}
+          <details className="mt-5 rounded-xl border border-slate-200 bg-white px-4 py-3" data-dashboard-embed>
+            <summary className="cursor-pointer text-sm font-semibold text-slate-800">
+              Embed on your existing site
+            </summary>
+            <p className="mt-2 text-xs text-slate-600">
+              Paste into an HTML block or page builder. The funnel auto-resizes inside the iframe
+              (postMessage protocol shipped Pass 6); set <code>min-height</code> as a fallback.
+              For best conversion, point a subdomain like{" "}
+              <code className="rounded bg-slate-100 px-1.5 py-0.5">book.{companyHandle}.com</code>{" "}
+              at us — see the <Link href="/docs/embed" className="underline">embed guide</Link>.
+            </p>
+            <pre className="mt-2 max-h-48 overflow-auto rounded-lg bg-slate-900 p-3 text-[11px] leading-relaxed text-emerald-300">
+{embedCode}
             </pre>
             <button
               type="button"
-              onClick={() => copyToClipboard(tenantData?.embedCode, "embed")}
+              onClick={() => copy(embedCode, "embed")}
               className="mt-2 text-xs font-semibold text-slate-700 underline"
             >
-              {copiedItem === "embed" ? "Copied" : "Copy embed code"}
+              {copied === "embed" ? "Copied" : "Copy embed snippet"}
             </button>
           </details>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-4 border-t border-slate-100 pt-6 text-sm">
+          {/* Lead-delivery summary */}
+          <div className="mt-5 rounded-xl border border-slate-200 bg-white p-5">
+            <h2 className="text-sm font-semibold text-slate-900">How leads reach you</h2>
+            <ul className="mt-2 space-y-1.5 text-xs text-slate-600">
+              <li>
+                <span className="font-medium text-slate-800">Dashboard:</span>{" "}
+                <Link href={leadsHref} className="underline">
+                  /c/{companyHandle}/leads
+                </Link>{" "}
+                — every submission, immediately.
+              </li>
+              <li>
+                <span className="font-medium text-slate-800">Email notification:</span>{" "}
+                {session.notificationEmail ? (
+                  <span>
+                    sent to <code>{session.notificationEmail}</code>.
+                  </span>
+                ) : (
+                  <span className="text-amber-700">
+                    not configured — set in{" "}
+                    <Link href={settingsHref} className="underline">
+                      settings
+                    </Link>
+                    .
+                  </span>
+                )}
+              </li>
+              <li>
+                <span className="font-medium text-slate-800">CRM webhook:</span>{" "}
+                {session.crmWebhookUrl ? (
+                  <span>POSTed to your URL on every new lead.</span>
+                ) : (
+                  <span className="text-slate-500">
+                    not configured — optional Zapier/Make/n8n endpoint.
+                  </span>
+                )}
+              </li>
+            </ul>
+          </div>
+
+          <div className="mt-7 flex flex-wrap justify-center gap-4 border-t border-slate-100 pt-6 text-sm">
+            <Link href="/docs/embed" className="font-medium text-slate-700 hover:text-slate-900">
+              Embed guide
+            </Link>
             <Link href="/support" className="font-medium text-slate-700 hover:text-slate-900">
               Support
             </Link>
-            <Link href="/contact" className="font-medium text-slate-700 hover:text-slate-900">
-              Contact
-            </Link>
-            <a href={`mailto:${SUPPORT_EMAIL}`} className="font-medium text-slate-700 hover:text-slate-900">
-              Email
+            <a
+              href={`mailto:${SUPPORT_EMAIL}`}
+              className="font-medium text-slate-700 hover:text-slate-900"
+            >
+              {SUPPORT_EMAIL}
             </a>
           </div>
         </div>
@@ -214,3 +375,20 @@ export default function CompanyDashboard() {
   );
 }
 
+function ChecklistRow({ done, label }: { done: boolean; label: string }) {
+  return (
+    <li className="flex items-start gap-2.5">
+      <span
+        className={`mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[11px] font-bold ${
+          done
+            ? "bg-emerald-100 text-emerald-700"
+            : "bg-slate-200 text-slate-500"
+        }`}
+        aria-hidden
+      >
+        {done ? "✓" : "·"}
+      </span>
+      <span className={done ? "text-slate-700 line-through" : "text-slate-800"}>{label}</span>
+    </li>
+  );
+}

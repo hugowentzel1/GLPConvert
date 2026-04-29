@@ -16,6 +16,17 @@ const nextConfig = {
     const useCspUpgrade =
       process.env.VERCEL === "1" && process.env.NODE_ENV === "production";
 
+    /**
+     * Pass-6: framing policy is enforced by the runtime middleware
+     * (`middleware.ts`) so we can branch per-pathname (only `/intake/*`
+     * and `/embed/*` are embeddable; everything else stays strict).
+     * Headers declared here apply to ALL routes, so we deliberately
+     * omit `frame-ancestors` and `X-Frame-Options` from this block —
+     * the middleware sets the right value depending on path. If we
+     * left a strict default here, Vercel would emit BOTH a strict
+     * static header and our permissive middleware header, and the
+     * stricter one wins.
+     */
     const cspDirectives = [
       "default-src 'self'",
       "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://maps.googleapis.com https://js.sentry-cdn.com",
@@ -23,7 +34,6 @@ const nextConfig = {
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: https: blob:",
       "connect-src 'self' https: wss: https://*.sentry.io https://api.resend.com",
-      "frame-ancestors 'self'",
       "base-uri 'self'",
       "form-action 'self'",
       "object-src 'none'",
@@ -33,7 +43,6 @@ const nextConfig = {
     }
 
     const securityHeaders = [
-      { key: "X-Frame-Options", value: "SAMEORIGIN" },
       { key: "X-Content-Type-Options", value: "nosniff" },
       { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
       { key: "X-XSS-Protection", value: "1; mode=block" },
@@ -51,7 +60,7 @@ const nextConfig = {
     ];
 
     if (useCspUpgrade) {
-      securityHeaders.splice(4, 0, {
+      securityHeaders.splice(3, 0, {
         key: "Strict-Transport-Security",
         value: "max-age=31536000; includeSubDomains",
       });

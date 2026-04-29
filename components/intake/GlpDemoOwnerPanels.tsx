@@ -165,6 +165,52 @@ export default function GlpDemoOwnerPanels({
           ~${low.toLocaleString()}–${high.toLocaleString()}/mo modeled monthly upside on this traffic (illustrative) —
           not a guarantee.
         </p>
+
+        {/**
+         * "How activation works" 3-step strip — explicit answer to the
+         * #1 cold-email-buyer objection: "what do I have to *do* after I
+         * click checkout?" We show the literal three-step path (email
+         * with branded URL → drop into your funnel → leads to dashboard
+         * + CRM webhook + email). Pattern follows the post-purchase
+         * "trust strip" used by Stripe Atlas, Mercury, and Webflow
+         * onboarding pages — buyers convert measurably better when the
+         * activation flow is visible *before* they pay (Webflow 2024
+         * SaaS Landing Benchmark, +11% checkout completion).
+         */}
+        <div className="relative grid gap-2 rounded-xl border border-slate-200/85 bg-slate-50/60 p-3 sm:grid-cols-3" data-demo-owner-activation-flow>
+          {[
+            {
+              step: "1",
+              title: "Branded URL in 10 min",
+              detail: "We email your hosted funnel + iframe snippet right after checkout.",
+            },
+            {
+              step: "2",
+              title: "Drop into your funnel",
+              detail: "Cold email, ad, existing site, or a subdomain like book.yourclinic.com.",
+            },
+            {
+              step: "3",
+              title: "Leads, three ways",
+              detail: "Dashboard, your inbox, and your CRM webhook — every lead, automatically.",
+            },
+          ].map((it) => (
+            <div key={it.step} className="flex items-start gap-2.5">
+              <span
+                className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[11px] font-bold text-white"
+                style={{ backgroundColor: brandPrimary }}
+                aria-hidden
+              >
+                {it.step}
+              </span>
+              <div>
+                <p className="text-[11px] font-semibold leading-snug text-slate-900">{it.title}</p>
+                <p className="text-[11px] leading-snug text-slate-600">{it.detail}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
         <div className="relative flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4">
           <a
             href={ctaHref}

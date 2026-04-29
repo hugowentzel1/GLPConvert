@@ -1,9 +1,10 @@
-/* @cache-bust: 2026-04-25T21:35 redo pass: darker rules, owner block rebuild, nav unification, lead-save fallback */
+/* @cache-bust: 2026-04-28T19:55 pass 6: buyer activation flow, settings UI, postMessage embed, patient ack email */
 
 import { Suspense } from "react";
 import GlpSimulationFunnel from "@/components/intake/GlpSimulationFunnel";
 import AttributionPixels from "@/components/attribution/AttributionPixels";
 import IntakeDemoQuoteStrip from "@/components/intake/IntakeDemoQuoteStrip";
+import IntakeIframeAutoResize from "@/components/intake/IntakeIframeAutoResize";
 import IntakePageFrame from "@/components/intake/IntakePageFrame";
 import IntakePageHeader from "@/components/intake/IntakePageHeader";
 import IntakeSearchParamsSanitizer from "@/components/intake/IntakeSearchParamsSanitizer";
@@ -49,6 +50,7 @@ export default function IntakePage({
         </div>
       ) : null}
       <AttributionPixels />
+      <IntakeIframeAutoResize />
       <GlpSimulationFunnel />
     </IntakePageFrame>
   );

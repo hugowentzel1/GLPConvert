@@ -189,22 +189,44 @@ export async function POST(request: NextRequest) {
       void postLeadToTenantCrmWebhook(crmUrl, webhookPayload);
     }
 
-    // Instant email to installer (if tenant has Notification Email and Resend is configured)
+    /**
+     * Lead-delivery side-effects (Pass 6 — three-channel-by-default).
+     *
+     * Best-practice 2026 clinic-conversion stacks deliver every lead to
+     * three places at once so the buyer never has to "remember to check"
+     * one of them:
+     *
+     *   1. **Dashboard** — already done above via Supabase persistence.
+     *   2. **Notification email to clinic** — short summary so the
+     *      front desk reacts in minutes, not hours.
+     *   3. **Patient acknowledgement email** — HIPAA-friendly receipt
+     *      that *they* submitted (no PHI, no medication mentions, no
+     *      diagnosis copy). Closes the "did it go through?" loop and
+     *      cuts duplicate-submission rate. (HHS HIPAA "minimum
+     *      necessary" + FTC Health Products Guidance: confirmation of
+     *      receipt is *not* PHI; details about the patient's plan
+     *      *are*. We send only the former.)
+     *
+     * CRM webhook (when configured by the buyer) is already fired
+     * earlier in this handler. The two emails below are non-blocking —
+     * we never let outbound email failure break the HTTP response.
+     */
     if (ENV.RESEND_API_KEY && tenantSlug) {
       try {
         const tenant = tenantForNotify ?? (await getTenantByHandle(String(tenantSlug)));
         const notifyEmail = tenant?.[TENANT_FIELDS.NOTIFICATION_EMAIL as keyof typeof tenant] as string | undefined;
         const toEmail = typeof notifyEmail === "string" && notifyEmail.includes("@") ? notifyEmail.trim() : null;
+        const fromDomain = ENV.NEXT_PUBLIC_APP_URL?.replace("https://", "").replace("http://", "") || "glpconvert.com";
+        const fromEmail = `no-reply@${fromDomain}`;
+        const appBase = ENV.NEXT_PUBLIC_APP_URL || "https://glpconvert.com";
+        const dashboardUrl = `${appBase}/c/${tenantSlug}/leads`;
+        const emailTimeoutMs = Math.min(
+          12_000,
+          Number(process.env.RESEND_FETCH_TIMEOUT_MS ?? 12_000),
+        );
+
         if (toEmail) {
-          const fromDomain = ENV.NEXT_PUBLIC_APP_URL?.replace("https://", "").replace("http://", "") || "glpconvert.com";
-          const fromEmail = `no-reply@${fromDomain}`;
-          const dashboardUrl = `${ENV.NEXT_PUBLIC_APP_URL || "https://glpconvert.com"}/c/${tenantSlug}/leads`;
-          // Never block the HTTP response on outbound email; Vercel will 504 if this hangs.
-          const emailTimeoutMs = Math.min(
-            12_000,
-            Number(process.env.RESEND_FETCH_TIMEOUT_MS ?? 12_000),
-          );
-          const res = await fetch("https://api.resend.com/emails", {
+          const r1 = await fetch("https://api.resend.com/emails", {
             method: "POST",
             headers: {
               Authorization: `Bearer ${ENV.RESEND_API_KEY}`,
@@ -219,10 +241,41 @@ export async function POST(request: NextRequest) {
               text: `New lead: ${name}, ${email}, ${address || "Not provided"}. View: ${dashboardUrl}`,
             }),
           });
-          if (res.ok) {
+          if (r1.ok) {
             console.log("Lead notification email sent to", toEmail);
           } else {
-            console.warn("Lead notification email failed:", await res.text());
+            console.warn("Lead notification email failed:", await r1.text());
+          }
+        } else {
+          console.warn(`No notification_email configured for tenant ${tenantSlug}; skipping clinic email.`);
+        }
+
+        // Patient acknowledgement (HIPAA-safe — no PHI, no plan/medication details).
+        if (typeof email === "string" && email.includes("@")) {
+          const tenantDisplay = (tenant?.["name" as keyof typeof tenant] as string | undefined) || tenantSlug;
+          const r2 = await fetch("https://api.resend.com/emails", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${ENV.RESEND_API_KEY}`,
+              "Content-Type": "application/json",
+            },
+            signal: AbortSignal.timeout(emailTimeoutMs),
+            body: JSON.stringify({
+              from: fromEmail,
+              to: [email.trim()],
+              subject: `We received your form for ${tenantDisplay}`,
+              text:
+                `Hi ${name || "there"},\n\n` +
+                `${tenantDisplay} received your form. Their team will be in touch shortly with the next step.\n\n` +
+                `If you didn't submit this, please ignore this email.\n\n` +
+                `— ${PRODUCT_NAME} (on behalf of ${tenantDisplay})`,
+              html: `<p>Hi ${name || "there"},</p><p><strong>${tenantDisplay}</strong> received your form. Their team will be in touch shortly with the next step.</p><p style="color:#6b7280;font-size:12px">If you didn't submit this, please ignore this email.</p><p style="color:#9ca3af;font-size:12px">— ${PRODUCT_NAME} (on behalf of ${tenantDisplay})</p>`,
+            }),
+          });
+          if (r2.ok) {
+            console.log("Patient ack email sent to", email);
+          } else {
+            console.warn("Patient ack email failed:", await r2.text());
           }
         }
       } catch (e) {
