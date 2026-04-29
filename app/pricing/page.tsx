@@ -64,43 +64,45 @@ export default function PricingPage() {
               </Link>
             </div>
 
-            <div className="text-center space-y-4">
-              <p className="text-sm text-neutral-500">
-                <span className="line-through decoration-neutral-400/70">Custom-built clinic intake: $8,000–$15,000 + dev cycles</span>
+            {/**
+             * Pricing hero rebuilt for premium feel: single focal block,
+             * one headline price (no anchor line — buyer feedback flagged
+             * the line-through as "ugly"), one body line, one CTA, one
+             * trust line below CTA. Stripe Pricing 2025 + Linear Plans
+             * pattern: monumental price + minimal supporting text +
+             * single dominant action.
+             */}
+            <div className="text-center">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-neutral-500">
+                White-label clinic intake · activate in 24h
               </p>
-              <h1 className="text-4xl md:text-5xl font-black text-neutral-900">
-                $99/mo + $399 setup
+              <h1 className="mt-3 text-5xl font-black tracking-tight text-neutral-900 sm:text-[3.5rem]">
+                <span className="tabular-nums">$99</span>
+                <span className="ml-1 text-2xl font-semibold text-neutral-500 sm:text-3xl">/mo</span>
               </h1>
-              <p className="text-lg text-neutral-700 max-w-3xl mx-auto">
-                Launch {PRODUCT_NAME} fast for your clinic brand. Intake → recommendation → booking.
+              <p className="mt-2 text-base font-medium text-neutral-600">
+                + <span className="tabular-nums">$399</span> one-time setup
               </p>
-              <p className="text-sm text-neutral-500">
-                This software supports educational and booking workflows only. Not medical advice.
+              <p className="mx-auto mt-5 max-w-md text-[15px] leading-relaxed text-neutral-600">
+                Branded intake → recommendation → booking, live on your site in 24h or your setup fee is refunded.
               </p>
-              {/**
-               * Primary CTA uses the active brand color (not slate-black) so a
-               * branded clinic preview never sees a generic black button on a
-               * branded page. Contrast is enforced by the WCAG-AA brand tokens
-               * (`--brand-600` darkens lighter brands automatically). Pattern
-               * follows Stripe Checkout, Linear, Notion: primary action ALWAYS
-               * carries the active brand fill — no neutral fallback in flow.
-               */}
-              <div className="flex flex-col items-center gap-3 pt-2">
-                <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-                  <span>HIPAA-ready posture</span>
-                  <span aria-hidden className="text-neutral-300">·</span>
-                  <span>BAAs where required</span>
-                  <span aria-hidden className="text-neutral-300">·</span>
-                  <span>Encrypted in transit</span>
-                </p>
+
+              <div className="mx-auto mt-7 flex max-w-sm flex-col items-stretch gap-3">
                 <button
                   onClick={handleStartSetup}
                   data-testid="pricing-start-setup"
-                  className="inline-flex items-center justify-center rounded-lg bg-[var(--brand-600)] px-6 py-3 text-white font-semibold shadow-md transition hover:brightness-[1.05] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)]"
+                  className="inline-flex items-center justify-center rounded-xl bg-[var(--brand-600)] px-6 py-3.5 text-base font-semibold text-white shadow-md transition hover:brightness-[1.05] hover:shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)]"
                 >
-                  Start setup — $399 today, then $99/mo
+                  Start setup — pay $399, then $99/mo
                 </button>
+                <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
+                  HIPAA-ready · BAA available · Stripe-secured checkout
+                </p>
               </div>
+
+              <p className="mx-auto mt-6 max-w-md text-xs leading-relaxed text-neutral-500">
+                Software for licensed clinics — educational + booking only. Not medical advice.
+              </p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
