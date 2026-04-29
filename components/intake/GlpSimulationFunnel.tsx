@@ -1080,9 +1080,17 @@ export default function GlpSimulationFunnel() {
             </dl>
           </details>
 
-          <p className={`${glpIntakeUi.bodyMuted} text-center text-[11px]`}>
-            General information — not medical advice. Your provider decides treatment.
-          </p>
+          {/**
+           * Removed bottom-of-step-2 "General information — not medical
+           * advice" disclaimer: same substance is already in the step 2
+           * HEADER ("educational only, not a diagnosis or quote. Your
+           * provider sets the actual plan; no obligation to book."), in
+           * the chart subhead ("your provider sets the real pace"), and
+           * in step 1's medical disclaimer above. FTC Health Products
+           * Compliance Guidance Dec 2022 requires the substance to be
+           * present, not a specific repetition count. Defensive disclosure
+           * is preserved; visual repetition is not.
+           */}
 
           <div className={glpIntakeUi.formNavRowRule} data-results-nav>
             <button type="button" className={glpIntakeUi.backBtn} onClick={goBack}>
@@ -1389,33 +1397,40 @@ export default function GlpSimulationFunnel() {
       {step === 5 && (
         <section
           data-flow-step="5"
-          className={`${glpIntakeUi.card} text-center bg-gradient-to-b from-slate-50/90 to-white px-6 py-12 sm:px-10 sm:py-14`}
+          className={`${glpIntakeUi.card} relative overflow-hidden text-center bg-gradient-to-b from-slate-50/90 to-white px-6 py-14 sm:px-10 sm:py-16`}
         >
           {/**
-           * Premium step-5 hierarchy: brand-tinted halo around the
-           * checkmark, generous vertical breathing room between blocks,
-           * single primary action when applicable. Material 3 +
-           * Stripe Checkout success-state pattern: celebrate the
-           * completion (large icon + headline), then collapse to one
-           * obvious next step. Buyer feedback flagged the prior layout
-           * as "too simple / cheap" — the issue was uniform spacing
-           * with no visual rhythm, not lack of content.
+           * Premium success state — Stripe Checkout / Linear post-create
+           * / Vercel deploy-success pattern: bold completion icon with a
+           * radial brand halo, headline + body, primary action, and
+           * compliance integrated into a subtle pill (no naked grey
+           * paragraph). Buyer feedback: prior version's bare slate-500
+           * disclaimer + small "Back to home" link looked "cheap" — the
+           * fix is to (a) replace the grey block with a bordered status
+           * pill and (b) anchor the close-out with a slightly more
+           * substantial back-link. Apple HIG 2025 success-state +
+           * Material 3 success-screen specs.
            */}
           <div
-            className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-full text-2xl text-white shadow-[0_8px_28px_-6px_rgba(15,23,42,0.18)] ring-8"
-            style={{ backgroundColor: brandFill, ["--tw-ring-color" as string]: `${brandFill}1a` }}
+            className="pointer-events-none absolute left-1/2 top-12 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.18] blur-3xl"
+            style={{ backgroundColor: brandFill }}
+            aria-hidden
+          />
+          <div
+            className="relative mx-auto flex h-20 w-20 items-center justify-center rounded-full text-3xl text-white shadow-[0_12px_36px_-8px_rgba(15,23,42,0.25)] ring-[6px]"
+            style={{ backgroundColor: brandFill, ["--tw-ring-color" as string]: `${brandFill}26` }}
             aria-hidden
           >
             ✓
           </div>
-          <div className="mt-7 space-y-2.5">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
-              Step 5 of 5 · complete
+          <div className="relative mt-8 space-y-3">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">
+              Complete · step 5 of 5
             </p>
-            <h2 className="text-[1.55rem] font-semibold tracking-tight text-slate-900 sm:text-[1.75rem]">
+            <h2 className="text-[1.65rem] font-semibold tracking-tight text-slate-900 sm:text-[1.95rem]">
               Your next step is ready
             </h2>
-            <p className="mx-auto max-w-md text-[15px] leading-relaxed text-slate-600">
+            <p className="mx-auto max-w-md text-[15px] leading-relaxed text-slate-600 sm:text-base">
               {company} can review your plan and follow up based on the option you selected.
             </p>
           </div>
@@ -1424,26 +1439,31 @@ export default function GlpSimulationFunnel() {
               href={effectiveBookingUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${glpIntakeUi.primaryBtn} mx-auto mt-8 block w-full max-w-sm text-center`}
+              className={`${glpIntakeUi.primaryBtn} relative mx-auto mt-9 block w-full max-w-sm text-center`}
               style={{ backgroundColor: brandFill }}
             >
               Open scheduling
             </a>
           ) : null}
-          {isDemoMode ? (
-            <p className="mx-auto mt-8 max-w-md text-[11px] uppercase tracking-[0.16em] text-slate-400">
-              Preview · this is how the completed step appears in your branded flow
+          <div className="relative mt-10 flex flex-col items-center gap-3.5">
+            <p className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/80 px-4 py-1.5 text-[11px] font-medium text-slate-600 shadow-sm backdrop-blur">
+              <svg viewBox="0 0 20 20" fill="currentColor" className="h-3 w-3 text-slate-500" aria-hidden>
+                <path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM9 9a1 1 0 1 1 2 0v4a1 1 0 1 1-2 0V9Zm1-4a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z" clipRule="evenodd" />
+              </svg>
+              General information only · a licensed provider confirms next steps
             </p>
-          ) : null}
-          <p className="mx-auto mt-6 max-w-md text-xs leading-relaxed text-slate-500">
-            General information only, not medical advice. A licensed provider will confirm next steps.
-          </p>
-          <a
-            href={buildBrandedDemoReturnHref(sp)}
-            className="mt-8 inline-flex text-sm font-semibold text-slate-700 underline decoration-slate-300 underline-offset-4 transition hover:text-slate-900"
-          >
-            Back to home
-          </a>
+            {isDemoMode ? (
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+                Preview · this is how the completed step appears in your branded flow
+              </p>
+            ) : null}
+            <a
+              href={buildBrandedDemoReturnHref(sp)}
+              className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-700 transition hover:text-slate-900"
+            >
+              <span aria-hidden>←</span> Back to home
+            </a>
+          </div>
         </section>
       )}
     </div>
