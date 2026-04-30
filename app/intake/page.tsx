@@ -54,7 +54,7 @@ export default function IntakePage({
        */}
       {demo ? (
         <div
-          className="w-full border-t border-slate-200 pt-10 pb-8 md:pt-12"
+          className="w-full border-t border-slate-200 pt-10 pb-10 md:pt-12 md:pb-12"
           data-intake-demo-social-proof
         >
           <IntakeDemoQuoteStrip />
@@ -95,8 +95,17 @@ export default function IntakePage({
            * + brand-color underline pill beneath the focal stat. Two
            * subtle brand touches, no text recolor, no chrome stripes.
            */}
+          {/**
+           * Even-gap wrapper: mt-10/md:mt-12 above the box mirrors the
+           * parent's pb-10/md:pb-12 below the box, so the white card
+           * floats with identical breathing room top and bottom.
+           * Buyer pass 14 feedback: prior 32px-above / 32px-below
+           * looked uneven because the quote-strip's bottom card edge
+           * sat tighter than the trust-strip's top edge. Equal padding
+           * on both sides of the card removes the perceptual mismatch.
+           */}
           <div
-            className="mx-auto mt-8 w-full max-w-4xl px-4"
+            className="mx-auto mt-10 w-full max-w-4xl px-4 md:mt-12"
             data-testid="intake-capability-strip"
           >
             <div

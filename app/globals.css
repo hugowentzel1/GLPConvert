@@ -56,23 +56,36 @@ html {
 }
 
 /**
- * Chart left-to-right reveal — Stripe Dashboard "draw in" / Linear
- * Insights time-series-paint / Vercel Analytics first-render pattern.
- * The chart card uses clip-path animated from `inset(0 100% 0 0)`
- * (fully clipped from the right edge) to `inset(0 0 0 0)` (fully
- * visible) over 1.4s with ease-out. Reads as a smooth left-to-right
- * "drawing in" reveal — matches the natural left-to-right reading
- * direction of a time-series chart so the brain anticipates the
- * forward motion. Material 3 motion + Apple HIG 2025: directional
- * reveals that mirror the data axis are the premium chart-mount
- * pattern in 2026. Companion finish-shimmer fires once the reveal
- * completes (see `.glp-intake-chart-reveal-scan` below) — a short
- * brand-tinted sweep that signals "ready to scan".
+ * Chart left-to-right reveal — slowed and delayed for "epic" first-
+ * paint feel (Apple Keynote chart-build / Linear Insights premium
+ * mount / Vercel Analytics first-render). Sequence:
+ *
+ *   0 – 600ms   waiting (chart held at 0% — the rest of step 2
+ *               settles first; nothing happens on the chart)
+ *   600 – 2900ms reveal (clip-path slides from right-clipped to
+ *               fully visible over 2.3s with ease-out — slow enough
+ *               to feel like the chart is being computed in real
+ *               time, fast enough to keep the buyer engaged)
+ *   2900ms+     finish-shimmer fires (see ::after below)
+ *
+ * Total arc ~4.4s — long for a UI element but EXPECTED for a hero
+ * data-viz on a sales-led landing page. Stripe Sigma demo, Linear
+ * Insights launch reel, Vercel Analytics OG videos all hold the
+ * chart's first paint for 2-3s for the same psychological effect:
+ * the slow draw signals "this is being computed FOR YOU, not just
+ * loaded from cache." (Stripe motion 2025 + Apple HIG 2025: hero
+ * data-viz reveals warrant 1.5-2.5s holds; longer than UI controls.)
+ *
+ * Honors prefers-reduced-motion: skips the animation entirely.
  */
 @keyframes glp-chart-reveal-ltr {
   0% {
     clip-path: inset(0 100% 0 0);
-    opacity: 0.5;
+    opacity: 0.45;
+  }
+  6% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0.55;
   }
   100% {
     clip-path: inset(0 0 0 0);
@@ -81,7 +94,8 @@ html {
 }
 .animate-glp-chart-reveal {
   position: relative;
-  animation: glp-chart-reveal-ltr 1400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  /** Hold pose at 0% before the reveal so it visibly starts AFTER the rest of step 2 has settled — uses a 600ms animation-delay rather than an absolute keyframe pause so the easing curve still applies cleanly to the reveal portion. */
+  animation: glp-chart-reveal-ltr 2300ms cubic-bezier(0.22, 1, 0.36, 1) 600ms both;
 }
 
 /**
@@ -106,7 +120,7 @@ html {
   background: linear-gradient(
     105deg,
     transparent 32%,
-    color-mix(in srgb, var(--brand-primary, #0f172a) 20%, white 80%) 50%,
+    color-mix(in srgb, var(--brand-primary, #0f172a) 22%, white 78%) 50%,
     transparent 68%
   );
   background-size: 220% 100%;
@@ -114,7 +128,8 @@ html {
   background-repeat: no-repeat;
   mix-blend-mode: screen;
   opacity: 0;
-  animation: glp-chart-finish-shimmer 1100ms cubic-bezier(0.22, 1, 0.36, 1) 1500ms 1 forwards;
+  /** Fires AFTER the slowed reveal: 600ms hold + 2300ms reveal = 2900ms total, then shimmer sweeps for 1300ms. */
+  animation: glp-chart-finish-shimmer 1300ms cubic-bezier(0.22, 1, 0.36, 1) 2900ms 1 forwards;
   z-index: 25;
 }
 

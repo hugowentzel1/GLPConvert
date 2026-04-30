@@ -179,6 +179,26 @@ export default function GlpDemoOwnerPanels({
          * (cluster→focal) → mt-10 (focal→close) → mt-10 (close→CTA).
          */}
         <div className="text-center">
+          {/**
+           * Rebalanced cluster — focal-anchored rhythm (Stripe Pricing
+           * 2025 + Linear Plans + Vercel Pricing): the dollar focal
+           * is the visual center; spacing widens approaching the focal
+           * and tightens after, framing it.
+           *
+           *   eyebrow → (mt-3 / 12px tight) → headline → (mt-7 / 28px
+           *   loose, anticipating the focal) → focal $ → (mt-3 / 12px
+           *   tight, paired with the caption) → caption → (mt-9 / 36px
+           *   cluster boundary) → activation flow line → (mt-12 / 48px
+           *   to the CTA pair).
+           *
+           * Buyer pass 14: prior mt-10 jump above the focal felt
+           * disconnected from the headline; mt-7 keeps the headline +
+           * focal $ as one logical pair so the eye reads "MORE BOOKED
+           * CONSULTS = $X-Y EXTRA PER MONTH" as a single argument.
+           * (Sales-page anchor tactic — pair the buyer's outcome with
+           * the modeled number directly underneath; Cialdini 2024
+           * trust-triangle: outcome + figure must read as one claim.)
+           */}
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">
             For your practice
           </p>
@@ -187,7 +207,7 @@ export default function GlpDemoOwnerPanels({
             More booked consults from {companyName}&apos;s current ad spend
           </p>
 
-          <div className="mt-10 leading-none">
+          <div className="mt-7 leading-none">
             <span
               className="text-[48px] font-black tabular-nums tracking-tight sm:text-[56px]"
               style={{ color: brandPrimary }}
@@ -208,7 +228,7 @@ export default function GlpDemoOwnerPanels({
           </p>
         </div>
 
-        <div className="mt-12 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
+        <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
           <a
             href={ctaHref}
             onClick={() => setActivating(true)}

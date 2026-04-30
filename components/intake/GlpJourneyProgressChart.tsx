@@ -59,10 +59,19 @@ export default function GlpJourneyProgressChart({
   /** Brand-tinted "data pulse" gradient — a fast-traveling brand-color streak that runs across the line on a 3.6s loop. New post-mount premium touch. */
   const pulseId = `glpJourneyPulse-${gid}`;
 
-  /** Defer the chart paint until after mount so users never see a "lonely gray line" before the area animates in. */
+  /**
+   * Defer the chart paint to align with the CSS clip-path reveal in
+   * globals.css (`.animate-glp-chart-reveal` — 600ms delay + 2300ms
+   * duration). Recharts begins drawing the area path AT the same moment
+   * the clip-path begins uncovering, so the buyer sees the line painted
+   * IN as the card opens — not a pre-drawn line revealed mid-stride.
+   * Buyer pass 14 feedback: "make it epic / load AFTER the page is
+   * loaded" — the 600ms hold lets step 2's surrounding content settle
+   * first, then the chart performs its slow signature reveal.
+   */
   const [revealed, setRevealed] = useState(false);
   useEffect(() => {
-    const id = window.setTimeout(() => setRevealed(true), 60);
+    const id = window.setTimeout(() => setRevealed(true), 600);
     return () => window.clearTimeout(id);
   }, []);
 
@@ -81,7 +90,7 @@ export default function GlpJourneyProgressChart({
     }
   }, []);
 
-  /** Animated % ticker — syncs to the 2.4s area draw (Stripe / data-viz “count-up” payoff without extra chart layers). */
+  /** Animated % ticker — syncs to the 2.3s area draw (Stripe / data-viz "count-up" payoff). */
   const targetProgressPct = points.length >= 2 ? (points[points.length - 1]?.progress ?? 0) : 0;
   const [displayPct, setDisplayPct] = useState(0);
   useEffect(() => {
@@ -91,7 +100,7 @@ export default function GlpJourneyProgressChart({
       return;
     }
     setDisplayPct(0);
-    const dur = 2400;
+    const dur = 2300;
     const t0 = performance.now();
     let raf = 0;
     const tick = (now: number) => {
@@ -485,7 +494,7 @@ export default function GlpJourneyProgressChart({
                   strokeLinejoin="round"
                   fill={`url(#${gradId})`}
                   isAnimationActive={animate}
-                  animationDuration={animate ? 2800 : 0}
+                  animationDuration={animate ? 2300 : 0}
                   animationEasing="ease-out"
                   activeDot={{ r: 6, strokeWidth: 2, stroke: "#fff" }}
                   dot={areaDot as never}
