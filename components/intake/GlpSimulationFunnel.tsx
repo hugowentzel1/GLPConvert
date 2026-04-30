@@ -796,7 +796,7 @@ export default function GlpSimulationFunnel() {
       {step === 2 && (
         <section
           data-flow-step="2"
-          className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} ${glpIntakeUi.resultsStack} animate-glp-step2-rise`}
+          className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} ${glpIntakeUi.resultsStack}`}
         >
           <header className={`${glpIntakeUi.panelInCard} text-center sm:text-left`}>
             <div

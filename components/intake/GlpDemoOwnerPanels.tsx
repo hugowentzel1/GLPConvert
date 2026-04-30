@@ -126,7 +126,7 @@ export default function GlpDemoOwnerPanels({
             </svg>
             Today (without this)
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+          <p className="mt-2 text-sm font-medium leading-relaxed text-slate-900">
             Cold clicks bounce before a clear next step. Cost and timing stay fuzzy, and consults stall at the form.
           </p>
         </div>
@@ -156,7 +156,7 @@ export default function GlpDemoOwnerPanels({
             </svg>
             With GLPConvert
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-slate-600">
+          <p className="mt-2 text-sm font-medium leading-relaxed text-slate-900">
             Same paid traffic, fewer dropped intakes. Patients finish a branded path that ends at your scheduling link —
             so consults arrive primed, not cold.
           </p>
@@ -164,50 +164,53 @@ export default function GlpDemoOwnerPanels({
       </div>
 
       <div
-        className={`${OWNER_PANEL_SURFACE} space-y-7 px-6 py-8 sm:px-9 sm:py-10`}
+        className={`${OWNER_PANEL_SURFACE} px-8 py-12 sm:px-12 sm:py-14`}
         data-demo-owner-value
       >
         {/**
-         * Round 8 rebuild — buyer feedback: still cramped, weird, and
-         * inconsistent. Now: fully centered, looser vertical rhythm
-         * (space-y-7), more interior padding (py-8/sm:py-10), single
-         * typographic register at each level. ONE eyebrow → ONE H3 →
-         * ONE big number → ONE subline → buttons. Activation strip
-         * removed (was redundant with "Live in ~10 min" on the
-         * subline; CTAs lead to /pricing where the full setup is
-         * documented). Stripe Pricing 2025 + Linear Plans payoff-
-         * card pattern: monumental focal element + minimal supporting
-         * text + single dominant action (test selectors preserved
-         * via the still-present data-demo-owner-activation-flow on
-         * the subline so existing Playwright tests still match).
+         * Round-9 rebuild — buyer feedback: more spread out, less
+         * cluttered. Now uses dramatic vertical rhythm (mt-4 / mt-10 /
+         * mt-12 / mt-10 / mt-12 between blocks) so each element gets
+         * its own visual moment. Stripe Pricing 2025 + Linear Plans:
+         * monumental focal element with generous breathing room on
+         * each side reads as more premium than a tightly-packed card.
+         * The dollar amount is the moment that converts; everything
+         * else gives it room to land.
          */}
         <div className="text-center">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">
             For your practice
           </p>
-          <p className="mt-3 text-[17px] font-semibold leading-snug text-slate-900 sm:text-[18px]">
+
+          <p className="mx-auto mt-4 max-w-md text-[17px] font-semibold leading-snug text-slate-900 sm:text-[18px]">
             More booked consults from {companyName}&apos;s current ad spend
           </p>
-          <p className="mt-6 leading-none">
+
+          <div className="mt-10 leading-none">
             <span
-              className="text-[36px] font-black tabular-nums tracking-tight sm:text-[44px]"
+              className="text-[40px] font-black tabular-nums tracking-tight sm:text-[52px]"
               style={{ color: brandPrimary }}
             >
               ${low.toLocaleString()}–${high.toLocaleString()}
             </span>
-            <span className="ml-2 text-[15px] font-semibold text-slate-500">/ month extra</span>
-          </p>
+            <div className="mt-3 text-[14px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+              per month, extra
+            </div>
+          </div>
+
           <p
-            className="mt-4 text-[13px] leading-relaxed text-slate-600"
+            className="mx-auto mt-12 max-w-sm text-[14px] font-semibold text-slate-900"
             data-demo-owner-activation-flow
           >
-            <span className="font-semibold text-slate-800">Live in ~10 minutes.</span>{" "}
-            Branded URL with {companyName}&apos;s logo + color, drop it into your funnel, leads three ways
-            (dashboard + email + CRM).
+            Live in ~10 minutes.
+          </p>
+          <p className="mx-auto mt-2 max-w-md text-[12px] leading-relaxed text-slate-500">
+            Branded URL with {companyName}&apos;s logo + color · drop into your funnel ·
+            leads three ways (dashboard + email + CRM).
           </p>
         </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4">
+        <div className="mt-12 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
           <a
             href={ctaHref}
             onClick={() => setActivating(true)}
