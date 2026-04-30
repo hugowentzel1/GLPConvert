@@ -74,11 +74,35 @@ export default function IntakePage({
            * hover transition. Same three-row rhythm that anchored
            * Sunspire's home conversion.
            */}
+          {/**
+           * Two stat cards, both in white shells matching the testimonial
+           * shell + the rest of the page chrome. Visual hierarchy:
+           *
+           * 1. PLATFORM MOMENTUM (top, brand-color numbers, eyebrow
+           *    "On the platform") — the big-feeling Sunspire-pattern
+           *    stats: volume + lift + customer-count. Showcase tier.
+           *
+           * 2. CATEGORY BENCHMARKS (below, slate-900 numbers, eyebrow
+           *    "Category benchmarks") — illustrative-norm spec stats:
+           *    expected lift / time-to-live / embed pattern. Supporting
+           *    tier; deliberately smaller + monochrome so it reads as
+           *    technical fact, not marketing claim.
+           *
+           * Pattern source: `/Users/hugowentzel/sunspire-clean/app/page.tsx`
+           * hero stats + Stripe Pricing 2025 stat-band hierarchy
+           * (showcase first, then specs). Both cards: white bg, soft
+           * border, rounded-2xl, divide-x between cells, FTC 2024
+           * Endorsement Guides outcome disclaimer line at the bottom.
+           */}
           <div
-            className="mx-auto mt-12 max-w-4xl px-4"
+            className="mx-auto mt-12 max-w-4xl space-y-5 px-4"
             data-testid="intake-capability-strip"
           >
-            <div className="rounded-2xl border border-slate-200/80 bg-gradient-to-br from-slate-50/50 to-white px-6 py-10 shadow-[0_2px_8px_rgba(15,23,42,0.04)] sm:px-12 sm:py-12">
+            {/* Card 1 — Platform momentum (brand-color showcase) */}
+            <div className="rounded-2xl border border-slate-200/80 bg-white px-6 py-10 shadow-[0_2px_12px_rgba(15,23,42,0.04)] sm:px-12 sm:py-12">
+              <p className="mb-8 text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
+                On the platform
+              </p>
               <div className="grid grid-cols-1 gap-y-10 text-center sm:grid-cols-3 sm:gap-x-12 sm:gap-y-0 sm:divide-x sm:divide-slate-200/70">
                 {[
                   { stat: "8,417", label: "demos modeled this month" },
@@ -100,6 +124,32 @@ export default function IntakePage({
               </div>
               <p className="mt-8 text-center text-[11px] leading-relaxed text-slate-400">
                 Illustrative figures — varies by clinic, traffic, and configuration.
+              </p>
+            </div>
+
+            {/* Card 2 — Category benchmarks (slate-900 specs) */}
+            <div className="rounded-2xl border border-slate-200/70 bg-white px-6 py-8 shadow-[0_1px_4px_rgba(15,23,42,0.03)] sm:px-12 sm:py-10">
+              <p className="mb-6 text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
+                Category benchmarks
+              </p>
+              <div className="grid grid-cols-1 gap-y-8 text-center sm:grid-cols-3 sm:gap-x-12 sm:gap-y-0 sm:divide-x sm:divide-slate-200/70">
+                {[
+                  { stat: "10–30%", label: "Illustrative lift in funnel completions" },
+                  { stat: "<24h", label: "Typical time-to-live for white-label intake" },
+                  { stat: "1-line", label: "Embed snippet works on any site or LP" },
+                ].map((item) => (
+                  <div key={item.label} className="sm:px-6">
+                    <div className="text-[2rem] font-black leading-none tracking-tight tabular-nums text-slate-900 sm:text-[2.25rem]">
+                      {item.stat}
+                    </div>
+                    <div className="mt-3 text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-slate-500">
+                      {item.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-6 text-center text-[11px] leading-relaxed text-slate-400">
+                Category-norm references — not guaranteed outcomes for any individual clinic.
               </p>
             </div>
           </div>
