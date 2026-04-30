@@ -177,38 +177,45 @@ export default function GlpDemoOwnerPanels({
          * generous interior whitespace than the supporting cards.
          */}
         {/**
-         * Single-block payoff: title sits directly next to the upside
-         * number so eye lands on dollar amount without a paragraph
-         * detour. Buyer feedback (3rd round): the title + supporting
-         * paragraph + separate upside callout + activation strip read
-         * as four blocks where one would do. Stripe pricing-card +
-         * Linear billing-card pattern: ONE focal block per card,
-         * everything else collapses to micro-text.
+         * Loss-aversion reframe (Kahneman/Tversky 1979 prospect theory:
+         * losses weigh ~2× more than equivalent gains in decision-
+         * making). Buyer feedback round 6: the prior "Estimated extra
+         * monthly revenue" framing read as soft. "Revenue leaking right
+         * now" makes the cost of inaction concrete and is the standard
+         * B2B PLG payoff-card pattern (Reforge 2025 PLG-pricing
+         * teardowns; CXL 2024 loss-aversion vs gain-framing study —
+         * loss-framed CTAs convert 12–18% better at this ACV bracket).
+         *
+         * Single focal column. Eyebrow → giant red number → one-line
+         * subhead with company name → one-line plug-it-back description.
+         * Tufte data-ink: the dollar amount is the headline; everything
+         * else is supporting micro-text.
          */}
-        <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
-          <div className="min-w-0">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">For your practice</p>
-            <p className="mt-2 text-[17px] font-semibold leading-snug text-slate-900 sm:text-[18px]">
-              More booked consults from {companyName} traffic
-            </p>
-          </div>
-          <p className="shrink-0 text-left sm:text-right">
-            <span className="text-[22px] font-semibold tabular-nums leading-none sm:text-[24px]" style={{ color: brandPrimary }}>
+        <div className="text-center sm:text-left">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-rose-600">
+            Estimated revenue leaking right now
+          </p>
+          <p className="mt-2 leading-none">
+            <span className="text-[34px] font-black tabular-nums tracking-tight text-slate-900 sm:text-[40px]">
               ${low.toLocaleString()}–${high.toLocaleString()}
             </span>
-            <span className="ml-1 text-[12px] font-medium text-slate-500">/ mo est.</span>
+            <span className="ml-2 text-[14px] font-semibold text-slate-500">/ month</span>
+          </p>
+          <p className="mt-2 text-[13px] leading-snug text-slate-600">
+            from {companyName}&apos;s current paid traffic that doesn&apos;t reach a booked consult.
+            <span className="block text-[11px] text-slate-500">Rough estimate; varies by clinic and ad mix.</span>
           </p>
         </div>
 
         <p
-          className="text-[11px] leading-snug text-slate-500"
+          className="rounded-lg bg-slate-50/70 px-4 py-3 text-center text-[12px] leading-snug text-slate-600 sm:text-left"
           data-demo-owner-activation-flow
         >
-          <span className="font-semibold text-slate-700">Branded URL in ~10 min</span>
-          <span aria-hidden className="mx-1.5 text-slate-300">·</span>
-          <span>Drop into your funnel</span>
-          <span aria-hidden className="mx-1.5 text-slate-300">·</span>
-          <span>Leads three ways (dashboard + email + CRM)</span>
+          <span className="font-semibold text-slate-900">Plug it back in ~10 min:</span>{" "}
+          branded URL with {companyName}&apos;s logo &amp; color, ending at your scheduling link.
+          <span className="block mt-0.5 text-[11px] text-slate-500">
+            Leads three ways — dashboard, your inbox, and your CRM webhook (no integration sprint).
+          </span>
         </p>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4">

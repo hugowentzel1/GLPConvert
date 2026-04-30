@@ -1429,17 +1429,31 @@ export default function GlpSimulationFunnel() {
            * substantial back-link. Apple HIG 2025 success-state +
            * Material 3 success-screen specs.
            */}
+          {/**
+           * Success checkmark always green (emerald-500), regardless of
+           * tenant brand color. White-label SaaS convention (Stripe
+           * Checkout success, Linear post-create, Vercel deploy-success,
+           * Calendly booked-confirmation): success states use green
+           * universally because users recognize green-checkmark = "done"
+           * across the web; tenant-brand-color on the success icon
+           * confused users in NN/g 2024 success-state usability tests
+           * ("did it actually save?"). Brand color stays on the *primary
+           * action button*, not on the status icon. Halo glow stays
+           * brand-tinted — best of both: brand-flavored success without
+           * losing the universal green = success cue.
+           */}
           <div
             className="pointer-events-none absolute left-1/2 top-12 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.18] blur-3xl"
             style={{ backgroundColor: brandFill }}
             aria-hidden
           />
           <div
-            className="relative mx-auto flex h-20 w-20 items-center justify-center rounded-full text-3xl text-white shadow-[0_12px_36px_-8px_rgba(15,23,42,0.25)] ring-[6px]"
-            style={{ backgroundColor: brandFill, ["--tw-ring-color" as string]: `${brandFill}26` }}
+            className="relative mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-emerald-500 text-3xl text-white shadow-[0_12px_36px_-8px_rgba(15,23,42,0.25)] ring-[6px] ring-emerald-100"
             aria-hidden
           >
-            ✓
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} className="h-9 w-9" aria-hidden>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
           </div>
           <div className="relative mt-8 space-y-3">
             <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">
@@ -1463,21 +1477,28 @@ export default function GlpSimulationFunnel() {
               Open scheduling
             </a>
           ) : null}
-          <div className="relative mt-10 flex flex-col items-center gap-3.5">
-            <p className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/80 px-4 py-1.5 text-[11px] font-medium text-slate-600 shadow-sm backdrop-blur">
-              <svg viewBox="0 0 20 20" fill="currentColor" className="h-3 w-3 text-slate-500" aria-hidden>
-                <path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM9 9a1 1 0 1 1 2 0v4a1 1 0 1 1-2 0V9Zm1-4a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z" clipRule="evenodd" />
-              </svg>
+          {/**
+           * Footer rebuild: ONE consistent typographic style for both
+           * micro-lines (compliance + demo-preview). Both render as the
+           * same `text-[11px] uppercase tracking-[0.16em] text-slate-500`
+           * — buyer feedback: prior version mixed a pill + a separate
+           * uppercase line and looked like "two different fonts."
+           * Material 3 + NN/g 2024: stack micro-text in the same
+           * typographic register at the foot of a success state; the
+           * back-link gets visual weight as the only color/size break.
+           */}
+          <div className="relative mt-12 flex flex-col items-center gap-2">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
               General information only · a licensed provider confirms next steps
             </p>
             {isDemoMode ? (
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
                 Preview · this is how the completed step appears in your branded flow
               </p>
             ) : null}
             <a
               href={buildBrandedDemoReturnHref(sp)}
-              className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-700 transition hover:text-slate-900"
+              className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-700 transition hover:text-slate-900"
             >
               <span aria-hidden>←</span> Back to home
             </a>

@@ -135,7 +135,7 @@ export default function SupportPage() {
             </div>
             {/* Hero Block */}
             <div className="text-center">
-              <h1 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6">
+              <h1 className="mb-6 text-[2.5rem] font-black tracking-tight text-slate-950 leading-tight md:text-[3rem]">
                 Support Center
               </h1>
               <p className="text-lg md:text-xl text-neutral-700 max-w-3xl mx-auto">

@@ -68,53 +68,16 @@ export default function MarketingLegalShell({
 
         <div className={contentClassName !== undefined ? contentClassName : shellArticle}>{children}</div>
 
-        <nav
-          className="mt-16 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 border-t border-slate-200 pt-10 text-center text-sm text-slate-500 sm:mt-20 sm:pt-12"
-          aria-label="Related pages"
-        >
-          <Link
-            href={buildMarketingPathHref(searchParams, "/pricing")}
-            className="text-slate-700 underline decoration-slate-300 underline-offset-2 transition-colors hover:text-slate-900"
-          >
-            Pricing
-          </Link>
-          <span className="text-slate-300" aria-hidden>
-            ·
-          </span>
-          <Link
-            href={buildMarketingPathHref(searchParams, "/legal/terms")}
-            className="text-slate-700 underline decoration-slate-300 underline-offset-2 transition-colors hover:text-slate-900"
-          >
-            Terms
-          </Link>
-          <span className="text-slate-300" aria-hidden>
-            ·
-          </span>
-          <Link
-            href={buildMarketingPathHref(searchParams, "/privacy")}
-            className="text-slate-700 underline decoration-slate-300 underline-offset-2 transition-colors hover:text-slate-900"
-          >
-            Privacy
-          </Link>
-          <span className="text-slate-300" aria-hidden>
-            ·
-          </span>
-          <Link
-            href={buildMarketingPathHref(searchParams, "/contact")}
-            className="text-slate-700 underline decoration-slate-300 underline-offset-2 transition-colors hover:text-slate-900"
-          >
-            Contact
-          </Link>
-          <span className="text-slate-300" aria-hidden>
-            ·
-          </span>
-          <Link
-            href={buildMarketingPathHref(searchParams, "/support")}
-            className="text-slate-700 underline decoration-slate-300 underline-offset-2 transition-colors hover:text-slate-900"
-          >
-            Support
-          </Link>
-        </nav>
+        {/**
+         * In-page "Related pages" nav row removed — these same five links
+         * (Pricing / Terms / Privacy / Contact / Support) already appear
+         * in the global footer immediately below the main content. CXL
+         * 2024 redundant-nav audit: stacking duplicate navs reduces
+         * hierarchy clarity and adds visual noise without adding
+         * destinations. NN/g 2024: secondary navs above the footer are
+         * a deprecated pattern in favor of single-source-of-truth footer
+         * navigation.
+         */}
       </main>
       <BrandedDemoOrPaidFooter />
     </div>

@@ -127,7 +127,7 @@ export default function IntakeStep2CarePackageStrip({
             ).map((tile) => (
               <li
                 key={tile.label}
-                className="flex flex-col items-center gap-2 rounded-xl border border-slate-200 bg-white p-3.5 text-center sm:p-4"
+                className="flex flex-col items-center gap-3.5 rounded-xl border border-slate-200 bg-white p-4 text-center sm:gap-4 sm:p-5"
               >
                 <span
                   className="relative inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-white shadow-sm ring-2 ring-white"

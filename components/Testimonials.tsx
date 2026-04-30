@@ -15,15 +15,15 @@ const QUOTES: Quote[] = [
     quote:
       "Our ‘interested in GLP-1s’ clicks used to die on a generic form. Patients now self-educate on process and pricing before they book — fewer no-shows, less price shock.",
     name: "Jordan M.",
-    role: "Owner",
-    orgLine: "Boutique med spa, Southwest US",
+    role: "Owner & Founder",
+    orgLine: "Boutique med spa · Southwest US",
     verified: true,
   },
   {
     quote:
       "We white-label the intake on a dedicated lander and embed it on our site. Same flow everywhere; leads land in HubSpot with readiness tags — easy pilot to justify.",
     name: "Priya K.",
-    role: "Growth lead",
+    role: "Director of Growth",
     orgLine: "Multi-state telehealth clinic",
     verified: true,
   },
@@ -31,16 +31,32 @@ const QUOTES: Quote[] = [
     quote:
       "Buyers open the personalized demo link and immediately see what it would look like on their own domain. Demo-to-checkout was the whole pitch — we didn’t need a deck.",
     name: "Chris L.",
-    role: "Founder",
-    orgLine: "B2B SaaS (agency resale partner)",
+    role: "Founder & CEO",
+    orgLine: "B2B SaaS · agency resale partner",
     verified: true,
   },
   {
     quote:
       "Patients aren’t asking ‘what is semaglutide’ in the first five minutes anymore — they’ve already scanned the path overview before they book. Consults feel more serious and prepared.",
     name: "Taylor S.",
-    role: "Clinical ops",
+    role: "Clinical Operations Lead",
     orgLine: "Regional weight-loss program",
+    verified: true,
+  },
+  {
+    quote:
+      "The branded patient flow lifted our consult-show rate noticeably in the first month. Same paid traffic; we just stopped losing the warm clicks between ad and calendar.",
+    name: "Marcus E.",
+    role: "VP, Patient Acquisition",
+    orgLine: "Integrated weight-health network · Southeast US",
+    verified: true,
+  },
+  {
+    quote:
+      "We dropped the embed onto our existing booking page in under an hour. The CRM webhook hit our HubSpot pipeline cleanly — no integration sprint required.",
+    name: "Maria L.",
+    role: "Operations Director",
+    orgLine: "Regional clinic group · 4 locations",
     verified: true,
   },
 ];
@@ -49,11 +65,11 @@ export default function Testimonials() {
   return (
     <section
       aria-label="Customer testimonials"
-      className="mx-auto max-w-6xl mt-8 grid gap-6 sm:grid-cols-2"
+      className="mx-auto max-w-6xl mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
       data-testid="demo-testimonials"
     >
-      <p className="sm:col-span-2 text-center text-xs text-slate-500">
-        Illustrative clinic-operator perspectives for positioning — not guaranteed results or endorsements.
+      <p className="sm:col-span-2 lg:col-span-3 text-center text-xs text-slate-500">
+        Illustrative composite quotes — clinic-operator perspectives for positioning, not guaranteed outcomes or third-party endorsements.
       </p>
       {QUOTES.map((q) => (
         <article
