@@ -59,38 +59,48 @@ export default function IntakePage({
           <IntakeDemoQuoteStrip />
 
           {/**
-           * Capability strip — Sunspire-style stat tiles (`text-4xl
-           * font-black font-mono` numbers + descriptor below; brand-
-           * primary color appears on hover). 4 honest, quantified-
-           * mechanism stats — capabilities, not invented customer
-           * counts. CXL 2024 + Wynter 2024: when outcomes aren't
-           * auditable yet, surface concrete capabilities instead of
-           * fabricated metrics. Pattern source: Sunspire's home page
-           * (`/Users/hugowentzel/sunspire-clean/app/page.tsx`) — same
-           * three-row rhythm that lifted Sunspire's hero conversion.
+           * Stat tiles — Sunspire-style hero stats pattern (3-up grid,
+           * monumental tabular-nums numbers + small uppercase descriptor
+           * below; brand-color visible by default on the number, lifts
+           * to deeper brand on hover). Honest: every claim sourced in
+           * data/trust.json (category-norm time-to-live, illustrative
+           * modeled lift, demo-led motion). NO fabricated customer
+           * counts. CXL 2024 + FTC 2024 Endorsement Guides: at pre-
+           * PMF stage, surface category-norm + illustrative-lift +
+           * mechanism stats instead of unverifiable usage numbers.
+           *
+           * Pattern source: `/Users/hugowentzel/sunspire-clean/app/page.tsx`
+           * hero stats — `text-4xl font-black font-mono` + brand-color
+           * hover transition. Same three-row rhythm that anchored
+           * Sunspire's home conversion.
            */}
           <div
-            className="mx-auto mt-12 max-w-4xl border-y border-slate-200/80 px-4 py-10 sm:py-12"
+            className="mx-auto mt-12 max-w-4xl px-4"
             data-testid="intake-capability-strip"
           >
-            <div className="grid grid-cols-2 gap-x-8 gap-y-10 text-center sm:grid-cols-4 sm:gap-x-6">
-              {[
-                { stat: "<24h", label: "time-to-live after checkout" },
-                { stat: "1-line", label: "embed snippet for any site" },
-                { stat: "3", label: "lead-delivery channels (dashboard + email + CRM)" },
-                { stat: "HIPAA", label: "ready · BAA available · encrypted in transit" },
-              ].map((item) => (
-                <div key={item.label} className="group">
-                  <div
-                    className="text-4xl font-black tracking-tight text-slate-900 tabular-nums transition-colors duration-300 group-hover:text-[var(--brand-primary)] sm:text-[2.75rem]"
-                  >
-                    {item.stat}
+            <div className="rounded-2xl border border-slate-200/80 bg-gradient-to-br from-slate-50/50 to-white px-6 py-10 shadow-[0_2px_8px_rgba(15,23,42,0.04)] sm:px-12 sm:py-12">
+              <div className="grid grid-cols-1 gap-y-10 text-center sm:grid-cols-3 sm:gap-x-12 sm:gap-y-0 sm:divide-x sm:divide-slate-200/70">
+                {[
+                  { stat: "10–30%", label: "Illustrative lift in funnel completions" },
+                  { stat: "<24h", label: "Typical time-to-live for white-label intake" },
+                  { stat: "1-line", label: "Embed snippet works on any site or LP" },
+                ].map((item) => (
+                  <div key={item.label} className="group sm:px-6">
+                    <div
+                      className="text-[2.75rem] font-black leading-none tracking-tight tabular-nums transition-all duration-300 group-hover:scale-[1.04] sm:text-[3rem]"
+                      style={{ color: "var(--brand-primary)" }}
+                    >
+                      {item.stat}
+                    </div>
+                    <div className="mt-3 text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-slate-500">
+                      {item.label}
+                    </div>
                   </div>
-                  <div className="mt-2 text-sm font-medium leading-snug text-slate-600">
-                    {item.label}
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <p className="mt-8 text-center text-[11px] leading-relaxed text-slate-400">
+                Category-norm references — not guaranteed outcomes for any individual clinic.
+              </p>
             </div>
           </div>
         </div>
