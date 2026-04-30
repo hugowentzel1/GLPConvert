@@ -59,89 +59,39 @@ export default function IntakePage({
           <IntakeDemoQuoteStrip />
 
           {/**
-           * Social-proof signals on the cold-email landing — same set
-           * that the home demo card uses, mirrored here because cold-
-           * email URLs land on /intake (per the canonical demo URL
-           * pattern in MASTER_TODO). Without these, the cold-email
-           * buyer never sees the trust signals before scrolling into
-           * the intake funnel itself. CXL 2024: trust signals must
-           * appear ABOVE the conversion ask, not buried below.
+           * Capability strip — Sunspire-style stat tiles (`text-4xl
+           * font-black font-mono` numbers + descriptor below; brand-
+           * primary color appears on hover). 4 honest, quantified-
+           * mechanism stats — capabilities, not invented customer
+           * counts. CXL 2024 + Wynter 2024: when outcomes aren't
+           * auditable yet, surface concrete capabilities instead of
+           * fabricated metrics. Pattern source: Sunspire's home page
+           * (`/Users/hugowentzel/sunspire-clean/app/page.tsx`) — same
+           * three-row rhythm that lifted Sunspire's hero conversion.
            */}
           <div
-            className="mx-auto mt-8 flex items-center justify-center gap-2 text-[11px] font-medium text-slate-500"
-            data-testid="intake-shipping-indicator"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75 motion-reduce:animate-none"></span>
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
-            </span>
-            <span>Active development · last shipped April 2026</span>
-          </div>
-
-          <div
-            className="mx-auto mt-6 max-w-3xl space-y-3 px-4 text-center"
-            data-testid="intake-vertical-specificity"
-          >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">
-              Made for the GLP-1 clinic stack
-            </p>
-            <p className="text-[14px] leading-relaxed text-slate-700">
-              Built specifically for clinics running GLP-1 / medical weight-loss programs — not adapted from
-              generic intake software. Plugs into the tools you already pay for:
-            </p>
-            <p className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[12px] font-semibold text-slate-700">
-              <span>HubSpot</span>
-              <span aria-hidden className="text-slate-300">·</span>
-              <span>Salesforce</span>
-              <span aria-hidden className="text-slate-300">·</span>
-              <span>Pipedrive</span>
-              <span aria-hidden className="text-slate-300">·</span>
-              <span>GoHighLevel</span>
-              <span aria-hidden className="text-slate-300">·</span>
-              <span>Calendly</span>
-              <span aria-hidden className="text-slate-300">·</span>
-              <span>Zapier</span>
-            </p>
-          </div>
-
-          <div
-            className="mx-auto mt-6 flex max-w-3xl flex-col items-center gap-3 sm:flex-row sm:justify-between sm:gap-6"
-            data-testid="intake-tech-stack-proof"
-          >
-            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
-              Built on infrastructure clinics already trust
-            </p>
-            <p className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[12px] font-medium text-slate-600">
-              <span className="font-semibold text-slate-800">Stripe</span>
-              <span aria-hidden className="text-slate-300">·</span>
-              <span className="font-semibold text-slate-800">Supabase</span>
-              <span aria-hidden className="text-slate-300">·</span>
-              <span className="font-semibold text-slate-800">Resend</span>
-              <span aria-hidden className="text-slate-300">·</span>
-              <span className="font-semibold text-slate-800">Vercel</span>
-              <span aria-hidden className="text-slate-300">·</span>
-              <span className="font-semibold text-slate-800">Sentry</span>
-            </p>
-          </div>
-
-          <div
-            className="mx-auto mt-6 grid max-w-3xl gap-3 sm:grid-cols-4 sm:gap-3"
+            className="mx-auto mt-12 max-w-4xl border-y border-slate-200/80 px-4 py-10 sm:py-12"
             data-testid="intake-capability-strip"
           >
-            {[
-              { stat: "<24h", label: "Time-to-live after checkout" },
-              { stat: "1-line", label: "Embed snippet for any site" },
-              { stat: "3-channel", label: "Lead delivery (dashboard + email + CRM)" },
-              { stat: "HIPAA-ready", label: "Encrypted in transit · BAA available" },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="rounded-xl border border-slate-200/70 bg-white px-3 py-3 text-left shadow-[0_1px_2px_rgba(15,23,42,0.04)]"
-              >
-                <p className="text-[15px] font-semibold tracking-tight text-slate-900">{item.stat}</p>
-                <p className="mt-1 text-[11px] leading-snug text-slate-600">{item.label}</p>
-              </div>
-            ))}
+            <div className="grid grid-cols-2 gap-x-8 gap-y-10 text-center sm:grid-cols-4 sm:gap-x-6">
+              {[
+                { stat: "<24h", label: "time-to-live after checkout" },
+                { stat: "1-line", label: "embed snippet for any site" },
+                { stat: "3", label: "lead-delivery channels (dashboard + email + CRM)" },
+                { stat: "HIPAA", label: "ready · BAA available · encrypted in transit" },
+              ].map((item) => (
+                <div key={item.label} className="group">
+                  <div
+                    className="text-4xl font-black tracking-tight text-slate-900 tabular-nums transition-colors duration-300 group-hover:text-[var(--brand-primary)] sm:text-[2.75rem]"
+                  >
+                    {item.stat}
+                  </div>
+                  <div className="mt-2 text-sm font-medium leading-snug text-slate-600">
+                    {item.label}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       ) : null}
