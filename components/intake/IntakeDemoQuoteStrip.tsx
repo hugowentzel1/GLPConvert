@@ -17,7 +17,7 @@ export default function IntakeDemoQuoteStrip() {
   return (
     <section
       aria-label="Operator perspectives (illustrative)"
-      className="mx-auto grid w-full max-w-2xl gap-5 sm:grid-cols-2 sm:items-stretch sm:gap-6"
+      className="mx-auto grid w-full max-w-5xl gap-5 sm:grid-cols-2 sm:items-stretch sm:gap-6 lg:grid-cols-4"
       data-intake-demo-quote-strip
     >
       {INTAKE_DEMO_HERO_QUOTES.map((q) => (

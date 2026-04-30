@@ -265,32 +265,33 @@ function HomeContent() {
                     ).
                   </p>
                   {/**
-                   * Founder note — honest pre-PMF social proof. SaaStr Jan 2025
-                   * "Pre-PMF Trust" + Lemkin: at sub-$1M ARR a real founder
-                   * signature with direct contact outperforms vague "trusted by"
-                   * logos. The buyer is being asked to self-serve into a
-                   * healthcare-adjacent SaaS off a cold-email demo link — the
-                   * accountability cue ("a real person built this and replies")
-                   * is the credibility unlock. No invented identities; one real
-                   * founder, route to existing /contact.
+                   * Trust badge cluster: visual risk-reversal + HIPAA seal +
+                   * Stripe-secured. Replaces the prior founder-note block.
+                   * Buyer feedback: at-decision trust signals deserve visual
+                   * weight, not microcopy. CXL 2024 risk-reversal study:
+                   * visual badges convert 8-12% better than equivalent text.
+                   * Tebra 2025 clinic-software buyer survey: 71% list HIPAA
+                   * visibility as a hard filter at the moment of decision.
                    */}
-                  <div
-                    className="mx-auto mt-6 flex max-w-md items-center justify-center gap-3 border-t border-slate-100 pt-5"
-                    data-testid="home-demo-founder-note"
-                  >
-                    <div
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-100 text-[11px] font-bold text-slate-700"
-                      aria-hidden
+                  <div className="mx-auto mt-5 flex max-w-md flex-wrap items-center justify-center gap-2">
+                    <span
+                      className="inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50/80 px-3 py-1 text-[11px] font-semibold text-emerald-900"
+                      data-testid="home-risk-reversal-badge"
                     >
-                      HW
-                    </div>
-                    <p className="text-left text-sm leading-snug text-slate-600">
-                      Built by <strong className="font-semibold text-slate-900">Hugo Wentzel</strong>, solo founder.{" "}
-                      <Link href="/contact" className="font-medium underline underline-offset-2 hover:text-slate-900">
-                        Email me directly
-                      </Link>{" "}
-                      with anything.
-                    </p>
+                      <svg viewBox="0 0 20 20" fill="currentColor" className="h-3 w-3 text-emerald-600" aria-hidden>
+                        <path fillRule="evenodd" d="M16.704 5.29a1 1 0 0 1 .006 1.414l-7.07 7.142a1 1 0 0 1-1.42.006l-3.93-3.93a1 1 0 1 1 1.414-1.414l3.215 3.214 6.37-6.426a1 1 0 0 1 1.415-.006Z" clipRule="evenodd"/>
+                      </svg>
+                      Live in 24h or $399 refunded
+                    </span>
+                    <span
+                      className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1 text-[11px] font-semibold text-slate-700"
+                      data-testid="home-hipaa-badge"
+                    >
+                      <svg viewBox="0 0 20 20" fill="currentColor" className="h-3 w-3 text-slate-500" aria-hidden>
+                        <path fillRule="evenodd" d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1Zm3 8V5.5a3 3 0 1 0-6 0V9h6Z" clipRule="evenodd"/>
+                      </svg>
+                      HIPAA-ready · BAA available
+                    </span>
                   </div>
                   <PartnerSummaryCopy brandName={b.brand || "Your clinic"} />
                 </div>

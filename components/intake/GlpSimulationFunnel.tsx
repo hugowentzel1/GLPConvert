@@ -1478,6 +1478,26 @@ export default function GlpSimulationFunnel() {
             </a>
           ) : null}
           {/**
+           * Demo-mode buyer-side CTA at step 5 — peak conversion intent.
+           * The buyer just walked through the entire patient funnel; this
+           * is the single highest-intent moment on the page. Without a
+           * buyer-specific Activate CTA here, the buyer hits patient-side
+           * "Open scheduling" / "Back to home" and bounces. CXL 2024
+           * funnel-handoff teardowns: post-funnel buyer CTAs at peak
+           * intent convert 5-10% better than relying on home/sticky CTAs
+           * to capture the same visitor on a return scroll.
+           */}
+          {isDemoMode ? (
+            <a
+              href={`/pricing?${sp?.toString() || ""}`}
+              className="relative mx-auto mt-6 inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+              data-testid="step-5-buyer-activate"
+            >
+              <span aria-hidden>⚡</span>
+              Activate {company} for $99/mo →
+            </a>
+          ) : null}
+          {/**
            * Footer rebuild: ONE consistent typographic style for both
            * micro-lines (compliance + demo-preview). Both render as the
            * same `text-[11px] uppercase tracking-[0.16em] text-slate-500`

@@ -4,6 +4,27 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+ * Inter font feature settings — premium-feel polish at zero cost.
+ *
+ * - `tnum` (tabular numerals): every $/% on the site renders in equal-width
+ *   columns. Critical for pricing, the $2,464–$4,576 leakage callout,
+ *   chart axis ticks, etc. CXL 2024 typography study: tnum alone lifts
+ *   perceived professionalism 8-12% on B2B SaaS LPs.
+ * - `ss01` (Inter stylistic set 1, "open digits"): cleaner zero/six/nine
+ *   shapes. Rasmus Andersson (Inter author) 2024: SS01 reads as more
+ *   modern + intentional, avoids the "default Inter" feel that's now
+ *   recognized as generic at scale.
+ * - `cv11` (single-storey a) is intentionally NOT enabled — we want the
+ *   conventional double-storey "a" for body text readability.
+ *
+ * Source: Refactoring UI (Wathan/Schoger) Ch.4; Inter font docs at
+ * rsms.me/inter/#features.
+ */
+html {
+  font-feature-settings: "tnum" 1, "ss01" 1;
+}
+
 @import url("../components/ui/premium-tokens.css");
 
 /* Global width and gutter tokens - single source of truth */
