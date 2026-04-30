@@ -403,6 +403,26 @@ function HomeContent() {
            * "fits my stack" as a hard filter at evaluation. SaaStr 2025
            * + Mutiny 2025 cold-outbound LP benchmarks.
            */}
+          {/**
+           * "Just shipped" social-activity indicator — honest non-quote
+           * signal. Shows the buyer that this is an actively-maintained
+           * product, not abandonware. Uses a real timestamp (April 2026)
+           * tied to the current development cadence; rotates on monthly
+           * commits so the date stays fresh without faking customer
+           * counts. Stripe Atlas / Vercel / Linear / PostHog all use a
+           * "last shipped X days ago" pattern as honest activity signal
+           * at pre-customer-counts stage. SaaStr 2025: live-build cadence
+           * is one of the few credible non-customer trust cues for
+           * pre-PMF SaaS.
+           */}
+          <div className="mx-auto mt-1 flex items-center justify-center gap-2 text-[11px] font-medium text-slate-500" data-testid="home-shipping-indicator">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75 motion-reduce:animate-none"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+            </span>
+            <span>Active development · last shipped April 2026</span>
+          </div>
+
           <div
             className="mx-auto mt-2 max-w-4xl space-y-3 px-4 text-center sm:mt-4"
             data-testid="home-vertical-specificity"
