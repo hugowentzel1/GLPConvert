@@ -1172,11 +1172,32 @@ Screenshots-style detail: **`BLINDSPOT-GUIDE.md`** (“Verify Cold Email Domain 
 
 **Net new monthly cost: $0 if Sunspire already has Sales Nav + Heyreach. ~$250/mo if not.**
 
-# 📧 PART A — Cold email at scale (OUT-1 → OUT-6)
+# 📧 PART A — Cold email at scale (Day 0 → 50,000+/month)
 
-> Goal: 50,000+ deliverable cold emails per month with personalized GLPConvert demo
-> URLs, reusing Sunspire's existing Instantly + Clay + Make + Airtable + ZeroBounce
-> stack. Net new spend: 4 sending domains (~$40/yr) + 16-20 inboxes ($120-145/mo).
+> **Goal:** ship 50,000+ deliverable personalized cold emails per month into GLP-1
+> clinic decision-makers' inboxes, each carrying a `/intake?demo=1&company=…&logo=…&brand=…`
+> link to a per-prospect demo. Net new spend: 4 GLPConvert sending domains (~$40/yr)
+> + 16-20 inboxes in your existing Sunspire Workspace (~$120-145/mo). Instantly + Clay
+> + Make + Airtable + ZeroBounce subscriptions all reused at $0 incremental.
+>
+> **🔁 = a moment where you reuse Sunspire's existing infrastructure.**
+
+## ⏱️ Day-by-day timeline — cold email
+
+| Phase | Day | What happens | Sunspire reuse | Detail |
+|---|---|---|---|---|
+| **Decide** | Day 0 | Pick 4 GLPConvert-themed sending-domain names. Confirm Sunspire Workspace + Instantly + Clay + Make + Airtable + ZeroBounce subscriptions are all active. | 🔁 every paid tool | OUT-1 below |
+| **Buy** | Day 1 | Buy the 4 domains at Cloudflare/Porkbun (~$10/yr each). | — | OUT-1 |
+| **Workspace** | Day 1 | Add the 4 domains as **secondary domains** in your existing Sunspire Google Workspace; create 4-5 inboxes per domain. | 🔁 Sunspire Workspace subscription | OUT-1 |
+| **DNS** | Day 1-2 | SPF + DKIM + DMARC + MX on each of the 4 domains. Verify with mxtoolbox + mail-tester (10/10). Add to Google Postmaster Tools. Add `link.glpconvert.com` tracking-domain CNAME. | — | OUT-2 |
+| **Instantly** | Day 2-3 | Connect all 16-20 new inboxes to your existing **Instantly** via OAuth. Build campaign "GLPConvert Cold — Q2 2026" with CAN-SPAM footer + List-Unsubscribe header. | 🔁 Instantly Pro ($94/mo Sunspire pays) | OUT-3 |
+| **Warmup** | Days 3-21 | Instantly's built-in warmup ramps each inbox 10→20→40→70→120/day over 21 days, weekend sends OFF for first 14 days, 30% reply rate target. **No manual action needed during this window.** | 🔁 Instantly warmup tool | OUT-3 |
+| **Lead build** | Days 4-7 | In your existing **Clay** account, create "GLPConvert Prospects" table. Apollo lead search (titles + industry + keywords filtered to GLP-1 clinics). Add Brandfetch + Logo.dev enrichment columns. Add `demo_link` formula column. | 🔁 Clay subscription | OUT-4 |
+| **Enrich** | Days 4-7 | Run CSV through your existing **Make.com** scenario (Clay → ZeroBounce → Instantly). Same architecture as Sunspire's pipeline; just remap to GLPConvert custom fields. | 🔁 Make.com + ZeroBounce + Airtable | OUT-4 |
+| **Compliance** | Day 7 | Publish `/privacy-cold-outreach` on glpconvert.com. Confirm Instantly suppression list, bounce-auto-remove (4%), reply-auto-pause ON. NO tracking pixels. NO shortened URLs. | — | OUT-5 |
+| **Pilot launch** | Day 22 | Warmup complete. Launch 4-step Smartlead/Instantly sequence at **200-300 emails/day** for 5-7 days. Review reply rate + bounce rate before scaling. | — | OUT-6 |
+| **Scale** | Days 29-60 | If pilot reply rate >2% and bounce <2%, scale to 1,000+/day by adding more warmed inboxes. A/B test subject + first line. | — | OUT-6 |
+| **Steady state** | Day 60+ | **50,000+/month** = 16-20 inboxes × 30/day × 22 working days × 1.3× rotation. Ongoing weekly: postmaster.google.com per domain (<0.10% spam-rate), bounce-rate <2%, retire inboxes <2% reply rate. | 🔁 Instantly Unibox for replies | OUT-8 |
 
 ## OUT-1 · HUMAN — New sending domains (Day 1)
 
@@ -1251,14 +1272,35 @@ For each of the 4 new domains in Cloudflare DNS:
 
 ---
 
-# 💼 PART B — LinkedIn cold DM (OUT-7)
+# 💼 PART B — LinkedIn cold DM (Day 0 → 1,200+ connections/month)
 
-> Goal: 1,200+ LinkedIn connection requests per month + multi-step DM sequence sending
-> the same personalized GLPConvert demo URL. Runs parallel to cold email, targets the
-> same clinic decision-makers via a different channel. Reuses Sunspire's Sales Navigator
-> + Heyreach if those subscriptions exist; otherwise +$169/mo Sales Nav + $79/mo Heyreach.
-> At 30% acceptance + 1% reply→demo→checkout, floor is ~12 paying clinics/month from
-> LinkedIn alone.
+> **Goal:** ship 1,200+ LinkedIn connection requests per month + multi-step DM sequence
+> with the same personalized GLPConvert demo URL. Runs parallel to cold email, hits the
+> same clinic decision-makers via a different channel. Net new spend: $0 if Sunspire
+> already has Sales Navigator Advanced + Heyreach (most likely yes if Sunspire runs
+> LinkedIn outbound). Otherwise +$169/mo Sales Nav + $79/mo per Heyreach seat.
+>
+> **At 30% acceptance + 1% reply→demo→checkout: ~12 paying clinics/month from LinkedIn alone**, before any email-channel lift.
+>
+> **🔁 = a moment where you reuse Sunspire's existing LinkedIn stack.**
+
+## ⏱️ Day-by-day timeline — LinkedIn
+
+| Phase | Day | What happens | Sunspire reuse | Detail |
+|---|---|---|---|---|
+| **Stack check** | Day 1 | Open Sunspire's billing dashboard. Confirm: LinkedIn Sales Navigator Advanced ($169/mo) + Heyreach ($79/mo/seat). If Sunspire uses Expandi or Dripify, switch to Heyreach (cloud-based, no Chrome extension, zero mass-ban events since Q3 2024). | 🔁 Sales Nav + Heyreach (most likely) | OUT-7.0 |
+| **Account audit** | Days 1-7 | Pick 3-5 LinkedIn accounts. Each must clear all 4 gates: ≥6mo old, ≥500 connections, profile photo + banner + headline + summary all filled, Sales Nav Advanced active. | — | OUT-7.1 |
+| **Account warmup** | Days 1-14 | Any account that fails a gate: warm manually for 7-14 days (5→15 connections/day, 3-5 likes/day, 1-3 comments/day). Skip this if all accounts already aged via Sunspire usage. | 🔁 aged Sunspire accounts skip warmup | OUT-7.1 |
+| **Connect to Heyreach** | Day 8 | Heyreach dashboard → Connect LinkedIn Account. Enter LinkedIn email + password per account; assign **dedicated residential IP** per account (DO NOT share IPs). Pass Heyreach's Account Health Check (green = ready). | 🔁 Heyreach subscription | OUT-7.2 |
+| **Sales Nav search** | Days 8-9 | Save search "GLP-1 Clinic Decision Makers — Q2 2026" with title (Owner / Medical Director / Practice Manager / VP Patient Acquisition), industry (Medical Practices / Health & Wellness / Hospital), company size 2-200, geography US first, keywords (GLP-1 / semaglutide / tirzepatide / weight loss / obesity medicine), posted last 30 days. Export 2,500 leads to Heyreach via Chrome extension. | 🔁 Sales Nav Advanced subscription | OUT-7.3 |
+| **Enrich** | Days 9-10 | In your existing **Clay** account, new table "GLPConvert LinkedIn Leads". Brandfetch + Logo.dev enrichment. Generate `demo_link` formula with `&utm_source=linkedin&utm_campaign=q2-2026`. Re-import to Heyreach as updated lead set. | 🔁 Clay + Brandfetch + Make.com | OUT-7.4 |
+| **Build sequence** | Day 10 | In Heyreach, create 6-step "Connection + Multi-DM Sequence": Day 0 view profile → Day 1 connection request **NO note** (notes lower acceptance ~10%) → Day 2 (on accept) Soft DM 1 with demo link → Day 5 follow-up if no reply → Day 10 value reframe → Day 17 InMail to backup contact at same company. | — | OUT-7.5 |
+| **Throttle** | Day 10 | Configure: 100 connections/week per account first month (ramp to 150 if acceptance >25%). 100 messages/day per account max. Sending hours weekday 9am-5pm local time per account. Weekends OFF first 30 days. | — | OUT-7.5 |
+| **Launch** | Day 22 | Click "Start campaign" in Heyreach. Round-robins leads across your 3-5 connected accounts. Runs parallel to the cold email Day-22 launch. | — | OUT-7.5 |
+| **Monitor** | Days 23-29 | Daily for first 7 days: Heyreach health flags per account. If any hits a LinkedIn warning, pause for 48h then resume at half volume. | — | OUT-7.6 |
+| **Tune** | Weekly | Acceptance rate per account (healthy 25-35%). Below 20% = tighten Sales Nav filters. Above 40% = scale to 150/week. Reply rate per step (healthy 8-15% on Step 3). | — | OUT-7.6 |
+| **Reply handle** | Daily | Heyreach inbox auto-pauses sequences when leads reply. Tag intent (positive/neutral/negative/OOO). Hand-reply within **4 business hours**. | 🔁 Sunspire's Heyreach inbox view | OUT-7.6 |
+| **Steady state** | Day 30+ | **1,200+ connection requests/month** = 100/wk × 4 weeks × 3 accounts. At 30% acceptance + 1% reply→demo→checkout: ~12 paying clinics/month from LinkedIn alone. | — | OUT-7 + OUT-8 |
 
 ## OUT-7 · HUMAN — LinkedIn cold DM, click-by-click (Day 22+, parallel to email)
 
