@@ -1418,14 +1418,17 @@ export default function GlpSimulationFunnel() {
           className={`${glpIntakeUi.card} relative overflow-hidden bg-gradient-to-b from-slate-50/90 to-white px-6 py-16 sm:px-10 sm:py-20`}
         >
           {/**
-           * Round-10 success-state rebuild — buyer feedback: spacing
-           * was uneven, alignment inconsistent. Now everything sits on
-           * a single centered column with a strict 40px vertical rhythm
-           * between blocks (mt-10 / mt-10 / mt-10 / mt-10). Material 3
-           * + Apple HIG 2025 success-state spec: one centered column,
-           * consistent rhythm, single dominant icon → headline → body
-           * → action → fine print. Stripe Checkout / Linear post-
-           * create / Vercel deploy-success all follow this exact rule.
+           * Round-11 success-state rhythm — buyer feedback: previous
+           * mt-10/mt-3/mt-4/mt-10/mt-10/mt-6 jumps read as uneven. Now
+           * uses a strict 3-tier vertical rhythm:
+           *   • Intra-cluster (tight, lines belong together): mt-2 / mt-3
+           *   • Cluster → CTA boundary: mt-10
+           *   • CTA → close (compliance + back-link): mt-12
+           *   • Intra-close: mt-3
+           * Sources: Material 3 success-state spec (4/8/12 baseline);
+           * Apple HIG 2025 confirmation-screen pattern (single column,
+           * tiered spacing); Stripe Checkout / Linear post-create / Vercel
+           * deploy-success — all follow icon → cluster → action → close.
            */}
           <div className="mx-auto flex max-w-md flex-col items-center text-center">
             {/* Checkmark — solid emerald, no halo theatrics */}
@@ -1438,14 +1441,14 @@ export default function GlpSimulationFunnel() {
               </svg>
             </div>
 
-            {/* Eyebrow + Headline + Body — single centered block */}
-            <p className="mt-10 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">
+            {/* Eyebrow + Headline + Body — single tight cluster */}
+            <p className="mt-8 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">
               Complete · step 5 of 5
             </p>
-            <h2 className="mt-3 text-[1.75rem] font-semibold tracking-tight text-slate-900 sm:text-[2rem]">
+            <h2 className="mt-2 text-[1.75rem] font-semibold tracking-tight text-slate-900 sm:text-[2rem]">
               Your next step is ready
             </h2>
-            <p className="mt-4 text-[15px] leading-relaxed text-slate-600 sm:text-base">
+            <p className="mt-3 text-[15px] leading-relaxed text-slate-600 sm:text-base">
               {company} can review your plan and follow up based on the option you selected.
             </p>
 
@@ -1473,13 +1476,13 @@ export default function GlpSimulationFunnel() {
               </a>
             ) : null}
 
-            {/* Compliance + back-link — single column, even spacing */}
-            <p className="mt-10 text-xs leading-relaxed text-slate-500">
+            {/* Compliance + back-link — close cluster */}
+            <p className="mt-12 text-xs leading-relaxed text-slate-500">
               General information only — a licensed provider confirms next steps.
             </p>
             <a
               href={buildBrandedDemoReturnHref(sp)}
-              className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-700 transition hover:text-slate-900"
+              className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-700 transition hover:text-slate-900"
             >
               <span aria-hidden>←</span> Back to home
             </a>

@@ -220,7 +220,7 @@ export default function GlpJourneyProgressChart({
         compact
           ? "px-3 pb-3 pt-4 shadow-sm sm:px-4"
           : "px-4 pb-5 pt-6 shadow-[0_2px_8px_rgba(15,23,42,0.05),0_12px_40px_-16px_rgba(15,23,42,0.12)] sm:px-6 sm:pb-6 sm:pt-7"
-      }`}
+      } ${!compact ? "animate-glp-chart-reveal" : ""}`}
     >
       <div
         className="absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-slate-200 to-transparent"
@@ -275,10 +275,10 @@ export default function GlpJourneyProgressChart({
              * tightened to `w-8` so the caption sits closer to the chart's
              * percent ticks, removing the prior "floating in space" feel and
              * matching the X caption's vertical breathing room (mt-2.5/mb-2). */}
-            <div className="hidden w-12 shrink-0 self-stretch flex-col items-center justify-center md:flex md:w-14">
+            <div className="hidden w-7 shrink-0 self-stretch flex-col items-center justify-center px-0.5 md:flex md:w-8">
               <p
-                className="text-center [writing-mode:vertical-rl] rotate-180"
-                style={axisCaptionStyle}
+                className="text-center [writing-mode:vertical-rl]"
+                style={{ ...axisCaptionStyle, transform: "translateX(-6px) rotate(180deg)" }}
                 data-results-chart-y-label
               >
                 Toward your stated goal

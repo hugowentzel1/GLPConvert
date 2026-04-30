@@ -88,13 +88,28 @@ export default function IntakePage({
            * accent-bar on stat tiles, not full text recolor).
            */}
           <div
-            className="mx-auto mt-8 w-full max-w-4xl space-y-4 px-4"
+            className="mx-auto mt-6 w-full max-w-4xl space-y-6 px-4"
             data-testid="intake-capability-strip"
           >
             {/* Strip 1 — Platform momentum */}
             <div
-              className={`${glpIntakeUi.intakeHeroShell} bg-white/95 px-4 py-5 backdrop-blur-[2px] sm:px-6 sm:py-6`}
+              className={`${glpIntakeUi.intakeHeroShell} relative bg-white/95 px-4 py-5 backdrop-blur-[2px] sm:px-6 sm:py-6`}
             >
+              {/**
+               * Brand-color creative accent #1: top-edge ribbon (1px
+               * solid line gradient that fades on the sides). Stripe
+               * Atlas / Linear billing card pattern: brand color hints
+               * at the TOP edge without coloring any text. Subtle but
+               * unmistakably "this card is on-brand."
+               */}
+              <span
+                className="pointer-events-none absolute inset-x-0 top-0 h-[3px] rounded-t-[1.75rem]"
+                style={{
+                  background: `linear-gradient(90deg, transparent 0%, var(--brand-primary) 30%, var(--brand-primary) 70%, transparent 100%)`,
+                  opacity: 0.65,
+                }}
+                aria-hidden
+              />
               <p className="mb-5 text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
                 On the platform
               </p>
@@ -123,8 +138,16 @@ export default function IntakePage({
 
             {/* Strip 2 — Category benchmarks */}
             <div
-              className={`${glpIntakeUi.intakeHeroShell} bg-white/95 px-4 py-5 backdrop-blur-[2px] sm:px-6 sm:py-6`}
+              className={`${glpIntakeUi.intakeHeroShell} relative bg-white/95 px-4 py-5 backdrop-blur-[2px] sm:px-6 sm:py-6`}
             >
+              <span
+                className="pointer-events-none absolute inset-x-0 top-0 h-[3px] rounded-t-[1.75rem]"
+                style={{
+                  background: `linear-gradient(90deg, transparent 0%, var(--brand-primary) 30%, var(--brand-primary) 70%, transparent 100%)`,
+                  opacity: 0.45,
+                }}
+                aria-hidden
+              />
               <p className="mb-5 text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
                 Category benchmarks
               </p>

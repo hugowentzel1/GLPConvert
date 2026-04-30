@@ -168,44 +168,42 @@ export default function GlpDemoOwnerPanels({
         data-demo-owner-value
       >
         {/**
-         * Round-9 rebuild — buyer feedback: more spread out, less
-         * cluttered. Now uses dramatic vertical rhythm (mt-4 / mt-10 /
-         * mt-12 / mt-10 / mt-12 between blocks) so each element gets
-         * its own visual moment. Stripe Pricing 2025 + Linear Plans:
-         * monumental focal element with generous breathing room on
-         * each side reads as more premium than a tightly-packed card.
-         * The dollar amount is the moment that converts; everything
-         * else gives it room to land.
+         * Round-11 rebuild — buyer feedback: too many font sizes/colors,
+         * spacing inconsistent. Tightened to a STRICT typographic scale
+         * (only 3 sizes: 11px eyebrow + 17px title/body + 48-56px focal
+         * dollar) and 2 slate hues (slate-500 micro + slate-900 body).
+         * Brand color appears ONLY on the dollar amount (the focal
+         * point). Stripe Pricing 2025 + Linear Plans: limit to 3 type
+         * sizes per card, 2 colors max + 1 brand accent on the focal
+         * element. Even mt-* rhythm: mt-3 (intra-cluster) → mt-10
+         * (cluster→focal) → mt-10 (focal→close) → mt-10 (close→CTA).
          */}
         <div className="text-center">
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">
             For your practice
           </p>
 
-          <p className="mx-auto mt-4 max-w-md text-[17px] font-semibold leading-snug text-slate-900 sm:text-[18px]">
+          <p className="mx-auto mt-3 max-w-md text-[17px] font-semibold leading-snug text-slate-900">
             More booked consults from {companyName}&apos;s current ad spend
           </p>
 
           <div className="mt-10 leading-none">
             <span
-              className="text-[40px] font-black tabular-nums tracking-tight sm:text-[52px]"
+              className="text-[48px] font-black tabular-nums tracking-tight sm:text-[56px]"
               style={{ color: brandPrimary }}
             >
               ${low.toLocaleString()}–${high.toLocaleString()}
             </span>
-            <div className="mt-3 text-[14px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+            <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">
               per month, extra
-            </div>
+            </p>
           </div>
 
           <p
-            className="mx-auto mt-12 max-w-sm text-[14px] font-semibold text-slate-900"
+            className="mx-auto mt-10 max-w-md text-[15px] leading-relaxed text-slate-900"
             data-demo-owner-activation-flow
           >
-            Live in ~10 minutes.
-          </p>
-          <p className="mx-auto mt-2 max-w-md text-[12px] leading-relaxed text-slate-500">
-            Branded URL with {companyName}&apos;s logo + color · drop into your funnel ·
+            Live in ~10 minutes — branded URL with {companyName}&apos;s logo + color, drop into your funnel,
             leads three ways (dashboard + email + CRM).
           </p>
         </div>

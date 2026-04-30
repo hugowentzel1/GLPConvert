@@ -54,8 +54,34 @@ html {
 .animate-glp-step2-rise {
   animation: glp-step2-rise 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
+/**
+ * Chart top-to-bottom reveal — Stripe Dashboard / Linear Insights /
+ * Vercel Analytics chart-mount pattern. The chart card uses a CSS
+ * mask animated from `inset(0 0 100% 0)` (fully clipped from below)
+ * to `inset(0 0 0 0)` (fully visible) over 1.4s with ease-out. Reads
+ * as a smooth top-down "drawing in" reveal that masks any sub-layer
+ * flicker (sheen / sparkle / brand-pulse decorative loops fire
+ * underneath). Material 3 motion + Apple HIG 2025: clip-path reveals
+ * are the premium chart-mount pattern in 2026.
+ */
+@keyframes glp-chart-reveal-top-down {
+  0% {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0.4;
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+.animate-glp-chart-reveal {
+  animation: glp-chart-reveal-top-down 1400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .animate-glp-step2-rise {
+  .animate-glp-step2-rise,
+  .animate-glp-chart-reveal {
     animation: none;
   }
 }
