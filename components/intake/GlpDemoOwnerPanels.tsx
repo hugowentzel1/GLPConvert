@@ -110,8 +110,8 @@ export default function GlpDemoOwnerPanels({
       </p>
 
       <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
-        <div className={OWNER_PANEL_SURFACE}>
-          <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+        <div className={`${OWNER_PANEL_SURFACE} text-center`}>
+          <p className="flex items-center justify-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-500">
             <svg
               viewBox="0 0 20 20"
               fill="currentColor"
@@ -139,8 +139,8 @@ export default function GlpDemoOwnerPanels({
          * Pricing / Linear Plans / Vercel "winner card" pattern (mark with
          * a subtle iconographic cue, not a heavy chrome bar).
          */}
-        <div className={OWNER_PANEL_SURFACE}>
-          <p className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-600">
+        <div className={`${OWNER_PANEL_SURFACE} text-center`}>
+          <p className="flex items-center justify-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-600">
             <svg
               viewBox="0 0 20 20"
               fill="currentColor"

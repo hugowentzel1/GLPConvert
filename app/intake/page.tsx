@@ -76,41 +76,44 @@ export default function IntakePage({
            * Sunspire's home conversion.
            */}
           {/**
-           * Two stat strips matching the IntakeTrustStrip pattern:
-           * same `intakeHeroShell` rounded card + white bg + subtle
-           * shadow/ring, same px/py rhythm. No disclaimer lines (per
-           * buyer ask — they were stuck-on legal that interrupted the
-           * visual flow). Each strip mirrors the trust-strip's icon-
-           * grid layout but with monumental numbers in place of icons.
-           *
-           * Strip 1 — "On the platform" (brand-color numbers, showcase)
-           * Strip 2 — "Category benchmarks" (slate-900 numbers, specs)
+           * Two stat strips sized to match the IntakeTrustStrip exactly:
+           * same `intakeHeroShell` shell, same px-4/sm:px-6 py-5/sm:py-6
+           * padding rhythm, same `mb-8` outside spacing as the trust
+           * strip uses. Numbers reduced to ~h-9 visual weight
+           * (text-[1.25rem] sm:text-[1.5rem]) so each stat tile occupies
+           * roughly the same footprint as a trust-badge tile (icon +
+           * label). Brand-color accent: tiny brand-color underline bar
+           * beneath each number — adds a hint of tenant color WITHOUT
+           * coloring the text itself (Stripe Atlas / Linear pattern:
+           * accent-bar on stat tiles, not full text recolor).
            */}
           <div
-            className="mx-auto mt-12 w-full max-w-4xl space-y-5 px-4"
+            className="mx-auto mt-8 w-full max-w-4xl space-y-4 px-4"
             data-testid="intake-capability-strip"
           >
             {/* Strip 1 — Platform momentum */}
             <div
-              className={`${glpIntakeUi.intakeHeroShell} bg-white/95 px-6 py-7 backdrop-blur-[2px] sm:px-8 sm:py-8`}
+              className={`${glpIntakeUi.intakeHeroShell} bg-white/95 px-4 py-5 backdrop-blur-[2px] sm:px-6 sm:py-6`}
             >
-              <p className="mb-6 text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
+              <p className="mb-5 text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
                 On the platform
               </p>
-              <div className="grid grid-cols-1 gap-y-8 text-center sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0">
+              <div className="grid grid-cols-1 gap-y-5 text-center sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0">
                 {[
                   { stat: "8,417", label: "demos modeled this month" },
                   { stat: "31%", label: "average lift in consult bookings" },
                   { stat: "100+", label: "clinic paths modeled to date" },
                 ].map((item) => (
-                  <div key={item.label} className="group">
-                    <div
-                      className="text-[2.5rem] font-black leading-none tracking-tight tabular-nums transition-all duration-300 group-hover:scale-[1.04] sm:text-[2.75rem]"
-                      style={{ color: "var(--brand-primary)" }}
-                    >
+                  <div key={item.label} className="group flex flex-col items-center">
+                    <div className="text-[1.5rem] font-black leading-none tracking-tight tabular-nums text-slate-900 sm:text-[1.65rem]">
                       {item.stat}
                     </div>
-                    <div className="mt-3 text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-slate-500">
+                    <span
+                      aria-hidden
+                      className="mt-1.5 block h-[3px] w-6 rounded-full transition-all duration-300 group-hover:w-10"
+                      style={{ backgroundColor: "var(--brand-primary)" }}
+                    />
+                    <div className="mt-2.5 text-[10.5px] font-semibold uppercase leading-snug tracking-[0.14em] text-slate-500">
                       {item.label}
                     </div>
                   </div>
@@ -120,22 +123,27 @@ export default function IntakePage({
 
             {/* Strip 2 — Category benchmarks */}
             <div
-              className={`${glpIntakeUi.intakeHeroShell} bg-white/95 px-6 py-7 backdrop-blur-[2px] sm:px-8 sm:py-8`}
+              className={`${glpIntakeUi.intakeHeroShell} bg-white/95 px-4 py-5 backdrop-blur-[2px] sm:px-6 sm:py-6`}
             >
-              <p className="mb-6 text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
+              <p className="mb-5 text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
                 Category benchmarks
               </p>
-              <div className="grid grid-cols-1 gap-y-8 text-center sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0">
+              <div className="grid grid-cols-1 gap-y-5 text-center sm:grid-cols-3 sm:gap-x-6 sm:gap-y-0">
                 {[
                   { stat: "10–30%", label: "Illustrative lift in funnel completions" },
                   { stat: "<24h", label: "Typical time-to-live for white-label intake" },
                   { stat: "1-line", label: "Embed snippet works on any site or LP" },
                 ].map((item) => (
-                  <div key={item.label}>
-                    <div className="text-[1.85rem] font-black leading-none tracking-tight tabular-nums text-slate-900 sm:text-[2rem]">
+                  <div key={item.label} className="group flex flex-col items-center">
+                    <div className="text-[1.5rem] font-black leading-none tracking-tight tabular-nums text-slate-900 sm:text-[1.65rem]">
                       {item.stat}
                     </div>
-                    <div className="mt-3 text-[11px] font-semibold uppercase leading-snug tracking-[0.14em] text-slate-500">
+                    <span
+                      aria-hidden
+                      className="mt-1.5 block h-[3px] w-6 rounded-full transition-all duration-300 group-hover:w-10"
+                      style={{ backgroundColor: "var(--brand-primary)" }}
+                    />
+                    <div className="mt-2.5 text-[10.5px] font-semibold uppercase leading-snug tracking-[0.14em] text-slate-500">
                       {item.label}
                     </div>
                   </div>

@@ -1415,100 +1415,71 @@ export default function GlpSimulationFunnel() {
       {step === 5 && (
         <section
           data-flow-step="5"
-          className={`${glpIntakeUi.card} relative overflow-hidden text-center bg-gradient-to-b from-slate-50/90 to-white px-6 py-14 sm:px-10 sm:py-16`}
+          className={`${glpIntakeUi.card} relative overflow-hidden bg-gradient-to-b from-slate-50/90 to-white px-6 py-16 sm:px-10 sm:py-20`}
         >
           {/**
-           * Premium success state — Stripe Checkout / Linear post-create
-           * / Vercel deploy-success pattern: bold completion icon with a
-           * radial brand halo, headline + body, primary action, and
-           * compliance integrated into a subtle pill (no naked grey
-           * paragraph). Buyer feedback: prior version's bare slate-500
-           * disclaimer + small "Back to home" link looked "cheap" — the
-           * fix is to (a) replace the grey block with a bordered status
-           * pill and (b) anchor the close-out with a slightly more
-           * substantial back-link. Apple HIG 2025 success-state +
-           * Material 3 success-screen specs.
+           * Round-10 success-state rebuild — buyer feedback: spacing
+           * was uneven, alignment inconsistent. Now everything sits on
+           * a single centered column with a strict 40px vertical rhythm
+           * between blocks (mt-10 / mt-10 / mt-10 / mt-10). Material 3
+           * + Apple HIG 2025 success-state spec: one centered column,
+           * consistent rhythm, single dominant icon → headline → body
+           * → action → fine print. Stripe Checkout / Linear post-
+           * create / Vercel deploy-success all follow this exact rule.
            */}
-          {/**
-           * Round-8 rebuild — buyer feedback: weird brand-tinted blur
-           * halo behind the checkmark + ring-6 emerald-100 looked
-           * inconsistent with the rest of the site. Now: NO halo blur,
-           * single solid emerald-500 checkmark with a subtle 1-pixel
-           * white outline + minimal shadow. Stripe Checkout success
-           * state pattern (clean, no theatrics). Universal green-
-           * checkmark = "done" semantic preserved.
-           */}
-          <div
-            className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500 text-white shadow-[0_4px_12px_rgba(16,185,129,0.25)]"
-            aria-hidden
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} className="h-8 w-8" aria-hidden>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <div className="relative mt-8 space-y-3">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">
+          <div className="mx-auto flex max-w-md flex-col items-center text-center">
+            {/* Checkmark — solid emerald, no halo theatrics */}
+            <div
+              className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500 text-white shadow-[0_4px_12px_rgba(16,185,129,0.25)]"
+              aria-hidden
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} className="h-8 w-8" aria-hidden>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+
+            {/* Eyebrow + Headline + Body — single centered block */}
+            <p className="mt-10 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">
               Complete · step 5 of 5
             </p>
-            <h2 className="text-[1.65rem] font-semibold tracking-tight text-slate-900 sm:text-[1.95rem]">
+            <h2 className="mt-3 text-[1.75rem] font-semibold tracking-tight text-slate-900 sm:text-[2rem]">
               Your next step is ready
             </h2>
-            <p className="mx-auto max-w-md text-[15px] leading-relaxed text-slate-600 sm:text-base">
+            <p className="mt-4 text-[15px] leading-relaxed text-slate-600 sm:text-base">
               {company} can review your plan and follow up based on the option you selected.
             </p>
-          </div>
-          {effectiveBookingUrl && nextStep === "book" ? (
-            <a
-              href={effectiveBookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`${glpIntakeUi.primaryBtn} relative mx-auto mt-9 block w-full max-w-sm text-center`}
-              style={{ backgroundColor: brandFill }}
-            >
-              Open scheduling
-            </a>
-          ) : null}
-          {/**
-           * Buyer-side demo CTA — now matches the home demo card's
-           * primary-button style (brand-color fill, white text,
-           * ⚡ emoji prefix, brand-color shadow). Buyer feedback round-
-           * 8: this CTA was visually inconsistent with the home page's
-           * primary action; users expect the same "buy now" button to
-           * look the same everywhere. Stripe Checkout / Linear primary-
-           * action consistency across the funnel.
-           */}
-          {isDemoMode ? (
-            <a
-              href={`/pricing?${sp?.toString() || ""}`}
-              className="relative mx-auto mt-9 inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.05]"
-              style={{ backgroundColor: brandFill }}
-              data-testid="step-5-buyer-activate"
-            >
-              <span aria-hidden>⚡</span>
-              Activate {company} for $99/mo
-            </a>
-          ) : null}
-          {/**
-           * Round-8 footer rebuild — buyer feedback flagged the previous
-           * stacked uppercase pills as "ugly + inconsistent." Removed the
-           * "Preview" disclosure entirely (the buyer is already oriented
-           * by the persistent top demo strip showing "Preview for X" +
-           * branded header — repeating it here is redundant chrome).
-           *
-           * Kept the medical disclaimer (US state medical-practice law
-           * + FTC Health Products Compliance Guidance Dec 2022 baseline:
-           * a healthcare-adjacent flow that just showed a weight-progress
-           * chart needs a software-not-care disclaimer at the close).
-           * Restyled as plain sentence-case body text (not uppercase
-           * tracking) so it reads as natural language, not as a label.
-           */}
-          <div className="relative mt-12 flex flex-col items-center gap-5">
-            <p className="text-xs leading-relaxed text-slate-500">
+
+            {/* Primary action(s) — centered, consistent button stack */}
+            {effectiveBookingUrl && nextStep === "book" ? (
+              <a
+                href={effectiveBookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${glpIntakeUi.primaryBtn} mt-10 block w-full max-w-sm text-center`}
+                style={{ backgroundColor: brandFill }}
+              >
+                Open scheduling
+              </a>
+            ) : null}
+            {isDemoMode ? (
+              <a
+                href={`/pricing?${sp?.toString() || ""}`}
+                className="mt-10 inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.05]"
+                style={{ backgroundColor: brandFill }}
+                data-testid="step-5-buyer-activate"
+              >
+                <span aria-hidden>⚡</span>
+                Activate {company} for $99/mo
+              </a>
+            ) : null}
+
+            {/* Compliance + back-link — single column, even spacing */}
+            <p className="mt-10 text-xs leading-relaxed text-slate-500">
               General information only — a licensed provider confirms next steps.
             </p>
             <a
               href={buildBrandedDemoReturnHref(sp)}
-              className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-700 transition hover:text-slate-900"
+              className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-700 transition hover:text-slate-900"
             >
               <span aria-hidden>←</span> Back to home
             </a>

@@ -275,7 +275,7 @@ export default function GlpJourneyProgressChart({
              * tightened to `w-8` so the caption sits closer to the chart's
              * percent ticks, removing the prior "floating in space" feel and
              * matching the X caption's vertical breathing room (mt-2.5/mb-2). */}
-            <div className="hidden w-7 shrink-0 self-stretch flex-col items-center justify-center px-0.5 md:flex md:w-8">
+            <div className="hidden w-12 shrink-0 self-stretch flex-col items-center justify-center md:flex md:w-14">
               <p
                 className="text-center [writing-mode:vertical-rl] rotate-180"
                 style={axisCaptionStyle}
