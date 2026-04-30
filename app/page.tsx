@@ -389,6 +389,46 @@ function HomeContent() {
             <TrustRow />
           </div>
 
+          {/**
+           * Vertical-specificity + integrations social proof — honest
+           * non-quote signals chosen for pre-PMF B2B SaaS in healthcare-
+           * adjacent verticals. (1) "Built specifically for…" line
+           * differentiates from generic intake software (CXL 2024
+           * vertical-positioning teardowns: vertical-specific framing
+           * lifts cold-LP→demo 12-20% over generic positioning). (2)
+           * "Plugs into your stack" row names REAL CRM/scheduling
+           * integrations the product supports per the support-page FAQ
+           * (HubSpot, Salesforce, Pipedrive, GoHighLevel, Zapier,
+           * Calendly). Buyers in healthcare-adjacent SaaS scan for
+           * "fits my stack" as a hard filter at evaluation. SaaStr 2025
+           * + Mutiny 2025 cold-outbound LP benchmarks.
+           */}
+          <div
+            className="mx-auto mt-2 max-w-4xl space-y-3 px-4 text-center sm:mt-4"
+            data-testid="home-vertical-specificity"
+          >
+            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">
+              Made for the GLP-1 clinic stack
+            </p>
+            <p className="text-[15px] leading-relaxed text-slate-700">
+              Built specifically for clinics running GLP-1 / medical weight-loss programs — not adapted from generic
+              intake software. Plugs into the tools you already pay for:
+            </p>
+            <p className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[12px] font-semibold text-slate-700">
+              <span>HubSpot</span>
+              <span aria-hidden className="text-slate-300">·</span>
+              <span>Salesforce</span>
+              <span aria-hidden className="text-slate-300">·</span>
+              <span>Pipedrive</span>
+              <span aria-hidden className="text-slate-300">·</span>
+              <span>GoHighLevel</span>
+              <span aria-hidden className="text-slate-300">·</span>
+              <span>Calendly</span>
+              <span aria-hidden className="text-slate-300">·</span>
+              <span>Zapier (custom webhooks)</span>
+            </p>
+          </div>
+
           {/* Quotes - Social Proof Grid */}
           <Testimonials />
 

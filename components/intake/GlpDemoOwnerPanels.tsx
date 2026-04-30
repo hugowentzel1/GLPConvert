@@ -156,7 +156,7 @@ export default function GlpDemoOwnerPanels({
             </svg>
             With GLPConvert
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-slate-800">
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">
             Same paid traffic, fewer dropped intakes. Patients finish a branded path that ends at your scheduling link —
             so consults arrive primed, not cold.
           </p>
@@ -164,58 +164,48 @@ export default function GlpDemoOwnerPanels({
       </div>
 
       <div
-        className={`${OWNER_PANEL_SURFACE} space-y-5 sm:p-7`}
+        className={`${OWNER_PANEL_SURFACE} space-y-7 px-6 py-8 sm:px-9 sm:py-10`}
         data-demo-owner-value
       >
         {/**
-         * Slightly more padding (`sm:p-7` overrides the default `sm:p-6`
-         * from OWNER_PANEL_SURFACE) and looser inner rhythm (`space-y-5`
-         * vs prior `space-y-4`) so the payoff card breathes — buyer
-         * feedback was that this section read as crowded with title +
-         * paragraph + upside + activation stack all jammed together.
-         * Stripe pricing-card pattern: the "winner" card gets more
-         * generous interior whitespace than the supporting cards.
+         * Round 8 rebuild — buyer feedback: still cramped, weird, and
+         * inconsistent. Now: fully centered, looser vertical rhythm
+         * (space-y-7), more interior padding (py-8/sm:py-10), single
+         * typographic register at each level. ONE eyebrow → ONE H3 →
+         * ONE big number → ONE subline → buttons. Activation strip
+         * removed (was redundant with "Live in ~10 min" on the
+         * subline; CTAs lead to /pricing where the full setup is
+         * documented). Stripe Pricing 2025 + Linear Plans payoff-
+         * card pattern: monumental focal element + minimal supporting
+         * text + single dominant action (test selectors preserved
+         * via the still-present data-demo-owner-activation-flow on
+         * the subline so existing Playwright tests still match).
          */}
-        {/**
-         * Clean payoff card — buyer feedback (round 7): the rose-600
-         * "leaking right now" framing was visually ugly + inconsistent
-         * with site typography. Reverted to the site's standard slate-
-         * 500 eyebrow + brand-color tabular dollar amount + plain-
-         * English subhead. Loss-aversion concept preserved through the
-         * word "extra" + "current paid traffic" framing (Kahneman/
-         * Tversky 1979 prospect theory still applies — we're framing
-         * the gap between current state and possible state — but with
-         * neutral typography that matches the rest of the page).
-         *
-         * Stripe pricing-card / Linear billing-card pattern: ONE focal
-         * dollar amount, eyebrow above, single-line subhead below.
-         */}
-        <div className="text-center sm:text-left">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+        <div className="text-center">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">
             For your practice
           </p>
-          <p className="mt-2 leading-none">
-            <span className="text-[34px] font-black tabular-nums tracking-tight sm:text-[40px]" style={{ color: brandPrimary }}>
+          <p className="mt-3 text-[17px] font-semibold leading-snug text-slate-900 sm:text-[18px]">
+            More booked consults from {companyName}&apos;s current ad spend
+          </p>
+          <p className="mt-6 leading-none">
+            <span
+              className="text-[36px] font-black tabular-nums tracking-tight sm:text-[44px]"
+              style={{ color: brandPrimary }}
+            >
               ${low.toLocaleString()}–${high.toLocaleString()}
             </span>
-            <span className="ml-2 text-[14px] font-semibold text-slate-500">/ month</span>
+            <span className="ml-2 text-[15px] font-semibold text-slate-500">/ month extra</span>
           </p>
-          <p className="mt-2.5 text-[13px] leading-relaxed text-slate-700">
-            extra revenue from {companyName}&apos;s current paid traffic.{" "}
-            <span className="font-semibold text-slate-900">Live in ~10 minutes.</span>
+          <p
+            className="mt-4 text-[13px] leading-relaxed text-slate-600"
+            data-demo-owner-activation-flow
+          >
+            <span className="font-semibold text-slate-800">Live in ~10 minutes.</span>{" "}
+            Branded URL with {companyName}&apos;s logo + color, drop it into your funnel, leads three ways
+            (dashboard + email + CRM).
           </p>
         </div>
-
-        <p
-          className="text-[11px] leading-snug text-slate-500"
-          data-demo-owner-activation-flow
-        >
-          <span className="font-semibold text-slate-700">Branded URL in ~10 min</span>
-          <span aria-hidden className="mx-1.5 text-slate-300">·</span>
-          <span>Drop into your funnel</span>
-          <span aria-hidden className="mx-1.5 text-slate-300">·</span>
-          <span>Leads three ways (dashboard + email + CRM)</span>
-        </p>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:justify-between sm:gap-4">
           <a

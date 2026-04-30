@@ -213,9 +213,9 @@ export default function GlpJourneyProgressChart({
   return (
     <motion.div
       data-results-chart
-      initial={animate && !compact ? { opacity: 0, y: 8 } : false}
+      initial={animate && !compact ? { opacity: 0, y: 14 } : false}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className={`glp-intake-chart-card relative w-full overflow-hidden rounded-2xl border border-slate-200/90 bg-white ring-1 ring-slate-900/[0.04] ${
         compact
           ? "px-3 pb-3 pt-4 shadow-sm sm:px-4"
@@ -485,8 +485,8 @@ export default function GlpJourneyProgressChart({
                   strokeLinejoin="round"
                   fill={`url(#${gradId})`}
                   isAnimationActive={animate}
-                  animationDuration={animate ? 2400 : 0}
-                  animationEasing="ease-in-out"
+                  animationDuration={animate ? 2800 : 0}
+                  animationEasing="ease-out"
                   activeDot={{ r: 6, strokeWidth: 2, stroke: "#fff" }}
                   dot={areaDot as never}
                 />

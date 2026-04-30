@@ -25,6 +25,41 @@ html {
   font-feature-settings: "tnum" 1, "ss01" 1;
 }
 
+/**
+ * Step 2 entrance animation — premium fade-up on first paint.
+ *
+ * The intake step-1 → step-2 transition is the single biggest "wow"
+ * moment in the funnel (the buyer who clicks Continue gets the
+ * personalized chart + care package + owner panel revealed at once).
+ * A subtle 600ms fade-up (translate-y from 16px to 0 with opacity
+ * 0 → 1) gives the reveal a deliberate-feeling entrance without
+ * the disappear/reappear that AnimatePresence-mode-wait caused.
+ *
+ * Easing: cubic-bezier(0.16, 1, 0.3, 1) — Apple HIG 2025 + Material 3
+ * "ease-out-expo" — fast initial, soft settle. The same easing used
+ * by Stripe Atlas, Linear, Vercel for premium reveal moments.
+ *
+ * Honors prefers-reduced-motion: reveals instantly with no animation.
+ */
+@keyframes glp-step2-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-glp-step2-rise {
+  animation: glp-step2-rise 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-glp-step2-rise {
+    animation: none;
+  }
+}
+
 @import url("../components/ui/premium-tokens.css");
 
 /* Global width and gutter tokens - single source of truth */

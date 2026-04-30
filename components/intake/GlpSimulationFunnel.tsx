@@ -796,7 +796,7 @@ export default function GlpSimulationFunnel() {
       {step === 2 && (
         <section
           data-flow-step="2"
-          className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} ${glpIntakeUi.resultsStack}`}
+          className={`${glpIntakeUi.card} ${glpIntakeUi.cardPadLoose} ${glpIntakeUi.resultsStack} animate-glp-step2-rise`}
         >
           <header className={`${glpIntakeUi.panelInCard} text-center sm:text-left`}>
             <div
@@ -1430,28 +1430,19 @@ export default function GlpSimulationFunnel() {
            * Material 3 success-screen specs.
            */}
           {/**
-           * Success checkmark always green (emerald-500), regardless of
-           * tenant brand color. White-label SaaS convention (Stripe
-           * Checkout success, Linear post-create, Vercel deploy-success,
-           * Calendly booked-confirmation): success states use green
-           * universally because users recognize green-checkmark = "done"
-           * across the web; tenant-brand-color on the success icon
-           * confused users in NN/g 2024 success-state usability tests
-           * ("did it actually save?"). Brand color stays on the *primary
-           * action button*, not on the status icon. Halo glow stays
-           * brand-tinted — best of both: brand-flavored success without
-           * losing the universal green = success cue.
+           * Round-8 rebuild — buyer feedback: weird brand-tinted blur
+           * halo behind the checkmark + ring-6 emerald-100 looked
+           * inconsistent with the rest of the site. Now: NO halo blur,
+           * single solid emerald-500 checkmark with a subtle 1-pixel
+           * white outline + minimal shadow. Stripe Checkout success
+           * state pattern (clean, no theatrics). Universal green-
+           * checkmark = "done" semantic preserved.
            */}
           <div
-            className="pointer-events-none absolute left-1/2 top-12 h-48 w-48 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.18] blur-3xl"
-            style={{ backgroundColor: brandFill }}
-            aria-hidden
-          />
-          <div
-            className="relative mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-emerald-500 text-3xl text-white shadow-[0_12px_36px_-8px_rgba(15,23,42,0.25)] ring-[6px] ring-emerald-100"
+            className="relative mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500 text-white shadow-[0_4px_12px_rgba(16,185,129,0.25)]"
             aria-hidden
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} className="h-9 w-9" aria-hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} className="h-8 w-8" aria-hidden>
               <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
             </svg>
           </div>
@@ -1478,47 +1469,46 @@ export default function GlpSimulationFunnel() {
             </a>
           ) : null}
           {/**
-           * Demo-mode buyer-side CTA at step 5 — peak conversion intent.
-           * The buyer just walked through the entire patient funnel; this
-           * is the single highest-intent moment on the page. Without a
-           * buyer-specific Activate CTA here, the buyer hits patient-side
-           * "Open scheduling" / "Back to home" and bounces. CXL 2024
-           * funnel-handoff teardowns: post-funnel buyer CTAs at peak
-           * intent convert 5-10% better than relying on home/sticky CTAs
-           * to capture the same visitor on a return scroll.
+           * Buyer-side demo CTA — now matches the home demo card's
+           * primary-button style (brand-color fill, white text,
+           * ⚡ emoji prefix, brand-color shadow). Buyer feedback round-
+           * 8: this CTA was visually inconsistent with the home page's
+           * primary action; users expect the same "buy now" button to
+           * look the same everywhere. Stripe Checkout / Linear primary-
+           * action consistency across the funnel.
            */}
           {isDemoMode ? (
             <a
               href={`/pricing?${sp?.toString() || ""}`}
-              className="relative mx-auto mt-6 inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+              className="relative mx-auto mt-9 inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.05]"
+              style={{ backgroundColor: brandFill }}
               data-testid="step-5-buyer-activate"
             >
               <span aria-hidden>⚡</span>
-              Activate {company} for $99/mo →
+              Activate {company} for $99/mo
             </a>
           ) : null}
           {/**
-           * Footer rebuild: ONE consistent typographic style for both
-           * micro-lines (compliance + demo-preview). Both render as the
-           * same `text-[11px] uppercase tracking-[0.16em] text-slate-500`
-           * — buyer feedback: prior version mixed a pill + a separate
-           * uppercase line and looked like "two different fonts."
-           * Material 3 + NN/g 2024: stack micro-text in the same
-           * typographic register at the foot of a success state; the
-           * back-link gets visual weight as the only color/size break.
+           * Round-8 footer rebuild — buyer feedback flagged the previous
+           * stacked uppercase pills as "ugly + inconsistent." Removed the
+           * "Preview" disclosure entirely (the buyer is already oriented
+           * by the persistent top demo strip showing "Preview for X" +
+           * branded header — repeating it here is redundant chrome).
+           *
+           * Kept the medical disclaimer (US state medical-practice law
+           * + FTC Health Products Compliance Guidance Dec 2022 baseline:
+           * a healthcare-adjacent flow that just showed a weight-progress
+           * chart needs a software-not-care disclaimer at the close).
+           * Restyled as plain sentence-case body text (not uppercase
+           * tracking) so it reads as natural language, not as a label.
            */}
-          <div className="relative mt-12 flex flex-col items-center gap-2">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-              General information only · a licensed provider confirms next steps
+          <div className="relative mt-12 flex flex-col items-center gap-5">
+            <p className="text-xs leading-relaxed text-slate-500">
+              General information only — a licensed provider confirms next steps.
             </p>
-            {isDemoMode ? (
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-                Preview · this is how the completed step appears in your branded flow
-              </p>
-            ) : null}
             <a
               href={buildBrandedDemoReturnHref(sp)}
-              className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-700 transition hover:text-slate-900"
+              className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-700 transition hover:text-slate-900"
             >
               <span aria-hidden>←</span> Back to home
             </a>
