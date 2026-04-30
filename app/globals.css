@@ -56,107 +56,28 @@ html {
 }
 
 /**
- * Chart left-to-right reveal — slowed and delayed for "epic" first-
- * paint feel (Apple Keynote chart-build / Linear Insights premium
- * mount / Vercel Analytics first-render). Sequence:
+ * Chart card — no card-level reveal. The card itself paints
+ * normally with the rest of step 2 (no clip-path animation, no
+ * delay, no shimmer). Only the LINE inside the chart draws slowly
+ * left-to-right via Recharts' `animationDuration` (controlled in
+ * `GlpJourneyProgressChart.tsx`).
  *
- *   0 – 600ms   waiting (chart held at 0% — the rest of step 2
- *               settles first; nothing happens on the chart)
- *   600 – 2900ms reveal (clip-path slides from right-clipped to
- *               fully visible over 2.3s with ease-out — slow enough
- *               to feel like the chart is being computed in real
- *               time, fast enough to keep the buyer engaged)
- *   2900ms+     finish-shimmer fires (see ::after below)
+ * Buyer pass 15 feedback: holding the entire card at clip 100% for
+ * 600ms felt like a page-load failure. Reverted to "page renders
+ * instantly + only the data line animates" — the conventional
+ * pattern in Stripe Sigma, Linear Insights, Vercel Analytics, and
+ * Mixpanel's chart-mount behavior.
  *
- * Total arc ~4.4s — long for a UI element but EXPECTED for a hero
- * data-viz on a sales-led landing page. Stripe Sigma demo, Linear
- * Insights launch reel, Vercel Analytics OG videos all hold the
- * chart's first paint for 2-3s for the same psychological effect:
- * the slow draw signals "this is being computed FOR YOU, not just
- * loaded from cache." (Stripe motion 2025 + Apple HIG 2025: hero
- * data-viz reveals warrant 1.5-2.5s holds; longer than UI controls.)
- *
- * Honors prefers-reduced-motion: skips the animation entirely.
+ * `.animate-glp-chart-reveal` is kept as a no-op class so existing
+ * call sites don't error; it intentionally has no animation.
  */
-@keyframes glp-chart-reveal-ltr {
-  0% {
-    clip-path: inset(0 100% 0 0);
-    opacity: 0.45;
-  }
-  6% {
-    clip-path: inset(0 100% 0 0);
-    opacity: 0.55;
-  }
-  100% {
-    clip-path: inset(0 0 0 0);
-    opacity: 1;
-  }
-}
 .animate-glp-chart-reveal {
-  position: relative;
-  /** Hold pose at 0% before the reveal so it visibly starts AFTER the rest of step 2 has settled — uses a 600ms animation-delay rather than an absolute keyframe pause so the easing curve still applies cleanly to the reveal portion. */
-  animation: glp-chart-reveal-ltr 2300ms cubic-bezier(0.22, 1, 0.36, 1) 600ms both;
-}
-
-/**
- * Finish-shimmer (CSS-only, fires every mount). A soft brand-tinted
- * highlight sweeps left → right across the chart card AFTER the LTR
- * reveal completes (delay 1500ms, duration 1100ms). Pure CSS so it's
- * not gated by useState/useEffect timing or sessionStorage flags —
- * always renders, always one-shot, then stays transparent (`forwards`).
- *
- * Pattern: Apple Keynote chart-finish polish / Vercel Analytics first-
- * paint sweep / Linear "ready" flash. Sequential reveal → shimmer reads
- * as "drawing in → finished, ready to scan" (Material 3 + Apple HIG
- * 2025: sequential animation phases beat overlapping ones at signaling
- * load completion).
- */
-.animate-glp-chart-reveal::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  border-radius: inherit;
-  background: linear-gradient(
-    105deg,
-    transparent 32%,
-    color-mix(in srgb, var(--brand-primary, #0f172a) 22%, white 78%) 50%,
-    transparent 68%
-  );
-  background-size: 220% 100%;
-  background-position: -120% 0;
-  background-repeat: no-repeat;
-  mix-blend-mode: screen;
-  opacity: 0;
-  /** Fires AFTER the slowed reveal: 600ms hold + 2300ms reveal = 2900ms total, then shimmer sweeps for 1300ms. */
-  animation: glp-chart-finish-shimmer 1300ms cubic-bezier(0.22, 1, 0.36, 1) 2900ms 1 forwards;
-  z-index: 25;
-}
-
-@keyframes glp-chart-finish-shimmer {
-  0% {
-    background-position: -120% 0;
-    opacity: 0;
-  }
-  15% {
-    opacity: 1;
-  }
-  85% {
-    opacity: 1;
-  }
-  100% {
-    background-position: 220% 0;
-    opacity: 0;
-  }
+  /* intentionally no animation — line-only draw is handled inside Recharts */
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-glp-step2-rise,
-  .animate-glp-chart-reveal {
+  .animate-glp-step2-rise {
     animation: none;
-  }
-  .animate-glp-chart-reveal::after {
-    display: none;
   }
 }
 

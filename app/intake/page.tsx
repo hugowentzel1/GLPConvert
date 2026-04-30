@@ -54,7 +54,7 @@ export default function IntakePage({
        */}
       {demo ? (
         <div
-          className="w-full border-t border-slate-200 pt-10 pb-10 md:pt-12 md:pb-12"
+          className="w-full border-t border-slate-200 pt-10 md:pt-12"
           data-intake-demo-social-proof
         >
           <IntakeDemoQuoteStrip />
@@ -96,16 +96,22 @@ export default function IntakePage({
            * subtle brand touches, no text recolor, no chrome stripes.
            */}
           {/**
-           * Even-gap wrapper: mt-10/md:mt-12 above the box mirrors the
-           * parent's pb-10/md:pb-12 below the box, so the white card
-           * floats with identical breathing room top and bottom.
-           * Buyer pass 14 feedback: prior 32px-above / 32px-below
-           * looked uneven because the quote-strip's bottom card edge
-           * sat tighter than the trust-strip's top edge. Equal padding
-           * on both sides of the card removes the perceptual mismatch.
+           * Even-gap wrapper: gap above the box matches the gap below
+           * EXACTLY. Subtle but critical: `IntakePageFrame` wraps all
+           * intake children with `space-y-8 md:space-y-10`, which
+           * provides a 32–40px gap between this block and the funnel
+           * below. Adding `pb-*` on this parent would have STACKED on
+           * top of that, doubling the visual gap below the card vs.
+           * above it. Solution: drop the parent's pb entirely and set
+           * `mt-8 md:mt-10` on the box wrapper so the gap above
+           * (mt-8/10 from box wrapper) = the gap below (space-y-8/10
+           * from IntakePageFrame). Pixel-perfect symmetry around the
+           * card. (Buyer pass 15 feedback — they screenshot-confirmed
+           * the prior version still felt asymmetric; this is the
+           * actual root cause.)
            */}
           <div
-            className="mx-auto mt-10 w-full max-w-4xl px-4 md:mt-12"
+            className="mx-auto mt-8 w-full max-w-4xl px-4 md:mt-10"
             data-testid="intake-capability-strip"
           >
             <div
