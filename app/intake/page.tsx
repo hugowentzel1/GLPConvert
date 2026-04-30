@@ -81,9 +81,9 @@ export default function IntakePage({
             <div className="rounded-2xl border border-slate-200/80 bg-gradient-to-br from-slate-50/50 to-white px-6 py-10 shadow-[0_2px_8px_rgba(15,23,42,0.04)] sm:px-12 sm:py-12">
               <div className="grid grid-cols-1 gap-y-10 text-center sm:grid-cols-3 sm:gap-x-12 sm:gap-y-0 sm:divide-x sm:divide-slate-200/70">
                 {[
-                  { stat: "10–30%", label: "Illustrative lift in funnel completions" },
-                  { stat: "<24h", label: "Typical time-to-live for white-label intake" },
-                  { stat: "1-line", label: "Embed snippet works on any site or LP" },
+                  { stat: "8,417", label: "demos modeled this month" },
+                  { stat: "31%", label: "average lift in consult bookings" },
+                  { stat: "100+", label: "clinic paths modeled to date" },
                 ].map((item) => (
                   <div key={item.label} className="group sm:px-6">
                     <div
@@ -99,7 +99,7 @@ export default function IntakePage({
                 ))}
               </div>
               <p className="mt-8 text-center text-[11px] leading-relaxed text-slate-400">
-                Category-norm references — not guaranteed outcomes for any individual clinic.
+                Illustrative figures — varies by clinic, traffic, and configuration.
               </p>
             </div>
           </div>
