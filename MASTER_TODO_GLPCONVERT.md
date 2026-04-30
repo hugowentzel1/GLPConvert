@@ -13,12 +13,12 @@
 5. [Audit snapshot — current state](#-audit-snapshot)
 6. [Unified chronological queue (Phase R / 0–10)](#-unified-queue)
 7. [Wellspire LLC multi-brand ladder (W001+)](#-wellspire-ladder)
-8. [Marketing — original cold email setup (M000–M008)](#-marketing-m000-m008)
-9. [**Phase OUT — outbound launch (April 2026, infra-reuse plan)**](#-phase-out)
-   - OUT-1 → OUT-6: cold email sequence
-   - **OUT-7: LinkedIn cold DM, click-by-click**
-   - OUT-8: reply handling + ongoing ops
-   - Cost summary + sources
+8. [Legacy: M000–M008 cold-email setup (superseded — see Phase OUT)](#-marketing-m000-m008)
+9. [**🚀 Phase OUT — outbound launch (April 2026, infra-reuse plan)**](#-phase-out) — the active plan
+   - **PART A — 📧 Cold email at scale** (OUT-1 → OUT-6)
+   - **PART B — 💼 LinkedIn cold DM** (OUT-7)
+   - **PART C — ⚙️ Reply handling + ongoing ops** (OUT-8)
+   - Cost summary + sources cited
 
 ---
 
@@ -954,7 +954,15 @@ Aligned with `PRODUCT_STRATEGY_GLPCONVERT.md`. Execute in parallel with human in
 
 <a id="-marketing-m000-m008"></a>
 
-## 📧 Marketing — original cold-email setup (M000–M008)
+## 📧 Legacy: M000–M008 cold-email setup (superseded — see Phase OUT below)
+
+> ⚠️ **This section is the older/generic plan from before the Sunspire-infrastructure-reuse research.**
+> **Use [Phase OUT](#-phase-out) instead** — it reuses every paid Sunspire subscription
+> (Instantly, Clay, Make.com, Airtable, ZeroBounce, Google Workspace, Sales Navigator,
+> Heyreach) so GLPConvert outbound launches at marginal cost (~$135-180/mo vs $700-900).
+>
+> M000–M008 below is kept for reference + because **M000 (Resend transactional API)** is
+> still required for product email regardless of the cold-outbound plan.
 
 **Order before buying cold-email domains (M001):** (1) **Wellspire / W001+** far enough for real business identity. (2) **`M000 — Resend`** so the **app** can send mail from a **verified domain** (lead notify, transactional, optional broadcasts—Resend is **not** a replacement for **Google Workspace + Instantly** for high-volume cold outbound; it powers **product** email and can complement ops). (3) **Stripe live** so production checkout matches real money **before** you drive serious traffic from cold email. (4) Then **M001+** (domains for Workspace cold send, DNS, Instantly, etc.).
 
@@ -1164,7 +1172,13 @@ Screenshots-style detail: **`BLINDSPOT-GUIDE.md`** (“Verify Cold Email Domain 
 
 **Net new monthly cost: $0 if Sunspire already has Sales Nav + Heyreach. ~$250/mo if not.**
 
-OUT-1 · HUMAN — New sending domains (Day 1)
+# 📧 PART A — Cold email at scale (OUT-1 → OUT-6)
+
+> Goal: 50,000+ deliverable cold emails per month with personalized GLPConvert demo
+> URLs, reusing Sunspire's existing Instantly + Clay + Make + Airtable + ZeroBounce
+> stack. Net new spend: 4 sending domains (~$40/yr) + 16-20 inboxes ($120-145/mo).
+
+## OUT-1 · HUMAN — New sending domains (Day 1)
 
 [ ] OUT-1A. Buy 4 GLPConvert-themed sending domains at Cloudflare Registrar or Porkbun (~$10/yr each):
    - `getglpconvert.com`
@@ -1175,7 +1189,7 @@ OUT-1 · HUMAN — New sending domains (Day 1)
 [ ] OUT-1C. Create 4-5 user inboxes per new domain (real first names): `jane@getglpconvert.com`, `mike@useglpconvert.com`, etc. Total = 16-20 GLPConvert inboxes alongside the existing Sunspire ones.
 [ ] OUT-1D. Set each user's display name to "First Last" — never "Sales" or "Outreach"
 
-OUT-2 · HUMAN — DNS authentication (Day 1-2)
+## OUT-2 · HUMAN — DNS authentication (Day 1-2)
 
 For each of the 4 new domains in Cloudflare DNS:
 
@@ -1187,7 +1201,7 @@ For each of the 4 new domains in Cloudflare DNS:
 [ ] OUT-2F. Add all 4 domains to **Google Postmaster Tools** (postmaster.google.com); target spam-rate < 0.10%, hard block at 0.30% (2025 enforcement floor)
 [ ] OUT-2G. Set up tracking subdomain: `link.glpconvert.com` CNAME → Instantly's tracking endpoint (same pattern as `link.sunspiredemo.com`)
 
-OUT-3 · HUMAN — Instantly setup (Day 2-3, then 21-day burn)
+## OUT-3 · HUMAN — Instantly setup (Day 2-3, then 21-day burn)
 
 [ ] OUT-3A. In your existing Instantly account: Settings → Email Accounts → Add → connect all 16-20 new GLPConvert inboxes via OAuth (same flow as Sunspire inboxes)
 [ ] OUT-3B. Enable Instantly's free built-in warmup on every new inbox: ramp 10→20→40→70→120/day over 21 days, reply-rate 30%, weekend sends OFF for first 14 days
@@ -1196,7 +1210,7 @@ OUT-3 · HUMAN — Instantly setup (Day 2-3, then 21-day burn)
 [ ] OUT-3E. Throttle: max 30/inbox/day, 1 send / 90 sec / inbox (Apollo State of Outbound 2026: inbox placement drops sharply above 50/day per inbox post-Gmail April 2024 changes)
 [ ] OUT-3F. Bounce auto-remove threshold = 4%, reply-auto-pause = ON
 
-OUT-4 · HUMAN — Lead pipeline reusing Clay → ZeroBounce → Instantly (Days 3-7)
+## OUT-4 · HUMAN — Lead pipeline reusing Clay → ZeroBounce → Instantly (Days 3-7)
 
 [ ] OUT-4A. In Clay (existing account): create new table "GLPConvert Prospects". Import lead source from Apollo, ZoomInfo, or LinkedIn Sales Navigator search.
 [ ] OUT-4B. Apollo search: titles `Owner / Medical Director / Practice Manager / Clinic Manager`, industries `Medical Practice / Health Care / Wellness Centers / Telehealth`, keywords `GLP-1 / weight loss / semaglutide / tirzepatide / medical weight management`. US clinics first (regulatory simplicity), then UK/CA/AU.
@@ -1214,7 +1228,7 @@ OUT-4 · HUMAN — Lead pipeline reusing Clay → ZeroBounce → Instantly (Days
 [ ] OUT-4G. Reuse existing **Airtable base** OR clone Sunspire's "Leads" table structure into a new GLPConvert base for status tracking
 [ ] OUT-4H. Enrichment cost at 50k volume: ~$1,050 (Brandfetch ~$1,000 + Logo.dev fallback ~$50). Apollo email enrichment if not in Clay's data: +$1,800 bulk.
 
-OUT-5 · HUMAN — Compliance (Day 7)
+## OUT-5 · HUMAN — Compliance (Day 7)
 
 [ ] OUT-5A. Publish `/privacy-cold-outreach` on glpconvert.com — list data sources (Apollo, public web), GDPR Art. 6(1)(f) legitimate-interest basis (settled per EDPB Guidelines 8/2020), deletion email, retention period
 [ ] OUT-5B. Confirm CAN-SPAM physical mailing address + working unsubscribe in every Instantly template
@@ -1222,7 +1236,7 @@ OUT-5 · HUMAN — Compliance (Day 7)
 [ ] OUT-5D. NO tracking pixels (huge deliverability hit per Smartlead 2026 + EU ePrivacy consent trigger)
 [ ] OUT-5E. NO shortened URLs (bit.ly auto-flagged by Gmail spam classifier 2025)
 
-OUT-6 · HUMAN — Campaign launch (Day 22, after warmup)
+## OUT-6 · HUMAN — Campaign launch (Day 22, after warmup)
 
 [ ] OUT-6A. Build 4-step Instantly sequence:
    - Email 1 (Day 0): observation about their clinic + 1-line ask + demo link
@@ -1235,13 +1249,24 @@ OUT-6 · HUMAN — Campaign launch (Day 22, after warmup)
 [ ] OUT-6E. Scale to 1,000+/day by adding warmed inboxes/domains; A/B subject + first line; keep ONE link per email
 [ ] OUT-6F. Target steady state: 50,000/month across 16-20 inboxes × 30/day × 22 working days
 
-OUT-7 · HUMAN — LinkedIn cold DM, click-by-click (Day 22+, parallel to email)
+---
+
+# 💼 PART B — LinkedIn cold DM (OUT-7)
+
+> Goal: 1,200+ LinkedIn connection requests per month + multi-step DM sequence sending
+> the same personalized GLPConvert demo URL. Runs parallel to cold email, targets the
+> same clinic decision-makers via a different channel. Reuses Sunspire's Sales Navigator
+> + Heyreach if those subscriptions exist; otherwise +$169/mo Sales Nav + $79/mo Heyreach.
+> At 30% acceptance + 1% reply→demo→checkout, floor is ~12 paying clinics/month from
+> LinkedIn alone.
+
+## OUT-7 · HUMAN — LinkedIn cold DM, click-by-click (Day 22+, parallel to email)
 
 > **Goal:** Healthcare-clinic decision-makers (medical directors, clinic owners, practice managers, VPs of patient acquisition) at GLP-1 / weight-loss clinics. Reach via connection requests + soft DMs + the same personalized GLPConvert demo URL. Drives the same Stripe self-serve activation as cold email.
 >
 > **Reuse Sunspire's existing Sales Nav + LinkedIn automation tool if Sunspire has them.** If yes: $0 incremental. If no: ~$250/mo + $79/mo per additional automation seat.
 
-OUT-7.0 — Pre-flight: confirm Sunspire stack reuse
+### OUT-7.0 — Pre-flight: confirm Sunspire stack reuse
 
 [ ] OUT-7.0A. Open Sunspire's billing dashboard / receipts. Confirm whether Sunspire is currently subscribed to:
    - **LinkedIn Sales Navigator Advanced** ($169/mo, 2026 price). Required for unrestricted search filters + InMail credits.
@@ -1252,7 +1277,7 @@ OUT-7.0 — Pre-flight: confirm Sunspire stack reuse
    - Heyreach supports unified multi-account inboxes from a single dashboard — required if running 5+ LinkedIn personas.
 [ ] OUT-7.0C. If Sunspire has neither, sign up at heyreach.io. Click "Start free trial" → enter email + create password → confirm via email link → choose **Pro plan ($79/mo/seat)** at checkout.
 
-OUT-7.1 — LinkedIn account preparation (Days 1–7 if accounts new; skip if reusing aged Sunspire accounts)
+### OUT-7.1 — LinkedIn account preparation (Days 1–7 if accounts new; skip if reusing aged Sunspire accounts)
 
 > **Critical:** LinkedIn 2026 enforcement is strict. New accounts (< 6 months old, < 500 connections, no Sales Nav) get throttled or banned almost immediately under automation. Use only **aged, warmed accounts**.
 
@@ -1268,14 +1293,14 @@ OUT-7.1 — LinkedIn account preparation (Days 1–7 if accounts new; skip if re
 [ ] OUT-7.1C. Subscribe each account to **Sales Navigator Advanced** at linkedin.com/sales → "Try for free" → choose Advanced ($169/mo, 2026). Required for unrestricted lead-search + InMail credits.
 [ ] OUT-7.1D. In each LinkedIn account → Settings → Account preferences → set **timezone to match account location**. Heyreach respects timezone for sending hours; mismatched TZ triggers detection.
 
-OUT-7.2 — Connect accounts to Heyreach (Day 8)
+### OUT-7.2 — Connect accounts to Heyreach (Day 8)
 
 [ ] OUT-7.2A. Log into heyreach.io → Dashboard → "Connect LinkedIn Account" button (top right).
 [ ] OUT-7.2B. For each LinkedIn account: enter LinkedIn email + password. Heyreach uses **dedicated residential IPs** per account (configured via the dropdown — pick a residential IP near your account's claimed location). DO NOT share an IP across accounts.
 [ ] OUT-7.2C. Pass Heyreach's "Account Health Check" — green = ready to automate, yellow = needs more warmup, red = LinkedIn already flagged. Skip any red-flagged accounts (they're already burnt).
 [ ] OUT-7.2D. In each account's Heyreach settings, set **sending hours** to match the account's claimed timezone (e.g. 9am–5pm local). Disable weekend sends for the first 30 days.
 
-OUT-7.3 — Lead list build via Sales Navigator (Day 8–9)
+### OUT-7.3 — Lead list build via Sales Navigator (Day 8–9)
 
 [ ] OUT-7.3A. In Sales Navigator → "Leads" → "+ New search" → set filters:
    - **Title (current):** Owner, Founder, Medical Director, Practice Manager, Clinic Manager, VP Patient Acquisition, VP Operations, Director of Growth
@@ -1288,7 +1313,7 @@ OUT-7.3 — Lead list build via Sales Navigator (Day 8–9)
 [ ] OUT-7.3C. Sales Nav typically returns 5,000–15,000 leads matching this filter set. Export the first 2,500 to Heyreach via the **"Export to Heyreach" Chrome extension** (heyreach.io/lead-finder). Map the column `linkedin_url` as the unique key.
 [ ] OUT-7.3D. In Heyreach → Leads → Import → upload the CSV. Heyreach auto-deduplicates against your suppression list and existing campaigns.
 
-OUT-7.4 — Enrich leads with personalized demo URLs (Day 9–10)
+### OUT-7.4 — Enrich leads with personalized demo URLs (Day 9–10)
 
 > Same enrichment pipeline as cold email (Phase OUT-4). Reuse the existing Clay → Brandfetch → Logo.dev → demo_link formula.
 
@@ -1306,7 +1331,7 @@ OUT-7.4 — Enrich leads with personalized demo URLs (Day 9–10)
    ```
 [ ] OUT-7.4F. Export enriched CSV with: `linkedin_url, first_name, last_name, company_name, demo_link`. Re-import to Heyreach as updated lead set.
 
-OUT-7.5 — Build the Heyreach campaign (Day 10)
+### OUT-7.5 — Build the Heyreach campaign (Day 10)
 
 [ ] OUT-7.5A. In Heyreach → Campaigns → "+ Create campaign" → pick template: **"Connection + Multi-DM Sequence"**.
 [ ] OUT-7.5B. Name it: "GLPConvert Cold — LinkedIn Q2 2026".
@@ -1369,14 +1394,14 @@ OUT-7.5 — Build the Heyreach campaign (Day 10)
 [ ] OUT-7.5E. Sending hours: weekdays 9am–5pm local time per account. NO weekends for first 30 days.
 [ ] OUT-7.5F. Click "Start campaign." Heyreach will distribute leads across your 3–5 connected accounts via round-robin.
 
-OUT-7.6 — Monitor + tune (ongoing)
+### OUT-7.6 — Monitor + tune (ongoing)
 
 [ ] OUT-7.6A. **Daily for first 7 days:** check Heyreach dashboard for any account showing yellow/red health flags. If any account hits a LinkedIn warning, PAUSE that account for 48h, then resume at half volume.
 [ ] OUT-7.6B. **Weekly:** review acceptance rate per account. Healthy = 25–35%. Below 20% = your targeting is wrong (too senior, wrong vertical) — tighten Sales Nav filters. Above 40% = scale faster.
 [ ] OUT-7.6C. **Weekly:** review reply rate per step. Healthy = 8–15% on Step 3. Below 5% = your DM template isn't connecting; A/B-test the spintax variants.
 [ ] OUT-7.6D. **Reply handling:** Heyreach auto-pauses the sequence when a lead replies. Reply intent buckets in Heyreach inbox: positive / neutral / negative / OOO. Tag accordingly. Hand-reply within **4 business hours** (LinkedIn buyers expect speed; >24h reply rate kills warm intent).
 
-OUT-7.7 — DON'T do these (2026 LinkedIn dos/don'ts)
+### OUT-7.7 — DON'T do these (2026 LinkedIn dos/don'ts)
 
 - ❌ **No voice notes or video messages** for healthcare decision-makers. LinkedIn 2026 B2B Buyer Behavior data: clinical buyers rate voice notes **2.3× more intrusive** than tech buyers. Voice notes work for SaaS-to-SaaS sales, not for clinic owners.
 - ❌ **No "loved your post" comment-then-DM** — every clinic owner has seen this 50 times. Performs worse than no comment at all in 2026 (Heyreach Q1 2026 data).
@@ -1386,7 +1411,7 @@ OUT-7.7 — DON'T do these (2026 LinkedIn dos/don'ts)
 - ❌ **No Chrome-extension automation tools** in 2026 (Dux-Soup, etc.) — LinkedIn's 2025 detection update specifically targets headless browser extensions.
 - ❌ **Don't use LinkedIn Recruiter** for sales outreach — explicitly violates LinkedIn TOS, will get banned.
 
-OUT-7.8 — Personalization signals that work for clinic owners in 2026
+### OUT-7.8 — Personalization signals that work for clinic owners in 2026
 
 - ✅ Recent hire announcements (clinic just added an NP or RN — they're scaling intake)
 - ✅ New location / expansion posts
@@ -1395,7 +1420,7 @@ OUT-7.8 — Personalization signals that work for clinic owners in 2026
 - ✅ State telehealth license expansion announcements
 - ✅ Recent partnership announcements with med-spas or wellness brands
 
-OUT-7.9 — LinkedIn cost summary
+### OUT-7.9 — LinkedIn cost summary
 
 | Item | Monthly (per seat) | Notes |
 |---|---|---|
@@ -1406,7 +1431,7 @@ OUT-7.9 — LinkedIn cost summary
 | LinkedIn DM volume at 100/wk × 3 accounts × 4 wk | ~1,200 connection requests/mo | At 30% accept = ~360 new connections/mo |
 | Conversion floor at 1% reply→demo→checkout | ~12 paying clinics/mo | From LinkedIn alone, before email lift |
 
-OUT-7.10 — Sources cited (LinkedIn-specific)
+### OUT-7.10 — Sources cited (LinkedIn-specific)
 
 - Heyreach 2026 LinkedIn Limits Report (heyreach.io/resources, Jan 2026 rev)
 - LinkedIn Engineering Blog "Automation detection improvements" (Oct 2025)
@@ -1416,7 +1441,15 @@ OUT-7.10 — Sources cited (LinkedIn-specific)
 - r/SaaS LinkedIn automation thread Q1 2026 (independent corroboration of Heyreach reliability)
 
 
-OUT-8 · HUMAN — Reply handling + ongoing ops (always-on)
+---
+
+# ⚙️ PART C — Reply handling + ongoing ops (OUT-8)
+
+> Goal: triage inbound responses across both channels, monitor sender reputation, keep
+> the machine healthy. Same daily/weekly checklist whether the reply came from email
+> or LinkedIn.
+
+## OUT-8 · HUMAN — Reply handling + ongoing ops (always-on)
 
 [ ] OUT-8A. Instantly Unibox handles all 16-20 GLPConvert inbox replies in one view (separate from Sunspire's view via campaign filter)
 [ ] OUT-8B. Forward positive-intent replies to a master `sales@glpconvert.com` Workspace inbox via Instantly Inbox Rules
