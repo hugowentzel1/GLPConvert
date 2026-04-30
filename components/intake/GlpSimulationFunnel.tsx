@@ -1441,14 +1441,20 @@ export default function GlpSimulationFunnel() {
               </svg>
             </div>
 
-            {/* Eyebrow + Headline + Body — single tight cluster */}
-            <p className="mt-8 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">
+            {/* Eyebrow + Headline + Body — single centered cluster on
+                an even mt-4 cadence (eyebrow→headline→body all 16px
+                apart). Buyer pass 14: mt-2/mt-3 read as "stuck
+                together"; mt-4/mt-4 gives each line breathing room
+                without breaking the tight-cluster grouping. Material 3
+                + Apple HIG 2025: 16px is the standard cluster-internal
+                step for centered confirmation text. */}
+            <p className="mt-9 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">
               Complete · step 5 of 5
             </p>
-            <h2 className="mt-2 text-[1.75rem] font-semibold tracking-tight text-slate-900 sm:text-[2rem]">
+            <h2 className="mt-4 text-[1.75rem] font-semibold tracking-tight text-slate-900 sm:text-[2rem]">
               Your next step is ready
             </h2>
-            <p className="mt-3 text-[15px] leading-relaxed text-slate-600 sm:text-base">
+            <p className="mt-4 text-[15px] leading-relaxed text-slate-600 sm:text-base">
               {company} can review your plan and follow up based on the option you selected.
             </p>
 

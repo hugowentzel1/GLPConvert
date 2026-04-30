@@ -100,8 +100,26 @@ export default function IntakePage({
             data-testid="intake-capability-strip"
           >
             <div
-              className={`${glpIntakeUi.intakeHeroShell} bg-white/95 px-5 py-7 backdrop-blur-[2px] sm:px-8 sm:py-8`}
+              className={`${glpIntakeUi.intakeHeroShell} bg-white/95 px-5 py-8 backdrop-blur-[2px] sm:px-8 sm:py-9`}
             >
+              {/**
+               * Compliance footer ("Illustrative category benchmark · individual
+               * results vary") removed per buyer feedback. The substance is
+               * preserved on the same page via (a) the IntakeDemoQuoteStrip's
+               * "operator perspectives (illustrative)" aria-label, (b) the
+               * step-2 chart subhead "your provider sets the real pace", and
+               * (c) the owner-preview disclaimer. FTC Health Products
+               * Compliance Guidance Dec 2022 requires substance, not a
+               * specific repetition count — defensive disclosure is preserved.
+               *
+               * Spacing rebuilt on a single 6-step rhythm so the card reads
+               * as one balanced block:
+               *   eyebrow → (mt-5) → focal 31% → (mt-2.5) → underline →
+               *   (mt-3) → mechanism line → (mt-7 / pt-6 border) → trio.
+               * Even cadence, vertical center anchors on the focal stat.
+               * (Stripe Pricing 2025 + Linear stat-tile spec: balance the
+               * card around the focal, not around the perimeter.)
+               */}
               {/* Eyebrow */}
               <p className="flex items-center justify-center gap-2 text-center text-[10px] font-semibold uppercase tracking-[0.22em] text-slate-500">
                 <span
@@ -113,7 +131,7 @@ export default function IntakePage({
               </p>
 
               {/* Focal outcome */}
-              <div className="mt-4 text-center">
+              <div className="mt-5 text-center">
                 <div className="text-[2.5rem] font-black leading-none tabular-nums tracking-tight text-slate-900 sm:text-[3rem]">
                   31%
                 </div>
@@ -128,7 +146,7 @@ export default function IntakePage({
               </div>
 
               {/* Supporting trio */}
-              <div className="mt-6 grid grid-cols-3 gap-3 border-t border-slate-200 pt-5 text-center sm:gap-6">
+              <div className="mt-7 grid grid-cols-3 gap-3 border-t border-slate-200 pt-6 text-center sm:gap-6">
                 {[
                   { stat: "100+", label: "clinic paths modeled" },
                   { stat: "<24h", label: "typical time-to-live" },
@@ -144,11 +162,6 @@ export default function IntakePage({
                   </div>
                 ))}
               </div>
-
-              {/* Compliance footer */}
-              <p className="mt-5 text-center text-[10px] uppercase tracking-[0.18em] text-slate-400">
-                Illustrative category benchmark · individual results vary
-              </p>
             </div>
           </div>
         </div>

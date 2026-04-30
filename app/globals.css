@@ -56,19 +56,23 @@ html {
 }
 
 /**
- * Chart top-to-bottom reveal — Stripe Dashboard / Linear Insights /
- * Vercel Analytics chart-mount pattern. The chart card uses a CSS
- * mask animated from `inset(0 0 100% 0)` (fully clipped from below)
- * to `inset(0 0 0 0)` (fully visible) over 1.4s with ease-out. Reads
- * as a smooth top-down "drawing in" reveal that masks any sub-layer
- * flicker (sheen / sparkle / brand-pulse decorative loops fire
- * underneath). Material 3 motion + Apple HIG 2025: clip-path reveals
- * are the premium chart-mount pattern in 2026.
+ * Chart left-to-right reveal — Stripe Dashboard "draw in" / Linear
+ * Insights time-series-paint / Vercel Analytics first-render pattern.
+ * The chart card uses clip-path animated from `inset(0 100% 0 0)`
+ * (fully clipped from the right edge) to `inset(0 0 0 0)` (fully
+ * visible) over 1.4s with ease-out. Reads as a smooth left-to-right
+ * "drawing in" reveal — matches the natural left-to-right reading
+ * direction of a time-series chart so the brain anticipates the
+ * forward motion. Material 3 motion + Apple HIG 2025: directional
+ * reveals that mirror the data axis are the premium chart-mount
+ * pattern in 2026. Companion finish-shimmer fires once the reveal
+ * completes (see `.glp-intake-chart-reveal-scan` below) — a short
+ * brand-tinted sweep that signals "ready to scan".
  */
-@keyframes glp-chart-reveal-top-down {
+@keyframes glp-chart-reveal-ltr {
   0% {
-    clip-path: inset(0 0 100% 0);
-    opacity: 0.4;
+    clip-path: inset(0 100% 0 0);
+    opacity: 0.5;
   }
   100% {
     clip-path: inset(0 0 0 0);
@@ -76,13 +80,68 @@ html {
   }
 }
 .animate-glp-chart-reveal {
-  animation: glp-chart-reveal-top-down 1400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  position: relative;
+  animation: glp-chart-reveal-ltr 1400ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/**
+ * Finish-shimmer (CSS-only, fires every mount). A soft brand-tinted
+ * highlight sweeps left → right across the chart card AFTER the LTR
+ * reveal completes (delay 1500ms, duration 1100ms). Pure CSS so it's
+ * not gated by useState/useEffect timing or sessionStorage flags —
+ * always renders, always one-shot, then stays transparent (`forwards`).
+ *
+ * Pattern: Apple Keynote chart-finish polish / Vercel Analytics first-
+ * paint sweep / Linear "ready" flash. Sequential reveal → shimmer reads
+ * as "drawing in → finished, ready to scan" (Material 3 + Apple HIG
+ * 2025: sequential animation phases beat overlapping ones at signaling
+ * load completion).
+ */
+.animate-glp-chart-reveal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 32%,
+    color-mix(in srgb, var(--brand-primary, #0f172a) 20%, white 80%) 50%,
+    transparent 68%
+  );
+  background-size: 220% 100%;
+  background-position: -120% 0;
+  background-repeat: no-repeat;
+  mix-blend-mode: screen;
+  opacity: 0;
+  animation: glp-chart-finish-shimmer 1100ms cubic-bezier(0.22, 1, 0.36, 1) 1500ms 1 forwards;
+  z-index: 25;
+}
+
+@keyframes glp-chart-finish-shimmer {
+  0% {
+    background-position: -120% 0;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    background-position: 220% 0;
+    opacity: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .animate-glp-step2-rise,
   .animate-glp-chart-reveal {
     animation: none;
+  }
+  .animate-glp-chart-reveal::after {
+    display: none;
   }
 }
 
@@ -358,11 +417,19 @@ a.intake-nav-activate:hover::before {
 }
 
 /**
- * Signature one-shot reveal scan — Apple Keynote chart-reveal / Linear changelog /
- * Vercel Analytics first-load pattern. A brand-tinted vertical band sweeps across
- * the chart exactly once on mount while the area animation draws in, giving the
- * appearance of the line being painted by the scan. After it completes the layer
- * stays invisible (`forwards`) so it never competes with the looping animations.
+ * Signature finish shimmer — Apple Keynote chart-finish / Linear changelog
+ * "ready" sweep / Vercel Analytics first-paint polish. A brand-tinted vertical
+ * band sweeps across the chart exactly once **after** the LTR reveal
+ * completes, signalling "drawing finished — ready to scan". After it
+ * completes the layer stays invisible (`forwards`) so it never competes
+ * with the looping animations.
+ *
+ * Timing: reveal runs 0–1400ms (LTR clip-path); shimmer fires at 1450ms
+ * for 1100ms with a brighter highlight than the previous mid-reveal scan,
+ * so the shimmer reads as a discrete finishing flourish rather than as
+ * paint that's already underway. (Material 3 / Apple HIG 2025 motion:
+ * sequential reveals beat overlapping reveals at communicating "load
+ * complete".)
  */
 @media (prefers-reduced-motion: no-preference) {
   .glp-intake-chart-reveal-scan {
@@ -370,19 +437,19 @@ a.intake-nav-activate:hover::before {
     background: linear-gradient(
       90deg,
       transparent 0%,
-      transparent 38%,
-      color-mix(in srgb, var(--glp-scan-color) 24%, transparent) 47%,
-      color-mix(in srgb, var(--glp-scan-color) 55%, transparent) 50%,
-      color-mix(in srgb, var(--glp-scan-color) 24%, transparent) 53%,
-      transparent 62%,
+      transparent 32%,
+      color-mix(in srgb, var(--glp-scan-color) 32%, transparent) 44%,
+      color-mix(in srgb, var(--glp-scan-color) 70%, transparent) 50%,
+      color-mix(in srgb, var(--glp-scan-color) 32%, transparent) 56%,
+      transparent 68%,
       transparent 100%
     );
-    background-size: 250% 100%;
+    background-size: 240% 100%;
     background-position: -120% 0;
     background-repeat: no-repeat;
     mix-blend-mode: screen;
     opacity: 0;
-    animation: glp-intake-chart-reveal-scan 1.7s cubic-bezier(0.22, 1, 0.36, 1) 0.12s 1 forwards;
+    animation: glp-intake-chart-reveal-scan 1100ms cubic-bezier(0.22, 1, 0.36, 1) 1450ms 1 forwards;
   }
 }
 @media (prefers-reduced-motion: reduce) {
