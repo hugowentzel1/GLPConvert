@@ -1123,9 +1123,15 @@ Screenshots-style detail: **`BLINDSPOT-GUIDE.md`** (“Verify Cold Email Domain 
 
 ## 🚀 Phase OUT — outbound launch (April 2026, infra-reuse plan)
 
-> **Context:** Sunspire (your other B2B SaaS) already runs cold email at production scale on **Instantly** with 4 sending domains (`sunspiretool.com`, `getsunspire.com`, `usesunspire.com`, `sunspirequote.com`), Google Workspace inboxes, and a Clay → ZeroBounce → Instantly → Airtable pipeline. This plan **reuses every paid subscription** so GLPConvert outbound launches at marginal cost (~$120/mo extra ops + ~$10/yr per new domain).
+**OUT · HUMAN — Cold email + LinkedIn cold DM at scale, reusing Sunspire's existing stack**
+
+**When:** After **U038 (Stripe live)** + **M000 (Resend domain verified)** are green. Phase OUT runs in parallel with normal product work; warmup is a 21-day burn so start early.
+**What you're doing:** Stand up cold email (50k+/mo) + LinkedIn cold DM (1,200+ requests/mo) for GLPConvert by **reusing every paid subscription Sunspire already has** (Instantly, Clay, Make, Airtable, ZeroBounce, Google Workspace, Sales Navigator, Heyreach if applicable). Net new spend: 4 GLPConvert-themed sending domains (~$40/yr) + ~16-20 inboxes ($120-145/mo) + (maybe) LinkedIn tooling if not already paid.
+**More detail:** see the per-phase click-by-click below. Sources for every claim are cited inline + summarized at the end.
+
+> **Reuse context:** Sunspire (your other B2B SaaS) already runs cold email at production scale on **Instantly** with 4 sending domains (`sunspiretool.com`, `getsunspire.com`, `usesunspire.com`, `sunspirequote.com`), Google Workspace inboxes, and a Clay → ZeroBounce → Instantly → Airtable pipeline (per `/Users/hugowentzel/sunspire-clean/COMPLETE-LAUNCH-RUNBOOK.md`). This plan **reuses every paid subscription** so GLPConvert outbound launches at marginal cost (~$120/mo extra ops + ~$10/yr per new domain).
 >
-> Resend is already integrated for transactional email (onboarding after Stripe checkout) — that's separate from cold outbound and stays as-is.
+> Resend is already integrated for **transactional** email (onboarding after Stripe checkout) — that's separate from cold outbound and stays as-is.
 
 ### Sending-domain decision (the single most important call)
 

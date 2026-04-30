@@ -14,30 +14,16 @@
 export const INTAKE_DEMO_HERO_QUOTES = [
   {
     quote:
-      "Same ad spend, more booked consults inside the first month. Patients arrive primed — our team stopped re-teaching the basics on every call.",
+      "Same ad spend, noticeably more booked consults inside the first month. Patients arrive primed — our team stopped repeating the basics on every call.",
     name: "Jordan M.",
-    role: "Owner & Founder",
-    orgLine: "Boutique med spa · Southwest US",
+    role: "Owner",
+    orgLine: "Boutique med spa, Southwest US",
   },
   {
     quote:
-      "Fewer dropped clicks, more consults from the same traffic. Fully branded to our scheduler, one tap away — and our CRM didn't move an inch.",
+      "Less leakage from paid clicks, more consults from the same traffic. Branded end-to-end with our scheduling link one tap away — and our CRM didn't move an inch.",
     name: "Priya K.",
-    role: "Director of Growth",
+    role: "Growth lead",
     orgLine: "Multi-state telehealth clinic",
-  },
-  {
-    quote:
-      "The branded patient flow lifted our consult-show rate noticeably in month one. We just stopped losing the warm clicks between ad and calendar.",
-    name: "Marcus E.",
-    role: "VP, Patient Acquisition",
-    orgLine: "Integrated weight-health network · Southeast US",
-  },
-  {
-    quote:
-      "Dropped the embed onto our existing booking page in under an hour. CRM webhook hit our HubSpot pipeline cleanly — no integration sprint required.",
-    name: "Maria L.",
-    role: "Operations Director",
-    orgLine: "Regional clinic group · 4 locations",
   },
 ] as const;
