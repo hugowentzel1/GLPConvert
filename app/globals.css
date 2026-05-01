@@ -56,32 +56,44 @@ html {
 }
 
 /**
- * Chart card paints instantly with the rest of step 2 — but the
- * Area LAYER inside the chart (line stroke + fill polygon + dots)
- * is clip-pathed L→R via CSS so the LINE appears to draw in slowly
- * after the page settles.
+ * Chart card title + subtitle paint instantly with the rest of step
+ * 2 — but the entire chart CANVAS (axes, gridlines, labels, area
+ * fill, line stroke, dots) is clip-pathed L→R via CSS so the WHOLE
+ * graph reveals from left to right after the page settles.
  *
- * Why CSS clip-path on .recharts-area instead of Recharts'
+ * Buyer pass 18: prior implementation clipped only `.recharts-area`,
+ * which left the axis labels, baseline, and chart "outline"
+ * fully visible from t=0 — the line then drew over an already-visible
+ * frame, which the buyer described as "outline of the graph there
+ * before it loads in". New implementation clips `.recharts-wrapper`
+ * (the inner SVG container) so EVERYTHING inside the chart canvas
+ * reveals together, left-to-right.
+ *
+ * Why CSS clip-path on .recharts-wrapper instead of Recharts'
  * `isAnimationActive`: Recharts 3.x's built-in area-draw animation
  * does NOT run reliably under React 18 strict mode (the dev double-
  * mount short-circuits the internal `react-smooth` lifecycle, so
  * `<Area>` re-renders with the full path on first paint). CSS
- * clip-path on the parent <g> is deterministic — it always animates,
+ * clip-path on the SVG wrapper is deterministic — it always animates,
  * always over the same duration, no JS lifecycle dependencies.
  *
  * Sequence:
- *   0 – 800ms   chart card visible, axes drawn, no line yet
- *   800 – 4300ms area + line clip-path animates from inset(0 100% 0 0)
- *               to inset(0 0 0 0) — line "grows" L→R over 3.5s
- *   4300ms+     fully revealed, line stays in place
+ *   0 – 800ms   chart card visible (title + subtitle + legend);
+ *               chart canvas held at clip 100% (NOTHING visible
+ *               inside the chart area — no axes, no baseline, no
+ *               line, no labels)
+ *   800 – 4300ms clip-path animates from inset(0 100% 0 0) to
+ *               inset(0 0 0 0); axes + line + labels reveal L→R
+ *   4300ms+     fully revealed
  *
  * Honors prefers-reduced-motion: skips the clip-path animation.
  *
  * Pattern source: Stripe Dashboard / Linear Insights / Vercel
- * Analytics first-render — chart card paints instantly, data line
- * draws in afterward as a focal moment.
+ * Analytics first-render — chart canvas reveals as a single L→R
+ * unit; the title/legend paint instantly so the buyer knows what's
+ * about to render.
  */
-.glp-intake-chart-card .recharts-area {
+.glp-intake-chart-card .recharts-wrapper {
   animation: glp-area-line-reveal 3500ms cubic-bezier(0.22, 1, 0.36, 1) 800ms both;
   clip-path: inset(0 100% 0 0);
 }
@@ -103,7 +115,7 @@ html {
   .animate-glp-step2-rise {
     animation: none;
   }
-  .glp-intake-chart-card .recharts-area {
+  .glp-intake-chart-card .recharts-wrapper {
     animation: none;
     clip-path: none;
   }

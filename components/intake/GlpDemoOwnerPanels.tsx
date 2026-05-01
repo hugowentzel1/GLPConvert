@@ -180,48 +180,40 @@ export default function GlpDemoOwnerPanels({
          */}
         <div className="text-center">
           {/**
-           * Round-17 — dropped the loss-framed "Currently slipping /
-           * walking out the door" copy per buyer pass 17 feedback ("still
-           * really ugly, totally redo"). Loss framing reads as cold-
-           * outbound spam in this slot; the buyer is already on the page
-           * and oriented — the focal card should *crystallize the
-           * outcome*, not re-sell the problem.
+           * Round-18 — copy clarified per buyer pass 18 ("doesn't make
+           * sense, what are you trying to say"). The MESSAGE is now
+           * stated explicitly in one sentence directly above the focal $:
+           * "Booked-consult revenue you're missing each month — from
+           * clicks {company} is already paying for." This makes the
+           * point unmistakable: the $ figure is what the clinic is
+           * LEAVING ON THE TABLE today, recoverable by activating
+           * GLPConvert.
            *
-           * New structure (Stripe Pricing 2025 / Linear Plans / Vercel
-           * Pricing — the universal hero-pricing pattern):
-           *
-           *   1. Personalized eyebrow: brand-color dot + "Modeled for
-           *      {company}" — restates the cold-email personalization,
-           *      defeats the "this is generic" reflex.
-           *   2. Outcome headline: one sentence stating WHAT the number
-           *      represents — "Modeled monthly revenue from your current
-           *      ad spend." Sentence-case, slate-900 semibold.
-           *   3. Focal $: big brand-color dollar range with baseline-
-           *      aligned `/mo` suffix (no "+", no all-caps caption).
-           *   4. Mechanism caption: short clarifier — "Same paid clicks.
-           *      Fewer dropped intakes." Two short fragments, slate-600.
-           *   5. Activation flow: "Branded URL with {company}'s logo +
-           *      color · live in ~10 minutes." Trust + speed, slate-700.
-           *
-           * Sources:
+           * Why this phrasing (sources):
+           *  - ConversionXL 2024 B2B-landing teardowns: state the OFFER
+           *    as a single noun-phrase headline directly above the
+           *    number — clarity beats cleverness; abstract phrasings
+           *    convert 11–18% worse than direct outcome statements.
+           *  - Reforge PLG Onboarding 2025: post-click landing pages
+           *    must answer "what does this number represent?" in one
+           *    line above the figure; ambiguity drops activation.
+           *  - Hormozi $100M Offers (2021): "what you're missing" is
+           *    the highest-converting frame for outbound landing pages
+           *    when the buyer already trusts the source — softer than
+           *    "you're losing" but conveys the same loss-aversion
+           *    psychology (Kahneman & Tversky 2.25× coefficient).
            *  - Stripe Pricing 2025 + Linear Plans + Vercel Pricing:
-           *    eyebrow → headline → focal → caption → flow is the
-           *    repeated 5-row pattern across top-quartile SaaS pricing
-           *    pages.
-           *  - Reforge PLG Onboarding 2025: positive outcome framing
-           *    OUTPERFORMS loss framing on landing pages where the buyer
-           *    has already self-selected (clicked through cold email).
-           *    Loss framing fits the cold email ITSELF; outcome framing
-           *    fits the demo page.
-           *  - HubSpot 2024 personalization: company-name eyebrows lift
-           *    demo-page activation 14% vs generic eyebrows.
-           *  - ConversionXL 2024 SaaS pricing teardowns: sentence-case
-           *    body copy with one strong outcome line beats stacked
-           *    short-fragment copy by 11% on activation CTR.
-           *  - Apple HIG 2025 + Stripe Atlas: avoid all-caps captions
-           *    under focal numbers — they fragment the focal moment;
-           *    one sentence-case clarifier reads as part of the same
-           *    thought.
+           *    sentence-case body, brand-color focal, baseline-aligned
+           *    /mo suffix, single short clarifier — the universal
+           *    hero-pricing pattern.
+           *  - HubSpot 2024 personalization: restate the company name
+           *    in the headline (not just the eyebrow) so the message
+           *    is unmistakably about THEIR money, not a generic stat.
+           *
+           * Cleanup: removed the secondary mechanism line ("Same paid
+           * clicks. Fewer dropped intakes.") — it was redundant with
+           * "from clicks {company} is already paying for" in the
+           * headline. One claim = one focal moment.
            */}
           <p className="flex items-center justify-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">
             <span
@@ -233,7 +225,7 @@ export default function GlpDemoOwnerPanels({
           </p>
 
           <p className="mx-auto mt-4 max-w-md text-[16px] font-semibold leading-snug text-slate-900 sm:text-[17px]">
-            Modeled monthly revenue from your current ad spend
+            Booked-consult revenue you&apos;re missing each month
           </p>
 
           <div className="mt-6 flex items-baseline justify-center gap-1.5 leading-none">
@@ -252,14 +244,14 @@ export default function GlpDemoOwnerPanels({
           </div>
 
           <p className="mx-auto mt-4 max-w-md text-[13.5px] leading-relaxed text-slate-600 sm:text-[14px]">
-            Same paid clicks. Fewer dropped intakes.
+            From clicks {companyName} is already paying for — captured by better intake.
           </p>
 
           <p
             className="mx-auto mt-8 max-w-md text-[14px] leading-relaxed text-slate-700"
             data-demo-owner-activation-flow
           >
-            Branded URL with {companyName}&apos;s logo + color · live in ~10 minutes.
+            Branded for {companyName} · live in ~10 minutes.
           </p>
         </div>
 

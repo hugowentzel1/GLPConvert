@@ -145,14 +145,28 @@ export default function IntakePage({
                 Why clinics activate
               </p>
 
-              {/* Focal outcome */}
+              {/* Focal outcome — typographic scale harmonized with the
+                 owner-card $ focal (text-[46px] sm:text-[56px] font-black
+                 tabular-nums tracking-tight) so both focal numbers on the
+                 page read as one design system. Buyer pass 18: prior 2.5–3rem
+                 felt smaller than other focal numbers and detached from the
+                 site's hero-stat treatment. Now sized at 44/52px (slightly
+                 below the $ focal at 46/56px so the $ stays the climactic
+                 number, while the social-proof stat now reads as part of
+                 the same family). Stripe Pricing 2025 + Linear Plans + Vercel
+                 Pricing — top-quartile SaaS pages use a single focal-number
+                 type-treatment across the page; differentiate by SIZE only,
+                 not by family/weight/tracking. */}
               <div className="mt-5 text-center">
-                <div className="text-[2.5rem] font-black leading-none tabular-nums tracking-tight text-slate-900 sm:text-[3rem]">
+                <div
+                  className="text-[2.75rem] font-black leading-none tabular-nums tracking-tight text-slate-900 sm:text-[3.25rem]"
+                  style={{ fontFeatureSettings: '"tnum" 1, "ss01" 1' }}
+                >
                   31%
                 </div>
                 <span
                   aria-hidden
-                  className="mx-auto mt-2.5 block h-[3px] w-10 rounded-full"
+                  className="mx-auto mt-3 block h-[3px] w-10 rounded-full"
                   style={{ backgroundColor: "var(--brand-primary)" }}
                 />
                 <p className="mx-auto mt-3 max-w-md text-[14px] font-medium leading-snug text-slate-700 sm:text-[15px]">
