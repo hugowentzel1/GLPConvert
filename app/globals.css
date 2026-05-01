@@ -129,36 +129,75 @@ html {
  * at full opacity instantly.
  */
 
-/* Line stroke: clipped invisible at t=0, draws L→R after 400ms hold */
-.glp-intake-chart-card .recharts-area-curve {
+/* Buyer pass 26 chart reveal — definitive layered behavior:
+ *
+ *   ALWAYS-ON (visible at t=0, no animation):
+ *     • Axes (recharts-cartesian-axis): x-axis labels (Start, Month 1,
+ *       Month 3, …) and y-axis labels (0%, 25%, 50%, 75%, 100%).
+ *     • Gridlines (recharts-cartesian-grid).
+ *     • Card frame, title "Modeled momentum", subtitle, legend.
+ *     • Y-axis title "Toward your stated goal" and x-axis title
+ *       "Time (months from start)".
+ *
+ *   CLIPPED L→R (data layer — line, fill, dots all draw together
+ *   after 400ms hold over 3000ms):
+ *     • .recharts-area (the entire <Area> group: fill polygon +
+ *       line stroke + dots). Single clip-path on the parent <g>
+ *       reveals all three children synchronously.
+ *     • .recharts-line (sheen + glow + brand-pulse <Line> overlays).
+ *       Same animation timing as .recharts-area so they reveal
+ *       in lockstep with the main line.
+ *
+ *   Why this kills flicker:
+ *     • Same animation name, same delay, same duration on EVERY
+ *       data layer → all start at t=0, all hit the same clip-path
+ *       waypoints to the millisecond. No phase drift between
+ *       fill / line / dots / sheen.
+ *     • Axes + gridlines are SIBLINGS of .recharts-area in the SVG
+ *       and are not inside any animated parent — they paint once
+ *       at mount and never re-rasterize during the line draw.
+ *     • Decorative SVG <animate> on gradient stops + dot halos
+ *       all begin="3.5s" or later — no continuous gradient drift
+ *       during the L→R reveal. Same for CSS lux-shimmer + sparkle
+ *       (animation-delay: 3500ms).
+ *     • will-change: clip-path on .recharts-area + .recharts-line
+ *       → each is on its own GPU composite layer, the clip-path
+ *       animation runs on the compositor thread, no main-thread
+ *       paint per frame.
+ *
+ *   Sequence:
+ *     0ms          chart frame fully painted (axes + labels + gridlines
+ *                  + title + legend visible). Data layers held at
+ *                  clip-path inset(0 100% 0 0) — invisible.
+ *     400ms        clip-path animation begins.
+ *     400-3400ms   fill + line + dots + sheen + glow + pulse all
+ *                  reveal together L→R over 3 seconds.
+ *     3400ms+      decorative <animate> loops + lux-shimmer + sparkle
+ *                  begin their continuous cycles.
+ *
+ *   Sources for "axes-first, all-data-together-L→R" pattern:
+ *     • Stripe Sigma chart-build 2024 — axes paint instantly,
+ *       all data layers reveal in lockstep.
+ *     • Linear Insights time-series — same.
+ *     • Apple Numbers chart animation default — fill + line draw
+ *       together over a pre-rendered axis frame.
+ *     • Vercel Analytics first-render — frame instant, data
+ *       synchronized reveal.
+ *     • Mixpanel 2024 dashboard mounts — frame instant, fill +
+ *       line + dots all draw together L→R.
+ */
+.glp-intake-chart-card .recharts-area,
+.glp-intake-chart-card .recharts-line {
   clip-path: inset(0 100% 0 0);
   will-change: clip-path;
-  animation: glp-line-draw 3000ms cubic-bezier(0.22, 1, 0.36, 1) 400ms both;
+  animation: glp-data-reveal-ltr 3000ms cubic-bezier(0.22, 1, 0.36, 1) 400ms both;
 }
-@keyframes glp-line-draw {
+@keyframes glp-data-reveal-ltr {
   0% {
     clip-path: inset(0 100% 0 0);
   }
   100% {
     clip-path: inset(0 0 0 0);
-  }
-}
-
-/* Decorative overlays + dots: hidden during the line draw, fade in
-   after the stroke completes (3400ms) so their own animated gradients
-   never compete with the clip-path reveal. */
-.glp-intake-chart-card .recharts-line,
-.glp-intake-chart-card .recharts-area-dots {
-  opacity: 0;
-  will-change: opacity;
-  animation: glp-decoration-fadein 300ms ease-out 3400ms both;
-}
-@keyframes glp-decoration-fadein {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
   }
 }
 
@@ -171,14 +210,10 @@ html {
   .animate-glp-step2-rise {
     animation: none;
   }
-  .glp-intake-chart-card .recharts-area-curve {
+  .glp-intake-chart-card .recharts-area,
+  .glp-intake-chart-card .recharts-line {
     animation: none;
     clip-path: none;
-  }
-  .glp-intake-chart-card .recharts-line,
-  .glp-intake-chart-card .recharts-area-dots {
-    animation: none;
-    opacity: 1;
   }
 }
 

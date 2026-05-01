@@ -182,11 +182,19 @@ export default function PartnersPage() {
                     </div>
                   </Card>
 
-                  {/* Optimized Testimonial */}
+                  {/* Buyer pass 26: testimonial avatar vertically AND
+                      horizontally centered next to the quote.
+                      `items-center` on the flex parent vertically centers
+                      the avatar against the multi-line quote+attribution
+                      block. The JR initials inside the circle were already
+                      horizontally centered via flex items-center justify-
+                      center on the inner div. Webflow Customer Stories /
+                      Apple Customer Stories canonical compact-testimonial
+                      pattern. */}
                   <Card>
-                    <div className="flex items-start gap-4">
-                      <div 
-                        className="w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+                    <div className="flex items-center gap-4">
+                      <div
+                        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
                         style={{
                           background: 'rgba(255, 255, 255, 0.85)',
                           backdropFilter: 'blur(12px)',
@@ -195,10 +203,10 @@ export default function PartnersPage() {
                           border: '1px solid rgba(255, 255, 255, 0.5)',
                         }}
                       >
-                        <span className="text-gray-800 font-semibold" style={{ fontSize: '16px', lineHeight: 1 }}>JR</span>
+                        <span className="font-semibold text-gray-800" style={{ fontSize: '16px', lineHeight: 1 }}>JR</span>
                       </div>
                       <div>
-                        <p className="text-neutral-700 italic mb-2">
+                        <p className="mb-2 italic text-neutral-700">
                           &ldquo;Partnering with GLPConvert gave our agency a repeatable way to help clinics launch faster with better-qualified consult requests.&rdquo;
                         </p>
                         <p className="text-sm text-neutral-500">— Agency partner, healthcare growth consultancy</p>

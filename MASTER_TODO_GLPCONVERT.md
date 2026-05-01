@@ -1005,19 +1005,56 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 
 > **Goal:** ship 50,000+ personalized cold emails per month into GLP-1 / weight-loss clinic inboxes, each carrying a `https://glpconvert.com/intake?demo=1&company=…&logo=…&brand=…` per-prospect demo link. Drives Stripe self-serve activation; no meeting CTA.
 >
-> **Cost steady-state: ~$135-180/mo** (4 GLPConvert sending domains + 16-20 inboxes in your existing Sunspire Workspace). All other tools (Instantly, Clay, Make.com, Airtable, ZeroBounce) are reused at $0 incremental. Lead enrichment ~$1,050 one-time per 50k batch.
+> **Pivot — round 26**: you are migrating off Sunspire's Namecheap + Google Workspace and standing up a fresh **Wellspire LLC**-owned stack. Sunspire's solar-themed domains and inboxes are being shut down; GLPConvert outreach goes out exclusively from **Wellspire-owned** domains via a **new Google Workspace under wellspire.com** (or whatever apex you register first under Wellspire). This means the **🔁 reuse Sunspire** flag below is rewritten — only the SOFTWARE accounts (Instantly, Heyreach, Clay, Make.com, Airtable, ZeroBounce, LinkedIn Sales Nav) carry over after you transfer billing ownership to a Wellspire credit card. The **DNS registrar** and **email hosting** start from zero under Wellspire LLC.
 >
-> **🔁 = a step that reuses Sunspire's existing infrastructure.**
+> Day 0 → cancel Sunspire stack (CE000 below) + buy Wellspire apex + GLPConvert domains. Day 1 → DNS + Workspace setup. Day 22 → first emails go out. Day 60 → steady state at 50,000+/mo. Sources cited inline + summarized at bottom.
+
+### **CE000 — Wellspire pivot: cancel Sunspire stack + stand up Wellspire infra** (Day 0 — do this BEFORE CE001)
+
+> You are abandoning the "reuse Sunspire's Namecheap + Workspace" plan and rebuilding under **Wellspire LLC** (parent company of GLPConvert per `lib/product-identity.ts`). This block must complete before any of the CE001-CE010 steps run, otherwise you will accidentally bill Sunspire's card or push GLPConvert mail through a Sunspire-owned domain.
+
+#### CE000.A — Decide the apex domain for Wellspire LLC
+
+- [ ] CE000.A1 You need a Wellspire apex (suggested: **wellspire.com** if available, or **wellspirellc.com** / **getwellspire.com** as fallbacks). Check availability at **https://www.namecheap.com**.
+- [ ] CE000.A2 If `wellspire.com` is taken, check `wellspire.co`, `wellspirellc.com`, `wellspire.io` — pick whichever reads cleanest as a parent-company website.
+- [ ] CE000.A3 Once you pick: this becomes (a) your Wellspire LLC marketing site, (b) the primary domain of your new Google Workspace, (c) the From-domain of your operations email (legal, billing, partnerships).
+
+#### CE000.B — Open a fresh Namecheap account in Wellspire LLC's name
+
+- [ ] CE000.B1 Open a new private window. Go to **https://www.namecheap.com** → **Create Account** (do NOT log into your Sunspire account).
+- [ ] CE000.B2 Register the account under **Wellspire LLC** with billing address matching your LLC's registered office (same address used on legal/CAN-SPAM, Stripe, and footer disclosure).
+- [ ] CE000.B3 Pay with a credit card linked to the Wellspire LLC bank account (NOT your personal Sunspire card). This keeps Wellspire books clean.
+- [ ] CE000.B4 Buy the apex chosen in CE000.A (~$8-12 first year).
+
+#### CE000.C — Open a fresh Google Workspace under Wellspire
+
+- [ ] CE000.C1 Go to **https://workspace.google.com** → **Get started** (do NOT use Sunspire's admin email).
+- [ ] CE000.C2 Plan: **Business Starter** ($7.20/user/mo) is enough for 16-20 outreach inboxes; bump to **Business Standard** later if you need shared drives or 99.9% SLA.
+- [ ] CE000.C3 Use the Wellspire apex (CE000.A) as the primary Workspace domain. Verify ownership via the TXT record Google asks for in your **new Wellspire Namecheap → Advanced DNS** panel.
+- [ ] CE000.C4 Create the admin user (e.g. `hugo@wellspire.com`). This becomes your Workspace super-admin login — bookmark it.
+- [ ] CE000.C5 Add MFA on the admin account (Google Authenticator + a printed backup code stored in 1Password/Bitwarden). Losing this account locks you out of all 16-20 outreach inboxes.
+
+#### CE000.D — Cancel Sunspire's Namecheap + Workspace (after CE000.B + CE000.C are running)
+
+> **Order matters**: do NOT cancel Sunspire's Workspace until your Wellspire Workspace is verified and you have copied any inbox content you still need. Cancellation is irreversible after the 30-day grace period.
+
+- [ ] CE000.D1 Sunspire Namecheap → **Domain List** → for each of `sunspiretool.com` / `getsunspire.com` / `usesunspire.com` / `sunspirequote.com`: decide (a) let it expire by turning OFF auto-renew (cheapest, takes effect at renewal), or (b) immediately cancel via Namecheap support if you want to free the names. **Option (a) is safer** — keeps inbound mail flowing for 30+ days while you migrate.
+- [ ] CE000.D2 Sunspire Google Workspace → **admin.google.com** → **Billing** → **Subscriptions** → **Sunspire Workspace** → **Cancel subscription** → choose **End at renewal** (gives you 30 days to copy any business-critical email out).
+- [ ] CE000.D3 In each Sunspire inbox: forward all addresses to your Wellspire admin (Workspace → Apps → Gmail → Routing → catch-all forwarding). This catches any in-flight reply from a prospect who emailed an old Sunspire address.
+- [ ] CE000.D4 Update Sunspire's Stripe + Resend + any other vendor records to point at the Wellspire admin email so billing/security alerts reach the right inbox during the transition.
+- [ ] CE000.D5 After 30 days (post-cancellation grace period), confirm Sunspire Workspace shows **No active subscription** in admin.google.com — then you stop being billed.
+
+> **Cost steady-state for the new Wellspire stack: ~$135-180/mo** (4 GLPConvert sending domains + 16-20 inboxes in the new Wellspire Workspace at $7.20 each). Software tools below carry over with billing reassigned to the Wellspire card. Lead enrichment ~$1,050 one-time per 50k batch.
 >
-> Day 0 → buy domains. Day 22 → first emails go out. Day 60 → steady state at 50,000+/mo. Sources cited inline + summarized at bottom.
-
-### **CE001 — Buy 4 sending domains via Namecheap** (Day 1)
-
-> Never send GLPConvert outreach from your apex `glpconvert.com` (reserved for marketing/Stripe) or from any `*sunspire*` domain. **Sunspire already owns** `sunspiretool.com`, `getsunspire.com`, `usesunspire.com`, `sunspirequote.com` (Namecheap, see `/Users/hugowentzel/sunspire-clean/COMPLETE-LAUNCH-RUNBOOK.md` lines 48 + 97). Those CANNOT be reused for GLPConvert outreach — different brand in the From line vs the From domain triggers Gmail's 2025 brand-mismatch classifier (Google "Bulk sender guidelines" Feb 2024 rev) and would burn Sunspire's deliverability reputation. **Buy 4 fresh GLPConvert-themed domains.**
+> **🔁 = a software account whose billing transfers to Wellspire LLC (not Sunspire-shared anymore).**
 >
-> **Why Namecheap (vs Cloudflare Registrar):** you're already on Namecheap for Sunspire — single account, single billing line, identical Advanced-DNS UX you already know. Cloudflare Registrar is at-cost (~$10/yr) but Namecheap is comparable (~$8-12 first year, ~$13/yr renewal) and the UX consistency saves setup time. Either works for SPF/DKIM/DMARC; this guide uses Namecheap.
+> Day 0 → CE000 (cancel + new Wellspire stack). Day 1 → buy GLPConvert domains. Day 22 → first emails go out. Day 60 → steady state.
 
-- [ ] CE1.1 Go to **https://www.namecheap.com** → sign in with your existing Sunspire account.
+### **CE001 — Buy 4 sending domains in the new Wellspire Namecheap** (Day 1, after CE000)
+
+> Never send GLPConvert outreach from your apex `glpconvert.com` (reserved for marketing/Stripe) or from any `*sunspire*` domain (Sunspire stack is being decommissioned in CE000). **Buy 4 fresh GLPConvert-themed sending domains in the new Wellspire LLC Namecheap account opened in CE000.B.**
+
+- [ ] CE1.1 Go to **https://www.namecheap.com** → sign in with your **new Wellspire LLC account** (not Sunspire).
 - [ ] CE1.2 Top search bar → search **getglpconvert.com** → click **Add to Cart** (~$8-12 first year).
 - [ ] CE1.3 Search **glpconverttool.com** → **Add to Cart**.
 - [ ] CE1.4 Search **useglpconvert.com** → **Add to Cart**.
@@ -1026,11 +1063,11 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 - [ ] CE1.7 Add card → confirm → **Pay Now**. Total ≈ **$32-48 first year** for 4 domains.
 - [ ] CE1.8 Wait for 4 confirmation emails. Domains live in **Namecheap → Domain List** within 5 minutes.
 
-### **CE002 — Add new domains as secondary in your Sunspire Workspace** 🔁 (Day 1)
+### **CE002 — Add new domains as secondary in your Wellspire Workspace** (Day 1)
 
-> One Workspace can host multiple domains as **secondary domains** (Google Admin Help: support.google.com/a/answer/7502379). Shares billing/admin with Sunspire but each domain has independent SPF/DKIM/DMARC + Postmaster reputation.
+> One Workspace can host multiple domains as **secondary domains** (Google Admin Help: support.google.com/a/answer/7502379). Each domain has independent SPF/DKIM/DMARC + Postmaster reputation. Sign in with the new **Wellspire** admin (CE000.C4), not Sunspire.
 
-- [ ] CE2.1 Go to **https://admin.google.com** → sign in with your Sunspire Workspace admin account.
+- [ ] CE2.1 Go to **https://admin.google.com** → sign in with your **Wellspire** Workspace admin account (the one created in CE000.C4).
 - [ ] CE2.2 Left nav → **Account** → **Domains** → **Manage domains**.
 - [ ] CE2.3 Click **Add a domain** (top right).
 - [ ] CE2.4 Type **getglpconvert.com** → select **Secondary domain** (NOT "Domain alias").
