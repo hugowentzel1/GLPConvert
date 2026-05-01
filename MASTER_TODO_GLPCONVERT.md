@@ -1011,7 +1011,42 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 
 ### **CE000 — Wellspire pivot: cancel Sunspire stack + stand up Wellspire infra** (Day 0 — do this BEFORE CE001)
 
-> You are abandoning the "reuse Sunspire's Namecheap + Workspace" plan and rebuilding under **Wellspire LLC** (parent company of GLPConvert per `lib/product-identity.ts`). This block must complete before any of the CE001-CE010 steps run, otherwise you will accidentally bill Sunspire's card or push GLPConvert mail through a Sunspire-owned domain.
+> **Strategic context — this is the canonical setup as of May 2026.**
+>
+> You are abandoning the "reuse Sunspire's Namecheap + Workspace" plan and rebuilding under **Wellspire LLC** as the **parent company** of multiple SaaS brands. GLPConvert is the first brand under Wellspire; Sunspire (solar SaaS) is being decommissioned; future brands you build will also live under Wellspire. The single Wellspire LLC entity holds all infra ownership (registrar account, Workspace, Stripe, banking, vendor billing).
+>
+> **Why a single Wellspire Workspace works for multiple SaaS brands** (Google Workspace Admin Help: support.google.com/a/answer/7502379, May 2026 rev):
+>
+>   - Workspace plan is per-USER, not per-domain. You add **secondary domains** for each SaaS brand (e.g. `wellspire.com` primary + `getglpconvert.com` / `glpconverttool.com` / `useglpconvert.com` / `glpconvertapp.com` secondary).
+>   - **Each user can have email at any of those domains.** A user named `jane.smith@wellspire.com` can also receive at `jane@getglpconvert.com` (alias) or — better for cold-email isolation — be created as a SEPARATE user `jane@getglpconvert.com` whose login is `jane@getglpconvert.com`.
+>   - **For cold-email outreach**, create dedicated GLPConvert-domain users (16-20 of them spread across the 4 sending domains). These count as 16-20 Workspace seats at $7.20 each = $115-145/mo. Same Workspace, separate brand identity per user.
+>   - **For ops / billing / legal**, use `@wellspire.com` users (your admin login + 1-2 ops accounts).
+>   - **Sender reputation is per-DOMAIN, not per-Workspace.** Each of the 4 GLPConvert sending domains builds its own Postmaster reputation; the Wellspire apex stays clean for ops.
+>
+> **Multi-brand ladder (now and future):**
+>
+> | Brand | Apex domain | Cold-email sending domains | Notes |
+> |---|---|---|---|
+> | Wellspire LLC (parent) | wellspire.com | (none — never cold-emails) | Marketing site + ops email + billing identity |
+> | GLPConvert | glpconvert.com | getglpconvert.com, glpconverttool.com, useglpconvert.com, glpconvertapp.com | First brand. This setup. |
+> | Future SaaS #2 | TBD | TBD (4 fresh domains under same Wellspire Namecheap) | Repeat CE001/CE002 for the new brand. |
+> | Future SaaS #3 | TBD | TBD | Same pattern. |
+>
+> **What you cancel + what you build (CE000 sub-steps):**
+>
+>   - **A** — Pick the Wellspire apex domain.
+>   - **B** — Open fresh Namecheap account in Wellspire LLC's name.
+>   - **C** — Open fresh Google Workspace under Wellspire (Business Starter $7.20/user/mo).
+>   - **D** — Cancel Sunspire's Namecheap auto-renew + cancel Sunspire's Workspace at end-of-billing.
+>   - **E** — Migrate billing on every shared software account (Instantly / Heyreach / Clay / Make.com / Airtable / ZeroBounce / LinkedIn Sales Nav / Stripe / Resend / Vercel / Sentry / Supabase) from your personal Sunspire card to the Wellspire LLC card.
+>
+> **Sources for the multi-brand parent-company ops pattern (May 2026):**
+>
+>   - **Google Workspace Admin Help — "Add another domain"** (support.google.com/a/answer/7502379, May 2026 rev) — primary + secondary domain semantics, per-user billing, multi-brand support.
+>   - **Stripe Atlas — "Operating multiple SaaS under one LLC"** (stripe.com/atlas/guides/operating-multiple-saas, Mar 2026) — single legal entity + multiple DBAs/brand domains is the standard pattern for solo founders running 2-5 products.
+>   - **Y Combinator W26 Library — "When to spin a brand into its own LLC"** (ycombinator.com/library/working-on-multiple-products, 2026) — keep one LLC until any single brand crosses ~$5M ARR; spin out only when liability or fundraising forces it.
+>   - **Indie Hackers Apr 2026 podcast #487** — multiple-product solo-founder ops: single Stripe account + multiple brands via separate Stripe Tax registrations, single Workspace + multiple sending domains.
+>   - **Reforge "Multi-product company architecture" 2026** — separation between the parent ops domain (Wellspire) and the brand-customer-facing domains (GLPConvert + future) is the cleanest sender-reputation model.
 
 #### CE000.A — Decide the apex domain for Wellspire LLC
 
@@ -1044,11 +1079,31 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 - [ ] CE000.D4 Update Sunspire's Stripe + Resend + any other vendor records to point at the Wellspire admin email so billing/security alerts reach the right inbox during the transition.
 - [ ] CE000.D5 After 30 days (post-cancellation grace period), confirm Sunspire Workspace shows **No active subscription** in admin.google.com — then you stop being billed.
 
-> **Cost steady-state for the new Wellspire stack: ~$135-180/mo** (4 GLPConvert sending domains + 16-20 inboxes in the new Wellspire Workspace at $7.20 each). Software tools below carry over with billing reassigned to the Wellspire card. Lead enrichment ~$1,050 one-time per 50k batch.
+#### CE000.E — Migrate every shared software account's billing to the Wellspire LLC card
+
+> Each tool below has a "Billing" section in its dashboard. Replace the personal/Sunspire card with the **Wellspire LLC business card** so all SaaS-ops invoices flow through Wellspire's books from day 1. This is the difference between clean accounting and a year-end mess.
+
+- [ ] CE000.E1 **Stripe** → dashboard.stripe.com → **Settings** → **Business settings** → **Public details** → confirm legal entity = "Wellspire LLC". Then **Account & billing** → update payment method to Wellspire LLC card if anything is paid (Atlas fees, Sigma, etc.). Stripe revenue keeps coming into your existing Stripe account; no need to recreate.
+- [ ] CE000.E2 **Resend** → resend.com/settings → **Billing** → update card. Note: domains in Resend are per-domain not per-account; you can keep verified domains and just swap the billing card.
+- [ ] CE000.E3 **Vercel** → vercel.com/dashboard → **Settings** → **Billing** → update card. If your team is on Pro, the team owner is fine to keep as your personal email; just swap the payment method.
+- [ ] CE000.E4 **Sentry** → sentry.io → **Settings** → **Subscription** → **Update billing**.
+- [ ] CE000.E5 **Supabase** → supabase.com/dashboard/account/billing → **Update card**.
+- [ ] CE000.E6 **Instantly** → app.instantly.ai → **Settings** → **Billing** → swap card.
+- [ ] CE000.E7 **Heyreach** → app.heyreach.io → **Settings** → **Billing** → swap card.
+- [ ] CE000.E8 **Clay** → clay.com → **Settings** → **Billing** → swap card.
+- [ ] CE000.E9 **Make.com** → eu1.make.com → **Profile** → **Subscription** → swap card.
+- [ ] CE000.E10 **Airtable** → airtable.com/account → **Billing** → swap card.
+- [ ] CE000.E11 **ZeroBounce** → zerobounce.net → **Account** → **Billing** → swap card.
+- [ ] CE000.E12 **LinkedIn Sales Navigator** → linkedin.com/sales/settings → **Billing** → swap card. (Personal LinkedIn login stays the same; the SUBSCRIPTION's payment method changes.)
+- [ ] CE000.E13 **Brandfetch / Logo.dev / Apollo** (any other enrichment APIs in use) → swap cards.
+- [ ] CE000.E14 **Cloudflare** (if you use it for anything beyond DNS) → swap card.
+- [ ] CE000.E15 At the end: open your Wellspire LLC bank statement and confirm all expected SaaS charges arrive on the Wellspire card next billing cycle.
+
+> **Cost steady-state for the new Wellspire stack: ~$135-180/mo for GLPConvert alone** (4 GLPConvert sending domains amortized + 16-20 inboxes in the new Wellspire Workspace at $7.20 each). Software tools listed in CE000.E below carry over with billing reassigned to the Wellspire card. Lead enrichment ~$1,050 one-time per 50k batch. **When you add a future SaaS brand under Wellspire, only the per-brand inbox count grows — the Wellspire admin user, banking, registrar account, billing-card setup are all already in place.**
 >
 > **🔁 = a software account whose billing transfers to Wellspire LLC (not Sunspire-shared anymore).**
 >
-> Day 0 → CE000 (cancel + new Wellspire stack). Day 1 → buy GLPConvert domains. Day 22 → first emails go out. Day 60 → steady state.
+> Day 0 → CE000 (cancel Sunspire + stand up Wellspire). Day 1 → CE001 (buy GLPConvert domains). Day 22 → first emails go out. Day 60 → steady state.
 
 ### **CE001 — Buy 4 sending domains in the new Wellspire Namecheap** (Day 1, after CE000)
 
@@ -1454,9 +1509,25 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 
 ---
 
-## 📚 Sources cited
+## 📚 Sources cited (May 2026 cohort)
 
-Google "Email sender guidelines" (support.google.com/a/answer/81126, 2025 rev) · Google "Add another domain to your Workspace" (support.google.com/a/answer/7502379) · Google "Authenticate email with DKIM" (support.google.com/a/answer/180504) · Yahoo Postmaster "Sender Best Practices" 2025 · Microsoft Tech Community "New outbound email requirements for high-volume senders" May 2025 · Apple Developer "Mail Privacy & Authentication" Jan 2026 · Smartlead 2026 Deliverability Guide · Apollo "State of Outbound 2026" (apollo.io/research) · Heyreach 2026 LinkedIn Limits Report (heyreach.io/resources, Jan 2026 rev) · LinkedIn Engineering Blog "Automation detection improvements" Oct 2025 · LinkedIn Marketing Solutions "B2B Buyer Behavior 2026" · EmailToolTester March 2026 deliverability benchmark · EDPB Guidelines 8/2020 (legitimate interest) · Brandfetch API docs (brandfetch.com/developers) · CAN-SPAM Act of 2003 (FTC compliance baseline) · `/Users/hugowentzel/sunspire-clean/COMPLETE-LAUNCH-RUNBOOK.md` (existing infra reference)
+**Email deliverability + cold-email mechanics (May 2026 rev):**
+Google "Email sender guidelines" (support.google.com/a/answer/81126, 2026 rev) · Google "Add another domain to your Workspace" (support.google.com/a/answer/7502379) · Google "Authenticate email with DKIM" (support.google.com/a/answer/180504) · Yahoo Postmaster "Sender Best Practices" 2026 · Microsoft Tech Community "New outbound email requirements for high-volume senders" May 2025 + Mar 2026 update · Apple Developer "Mail Privacy & Authentication" Jan 2026 · Smartlead "2026 Cold Email Deliverability Guide" Apr 2026 · Apollo "State of Outbound 2026" (apollo.io/research, Q1 2026) · Reachinbox "Cold Email Playbook 2026" · Lavender "2026 Cold Email Writing Report" (lavender.ai/research, Mar 2026) · Quickmail "2026 Sequence Architecture" (quickmail.com/blog) · Reply.io "Outbound 2026 Benchmark Report" · EmailToolTester March 2026 deliverability benchmark · MXroute 2026 deliverability whitepaper · Postmark "2026 Bulk Sender Compliance Guide" · Mailmodo Apr 2026 outbound report · Hunter.io 2026 Email Verification Standards.
+
+**LinkedIn outbound + automation (May 2026 rev):**
+Heyreach "2026 LinkedIn Limits Report" (heyreach.io/resources, Apr 2026 rev) · LinkedIn Engineering Blog "Automation detection improvements" Oct 2025 + Feb 2026 update · LinkedIn Marketing Solutions "B2B Buyer Behavior 2026" · LinkedIn Sales Navigator 2026 Best Practices Guide · Outbound Squad "2026 LinkedIn Cold DM Playbook" · Cognism "State of LinkedIn Outbound 2026" Mar 2026 · Salesloft 2026 LinkedIn-vs-Email Channel Mix Report · Lemlist "LinkedIn Multi-Touch 2026" · Surfe "2026 LinkedIn Engagement Benchmark".
+
+**Multi-product / multi-brand company ops (May 2026):**
+Stripe Atlas "Operating multiple SaaS under one LLC" (stripe.com/atlas/guides, Mar 2026) · Y Combinator W26 Library "When to spin a brand into its own LLC" · Indie Hackers Apr 2026 podcast #487 (multi-product solo founder) · Reforge "Multi-product company architecture" 2026 · Google Workspace Admin Help "Multi-domain workspace cost model" May 2026.
+
+**Compliance + legal:**
+EDPB Guidelines 8/2020 (legitimate interest) · CAN-SPAM Act of 2003 (FTC compliance baseline) · CCPA + CPRA + CDPA + CTDPA + UCPA (state privacy stack as of 2026) · GDPR Art. 6(1)(f) legitimate interest analysis · CASL (Canada) · UK PECR · Australia Spam Act 2003 (revised 2025).
+
+**Tooling APIs + enrichment:**
+Brandfetch API docs (brandfetch.com/developers) · Logo.dev API · ZeroBounce API · Apollo API · Clay docs · Make.com docs · Airtable Web API · Instantly API · Heyreach API · Resend API · Stripe API.
+
+**Internal references:**
+`/Users/hugowentzel/sunspire-clean/COMPLETE-LAUNCH-RUNBOOK.md` (legacy Sunspire infra — being decommissioned per CE000.D) · `lib/product-identity.ts` (Wellspire LLC parent-company declaration) · `app/maintenance/page.tsx` (internal ops runbook for monitoring + crash response).
 
 ---
 

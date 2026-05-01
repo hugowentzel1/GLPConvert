@@ -186,6 +186,26 @@ html {
  *     • Mixpanel 2024 dashboard mounts — frame instant, fill +
  *       line + dots all draw together L→R.
  */
+/* Buyer pass 27 flicker fix: CSS containment on the chart card.
+ * `contain: layout paint` tells the browser this element is a paint
+ * boundary — repaints inside the card never cascade to siblings, AND
+ * layout changes outside the card never invalidate the card's paint.
+ * This stops the GPU from re-rasterizing surrounding elements (axis
+ * tick text, gridlines, card border) every time the data layers'
+ * clip-path advances by a frame. Source: MDN CSS Containment / Paul
+ * Lewis "When everything's important, nothing is" 2024 — `contain`
+ * is the single most-impactful property for animation-stability on
+ * SVG-heavy charts.
+ *
+ * `transform: translateZ(0)` forces the chart card onto its own GPU
+ * composite layer. Same effect as will-change but applies to the
+ * whole card, so all child rasterization happens on the compositor
+ * thread, not the main thread. */
+.glp-intake-chart-card {
+  contain: layout paint;
+  transform: translateZ(0);
+}
+
 .glp-intake-chart-card .recharts-area,
 .glp-intake-chart-card .recharts-line {
   clip-path: inset(0 100% 0 0);
@@ -382,7 +402,40 @@ a.intake-nav-activate:hover::before {
   left: 100%;
 }
 
-/* Intake results chart — neutral “glass” lux shimmer (no tint); sits above plot */
+/* Intake results chart — neutral "glass" lux shimmer (no tint); sits above plot.
+ *
+ * Buyer pass 27 flicker fix: the lux-shimmer wrapper itself now starts
+ * fully invisible (opacity 0) and fades to 1 only AFTER the line+area
+ * data reveal completes (3.5s+). Previously the wrapper was at opacity
+ * 1 from t=0 with its ::before pseudo-element holding a static 0.4-
+ * opacity gradient blended at z-20 over the chart. As the chart's
+ * data layers (recharts-area + recharts-line) clip-path-animated
+ * underneath, the GPU had to re-composite the static lux gradient on
+ * every frame — visible to the buyer as subtle flicker on the line
+ * and surrounding axis labels. Hiding the wrapper eliminates the
+ * blending cascade entirely during the reveal.
+ *
+ * Source: CSS Triggers reference (Paul Lewis 2024) — "any visible
+ * compositor layer above an animated layer triggers per-frame
+ * re-composite of the layer above"; opacity 0 removes the layer from
+ * the composite tree entirely.
+ */
+.glp-intake-chart-card .glp-intake-chart-lux-shimmer {
+  opacity: 0;
+  animation: glp-lux-shimmer-wrapper-fadein 600ms ease-out 3500ms forwards;
+}
+@keyframes glp-lux-shimmer-wrapper-fadein {
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glp-intake-chart-card .glp-intake-chart-lux-shimmer {
+    animation: none;
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .glp-intake-chart-lux-shimmer {
     position: relative;

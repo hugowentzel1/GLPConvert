@@ -182,17 +182,18 @@ export default function PartnersPage() {
                     </div>
                   </Card>
 
-                  {/* Buyer pass 26: testimonial avatar vertically AND
-                      horizontally centered next to the quote.
-                      `items-center` on the flex parent vertically centers
-                      the avatar against the multi-line quote+attribution
-                      block. The JR initials inside the circle were already
-                      horizontally centered via flex items-center justify-
-                      center on the inner div. Webflow Customer Stories /
-                      Apple Customer Stories canonical compact-testimonial
-                      pattern. */}
+                  {/* Buyer pass 27: revert to items-start (top-aligned) — the
+                      JR avatar pairs with the FIRST line of the quote like a
+                      reading-order anchor (Stripe Customer Stories / Linear
+                      Customer Highlights / HubSpot Service Hub canonical
+                      pattern). With items-center the avatar floated to the
+                      visual middle of a multi-line block which read as
+                      decorative, not as "this person said this".
+                      Refined gap-5 (was gap-4) + tightened paragraph rhythm
+                      so the quote + attribution form a single attribution
+                      cluster anchored to the avatar. */}
                   <Card>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-start gap-5">
                       <div
                         className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
                         style={{
@@ -205,11 +206,13 @@ export default function PartnersPage() {
                       >
                         <span className="font-semibold text-gray-800" style={{ fontSize: '16px', lineHeight: 1 }}>JR</span>
                       </div>
-                      <div>
-                        <p className="mb-2 italic text-neutral-700">
+                      <div className="flex-1">
+                        <p className="text-[15px] italic leading-[1.7] text-neutral-700 sm:text-base">
                           &ldquo;Partnering with GLPConvert gave our agency a repeatable way to help clinics launch faster with better-qualified consult requests.&rdquo;
                         </p>
-                        <p className="text-sm text-neutral-500">— Agency partner, healthcare growth consultancy</p>
+                        <p className="mt-3 text-[13px] font-medium text-neutral-500 sm:text-sm">
+                          — Agency partner, healthcare growth consultancy
+                        </p>
                       </div>
                     </div>
                   </Card>
