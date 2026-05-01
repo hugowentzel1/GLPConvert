@@ -331,7 +331,13 @@ a.intake-nav-activate:hover::before {
       rgba(255, 255, 255, 0) 62%
     );
     opacity: 0.4;
-    animation: glp-intake-lux-drift 13s ease-in-out infinite;
+    /* Held in initial pose until the line reveal completes (~4500ms),
+       then begins its continuous loop. Buyer pass 21: simultaneous
+       decorative loops + clip-path reveal caused visible flicker
+       on the chart card. Sequencing the decoration AFTER the reveal
+       gives a clean, single-focus reveal moment then resumes
+       background lux. */
+    animation: glp-intake-lux-drift 13s ease-in-out 4500ms infinite;
   }
   .glp-intake-chart-lux-shimmer::after {
     content: "";
@@ -347,7 +353,7 @@ a.intake-nav-activate:hover::before {
       rgba(255, 255, 255, 0) 100%
     );
     opacity: 0.3;
-    animation: glp-intake-lux-sheen 5.8s ease-in-out infinite;
+    animation: glp-intake-lux-sheen 5.8s ease-in-out 4500ms infinite;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -391,7 +397,10 @@ a.intake-nav-activate:hover::before {
       ),
       radial-gradient(circle 12% at 86% 48%, rgba(255, 255, 255, 0.35) 0%, transparent 60%),
       radial-gradient(circle 14% at 44% 82%, rgba(255, 255, 255, 0.3) 0%, transparent 58%);
-    animation: glp-intake-sparkle-twinkle 7.5s ease-in-out infinite;
+    opacity: 0;
+    /* Held invisible until line reveal completes (~4500ms), then
+       continuous twinkle loop. Eliminates twinkle-vs-clip flicker. */
+    animation: glp-intake-sparkle-twinkle 7.5s ease-in-out 4500ms infinite;
   }
 }
 @media (prefers-reduced-motion: reduce) {

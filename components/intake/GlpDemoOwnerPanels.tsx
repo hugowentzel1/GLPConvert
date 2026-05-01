@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
+import { buildStripeCheckoutClientPayload } from "@/lib/stripe-checkout-client";
 
 const DEFAULT_BRAND = "#0f172a";
 
@@ -59,6 +60,41 @@ export default function GlpDemoOwnerPanels({
   /** Fallback preserves company only — caller should pass `pricingHref` from `buildIntakePricingHref(sp, company)` so UTMs/brand/logo persist. */
   const ctaHref = pricingHref ?? `/pricing?company=${encodeURIComponent(companyName)}`;
   const helpHref = supportHref ?? `/support?company=${encodeURIComponent(companyName)}`;
+
+  /**
+   * Buyer pass 21: "make SURE every Activate CTA goes to my Stripe perfectly."
+   * Click → direct POST to `/api/stripe/create-checkout-session` → redirect
+   * to the Stripe Checkout URL (one click, not two). If the POST fails
+   * (network, missing env vars, rate limit, etc.) we fall back to the
+   * `ctaHref` /pricing page so the buyer never lands on a dead end.
+   * Pattern matches `app/page.tsx`, `app/signup/page.tsx`, and
+   * `app/pricing/page.tsx`'s `handleStartSetup` — same payload shape,
+   * same Stripe API endpoint.
+   */
+  const handleActivateClick = async (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (activating) return;
+    setActivating(true);
+    try {
+      const payload = buildStripeCheckoutClientPayload();
+      const res = await fetch("/api/stripe/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("stripe checkout request failed");
+      const data = await res.json();
+      if (typeof data?.url === "string" && data.url) {
+        window.location.href = data.url;
+        return;
+      }
+      throw new Error("no checkout url returned");
+    } catch (err) {
+      // Fallback path so the buyer never lands on a dead end.
+      console.error("[Activate CTA] direct stripe failed, falling back to /pricing", err);
+      window.location.href = ctaHref;
+    }
+  };
 
   /**
    * Owner-preview composition — a clean three-row payoff card stack:
@@ -334,7 +370,7 @@ export default function GlpDemoOwnerPanels({
         <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
           <a
             href={ctaHref}
-            onClick={() => setActivating(true)}
+            onClick={handleActivateClick}
             aria-busy={activating || undefined}
             className={`inline-flex min-h-[48px] flex-1 items-center justify-center rounded-xl px-5 py-3 text-center text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.02] sm:min-w-[12rem] sm:max-w-md sm:flex-none ${activating ? "pointer-events-none opacity-90" : ""}`}
             style={{ backgroundColor: brandPrimary }}

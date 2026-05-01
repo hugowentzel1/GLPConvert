@@ -8,6 +8,7 @@ import GlpPathMilestonePreview from "@/components/intake/GlpPathMilestonePreview
 import IntakeStep2CarePackageStrip from "@/components/intake/IntakeStep2CarePackageStrip";
 import IntakeTrustStrip from "@/components/intake/IntakeTrustStrip";
 import { persistUtmFromSearchParams, getMergedUtm } from "@/lib/glp-attribution";
+import { buildStripeCheckoutClientPayload } from "@/lib/stripe-checkout-client";
 import { resolveGlpTenantSlug } from "@/lib/glp-tenant-slug";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
@@ -584,6 +585,43 @@ export default function GlpSimulationFunnel() {
       })),
     ];
   }, [input.currentWeight, input.goalWeight, output.projectedMonthlyRange]);
+
+  /**
+   * Step 5 Activate CTA → direct POST to Stripe checkout, redirect to the
+   * returned session URL. Buyer pass 21: "make SURE every Activate CTA
+   * goes to my Stripe perfectly." One click, not two. If the POST fails
+   * (network, missing price IDs, rate limit), fall back to /pricing so
+   * the buyer never lands on a dead end. Pattern matches the home page
+   * + signup page + owner-panel Activate CTA.
+   */
+  const [step5Activating, setStep5Activating] = useState(false);
+  const onStep5Activate = useCallback(
+    async (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      if (step5Activating) return;
+      setStep5Activating(true);
+      const fallbackHref = `/pricing?${sp?.toString() || ""}`;
+      try {
+        const payload = buildStripeCheckoutClientPayload();
+        const res = await fetch("/api/stripe/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error("stripe checkout request failed");
+        const data = await res.json();
+        if (typeof data?.url === "string" && data.url) {
+          window.location.href = data.url;
+          return;
+        }
+        throw new Error("no checkout url returned");
+      } catch (err) {
+        console.error("[Step 5 Activate] direct stripe failed, falling back to /pricing", err);
+        window.location.href = fallbackHref;
+      }
+    },
+    [sp, step5Activating],
+  );
 
   return (
     <div
@@ -1523,12 +1561,26 @@ export default function GlpSimulationFunnel() {
             {isDemoMode ? (
               <a
                 href={`/pricing?${sp?.toString() || ""}`}
-                className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.05]"
+                onClick={onStep5Activate}
+                aria-busy={step5Activating || undefined}
+                className={`mt-6 inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.05] ${step5Activating ? "pointer-events-none opacity-90" : ""}`}
                 style={{ backgroundColor: brandFill }}
                 data-testid="step-5-buyer-activate"
               >
-                <span aria-hidden>⚡</span>
-                Activate {company} for $99/mo
+                {step5Activating ? (
+                  <span className="inline-flex items-center gap-2">
+                    <span
+                      aria-hidden
+                      className="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/40 border-t-white motion-reduce:animate-none"
+                    />
+                    Activating…
+                  </span>
+                ) : (
+                  <>
+                    <span aria-hidden>⚡</span>
+                    Activate {company} for $99/mo
+                  </>
+                )}
               </a>
             ) : null}
 

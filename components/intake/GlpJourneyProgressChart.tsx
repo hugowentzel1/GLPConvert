@@ -60,20 +60,19 @@ export default function GlpJourneyProgressChart({
   const pulseId = `glpJourneyPulse-${gid}`;
 
   /**
-   * `revealed` controls a few aux layers (sheen / sparkle / counter)
-   * that should only fire after the area first paints. Set to true
-   * after a 60ms tick so React has time to lay out the SVG. Buyer
-   * pass 16 line-draw timing is now controlled by Recharts'
-   * `animationBegin` (800ms delay) on the <Area> below — that way the
-   * Area component always mounts on first render, and Recharts handles
-   * the "wait then animate slowly" sequence internally instead of
-   * relying on a React-state remount that strict-mode can collapse.
+   * `revealed` MUST start `true` so every data layer (area + sheen
+   * Line + glow Line + dots) mounts on the same React render as the
+   * SVG. Buyer pass 21: chart was flickering because the prior
+   * `useState(false) + setTimeout(60ms)` pattern caused
+   * `.recharts-area` to mount at t=0 (its CSS clip-path animation
+   * timer started immediately) but `.recharts-line` (sheen/glow)
+   * didn't mount until t=60ms (its timer started 60ms later) — the
+   * line stroke lagged the area fill by 60ms during the L→R reveal,
+   * which read as a "flicker" between the painted fill and the
+   * empty stroke. Mounting all layers on the same render keeps
+   * every animation perfectly in lockstep.
    */
-  const [revealed, setRevealed] = useState(false);
-  useEffect(() => {
-    const id = window.setTimeout(() => setRevealed(true), 60);
-    return () => window.clearTimeout(id);
-  }, []);
+  const [revealed] = useState(true);
 
   /**
    * Reveal-scan runs once per browser tab session only — repeat step-2 visits
