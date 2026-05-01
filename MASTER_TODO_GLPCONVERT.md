@@ -1011,18 +1011,20 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 >
 > Day 0 → buy domains. Day 22 → first emails go out. Day 60 → steady state at 50,000+/mo. Sources cited inline + summarized at bottom.
 
-### **CE001 — Buy 4 sending domains** (Day 1)
+### **CE001 — Buy 4 sending domains via Namecheap** (Day 1)
 
-> Never send GLPConvert outreach from your apex `glpconvert.com` (reserved for marketing/Stripe) or from any `*sunspire*` domain (burns Sunspire's reputation, triggers Gmail's 2025 brand-mismatch classifier).
+> Never send GLPConvert outreach from your apex `glpconvert.com` (reserved for marketing/Stripe) or from any `*sunspire*` domain. **Sunspire already owns** `sunspiretool.com`, `getsunspire.com`, `usesunspire.com`, `sunspirequote.com` (Namecheap, see `/Users/hugowentzel/sunspire-clean/COMPLETE-LAUNCH-RUNBOOK.md` lines 48 + 97). Those CANNOT be reused for GLPConvert outreach — different brand in the From line vs the From domain triggers Gmail's 2025 brand-mismatch classifier (Google "Bulk sender guidelines" Feb 2024 rev) and would burn Sunspire's deliverability reputation. **Buy 4 fresh GLPConvert-themed domains.**
+>
+> **Why Namecheap (vs Cloudflare Registrar):** you're already on Namecheap for Sunspire — single account, single billing line, identical Advanced-DNS UX you already know. Cloudflare Registrar is at-cost (~$10/yr) but Namecheap is comparable (~$8-12 first year, ~$13/yr renewal) and the UX consistency saves setup time. Either works for SPF/DKIM/DMARC; this guide uses Namecheap.
 
-- [ ] CE1.1 Go to **https://www.cloudflare.com/products/registrar/** → click **Get started** (or sign in to existing Cloudflare account).
-- [ ] CE1.2 In Cloudflare dashboard → **Domain Registration** → **Register Domains**.
-- [ ] CE1.3 Search **getglpconvert.com** → click **Add to cart** (~$10/yr at-cost pricing).
-- [ ] CE1.4 Search **glpconverttool.com** → **Add**.
-- [ ] CE1.5 Search **useglpconvert.com** → **Add**.
-- [ ] CE1.6 Search **glpconvertapp.com** → **Add**.
-- [ ] CE1.7 Click **Continue to checkout** → enter card → **Complete purchase**.
-- [ ] CE1.8 Wait for 4 confirmation emails. Domains usually live within 5 minutes.
+- [ ] CE1.1 Go to **https://www.namecheap.com** → sign in with your existing Sunspire account.
+- [ ] CE1.2 Top search bar → search **getglpconvert.com** → click **Add to Cart** (~$8-12 first year).
+- [ ] CE1.3 Search **glpconverttool.com** → **Add to Cart**.
+- [ ] CE1.4 Search **useglpconvert.com** → **Add to Cart**.
+- [ ] CE1.5 Search **glpconvertapp.com** → **Add to Cart**.
+- [ ] CE1.6 Cart → **View Cart** → set each domain to **1-year** registration → **Confirm Order**.
+- [ ] CE1.7 Add card → confirm → **Pay Now**. Total ≈ **$32-48 first year** for 4 domains.
+- [ ] CE1.8 Wait for 4 confirmation emails. Domains live in **Namecheap → Domain List** within 5 minutes.
 
 ### **CE002 — Add new domains as secondary in your Sunspire Workspace** 🔁 (Day 1)
 
@@ -1033,7 +1035,7 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 - [ ] CE2.3 Click **Add a domain** (top right).
 - [ ] CE2.4 Type **getglpconvert.com** → select **Secondary domain** (NOT "Domain alias").
 - [ ] CE2.5 Click **Continue and verify domain ownership**.
-- [ ] CE2.6 Google shows a TXT record. Copy the value. Open Cloudflare in another tab → select the domain → **DNS** → **Records** → **Add record** → Type: **TXT** → Name: **@** → Content: paste Google's value → **Save**.
+- [ ] CE2.6 Google shows a TXT record. Copy the value. Open Namecheap in another tab → **Domain List** → **Manage** next to the domain → **Advanced DNS** → **Add New Record** → Type: **TXT Record** → Host: **@** → Value: paste Google's value → green check to save.
 - [ ] CE2.7 Back in Google Admin → click **Verify**.
 - [ ] CE2.8 Repeat CE2.3–CE2.7 for **glpconverttool.com**, **useglpconvert.com**, **glpconvertapp.com**.
 
@@ -1046,20 +1048,22 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 - [ ] CE3.5 Repeat with **real first names** (never "Sales", "Outreach", "Team", "Hello"): create 4–5 inboxes per domain → **16-20 GLPConvert inboxes total** alongside Sunspire's existing ones.
 - [ ] CE3.6 For each user → click profile → **Personal info** → confirm Display name shows **"First Last"** format.
 
-### **CE004 — DNS authentication on each of the 4 domains** (Day 1-2)
+### **CE004 — DNS authentication on each of the 4 domains via Namecheap** (Day 1-2)
 
-> Run this checklist **per domain**. All 4 must pass before sending. Gmail's Feb 2024 bulk-sender rules require SPF + DKIM + DMARC + 0.10% spam-rate floor (hard block at 0.30%).
+> Run this checklist **per domain** in Namecheap's Advanced DNS panel. All 4 must pass before sending. Gmail's Feb 2024 bulk-sender rules require SPF + DKIM + DMARC + 0.10% spam-rate floor (hard block at 0.30%).
+>
+> **Where to find Advanced DNS:** Namecheap → **Domain List** → next to the domain click **Manage** → **Advanced DNS** tab.
 
-- [ ] CE4.1 Cloudflare → select domain → **DNS** → **Records** → **Add record** → Type: **MX** → Name: **@** → Mail server: **smtp.google.com** → Priority: **1** → **Save**. Google retired the 5-MX setup in 2023; one MX is now standard.
-- [ ] CE4.2 SPF: **Add record** → Type: **TXT** → Name: **@** → Content: `v=spf1 include:_spf.google.com ~all` → **Save**.
+- [ ] CE4.1 Namecheap → Advanced DNS → **Mail Settings** dropdown → set to **Custom MX**. Then **Add New Record** → Type: **MX Record** → Host: **@** → Value: **smtp.google.com** → Priority: **1** → green check to save. Google retired the 5-MX setup in 2023; one MX is now standard.
+- [ ] CE4.2 SPF: **Add New Record** → Type: **TXT Record** → Host: **@** → Value: `v=spf1 include:_spf.google.com ~all` → save.
 - [ ] CE4.3 Generate DKIM: admin.google.com → **Apps** → **Google Workspace** → **Gmail** → **Authenticate email** → select the domain → **Generate new record** → choose **2048-bit** → click **Generate**. Copy the long TXT value.
-- [ ] CE4.4 Add DKIM to Cloudflare: **Add record** → Type: **TXT** → Name: **google._domainkey** → Content: paste the DKIM value → **Save**.
+- [ ] CE4.4 Add DKIM to Namecheap: **Add New Record** → Type: **TXT Record** → Host: **google._domainkey** → Value: paste the DKIM value → save. (Namecheap auto-strips the `.yourdomain.com` suffix; just paste the raw key portion if Google gave you one with quotes — drop the quotes.)
 - [ ] CE4.5 Back in admin.google.com → click **Start authentication**. Wait 5-10 min. Status flips to "Authenticating email."
-- [ ] CE4.6 DMARC: Cloudflare → **Add record** → Type: **TXT** → Name: **_dmarc** → Content: `v=DMARC1; p=none; rua=mailto:dmarc@glpconvert.com; pct=100; adkim=r; aspf=r` → **Save**.
-- [ ] CE4.7 Verify all 4 domains pass at **https://mxtoolbox.com/SuperTool.aspx** → run MX, SPF, DKIM, DMARC lookups for each. All four checks should be green.
+- [ ] CE4.6 DMARC: Namecheap → **Add New Record** → Type: **TXT Record** → Host: **_dmarc** → Value: `v=DMARC1; p=none; rua=mailto:dmarc@glpconvert.com; pct=100; adkim=r; aspf=r` → save.
+- [ ] CE4.7 Verify all 4 domains pass at **https://mxtoolbox.com/SuperTool.aspx** → run MX, SPF, DKIM, DMARC lookups for each. All four checks should be green. Namecheap propagation is usually 5-30 min (Cloudflare is faster but the difference doesn't matter here).
 - [ ] CE4.8 Send a test email from each domain to **https://www.mail-tester.com/** → target score **10/10**.
-- [ ] CE4.9 Add all 4 domains to **Google Postmaster Tools** at **https://postmaster.google.com** → click **Add a domain** → verify each via TXT.
-- [ ] CE4.10 Tracking subdomain: Cloudflare → **Add record** → Type: **CNAME** → Name: **link.glpconvert.com** → Target: paste Instantly's tracking endpoint (you'll get this in CE5.7).
+- [ ] CE4.9 Add all 4 domains to **Google Postmaster Tools** at **https://postmaster.google.com** → click **Add a domain** → verify each via TXT (same Namecheap Advanced DNS panel).
+- [ ] CE4.10 Tracking subdomain: Namecheap → **Add New Record** → Type: **CNAME Record** → Host: **link** → Value: paste Instantly's tracking endpoint (you'll get this in CE5.7) → TTL: **Automatic** → save.
 
 ### **CE005 — Connect inboxes to Instantly** 🔁 (Day 2-3)
 

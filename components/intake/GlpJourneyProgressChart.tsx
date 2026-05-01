@@ -156,30 +156,27 @@ export default function GlpJourneyProgressChart({
         <g key={`glp-d-${index}`}>
           {animate ? (
             <>
-              {/* Pulse halos delayed until AFTER the line-reveal (CSS clip-path)
-                  completes at ~4500ms. SVG <animate begin="..."> defers the
-                  first run; with repeatCount="indefinite" the loop continues
-                  thereafter. Buyer pass 22: pulses kicking off at random phase
-                  during the L→R reveal caused the dots to "blink" as the line
-                  reached them — visible flicker. Synchronizing the pulse to
-                  AFTER reveal eliminates that. */}
+              {/* Pulse halos delayed until AFTER the opacity fade-in
+                  reveal completes at ~1600ms (round 24 simplification).
+                  begin="2s" gives a ~400ms breathing pause so the static
+                  chart settles before pulses begin their continuous loop. */}
               <circle cx={cx} cy={cy} r={6} fill={brandFill} opacity={0.18}>
-                <animate attributeName="r" values="6;16;6" dur="2.4s" begin="4.5s" repeatCount="indefinite" />
+                <animate attributeName="r" values="6;16;6" dur="2.4s" begin="2s" repeatCount="indefinite" />
                 <animate
                   attributeName="opacity"
                   values="0.35;0;0.35"
                   dur="2.4s"
-                  begin="4.5s"
+                  begin="2s"
                   repeatCount="indefinite"
                 />
               </circle>
               <circle cx={cx} cy={cy} r={4} fill={brandFill} opacity={0.28}>
-                <animate attributeName="r" values="4;10;4" dur="2.4s" begin="5.3s" repeatCount="indefinite" />
+                <animate attributeName="r" values="4;10;4" dur="2.4s" begin="2.8s" repeatCount="indefinite" />
                 <animate
                   attributeName="opacity"
                   values="0.45;0;0.45"
                   dur="2.4s"
-                  begin="5.3s"
+                  begin="2.8s"
                   repeatCount="indefinite"
                 />
               </circle>
@@ -395,44 +392,43 @@ export default function GlpJourneyProgressChart({
                   <stop offset="50%" stopColor={brandFill} stopOpacity={1} />
                   <stop offset="100%" stopColor={brandFill} stopOpacity={0.85} />
                 </linearGradient>
-                {/* Buyer pass 22: all decorative gradient-offset animations
-                    (white sheen + brand pulse) deferred to begin="4.5s" so
-                    they don't run during the line-reveal clip-path animation.
-                    Eliminates "shimmer drift" flicker on the line as the
-                    clip uncovers gradient stops in mid-phase. After 4.5s
-                    they resume their normal continuous loop. */}
+                {/* Round 24: gradient-offset decorative animations deferred
+                    to begin="2s" / "3.8s" — fire AFTER the 1.6s opacity
+                    fade-in completes, with a small pause for the static
+                    chart to settle. Sheen + brand-pulse both run
+                    continuously thereafter. */}
                 <linearGradient id={sheenId} x1="0" y1="0" x2="1" y2="0">
                   <stop offset="0%" stopColor="#ffffff" stopOpacity="0">
                     {animate ? (
-                      <animate attributeName="offset" values="-0.4;1.0" dur="5.6s" begin="4.5s" repeatCount="indefinite" />
+                      <animate attributeName="offset" values="-0.4;1.0" dur="5.6s" begin="2s" repeatCount="indefinite" />
                     ) : null}
                   </stop>
                   <stop offset="0.05" stopColor="#ffffff" stopOpacity="0.85">
                     {animate ? (
-                      <animate attributeName="offset" values="-0.35;1.05" dur="5.6s" begin="4.5s" repeatCount="indefinite" />
+                      <animate attributeName="offset" values="-0.35;1.05" dur="5.6s" begin="2s" repeatCount="indefinite" />
                     ) : null}
                   </stop>
                   <stop offset="0.1" stopColor="#ffffff" stopOpacity="0">
                     {animate ? (
-                      <animate attributeName="offset" values="-0.3;1.1" dur="5.6s" begin="4.5s" repeatCount="indefinite" />
+                      <animate attributeName="offset" values="-0.3;1.1" dur="5.6s" begin="2s" repeatCount="indefinite" />
                     ) : null}
                   </stop>
                 </linearGradient>
-                {/* Brand-tinted "data pulse" gradient — fast, narrow, repeating; offset by 1.8s vs. the white sheen so the two passes never collide. Begin 6.3s = 4.5s reveal-end + 1.8s pulse offset. */}
+                {/* Brand-tinted "data pulse" gradient — narrow + fast, offset 1.8s vs the white sheen so the two passes never collide. Begin 3.8s = 2s base + 1.8s pulse offset. */}
                 <linearGradient id={pulseId} x1="0" y1="0" x2="1" y2="0">
                   <stop offset="0%" stopColor={brandFill} stopOpacity="0">
                     {animate ? (
-                      <animate attributeName="offset" values="-0.3;1.0" dur="3.6s" begin="6.3s" repeatCount="indefinite" />
+                      <animate attributeName="offset" values="-0.3;1.0" dur="3.6s" begin="3.8s" repeatCount="indefinite" />
                     ) : null}
                   </stop>
                   <stop offset="0.04" stopColor={brandFill} stopOpacity="0.95">
                     {animate ? (
-                      <animate attributeName="offset" values="-0.26;1.04" dur="3.6s" begin="6.3s" repeatCount="indefinite" />
+                      <animate attributeName="offset" values="-0.26;1.04" dur="3.6s" begin="3.8s" repeatCount="indefinite" />
                     ) : null}
                   </stop>
                   <stop offset="0.08" stopColor={brandFill} stopOpacity="0">
                     {animate ? (
-                      <animate attributeName="offset" values="-0.22;1.08" dur="3.6s" begin="6.3s" repeatCount="indefinite" />
+                      <animate attributeName="offset" values="-0.22;1.08" dur="3.6s" begin="3.8s" repeatCount="indefinite" />
                     ) : null}
                   </stop>
                 </linearGradient>

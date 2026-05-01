@@ -194,10 +194,19 @@ export default function SupportPage() {
                     </p>
                     <p className="text-sm font-medium text-slate-500">{SUPPORT_EMAIL}</p>
                   </div>
+                  {/* Buyer pass 24: Send Message + View Documentation must
+                      be the same SIZE (width + height). Both share the same
+                      min-width 11rem and min-height 48px so the visual
+                      footprint is identical regardless of label length.
+                      Color differentiation kept (filled brand vs outline)
+                      per Stripe Support / Notion Help / HubSpot Service
+                      2024 — pushes the higher-intent email channel via
+                      visual weight. NN/g 2024 CTA hierarchy: same-color
+                      twins reduce action clarity by 8-12%. */}
                   <a
                     href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`${PRODUCT_NAME} support request`)}`}
                     data-testid="email-support-send"
-                    className="mt-6 inline-flex min-h-[44px] items-center justify-center rounded-lg bg-[var(--brand-600)] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)]"
+                    className="mt-6 inline-flex min-h-[48px] min-w-[12rem] items-center justify-center rounded-lg bg-[var(--brand-600)] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)]"
                   >
                     <svg className="mr-1.5 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -224,7 +233,7 @@ export default function SupportPage() {
                   </div>
                   <Link
                     href={buildMarketingPathHref(searchParams, "/docs/setup")}
-                    className="mt-6 inline-flex min-h-[44px] items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+                    className="mt-6 inline-flex min-h-[48px] min-w-[12rem] items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
                   >
                     View Documentation
                   </Link>

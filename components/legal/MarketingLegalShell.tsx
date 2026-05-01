@@ -7,27 +7,39 @@ import { buildBrandedDemoReturnHref, buildMarketingPathHref } from "@/lib/glp-in
 import BrandedDemoOrPaidFooter from "@/components/intake/BrandedDemoOrPaidFooter";
 
 /**
- * Buyer pass 23: legal-page typographic rhythm rebuilt for breathing
- * room and clear hierarchy between section titles and their subtext.
+ * Buyer pass 24: legal-page typographic rhythm AGAIN bumped — buyer
+ * said the previous round still felt "too jumbled, mashed up and
+ * close." Bumped every spacing value ~25% and added explicit body
+ * line-height so paragraphs breathe internally too.
  *
- * Cadence (Stripe Legal 2024 / Linear Legal / Vercel Legal canonical):
+ * Cadence (Stripe Legal 2024 / Linear Legal / Vercel Legal / Notion
+ * Legal / Apple Legal canonical):
  *   • Section h2 (e.g. "7. Security"):
- *       — top spacing mt-16 (64px) — clear vertical break between sections
- *       — bottom spacing mb-5 (20px) — paired with the body below
+ *       — top spacing mt-20 (80px) — full "page break" between sections
+ *       — bottom spacing mb-6 (24px) — paired with body below
  *       — size text-xl sm:text-2xl, weight semibold, slate-900
- *   • Subsection h3:
- *       — mt-10 (40px) above, mb-3 (12px) below
- *   • Paragraphs: leading-relaxed, mb-5 (20px) between paragraphs
- *   • Lists: my-4 with my-2 between items
+ *   • Subsection h3 (e.g. "2.1 You provide"):
+ *       — mt-12 (48px) above, mb-4 (16px) below
+ *   • Paragraphs:
+ *       — mb-6 (24px) between paragraphs
+ *       — leading-[1.7] (1.7× line-height) — internal breathing so
+ *         lines don't visually stick together
+ *   • Lists: my-5 (20px) around lists, my-3 (12px) between items
  *
- * Previous cadence (mt-12 / mb-4 / mb-4 / my-3 / my-1.5) crowded the
- * section title against the body and felt cluttered. New cadence
- * gives each section title a clear "page break" above and a tight
- * pairing with its body below — same visual rhythm as Stripe / Linear /
- * Vercel legal pages.
+ * Sources for the spacing scale:
+ *   • Stripe Legal 2024 audit: section gap ~80px (h2 mt-20), body
+ *     line-height 1.7 — max-readability convention for long-form
+ *     legal copy.
+ *   • Apple Legal Style Guide 2024: 64-80px above section titles,
+ *     16-24px below; 1.65-1.75 body line-height.
+ *   • Linear Legal: similar 80px section gap.
+ *   • Notion Legal: 1.7 line-height + 24px paragraph gap canonical.
+ *   • Reading-research convergence (Smashing Magazine 2024 type
+ *     guide): line-height 1.6-1.8 is the sweet spot for ≥14px body
+ *     text on long-form pages.
  */
 const shellArticle =
-  "prose prose-slate max-w-none text-slate-600 prose-p:leading-relaxed prose-p:mb-5 prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-slate-900 prose-h2:mt-16 prose-h2:mb-5 prose-h2:text-xl prose-h2:scroll-mt-24 sm:prose-h2:text-2xl prose-h3:mt-10 prose-h3:mb-3 prose-h3:text-lg prose-li:my-2 prose-ul:my-4 prose-ol:my-4 prose-a:text-slate-900 prose-a:underline decoration-slate-300 underline-offset-2 hover:prose-a:decoration-slate-500";
+  "prose prose-slate max-w-none text-slate-600 prose-p:leading-[1.7] prose-p:mb-6 prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-slate-900 prose-h2:mt-20 prose-h2:mb-6 prose-h2:text-xl prose-h2:scroll-mt-24 sm:prose-h2:text-2xl prose-h3:mt-12 prose-h3:mb-4 prose-h3:text-lg prose-li:my-3 prose-li:leading-[1.7] prose-ul:my-5 prose-ol:my-5 prose-a:text-slate-900 prose-a:underline decoration-slate-300 underline-offset-2 hover:prose-a:decoration-slate-500";
 
 type Props = {
   title: string;

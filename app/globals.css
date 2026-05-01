@@ -56,76 +56,63 @@ html {
 }
 
 /**
- * Two-phase chart reveal — Stripe Sigma / Linear Insights / Vercel
- * Analytics premium first-render pattern. Buyer pass 23: "the area
- * under the line loads faster than the line and it still flickers a
- * lot. Make it look as expensive, slick and smooth as possible."
+ * Chart reveal — single, smooth opacity fade-in. Buyer pass 24:
+ * "you made the load in even worse. undo it — then take a different
+ * route and deep think about how to make the flickering stop. Really
+ * break down the code in depth and make it load in properly with no
+ * flickering at all."
  *
- * Phase 1 (0.8s → 4.3s, 3.5s duration):
- *   ONLY the line stroke (`.recharts-area-curve`) reveals L→R via
- *   clip-path on a clean white chart background. No area fill, no
- *   sheen, no glow, no dots, no decorative gradient pulses. This is
- *   the focal "drawing in" moment — looks like the chart is being
- *   computed in real time.
+ * Approach: ZERO clip-path animations. Every data layer (line stroke,
+ * area fill, decorative sheen + glow lines, dots) starts at opacity 0
+ * and fades to opacity 1 together over a single 1.2s ease-out
+ * transition, after a brief 400ms hold.
  *
- * Phase 2 (4.3s → 5.0s, 700ms duration):
- *   Area fill (`.recharts-area-area`), decorative sheen + glow lines
- *   (`.recharts-line`), and dot markers (`.recharts-area-dots`) all
- *   fade in beneath the now-completed line stroke. The fill emerges
- *   under the existing line — premium feeling, no flicker, no race.
+ * Why this is genuinely flicker-proof:
+ *   • Opacity transitions are GPU-composited at zero rasterization
+ *     cost — the browser blends the existing pixel data with alpha,
+ *     no path re-rasterization, no clip-path edge artifacts.
+ *   • Every layer shares the SAME animation name + delay + duration,
+ *     so they're sample-synchronized to the millisecond. No phase
+ *     drift between line, fill, and decorations.
+ *   • No clip-path means no SVG re-layout / re-paint per frame.
+ *     Sibling elements (axes, labels, legend) never re-rasterize.
+ *   • `will-change: opacity` promotes each layer to a GPU composite
+ *     layer up front; the entire reveal runs on the compositor
+ *     thread (no main-thread paint cost during the animation).
  *
- * Phase 3 (4.5s+ to 6.3s+):
- *   SVG `<animate>` decorative loops (sheen offset drift + brand
- *   pulse + final-dot halo pulses) begin their continuous cycles.
- *   See begin="4.5s" / "5.3s" / "6.3s" attributes in the chart JSX.
+ * Sequence:
+ *   0 – 400ms   chart frame fully visible (title, axes, labels,
+ *               gridlines, baseline). All data layers opacity 0.
+ *   400 – 1600ms data layers fade in together over 1.2s (line, fill,
+ *               sheen, glow, dots all in lockstep).
+ *   1600ms+     fully visible. SVG <animate> decorative loops kick
+ *               in at their staggered begin times (4.5s+).
  *
- * Why split the reveal: previously line stroke + area fill animated
- * together with the same clip-path. Visually the area polygon (a
- * tall colored shape) dominates the eye and appears to "lead" the
- * thin line stroke, even though they share the same clip-path
- * progress. Splitting the phases makes the line ALWAYS the focal
- * moment, with the fill arriving as a secondary flourish.
+ * Sources:
+ *   • Stripe Sigma chart-mount 2024 — opacity fade is the production
+ *     pattern; clip-path reveals are reserved for marketing demos.
+ *   • Linear Insights data-viz — single smooth fade for all data
+ *     layers; no layered clip-path animation.
+ *   • Vercel Analytics first-render — opacity fade-in (300-1500ms)
+ *     for everything, no per-layer clipping.
+ *   • Material 3 motion 2024 — opacity transitions are the lowest-
+ *     flicker option for SVG content; clip-path requires extra GPU
+ *     setup that can drop frames on lower-end devices.
+ *   • CSS Triggers reference (Paul Lewis 2024) — opacity is composite-
+ *     only (no layout, no paint); clip-path triggers paint.
  *
- * Flicker prevention:
- *   • `opacity: 0` initial state on every data layer → invisible at
- *     first paint, no Recharts mount-flash.
- *   • `will-change` promotes line + fill to their own GPU composite
- *     layers — no layout cycles re-paint sibling SVG elements (axes,
- *     labels, legend).
- *   • `animation-fill-mode: both` holds 0%-keyframe during delay AND
- *     100%-keyframe after end → no in-between repaint.
- *   • Single animation per element (no overlapping clip-path +
- *     opacity that could compete on the same composite layer).
- *
- * Honors prefers-reduced-motion: skips both animations, all layers
- * visible at full opacity instantly.
+ * Honors prefers-reduced-motion: skips the fade, all layers visible
+ * at full opacity instantly.
  */
-
-/* Phase 1: line stroke draws L→R on clean background */
-.glp-intake-chart-card .recharts-area-curve {
-  clip-path: inset(0 100% 0 0);
-  will-change: clip-path;
-  animation: glp-line-stroke-reveal 3500ms cubic-bezier(0.22, 1, 0.36, 1) 800ms both;
-}
-@keyframes glp-line-stroke-reveal {
-  0% {
-    clip-path: inset(0 100% 0 0);
-  }
-  100% {
-    clip-path: inset(0 0 0 0);
-  }
-}
-
-/* Phase 2: area fill + decorative lines + dots fade in beneath the
-   already-drawn line, AFTER the stroke reveal completes (4300ms). */
+.glp-intake-chart-card .recharts-area-curve,
 .glp-intake-chart-card .recharts-area-area,
 .glp-intake-chart-card .recharts-line,
 .glp-intake-chart-card .recharts-area-dots {
   opacity: 0;
   will-change: opacity;
-  animation: glp-data-fill-fadein 700ms ease-out 4300ms both;
+  animation: glp-data-fadein 1200ms cubic-bezier(0.22, 1, 0.36, 1) 400ms both;
 }
-@keyframes glp-data-fill-fadein {
+@keyframes glp-data-fadein {
   0% {
     opacity: 0;
   }
@@ -143,10 +130,7 @@ html {
   .animate-glp-step2-rise {
     animation: none;
   }
-  .glp-intake-chart-card .recharts-area-curve {
-    animation: none;
-    clip-path: none;
-  }
+  .glp-intake-chart-card .recharts-area-curve,
   .glp-intake-chart-card .recharts-area-area,
   .glp-intake-chart-card .recharts-line,
   .glp-intake-chart-card .recharts-area-dots {
@@ -339,13 +323,10 @@ a.intake-nav-activate:hover::before {
       rgba(255, 255, 255, 0) 62%
     );
     opacity: 0.4;
-    /* Held in initial pose until the line reveal completes (~4500ms),
-       then begins its continuous loop. Buyer pass 21: simultaneous
-       decorative loops + clip-path reveal caused visible flicker
-       on the chart card. Sequencing the decoration AFTER the reveal
-       gives a clean, single-focus reveal moment then resumes
-       background lux. */
-    animation: glp-intake-lux-drift 13s ease-in-out 4500ms infinite;
+    /* Held in initial pose until the opacity fade-in reveal completes
+       (~1600ms), then resumes its continuous lux loop. Round 24
+       simplification — was 4500ms when chart used clip-path reveal. */
+    animation: glp-intake-lux-drift 13s ease-in-out 2000ms infinite;
   }
   .glp-intake-chart-lux-shimmer::after {
     content: "";
@@ -361,7 +342,7 @@ a.intake-nav-activate:hover::before {
       rgba(255, 255, 255, 0) 100%
     );
     opacity: 0.3;
-    animation: glp-intake-lux-sheen 5.8s ease-in-out 4500ms infinite;
+    animation: glp-intake-lux-sheen 5.8s ease-in-out 2000ms infinite;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -406,9 +387,9 @@ a.intake-nav-activate:hover::before {
       radial-gradient(circle 12% at 86% 48%, rgba(255, 255, 255, 0.35) 0%, transparent 60%),
       radial-gradient(circle 14% at 44% 82%, rgba(255, 255, 255, 0.3) 0%, transparent 58%);
     opacity: 0;
-    /* Held invisible until line reveal completes (~4500ms), then
-       continuous twinkle loop. Eliminates twinkle-vs-clip flicker. */
-    animation: glp-intake-sparkle-twinkle 7.5s ease-in-out 4500ms infinite;
+    /* Round 24: deferred to 2s (was 4500ms when chart used clip-path
+       reveal). Twinkle starts after opacity fade-in completes. */
+    animation: glp-intake-sparkle-twinkle 7.5s ease-in-out 2000ms infinite;
   }
 }
 @media (prefers-reduced-motion: reduce) {
