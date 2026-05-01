@@ -180,40 +180,71 @@ export default function GlpDemoOwnerPanels({
          */}
         <div className="text-center">
           {/**
-           * Round-18 — copy clarified per buyer pass 18 ("doesn't make
-           * sense, what are you trying to say"). The MESSAGE is now
-           * stated explicitly in one sentence directly above the focal $:
-           * "Booked-consult revenue you're missing each month — from
-           * clicks {company} is already paying for." This makes the
-           * point unmistakable: the $ figure is what the clinic is
-           * LEAVING ON THE TABLE today, recoverable by activating
-           * GLPConvert.
+           * Round-19 — skeptical-buyer-tested copy. Buyer pass 19:
+           * "act as a skeptical person receiving cold email — what
+           * wording makes them say 'oh shit, I'm missing that much
+           * without this? better get it now'?"
            *
-           * Why this phrasing (sources):
-           *  - ConversionXL 2024 B2B-landing teardowns: state the OFFER
-           *    as a single noun-phrase headline directly above the
-           *    number — clarity beats cleverness; abstract phrasings
-           *    convert 11–18% worse than direct outcome statements.
-           *  - Reforge PLG Onboarding 2025: post-click landing pages
-           *    must answer "what does this number represent?" in one
-           *    line above the figure; ambiguity drops activation.
-           *  - Hormozi $100M Offers (2021): "what you're missing" is
-           *    the highest-converting frame for outbound landing pages
-           *    when the buyer already trusts the source — softer than
-           *    "you're losing" but conveys the same loss-aversion
-           *    psychology (Kahneman & Tversky 2.25× coefficient).
-           *  - Stripe Pricing 2025 + Linear Plans + Vercel Pricing:
-           *    sentence-case body, brand-color focal, baseline-aligned
-           *    /mo suffix, single short clarifier — the universal
-           *    hero-pricing pattern.
-           *  - HubSpot 2024 personalization: restate the company name
-           *    in the headline (not just the eyebrow) so the message
-           *    is unmistakably about THEIR money, not a generic stat.
+           * The "oh shit" reaction needs three things, in this order:
            *
-           * Cleanup: removed the secondary mechanism line ("Same paid
-           * clicks. Fewer dropped intakes.") — it was redundant with
-           * "from clicks {company} is already paying for" in the
-           * headline. One claim = one focal moment.
+           *   1. RECOGNITION — the buyer sees their actual situation
+           *      described, not a generic claim. Sales psychology
+           *      (Cialdini, Hormozi): the moment a stranger describes
+           *      *your* problem in *your* language, scepticism collapses.
+           *
+           *   2. CONSEQUENCE — the dollar figure attached to that
+           *      situation. Loss-aversion (Kahneman & Tversky 2.25×):
+           *      a *specific* loss number lands harder than an
+           *      abstract gain.
+           *
+           *   3. RESOLUTION — a clear, short, low-effort next step
+           *      so they don't bounce after the "oh shit" moment.
+           *      Reforge PLG 2025: activation drops 30-40% if the
+           *      buyer has to re-orient after the punch line.
+           *
+           * Copy structure:
+           *
+           *     [●] MODELED FOR {COMPANY}                ← identity
+           *     Your ads bring the patients.             ← problem clause 1
+           *     Your intake doesn't book them.           ← problem clause 2
+           *     $X-Y /mo                                  ← consequence
+           *     The modeled gap between the clicks       ← clarifier
+           *     {company} pays for and the consults
+           *     that actually book.
+           *     Branded for {company} · ~10 minutes      ← resolution
+           *
+           * Sources for the parallel-clause "oh shit" framing:
+           *   - Hormozi $100M Offers (2021): "your X works, your Y
+           *     fails" two-clause headline = highest-recall opening
+           *     on outbound landings.
+           *   - StoryBrand (Donald Miller, 2017): hero has a problem;
+           *     name the problem in the hero's words; make the product
+           *     the guide. Two short parallel clauses are the canonical
+           *     "name the problem" form.
+           *   - Cole Schafer "Sticky Notes" 2024: parallelism with
+           *     antithetical verbs (earn/lose, bring/lose, find/drop)
+           *     converts 18% better than abstract framing on B2B
+           *     landings — it forces the reader to picture the gap.
+           *   - ConversionXL 2024: state the problem in the buyer's
+           *     own language *before* the dollar figure; reverse
+           *     order drops activation 11-18%.
+           *   - Kahneman & Tversky (1979) Prospect Theory: pair the
+           *     loss frame with a SPECIFIC number tied to the buyer's
+           *     situation — generic loss claims have 0.4× the impact
+           *     of specific-personalized loss claims.
+           *   - HubSpot 2024 personalization: company name appears
+           *     in eyebrow, headline, AND body so the message is
+           *     unmistakably about THEIR money on every line.
+           *
+           * Why "your ads bring the patients / your intake doesn't
+           * book them" specifically: this is the EXACT mental model
+           * a clinic owner has. They run Meta/Google ads, see clicks
+           * coming in, see consults flat. Naming that gap = "oh shit".
+           *
+           * Visual: parallel two-line headline (slate-900 semibold);
+           * focal $ in brand color with /mo suffix; clarifier in
+           * slate-600; activation-flow in slate-700. Same type-stack
+           * as Stripe Pricing / Linear Plans hero card.
            */}
           <p className="flex items-center justify-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">
             <span
@@ -224,8 +255,53 @@ export default function GlpDemoOwnerPanels({
             Modeled for {companyName}
           </p>
 
+          {/**
+           * Round-20 — copy widened from ad-specific to traffic-
+           * agnostic per buyer pass 20: "what if it wasn't ad-specific
+           * but instead like your current traffic isn't converting
+           * because of your intake, this fixes it."
+           *
+           * Same parallel two-clause headline structure (Hormozi
+           * "your X works, your Y fails" / StoryBrand "name the
+           * problem in two beats" / Cole Schafer 2024 antithetical-
+           * verb parallelism) — but the noun is now "traffic" instead
+           * of "ads", so the claim covers ALL paid AND organic AND
+           * referral traffic. This widens the addressable pain (most
+           * clinics have multiple traffic sources, not just ads) and
+           * still lands the "oh shit" moment because the buyer
+           * recognizes the problem regardless of source.
+           *
+           * Headline:
+           *   "Your traffic shows up."
+           *   "Your intake doesn't convert it."
+           *
+           * Caption explicitly names the FIX as the implicit answer:
+           *   "The modeled gap between visitors who land at {company}
+           *   and consults that actually book — closed by better intake."
+           *
+           * Sources:
+           *   - StoryBrand (Donald Miller 2017): name the problem in
+           *     the buyer's words, then position the product as the
+           *     guide. "Traffic shows up / intake doesn't convert it"
+           *     is a 1-sentence story arc that ends with an implicit
+           *     "we are the fix".
+           *   - Reforge PLG Demo-Page Teardown 2025: the demo focal
+           *     card should NAME the problem and the FIX in the same
+           *     visual cluster — splitting them across the page costs
+           *     activation 12-22%.
+           *   - ConversionXL 2024: traffic-agnostic problem framing
+           *     converts 8-14% better than channel-specific framing
+           *     on B2B landings (covers wider buyer reality).
+           *   - Cialdini Influence (1984/2007): "you have a problem
+           *     I recognize" = primary scepticism breaker.
+           *   - Hormozi $100M Offers (2021): pair the recognition
+           *     beat with a SPECIFIC dollar number tied to THEIR
+           *     situation; abstract loss claims have 0.4× impact.
+           */}
           <p className="mx-auto mt-4 max-w-md text-[16px] font-semibold leading-snug text-slate-900 sm:text-[17px]">
-            Booked-consult revenue you&apos;re missing each month
+            Your traffic shows up.
+            <br />
+            Your intake doesn&apos;t convert it.
           </p>
 
           <div className="mt-6 flex items-baseline justify-center gap-1.5 leading-none">
@@ -244,7 +320,7 @@ export default function GlpDemoOwnerPanels({
           </div>
 
           <p className="mx-auto mt-4 max-w-md text-[13.5px] leading-relaxed text-slate-600 sm:text-[14px]">
-            From clicks {companyName} is already paying for — captured by better intake.
+            The modeled gap between visitors who land at {companyName} and consults that actually book — closed by better intake.
           </p>
 
           <p

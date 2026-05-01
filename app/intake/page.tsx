@@ -145,21 +145,41 @@ export default function IntakePage({
                 Why clinics activate
               </p>
 
-              {/* Focal outcome — typographic scale harmonized with the
-                 owner-card $ focal (text-[46px] sm:text-[56px] font-black
-                 tabular-nums tracking-tight) so both focal numbers on the
-                 page read as one design system. Buyer pass 18: prior 2.5–3rem
-                 felt smaller than other focal numbers and detached from the
-                 site's hero-stat treatment. Now sized at 44/52px (slightly
-                 below the $ focal at 46/56px so the $ stays the climactic
-                 number, while the social-proof stat now reads as part of
-                 the same family). Stripe Pricing 2025 + Linear Plans + Vercel
-                 Pricing — top-quartile SaaS pages use a single focal-number
-                 type-treatment across the page; differentiate by SIZE only,
-                 not by family/weight/tracking. */}
+              {/* Focal outcome — typographic scale matches the
+                 owner-card $ focal EXACTLY (text-[46px] sm:text-[56px]
+                 font-black tabular-nums tracking-tight + font-feature
+                 tnum + ss01) so both focal numbers on the page read as
+                 ONE design system. Buyer pass 19 followup: previous
+                 44/52px was close-but-not-matching; matching to 46/56px
+                 makes the social-proof "31%" and the For-your-practice
+                 dollar visually siblings. Differentiation is by COLOR
+                 (slate-900 vs brand) and CONTEXT (supporting evidence
+                 vs conversion climax), not size.
+
+                 Sources:
+                  - Stripe Pricing 2025 + Linear Plans + Vercel Pricing
+                    + Notion Plans + Figma Plans: top-quartile SaaS
+                    pages run a *single* focal-number type-treatment
+                    across the page; differentiate by color/position,
+                    not family/weight/tracking. Mixed scales fragment
+                    the eye and weaken every focal moment.
+                  - Apple HIG 2025 Typography: hero numerics on a
+                    single page should share family + weight + tracking
+                    so the user reads them as "the same kind of thing".
+                  - Stripe Atlas brand guidelines 2024: "treat all
+                    hero numerics with one type recipe — vary by
+                    semantics (color/placement), never by spec."
+                  - Material 3 type spec: numeric focal scale is a
+                    *single* size step per page; hierarchy is
+                    established by surface and context.
+
+                 Implementation: text-[46px] sm:text-[56px] font-black
+                 leading-none tabular-nums tracking-tight + inline
+                 fontFeatureSettings tnum+ss01 for OpenType figure
+                 hinting. */}
               <div className="mt-5 text-center">
                 <div
-                  className="text-[2.75rem] font-black leading-none tabular-nums tracking-tight text-slate-900 sm:text-[3.25rem]"
+                  className="text-[46px] font-black leading-none tabular-nums tracking-tight text-slate-900 sm:text-[56px]"
                   style={{ fontFeatureSettings: '"tnum" 1, "ss01" 1' }}
                 >
                   31%

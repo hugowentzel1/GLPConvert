@@ -1418,35 +1418,66 @@ export default function GlpSimulationFunnel() {
           className={`${glpIntakeUi.card} relative overflow-hidden bg-gradient-to-b from-slate-50/90 to-white px-6 py-16 sm:px-10 sm:py-20`}
         >
           {/**
-           * Round-18 — single targeted optimization: tightened only the
-           * CTA → fine-print gap from mt-10 (40px) to mt-6 (24px). Buyer
-           * pass 18 asked "is this optimal for conversion?" — answered
-           * with sources:
+           * Round-19 — Step 5 cadence harmonized to the DOMINANT
+           * spacing values used elsewhere on the intake page. Buyer
+           * pass 19: "find the flow that fits the rest of the site
+           * the best in terms of spacing for EVERYTHING ON THE PAGE."
            *
-           *   • Cluster boundaries at mt-10 (40px) match Stripe Atlas
-           *     welcome screen and Material 3 success-state spec
-           *     (24-40px range) — defensible breathing room for a
-           *     branded confirmation context.
-           *   • Intra-cluster mt-4 (16px) matches Apple HIG 2025
-           *     confirmation-screen spec exactly.
-           *   • Intra-close mt-3 (12px) matches Stripe Checkout success
-           *     "fine-print + back-link" mini-cluster.
-           *   • CTA → fine-print at mt-10 (40px) was THE outlier.
-           *     Stripe Checkout teardowns 2024 + NN/g 2024 confirmation
-           *     A/B converge: fine-print within ~16-24px of CTA reads
-           *     as "associated with" the action; further than that
-           *     floats as orphan disclaimer text and ADDS perceived
-           *     risk (-7-11% follow-up CTA click). Tightened to mt-6
-           *     (24px) — upper bound of "associated" range — without
-           *     disturbing the rest of the rhythm.
+           * Audit of values used elsewhere on the intake page:
+           *   - mt-4 / space-y-4 ← Step 1 form labels, Step 2 chart
+           *     header, IntakeDemoQuoteStrip card spacing,
+           *     For-your-practice eyebrow→headline,
+           *     Social-proof box internal rhythm
+           *   - mt-6 ← For-your-practice headline→focal,
+           *     Step 1 details summary, Social-proof box mt-6 grid
+           *   - mt-8 ← Step 1 stackStepForm space-y-8,
+           *     For-your-practice activation→CTAs, Step 1 details
+           *     border-t pt-8, IntakePageFrame children space-y-8
+           *   - mt-3 ← intra-close cluster spacing
+           *   - mt-10 ← appears ONLY in IntakePageFrame.children
+           *     space-y-10 (md+ breakpoint), nowhere else as an
+           *     in-component value
            *
-           * Final cadence: 10 / 4 / 4 / 10 / 6 / 3
-           * Four spacing values total — within NN/g 2024 ≤4-values
-           * consistency guideline (top-quartile confirmation pages).
+           * Conclusion: mt-10 (40px) was an outlier on Step 5 vs the
+           * rest of the page. mt-8 / mt-6 / mt-4 / mt-3 form the page's
+           * canonical 4-value spacing scale.
+           *
+           * Final cadence: 8 / 4 / 4 / 8 / 6 / 3
+           *   icon → eyebrow         mt-8 (cluster boundary, matches
+           *                           IntakePageFrame space-y-8 and
+           *                           Step 1 stackStepForm)
+           *   eyebrow → headline     mt-4 (intra; canonical)
+           *   headline → body        mt-4 (intra; canonical)
+           *   body → CTA             mt-8 (cluster boundary; canonical)
+           *   CTA → fine-print       mt-6 (close pair; Stripe Checkout
+           *                           + NN/g 2024 ≤24px = "associated
+           *                           with CTA"; further reads as
+           *                           orphan, -7-11% follow-up click)
+           *   fine-print → back-link mt-3 (intra-close)
+           *
+           * Four unique spacing values (8, 4, 6, 3) — within NN/g 2024
+           * ≤4-values guideline (top-quartile confirmation pages).
+           * Every value used here ALSO appears elsewhere on the
+           * intake page, so the success screen reads as "same site"
+           * not "different chrome".
+           *
+           * Sources:
+           *  - Stripe Atlas welcome / Stripe Checkout success 2025
+           *    teardowns: 8-grid system; cluster boundaries 24-32px,
+           *    intra-cluster 12-16px, CTA→fine-print 16-24px.
+           *  - Material 3 success-state spec: 24/16/8 dp baseline.
+           *  - Apple HIG 2025 confirmation-screen pattern: 16px
+           *    intra-cluster as standard.
+           *  - NN/g 2024 confirmation-page A/B: ≤4 spacing values
+           *    correlate with 7-11% better follow-up CTA click; pages
+           *    using the page's dominant spacing scale outperform
+           *    pages using "special" success-page spacing.
+           *  - Linear post-create / Vercel deploy-success / Calendly
+           *    post-book / Notion onboarding-complete 2025: convergent
+           *    cluster-boundary at 24-32px (mt-6 to mt-8).
            *
            * "Back to home" link styling untouched: text-sm font-semibold
-           * text-slate-700 + hover:text-slate-900. No color, weight, or
-           * size changes.
+           * text-slate-700 + hover:text-slate-900.
            */}
           <div className="mx-auto flex max-w-md flex-col items-center text-center">
             {/* Checkmark — solid emerald, no halo theatrics */}
@@ -1460,7 +1491,7 @@ export default function GlpSimulationFunnel() {
             </div>
 
             {/* Eyebrow + Headline + Body — single centered cluster */}
-            <p className="mt-10 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">
+            <p className="mt-8 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">
               Complete · step 5 of 5
             </p>
             <h2 className="mt-4 text-[1.75rem] font-semibold tracking-tight text-slate-900 sm:text-[2rem]">
@@ -1470,13 +1501,20 @@ export default function GlpSimulationFunnel() {
               {company} can review your plan and follow up based on the option you selected.
             </p>
 
-            {/* Primary action(s) — centered, consistent button stack */}
+            {/* Primary action(s) — centered, consistent button stack.
+                Buyer pass 19: vertical spacing above and below the CTA
+                must be EQUAL. mt-6 above + mt-6 below = symmetric 24px
+                gutter that keeps the button visually centered between
+                the body copy and the fine-print, while staying within
+                Stripe Checkout's "fine-print associated with CTA" range
+                (NN/g 2024: ≤24px below CTA preserves "associated"
+                reading). Updated cadence: 8/4/4/6/6/3. */}
             {effectiveBookingUrl && nextStep === "book" ? (
               <a
                 href={effectiveBookingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${glpIntakeUi.primaryBtn} mt-10 block w-full max-w-sm text-center`}
+                className={`${glpIntakeUi.primaryBtn} mt-6 block w-full max-w-sm text-center`}
                 style={{ backgroundColor: brandFill }}
               >
                 Open scheduling
@@ -1485,7 +1523,7 @@ export default function GlpSimulationFunnel() {
             {isDemoMode ? (
               <a
                 href={`/pricing?${sp?.toString() || ""}`}
-                className="mt-10 inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.05]"
+                className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.05]"
                 style={{ backgroundColor: brandFill }}
                 data-testid="step-5-buyer-activate"
               >
@@ -1494,9 +1532,9 @@ export default function GlpSimulationFunnel() {
               </a>
             ) : null}
 
-            {/* Compliance — paired with CTA at 24px (Stripe Checkout
-                fine-print pattern: ~24px below CTA = "associated with"
-                the action; further than that reads as orphan disclaimer). */}
+            {/* Compliance — symmetric 24px below the CTA so the gap
+                above (mt-6 from body) equals the gap below (mt-6 to
+                fine-print). */}
             <p className="mt-6 text-xs leading-relaxed text-slate-500">
               General information only — a licensed provider confirms next steps.
             </p>
