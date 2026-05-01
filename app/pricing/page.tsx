@@ -78,7 +78,7 @@ export default function PricingPage() {
               </p>
               <h1 className="mt-3 text-5xl font-black tracking-tight text-slate-950 sm:text-[3.5rem]">
                 <span className="tabular-nums">$99</span>
-                <span className="ml-1 text-2xl font-black text-neutral-500 sm:text-3xl">/mo</span>
+                <span className="ml-1 text-2xl font-black text-slate-950 sm:text-3xl">/mo</span>
               </h1>
               <p className="mt-2 text-base font-medium text-neutral-600">
                 + <span className="tabular-nums">$399</span> one-time setup

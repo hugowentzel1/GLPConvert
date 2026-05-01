@@ -47,9 +47,9 @@ function TermsContent() {
           </p>
 
           <div className="prose prose-lg max-w-none">
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Acceptance of Terms</h2>
-              <p className="text-gray-600 mb-4">
+            <section className="mb-14">
+              <h2 className="mb-5 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">1. Acceptance of Terms</h2>
+              <p className="mb-5 text-[15px] leading-relaxed text-slate-600 sm:text-base">
                 By accessing and using {PRODUCT_NAME}, you accept and agree to be bound by these
                 Terms and the canonical{" "}
                 <Link href={longFormHref} className="text-[var(--brand-primary)] hover:underline">
@@ -59,9 +59,9 @@ function TermsContent() {
               </p>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">2. Description of Service</h2>
-              <p className="text-gray-600 mb-4">
+            <section className="mb-14">
+              <h2 className="mb-5 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">2. Description of Service</h2>
+              <p className="mb-5 text-[15px] leading-relaxed text-slate-600 sm:text-base">
                 {PRODUCT_NAME} provides intake, recommendation, and booking-conversion software
                 for clinics. It is <strong>not</strong> an EMR, telehealth platform, or
                 prescribing software. Licensed clinicians at the operating clinic make all
@@ -69,35 +69,35 @@ function TermsContent() {
               </p>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">3. Accounts</h2>
-              <p className="text-gray-600 mb-4">
+            <section className="mb-14">
+              <h2 className="mb-5 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">3. Accounts</h2>
+              <p className="mb-5 text-[15px] leading-relaxed text-slate-600 sm:text-base">
                 You are responsible for maintaining the confidentiality of your account
                 credentials and for all activity under your account. Notify us immediately of any
                 unauthorized use.
               </p>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">4. Acceptable Use</h2>
-              <p className="text-gray-600 mb-4">
+            <section className="mb-14">
+              <h2 className="mb-5 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">4. Acceptable Use</h2>
+              <p className="mb-5 text-[15px] leading-relaxed text-slate-600 sm:text-base">
                 Do not use the service for unlawful purposes, to overburden infrastructure, or to
                 make deceptive or unsubstantiated health claims.
               </p>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Payment Terms</h2>
-              <p className="text-gray-600 mb-4">
+            <section className="mb-14">
+              <h2 className="mb-5 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">5. Payment Terms</h2>
+              <p className="mb-5 text-[15px] leading-relaxed text-slate-600 sm:text-base">
                 {PRODUCT_NAME} bills monthly with a one-time setup fee. Subscription fees are
                 cancel-anytime and non-refundable except where required by law. Pricing changes
                 are announced 30 days in advance.
               </p>
             </section>
 
-            <section className="mb-8">
-              <h2 id="refunds" className="text-2xl font-bold text-gray-900 mb-4">6. Refunds &amp; Guarantee</h2>
-              <p className="text-gray-600 mb-4" id="guarantee">
+            <section className="mb-14">
+              <h2 id="refunds" className="mb-5 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">6. Refunds &amp; Guarantee</h2>
+              <p className="mb-5 text-[15px] leading-relaxed text-slate-600 sm:text-base" id="guarantee">
                 We guarantee your branded deployment goes live within 24 hours of purchase. If
                 onboarding is not initiated as promised, you may request a{" "}
                 <Link href={refundHref} className="text-[var(--brand-primary)] hover:underline">
@@ -105,7 +105,7 @@ function TermsContent() {
                 </Link>{" "}
                 within 7 days by emailing <strong>{SUPPORT_EMAIL}</strong>.
               </p>
-              <p className="text-gray-600">
+              <p className="text-[15px] leading-relaxed text-slate-600 sm:text-base">
                 For full refund details, see our{" "}
                 <Link href={refundHref} className="text-[var(--brand-primary)] hover:underline">
                   Refund Policy
@@ -114,50 +114,50 @@ function TermsContent() {
               </p>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">7. Data &amp; Privacy</h2>
-              <p className="text-gray-600 mb-4">
+            <section className="mb-14">
+              <h2 className="mb-5 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">7. Data &amp; Privacy</h2>
+              <p className="mb-5 text-[15px] leading-relaxed text-slate-600 sm:text-base">
                 Your data is protected by our Privacy Policy and security measures. We use
                 industry-standard encryption and maintain HIPAA-aware controls for clinic
                 customers. You retain ownership of your data.
               </p>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">8. Intellectual Property &amp; Clinical Scope</h2>
-              <p className="text-gray-600 mb-4">
+            <section className="mb-14">
+              <h2 className="mb-5 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">8. Intellectual Property &amp; Clinical Scope</h2>
+              <p className="mb-5 text-[15px] leading-relaxed text-slate-600 sm:text-base">
                 The service and its original content, features, and functionality are owned by
                 Wellspire LLC. {PRODUCT_NAME} does not provide medical advice, diagnosis, dosing
                 decisions, or eligibility determinations.
               </p>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">9. Limitation of Liability</h2>
-              <p className="text-gray-600 mb-4">
+            <section className="mb-14">
+              <h2 className="mb-5 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">9. Limitation of Liability</h2>
+              <p className="mb-5 text-[15px] leading-relaxed text-slate-600 sm:text-base">
                 To the maximum extent permitted by law, Wellspire LLC is not liable for indirect,
                 incidental, special, consequential, or punitive damages.
               </p>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">10. Termination</h2>
-              <p className="text-gray-600 mb-4">
+            <section className="mb-14">
+              <h2 className="mb-5 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">10. Termination</h2>
+              <p className="mb-5 text-[15px] leading-relaxed text-slate-600 sm:text-base">
                 You may cancel your account at any time. We may suspend or terminate accounts for
                 breach, non-payment, or risk to the platform.
               </p>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Changes</h2>
-              <p className="text-gray-600 mb-4">
+            <section className="mb-14">
+              <h2 className="mb-5 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">11. Changes</h2>
+              <p className="mb-5 text-[15px] leading-relaxed text-slate-600 sm:text-base">
                 We will provide at least 30 days&apos; notice of material changes via in-product
                 banner or email.
               </p>
             </section>
 
-            <section className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">12. Contact</h2>
+            <section className="mb-14">
+              <h2 className="mb-5 text-xl font-semibold tracking-tight text-slate-900 sm:text-2xl">12. Contact</h2>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-gray-700">
                   <strong>Support:</strong>{" "}

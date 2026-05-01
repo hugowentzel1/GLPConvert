@@ -26,8 +26,16 @@ export default function IntakeDemoQuoteStrip() {
           className={`flex h-full min-h-0 flex-col space-y-4 ${glpIntakeUi.intakeHeroShell} p-5 sm:space-y-5 sm:p-6`}
           data-testid="intake-demo-testimonial-card"
         >
-          <blockquote className="flex min-h-0 flex-1 flex-col justify-start text-left">
-            <p className="border-l-2 border-slate-300/90 pl-4 text-[15px] leading-relaxed text-slate-800 sm:text-[16px] sm:leading-[1.65]">
+          {/* Buyer pass 23: center the quote text to match the centered
+              avatar/name/role footer so the entire testimonial card reads
+              as a single centered visual unit (Stripe Pricing 2025
+              testimonial pattern + Linear customer-quote cards). The
+              previous left-aligned quote with a left rule clashed with
+              the centered avatar below — the eye couldn't tell whether
+              the card was left-aligned or centered. Now: uniformly
+              centered. */}
+          <blockquote className="flex min-h-0 flex-1 flex-col justify-start text-center">
+            <p className="mx-auto max-w-prose text-[15px] leading-relaxed text-slate-800 sm:text-[16px] sm:leading-[1.65]">
               &ldquo;{q.quote}&rdquo;
             </p>
           </blockquote>

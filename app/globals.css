@@ -56,76 +56,81 @@ html {
 }
 
 /**
- * Chart frame (card, title, subtitle, legend, axes, labels, baseline,
- * gridlines) paints instantly with the rest of step 2. Every DATA
- * layer — `.recharts-area` (area + line + fill), `.recharts-line`
- * (sheen and glow strokes), `.recharts-line-dots` (dot markers) —
- * is held FULLY INVISIBLE (opacity 0) until t=800ms, then clip-paths
- * L→R together over 3.5s.
+ * Two-phase chart reveal — Stripe Sigma / Linear Insights / Vercel
+ * Analytics premium first-render pattern. Buyer pass 23: "the area
+ * under the line loads faster than the line and it still flickers a
+ * lot. Make it look as expensive, slick and smooth as possible."
  *
- * Buyer pass 20: "I DONT want the line outline before the actual
- * line loads. The graph should be empty until the line loads in
- * from left to right. Make the entire thing stop flickering."
+ * Phase 1 (0.8s → 4.3s, 3.5s duration):
+ *   ONLY the line stroke (`.recharts-area-curve`) reveals L→R via
+ *   clip-path on a clean white chart background. No area fill, no
+ *   sheen, no glow, no dots, no decorative gradient pulses. This is
+ *   the focal "drawing in" moment — looks like the chart is being
+ *   computed in real time.
  *
- * Why this is flicker-proof:
- *   • opacity: 0 in the element's *initial* declared state means
- *     the data layers are invisible at first paint — Recharts can
- *     mount, lay out the SVG, and emit any number of intermediate
- *     paints WITHOUT the buyer seeing a flash of the line.
- *   • The keyframe explicitly sets opacity: 1 at 0% so the moment
- *     the animation starts (t=800ms), the layers become visible
- *     AND simultaneously begin clip-path animating from
- *     inset(0 100% 0 0) → inset(0 0 0 0).
- *   • `animation-fill-mode: both` keeps the layers at the 0%-frame
- *     state during the 800ms delay (so opacity stays 0 until the
- *     animation actually starts) and at the 100%-frame state
- *     afterward (fully revealed forever).
- *   • `will-change: clip-path, opacity` promotes the data layers
- *     onto their own composite layers — paint/layout cycles on
- *     surrounding elements don't re-flicker the line.
- *   • Selector covers area, line, and dots — every visible data
- *     element. Sheen/glow `<Line>` overlays inside `.recharts-line`
- *     are also covered (these previously rendered as a faint
- *     "outline" before the area's clip kicked in — the buyer's
- *     "line outline" complaint).
+ * Phase 2 (4.3s → 5.0s, 700ms duration):
+ *   Area fill (`.recharts-area-area`), decorative sheen + glow lines
+ *   (`.recharts-line`), and dot markers (`.recharts-area-dots`) all
+ *   fade in beneath the now-completed line stroke. The fill emerges
+ *   under the existing line — premium feeling, no flicker, no race.
  *
- * Why CSS clip-path on the data layers instead of Recharts'
- * `isAnimationActive`: Recharts 3.x's built-in area-draw animation
- * does NOT run reliably under React 18 strict mode (dev double-mount
- * short-circuits the internal react-smooth lifecycle, so <Area>
- * re-renders with the full path on first paint). CSS is deterministic.
+ * Phase 3 (4.5s+ to 6.3s+):
+ *   SVG `<animate>` decorative loops (sheen offset drift + brand
+ *   pulse + final-dot halo pulses) begin their continuous cycles.
+ *   See begin="4.5s" / "5.3s" / "6.3s" attributes in the chart JSX.
  *
- * Sequence:
- *   0 – 800ms   chart frame fully visible (title, axes, labels,
- *               gridlines, baseline). Data layers opacity 0 —
- *               TRUE empty graph, no line, no fill, no dots,
- *               no sheen, no glow, no outline.
- *   800 – 4300ms data layers snap to opacity 1 and clip-path animates
- *               from inset(0 100% 0 0) to inset(0 0 0 0); LINE draws
- *               L→R over 3.5s as a single coherent reveal.
- *   4300ms+     line, fill, and dots fully drawn, stay in place.
+ * Why split the reveal: previously line stroke + area fill animated
+ * together with the same clip-path. Visually the area polygon (a
+ * tall colored shape) dominates the eye and appears to "lead" the
+ * thin line stroke, even though they share the same clip-path
+ * progress. Splitting the phases makes the line ALWAYS the focal
+ * moment, with the fill arriving as a secondary flourish.
  *
- * Honors prefers-reduced-motion: skips the animation, layers visible.
+ * Flicker prevention:
+ *   • `opacity: 0` initial state on every data layer → invisible at
+ *     first paint, no Recharts mount-flash.
+ *   • `will-change` promotes line + fill to their own GPU composite
+ *     layers — no layout cycles re-paint sibling SVG elements (axes,
+ *     labels, legend).
+ *   • `animation-fill-mode: both` holds 0%-keyframe during delay AND
+ *     100%-keyframe after end → no in-between repaint.
+ *   • Single animation per element (no overlapping clip-path +
+ *     opacity that could compete on the same composite layer).
  *
- * Pattern source: Stripe Sigma / Linear Insights / Vercel Analytics
- * first-render — chart frame paints instantly; data draws afterward.
+ * Honors prefers-reduced-motion: skips both animations, all layers
+ * visible at full opacity instantly.
  */
-.glp-intake-chart-card .recharts-area,
-.glp-intake-chart-card .recharts-line,
-.glp-intake-chart-card .recharts-line-dots {
-  opacity: 0;
+
+/* Phase 1: line stroke draws L→R on clean background */
+.glp-intake-chart-card .recharts-area-curve {
   clip-path: inset(0 100% 0 0);
-  will-change: clip-path, opacity;
-  animation: glp-area-line-reveal 3500ms cubic-bezier(0.22, 1, 0.36, 1) 800ms both;
+  will-change: clip-path;
+  animation: glp-line-stroke-reveal 3500ms cubic-bezier(0.22, 1, 0.36, 1) 800ms both;
 }
-@keyframes glp-area-line-reveal {
+@keyframes glp-line-stroke-reveal {
   0% {
-    opacity: 1;
     clip-path: inset(0 100% 0 0);
   }
   100% {
-    opacity: 1;
     clip-path: inset(0 0 0 0);
+  }
+}
+
+/* Phase 2: area fill + decorative lines + dots fade in beneath the
+   already-drawn line, AFTER the stroke reveal completes (4300ms). */
+.glp-intake-chart-card .recharts-area-area,
+.glp-intake-chart-card .recharts-line,
+.glp-intake-chart-card .recharts-area-dots {
+  opacity: 0;
+  will-change: opacity;
+  animation: glp-data-fill-fadein 700ms ease-out 4300ms both;
+}
+@keyframes glp-data-fill-fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
@@ -138,11 +143,14 @@ html {
   .animate-glp-step2-rise {
     animation: none;
   }
-  .glp-intake-chart-card .recharts-area,
-  .glp-intake-chart-card .recharts-line,
-  .glp-intake-chart-card .recharts-line-dots {
+  .glp-intake-chart-card .recharts-area-curve {
     animation: none;
     clip-path: none;
+  }
+  .glp-intake-chart-card .recharts-area-area,
+  .glp-intake-chart-card .recharts-line,
+  .glp-intake-chart-card .recharts-area-dots {
+    animation: none;
     opacity: 1;
   }
 }

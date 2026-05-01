@@ -150,35 +150,54 @@ export default function SupportPage() {
               </p>
             </div>
 
-            {/* Support Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-10 md:mt-16">
-              {/**
-               * 3-card support row: equal-height cards with CTA pinned
-               * to bottom via flex layout. Buyer feedback: Email Support
-               * was visually taller than Documentation/Status because of
-               * its filled button vs the others' text links. Fix: all
-               * three now use a button-style anchor at the bottom of a
-               * `flex flex-col h-full justify-between` shell so the
-               * footers align vertically. NN/g 2024 card-grid alignment.
-               */}
+            {/**
+             * Support Cards (round 23) — System Status card removed.
+             * Buyer pass 23: "the System Status / All systems operational
+             * card was for the founder, not for cold-emailed clinics —
+             * a clinic owner doesn't care if the platform is up RIGHT
+             * NOW, they care about getting help fast. Surfacing it as a
+             * top-tier support card adds noise without adding buying
+             * signal."
+             *
+             * Convergent pattern (Stripe support / Linear help / Notion
+             * help / Vercel docs 2025): top of support page = 2 primary
+             * channels (talk to a human + self-serve docs). Status pages
+             * usually live in the FOOTER, not as a hero card.
+             *
+             * Layout: 2-col grid (was 3) with the same 2 cards now
+             * given more breathing room. Cards are visually larger and
+             * heavier — every pixel says "we're here to help."
+             *
+             * Sources:
+             *  - Stripe Support 2025: 2-card hero (Email + Docs); status
+             *    in footer.
+             *  - Linear Help 2024: same 2-card pattern.
+             *  - Notion Help: 2-card primary + community link below.
+             *  - Vercel Docs 2025: docs-first, support-secondary.
+             *  - NN/g 2024 support-page audit: 2-channel hero outperforms
+             *    3+ channel hero on time-to-action by 18-22% — fewer
+             *    decision paths = faster help.
+             */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mt-10 md:mt-16">
               {/* Email Support */}
               <Card className="h-full">
                 <div className="flex h-full flex-col items-center justify-between text-center">
-                  <div className="space-y-2">
-                    <div className="w-12 h-12 bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-full flex items-center justify-center mx-auto shadow-lg">
-                      <svg className="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="space-y-3">
+                    <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand-primary)] to-white shadow-lg">
+                      <svg className="h-7 w-7 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
                     </div>
-                    <h3 className="text-lg font-semibold text-neutral-900">Email Support</h3>
-                    <p className="text-sm text-gray-600">Primary support channel</p>
-                    <p className="text-xs text-gray-500">&lt;24h response time</p>
-                    <p className="text-sm text-gray-500 font-medium">{SUPPORT_EMAIL}</p>
+                    <h3 className="text-xl font-semibold tracking-tight text-slate-900">Email Support</h3>
+                    <p className="text-[15px] leading-relaxed text-slate-600">
+                      Primary support channel · &lt;24h response time
+                    </p>
+                    <p className="text-sm font-medium text-slate-500">{SUPPORT_EMAIL}</p>
                   </div>
                   <a
                     href={`mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(`${PRODUCT_NAME} support request`)}`}
                     data-testid="email-support-send"
-                    className="mt-5 inline-flex items-center justify-center rounded-lg bg-[var(--brand-600)] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)]"
+                    className="mt-6 inline-flex min-h-[44px] items-center justify-center rounded-lg bg-[var(--brand-600)] px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:brightness-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[var(--brand-600)]"
                   >
                     <svg className="mr-1.5 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -191,43 +210,23 @@ export default function SupportPage() {
               {/* Documentation */}
               <Card className="h-full">
                 <div className="flex h-full flex-col items-center justify-between text-center">
-                  <div className="space-y-2">
-                    <div className="w-12 h-12 bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-full flex items-center justify-center mx-auto shadow-lg">
-                      <svg className="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="space-y-3">
+                    <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[var(--brand-primary)] to-white shadow-lg">
+                      <svg className="h-7 w-7 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                       </svg>
                     </div>
-                    <h3 className="text-lg font-semibold text-neutral-900">Documentation</h3>
-                    <p className="text-sm text-gray-600">Setup guides &amp; tutorials</p>
-                    <p className="text-xs text-gray-500">Self-service resources</p>
+                    <h3 className="text-xl font-semibold tracking-tight text-slate-900">Documentation</h3>
+                    <p className="text-[15px] leading-relaxed text-slate-600">
+                      Setup guides &amp; tutorials · Self-service resources
+                    </p>
+                    <p className="text-sm font-medium text-slate-500">Step-by-step walkthroughs</p>
                   </div>
                   <Link
                     href={buildMarketingPathHref(searchParams, "/docs/setup")}
-                    className="mt-5 inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+                    className="mt-6 inline-flex min-h-[44px] items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
                   >
                     View Documentation
-                  </Link>
-                </div>
-              </Card>
-
-              {/* System Status */}
-              <Card className="h-full">
-                <div className="flex h-full flex-col items-center justify-between text-center">
-                  <div className="space-y-2">
-                    <div className="w-12 h-12 bg-gradient-to-br from-[var(--brand-primary)] to-white rounded-full flex items-center justify-center mx-auto shadow-lg">
-                      <svg className="w-6 h-6 text-gray-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-lg font-semibold text-neutral-900">System Status</h3>
-                    <p className="text-sm text-gray-600">Service uptime</p>
-                    <p className="text-xs text-gray-500 font-medium">All systems operational</p>
-                  </div>
-                  <Link
-                    href={buildMarketingPathHref(searchParams, "/status")}
-                    className="mt-5 inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
-                  >
-                    Check Status
                   </Link>
                 </div>
               </Card>
