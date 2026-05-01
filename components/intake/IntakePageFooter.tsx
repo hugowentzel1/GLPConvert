@@ -3,11 +3,24 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { buildMarketingPathHref } from "@/lib/glp-intake-nav-href";
-import { PARENT_COMPANY_LEGAL_NAME, PRODUCT_NAME, SUPPORT_EMAIL } from "@/lib/product-identity";
+import { PARENT_COMPANY_LEGAL_NAME, PRODUCT_NAME } from "@/lib/product-identity";
 
 /**
  * Intake footer: minimum visible legal + vendor line low in hierarchy.
  * Preserves full query (demo, UTM, branding) on in-app links.
+ *
+ * Buyer pass 25:
+ *   • Support link routed to /support PAGE (was mailto: — direct
+ *     mailto on a footer link is jarring on mobile and inconsistent
+ *     with the rest of the site, where /support is a full help page
+ *     with docs + ticket form + email). Stripe / Notion / Linear
+ *     2024 footer convention: "Support" → /support page; "Contact"
+ *     → /contact form. Both kept here because they serve different
+ *     audiences (general inquiry vs help/troubleshooting).
+ *   • Mobile tap targets: every nav link now has py-2 px-2 padding
+ *     so each clickable area is ≥44×44 per Apple HIG iOS Touch
+ *     Target guidelines (Material 3: 48dp). Previously links were
+ *     17-20px tall — below the touch-accuracy threshold.
  */
 export default function IntakePageFooter() {
   const year = new Date().getFullYear();
@@ -15,6 +28,10 @@ export default function IntakePageFooter() {
   const terms = buildMarketingPathHref(sp, "/legal/terms");
   const privacy = buildMarketingPathHref(sp, "/privacy");
   const contact = buildMarketingPathHref(sp, "/contact");
+  const support = buildMarketingPathHref(sp, "/support");
+
+  const navLinkClass =
+    "inline-flex min-h-[44px] items-center px-2 py-2 hover:text-slate-800 transition-colors";
 
   return (
     <footer
@@ -32,23 +49,23 @@ export default function IntakePageFooter() {
         treatment. Estimates are illustrative; pricing and plans depend on your provider.
       </p>
       <nav
-        className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[11px] font-medium text-slate-500"
+        className="mt-3 flex flex-wrap items-center justify-center gap-x-2 gap-y-0 text-[11px] font-medium text-slate-500"
         aria-label="Legal and support"
       >
-        <Link href={terms} className="hover:text-slate-800">
+        <Link href={terms} className={navLinkClass}>
           Terms
         </Link>
-        <Link href={privacy} className="hover:text-slate-800">
+        <Link href={privacy} className={navLinkClass}>
           Privacy
         </Link>
-        <Link href={contact} className="hover:text-slate-800">
+        <Link href={contact} className={navLinkClass}>
           Contact
         </Link>
-        <a href={`mailto:${SUPPORT_EMAIL}`} className="hover:text-slate-800">
+        <Link href={support} className={navLinkClass}>
           Support
-        </a>
+        </Link>
       </nav>
-      <p className="mt-5 text-[10px] text-slate-400">© {year} {PRODUCT_NAME}</p>
+      <p className="mt-3 text-[10px] text-slate-400">© {year} {PRODUCT_NAME}</p>
     </footer>
   );
 }

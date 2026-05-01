@@ -1322,6 +1322,83 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 
 ---
 
+<a id="-maintenance-runbook"></a>
+
+## 🛠️ **MAINTENANCE RUNBOOK** — single page that covers everything
+
+> **Open this URL every morning before the daily ops check:** **https://glp-convert.vercel.app/maintenance**
+>
+> The `/maintenance` page is an internal-facing dashboard that consolidates **every** monitoring URL, status check, and crash-response runbook into one place. It is **not** linked from the public marketing site and is excluded from search-engine indexing (`<meta name="robots" content="noindex">`). Treat it like an SRE on-call runbook — it is the **single source of truth** for "what dashboard do I open when X breaks?"
+>
+> **Treats reader as non-programmer.** Every step is a literal click instruction. Every URL opens in a new tab. Every "if you see X, do Y" is spelled out. Use this as your reference whenever anything goes wrong while you sell GLPConvert to major clinic chains.
+>
+> **What's on the page (8 monitoring sections + 6 crash-response runbooks):**
+>
+> 1. **Live status** — `/healthz` + `/status` (open these first every morning).
+> 2. **Vercel** — hosting, deployments, runtime logs, analytics.
+> 3. **Sentry** — every uncaught client/server error with stack trace, breadcrumbs, browser/device, UTM. Open this when Vercel logs show errors but you can't tell what broke.
+> 4. **Stripe** — payments, webhook deliveries, disputes/chargebacks.
+> 5. **Supabase** — database table editor (leads), Postgres logs, daily backups.
+> 6. **Resend** — transactional email status, domain verification, delivery logs.
+> 7. **Google Postmaster** — sender reputation per domain (spam-rate must stay <0.10% — Gmail Feb 2024 enforcement floor).
+> 8. **Cold-email + LinkedIn ops** — Instantly, Heyreach, Clay, Airtable.
+>
+> **6 crash-response runbooks** (every step is literal):
+>
+>   - Site fully down (404/5xx everywhere) → Vercel deploy red? Promote previous green deploy → fix → push → /healthz green.
+>   - Checkout (Stripe) failing → Webhook deliveries red? Resync env vars → test webhook → $0.50 test checkout.
+>   - Leads not appearing in Supabase → /api/lead 500? Check RLS error → resync `SUPABASE_SERVICE_ROLE_KEY` → redeploy.
+>   - Cold-email reply rate drops → Postmaster spam rate? Pause sending, halve volume, ZeroBounce next batch.
+>   - Customer reports no confirmation email → Resend log → bounced? Manually resend.
+>   - Sentry alert email → click link → resolve or ignore-24h.
+>
+> **Daily / weekly / monthly cadence** is also summarized on the page (full check-by-check list lives in OPS-DAILY/WEEKLY/MONTHLY above).
+>
+> **Escalation**: anything not covered by the page → email **support@glpconvert.com** with subject `P0 INCIDENT` + (1) what broke, (2) when, (3) which dashboard checked, (4) what error.
+
+### **OPS-RUNBOOK — Verify the maintenance page renders + every link works**
+
+- [ ] OPS.R1 Open **https://glp-convert.vercel.app/maintenance** → verify it renders without errors.
+- [ ] OPS.R2 Click each of the 24+ external dashboard links → verify each opens correctly (new tab) and lands on the right dashboard.
+- [ ] OPS.R3 Click `/healthz` button → confirm 200 OK.
+- [ ] OPS.R4 Click `/status` button → confirm all integration tiles green.
+- [ ] OPS.R5 **Bookmark** the `/maintenance` page in your browser bookmarks bar — this is the page you open when something breaks while you're on a sales call.
+- [ ] OPS.R6 Whenever you add a new monitoring tool (e.g., a log aggregator, an APM service), update `app/maintenance/page.tsx` to include it. Single source of truth.
+
+### **OPS-CRASH — When you're on a sales call and the demo breaks**
+
+- [ ] OPS.C1 Open the prospect's intake demo URL in a private window — does it load?
+- [ ] OPS.C2 If it does NOT load: open **https://glp-convert.vercel.app/maintenance** in a new tab → click `/healthz`. If 200 → it's a per-tenant data issue, not a global outage. If not 200 → global outage, follow runbook #1.
+- [ ] OPS.C3 If you cannot resolve in 60 seconds, tell the prospect: "We're seeing a brief glitch on our side; I'll send a working preview link within the hour and we can resume." Do NOT panic-debug on the call.
+- [ ] OPS.C4 Open Vercel Deployments → if the latest deploy is red, click previous green → **Promote to Production**. Site is back up while you investigate.
+- [ ] OPS.C5 Email yourself a Sentry alert summary so you have a written record of what broke + what you did.
+
+### **OPS-MONITORING — What to set up in Sentry + Vercel for ongoing peace of mind**
+
+- [ ] OPS.MO1 **Sentry alert rule**: in Sentry → Alerts → New Alert Rule → "Send me email when an issue first appears" + "Send me email when an issue regresses". Triggers email immediately on any new uncaught crash.
+- [ ] OPS.MO2 **Sentry weekly digest**: Settings → Notifications → Weekly Reports → enable. Catches anything you missed.
+- [ ] OPS.MO3 **Vercel error notifications**: Vercel → Project → Settings → Notifications → enable email notifications for failed deploys + 5xx error spikes.
+- [ ] OPS.MO4 **Stripe webhook failure alerts**: Stripe Dashboard → Developers → Webhooks → click your endpoint → "Notify me on failures" toggle.
+- [ ] OPS.MO5 **Google Postmaster weekly check**: set a recurring Monday calendar reminder titled "Postmaster spam-rate check — pause if >0.10%". Ten seconds per domain.
+- [ ] OPS.MO6 **Uptime monitoring (optional, recommended)**: sign up for **https://uptimerobot.com** free tier (50 monitors). Add `/healthz` as the check URL → 5-min interval → email + SMS alerts on downtime. Catches outages while you sleep.
+
+### **OPS-WHAT-IF — "I see X, what do I do?" quick reference**
+
+| Symptom | First place to look | Then |
+|---|---|---|
+| Entire site returns 5xx | Vercel Deployments | Promote previous green deploy → fix latest |
+| `/healthz` returns 503 | Vercel Logs | Filter on `/api/healthz` for the underlying error |
+| Customer reports failed payment | Stripe Webhook deliveries | Re-send the failed event; check env vars |
+| Leads dashboard empty after submission | Supabase Logs | Look for RLS or insert errors; check service role key |
+| No confirmation email | Resend Emails | Search by recipient address; check Bounced status |
+| Reply rate dropped suddenly | Google Postmaster | Spam-rate per domain; pause if >0.10% |
+| Account paused on Instantly | Instantly Email Accounts | Check IP warmup + bounce rate; reduce daily volume 50% |
+| LinkedIn account warning | Heyreach Account Health | Pause 48h, resume at half volume |
+| Sentry alert email | Sentry Issues | Click link in email → stack trace + breadcrumbs |
+| Slow page loads | Vercel Analytics → Web Vitals | Identify slowest pages; check largest payloads |
+
+---
+
 ## 💰 Steady-state cost summary
 
 | Item | Monthly | Notes |

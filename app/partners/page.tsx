@@ -355,7 +355,12 @@ export default function PartnersPage() {
            * the same content at the foot of the page is read by the audience
            * that needs it without taxing top-of-page comprehension.)
            */}
-          <p className="mx-auto mt-12 max-w-2xl text-center text-xs leading-relaxed text-neutral-500">
+          {/* Buyer pass 25: vertically centered between the offer block
+              above and page footer below — equal my-16 so the partner
+              terms paragraph floats with balanced breathing room.
+              Stripe Partners / Atlassian Marketplace footer-disclaimer
+              pattern. */}
+          <p className="mx-auto my-16 max-w-2xl text-center text-xs leading-relaxed text-neutral-500">
             Partner terms are governed by our{" "}
             <Link href={buildMarketingPathHref(searchParams, "/legal/terms")} className="text-neutral-700 underline">
               Terms
