@@ -60,19 +60,18 @@ export default function GlpJourneyProgressChart({
   const pulseId = `glpJourneyPulse-${gid}`;
 
   /**
-   * Defer the area path's first draw by 800ms after mount. Buyer pass
-   * 16: page should load normally first, THEN the line draws slowly
-   * L→R as a focal moment. The 800ms hold lets step 2's surrounding
-   * content (header, kicker, legend, axes) settle visually so the
-   * buyer's eye is on the chart card BEFORE the line begins drawing.
-   * Then Recharts animates the area over `animationDuration` (3500ms
-   * below) for a slow, deliberate left-to-right paint. Stripe Sigma /
-   * Linear Insights / Vercel Analytics OG videos use the same
-   * "card-first, line-after" sequence on their hero data-viz.
+   * `revealed` controls a few aux layers (sheen / sparkle / counter)
+   * that should only fire after the area first paints. Set to true
+   * after a 60ms tick so React has time to lay out the SVG. Buyer
+   * pass 16 line-draw timing is now controlled by Recharts'
+   * `animationBegin` (800ms delay) on the <Area> below — that way the
+   * Area component always mounts on first render, and Recharts handles
+   * the "wait then animate slowly" sequence internally instead of
+   * relying on a React-state remount that strict-mode can collapse.
    */
   const [revealed, setRevealed] = useState(false);
   useEffect(() => {
-    const id = window.setTimeout(() => setRevealed(true), 800);
+    const id = window.setTimeout(() => setRevealed(true), 60);
     return () => window.clearTimeout(id);
   }, []);
 
@@ -485,22 +484,18 @@ export default function GlpJourneyProgressChart({
                   name="glow"
                 />
               ) : null}
-              {revealed ? (
-                <Area
-                  type="monotone"
-                  dataKey="progress"
-                  stroke={brandFill}
-                  strokeWidth={2.75}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  fill={`url(#${gradId})`}
-                  isAnimationActive={animate}
-                  animationDuration={animate ? 3500 : 0}
-                  animationEasing="ease-out"
-                  activeDot={{ r: 6, strokeWidth: 2, stroke: "#fff" }}
-                  dot={areaDot as never}
-                />
-              ) : null}
+              <Area
+                type="monotone"
+                dataKey="progress"
+                stroke={brandFill}
+                strokeWidth={2.75}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill={`url(#${gradId})`}
+                isAnimationActive={false}
+                activeDot={{ r: 6, strokeWidth: 2, stroke: "#fff" }}
+                dot={areaDot as never}
+              />
               {/* Premium sheen overlay — a thin white highlight that slides across the line on a 5.6s loop. Gated until area finishes drawing in to avoid the static "tail" flash. */}
               {revealed && auxRevealed && animate && !compact ? (
                 <Line

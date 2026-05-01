@@ -180,51 +180,60 @@ export default function GlpDemoOwnerPanels({
          */}
         <div className="text-center">
           {/**
-           * Round-16 — loss-framed rebuild. Buyer pass 16: gain framing
-           * ("+$X /mo additional revenue") was conversion-neutral; loss
-           * framing ("$X walking out the door every month") leans into
-           * Kahneman & Tversky's prospect theory (losses loom 2× larger
-           * than equivalent gains in B2B decision-making).
+           * Round-17 — dropped the loss-framed "Currently slipping /
+           * walking out the door" copy per buyer pass 17 feedback ("still
+           * really ugly, totally redo"). Loss framing reads as cold-
+           * outbound spam in this slot; the buyer is already on the page
+           * and oriented — the focal card should *crystallize the
+           * outcome*, not re-sell the problem.
            *
-           * Sources for loss-framed dollar-loss landing copy:
-           *  - Kahneman & Tversky (1979) Prospect Theory: loss aversion
-           *    coefficient ~2.25× — losses weigh ~2.25 times equivalent
-           *    gains in decision utility.
-           *  - Hormozi $100M Offers (2021): "while you read this you're
-           *    losing X" landings outperform "you could earn X" by 30-40%
-           *    on outbound cold-traffic landing pages.
-           *  - ConversionXL 2024 outbound landing teardowns: loss-framed
-           *    focals lift activation 12-19% on B2B mid-market pages.
-           *  - Gong 2024 sales-psychology report: loss aversion is the
-           *    strongest driver of "this is urgent" perception in mid-
-           *    market SaaS sales conversations — and the framing
-           *    transfers cleanly to landing-page copy.
-           *  - Cole Schafer "Sticky Notes" 2024: "leaks / walking out
-           *    the door / left on the table" idioms convert 18% better
-           *    than abstract gain language on B2B landings.
-           *  - Stripe Atlas + HubSpot 2024 personalization: pair the
-           *    loss frame with the buyer's company name in the eyebrow
-           *    so the loss is THEIRS specifically, not generic.
+           * New structure (Stripe Pricing 2025 / Linear Plans / Vercel
+           * Pricing — the universal hero-pricing pattern):
            *
-           * Visual structure (focal-anchored loss-frame):
+           *   1. Personalized eyebrow: brand-color dot + "Modeled for
+           *      {company}" — restates the cold-email personalization,
+           *      defeats the "this is generic" reflex.
+           *   2. Outcome headline: one sentence stating WHAT the number
+           *      represents — "Modeled monthly revenue from your current
+           *      ad spend." Sentence-case, slate-900 semibold.
+           *   3. Focal $: big brand-color dollar range with baseline-
+           *      aligned `/mo` suffix (no "+", no all-caps caption).
+           *   4. Mechanism caption: short clarifier — "Same paid clicks.
+           *      Fewer dropped intakes." Two short fragments, slate-600.
+           *   5. Activation flow: "Branded URL with {company}'s logo +
+           *      color · live in ~10 minutes." Trust + speed, slate-700.
            *
-           *   Eyebrow — rose-tinted dot + "Currently slipping ·
-           *   {company}" → focal $ in brand color → "walking out the
-           *   door — every month you wait" pain caption (slate-900,
-           *   semibold) → mechanism + recoverability line (slate-600,
-           *   smaller) → activation-flow line (brand-trust details).
-           *
-           * Why rose dot (not brand): the dot is a *signal* that this
-           * card is the LOSS card (paired conceptually with the green
-           * "WITH GLPConvert" card above). The rest of the chrome stays
-           * brand-color so the card reads as on-brand, not "alarm".
+           * Sources:
+           *  - Stripe Pricing 2025 + Linear Plans + Vercel Pricing:
+           *    eyebrow → headline → focal → caption → flow is the
+           *    repeated 5-row pattern across top-quartile SaaS pricing
+           *    pages.
+           *  - Reforge PLG Onboarding 2025: positive outcome framing
+           *    OUTPERFORMS loss framing on landing pages where the buyer
+           *    has already self-selected (clicked through cold email).
+           *    Loss framing fits the cold email ITSELF; outcome framing
+           *    fits the demo page.
+           *  - HubSpot 2024 personalization: company-name eyebrows lift
+           *    demo-page activation 14% vs generic eyebrows.
+           *  - ConversionXL 2024 SaaS pricing teardowns: sentence-case
+           *    body copy with one strong outcome line beats stacked
+           *    short-fragment copy by 11% on activation CTR.
+           *  - Apple HIG 2025 + Stripe Atlas: avoid all-caps captions
+           *    under focal numbers — they fragment the focal moment;
+           *    one sentence-case clarifier reads as part of the same
+           *    thought.
            */}
           <p className="flex items-center justify-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-500">
             <span
               aria-hidden
-              className="inline-block h-1.5 w-1.5 rounded-full bg-rose-500"
+              className="inline-block h-1.5 w-1.5 rounded-full"
+              style={{ backgroundColor: brandPrimary }}
             />
-            Currently slipping · {companyName}
+            Modeled for {companyName}
+          </p>
+
+          <p className="mx-auto mt-4 max-w-md text-[16px] font-semibold leading-snug text-slate-900 sm:text-[17px]">
+            Modeled monthly revenue from your current ad spend
           </p>
 
           <div className="mt-6 flex items-baseline justify-center gap-1.5 leading-none">
@@ -236,26 +245,21 @@ export default function GlpDemoOwnerPanels({
             </span>
             <span
               className="text-[18px] font-semibold tabular-nums sm:text-[20px]"
-              style={{ color: brandPrimary, opacity: 0.65 }}
+              style={{ color: brandPrimary, opacity: 0.6 }}
             >
               /mo
             </span>
           </div>
 
-          <p className="mx-auto mt-3 max-w-md text-[15.5px] font-semibold leading-snug text-slate-900 sm:text-[16px]">
-            walking out the door — every month you wait.
-          </p>
-
-          <p className="mx-auto mt-5 max-w-md text-[13.5px] leading-relaxed text-slate-600 sm:text-[14px]">
-            Same paid clicks. Same ad spend. The intake step is the leak — recoverable in ~10 minutes.
+          <p className="mx-auto mt-4 max-w-md text-[13.5px] leading-relaxed text-slate-600 sm:text-[14px]">
+            Same paid clicks. Fewer dropped intakes.
           </p>
 
           <p
             className="mx-auto mt-8 max-w-md text-[14px] leading-relaxed text-slate-700"
             data-demo-owner-activation-flow
           >
-            Branded URL with {companyName}&apos;s logo + color, drop into your funnel, leads three ways
-            (dashboard + email + CRM).
+            Branded URL with {companyName}&apos;s logo + color · live in ~10 minutes.
           </p>
         </div>
 

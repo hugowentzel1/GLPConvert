@@ -56,28 +56,56 @@ html {
 }
 
 /**
- * Chart card — no card-level reveal. The card itself paints
- * normally with the rest of step 2 (no clip-path animation, no
- * delay, no shimmer). Only the LINE inside the chart draws slowly
- * left-to-right via Recharts' `animationDuration` (controlled in
- * `GlpJourneyProgressChart.tsx`).
+ * Chart card paints instantly with the rest of step 2 — but the
+ * Area LAYER inside the chart (line stroke + fill polygon + dots)
+ * is clip-pathed L→R via CSS so the LINE appears to draw in slowly
+ * after the page settles.
  *
- * Buyer pass 15 feedback: holding the entire card at clip 100% for
- * 600ms felt like a page-load failure. Reverted to "page renders
- * instantly + only the data line animates" — the conventional
- * pattern in Stripe Sigma, Linear Insights, Vercel Analytics, and
- * Mixpanel's chart-mount behavior.
+ * Why CSS clip-path on .recharts-area instead of Recharts'
+ * `isAnimationActive`: Recharts 3.x's built-in area-draw animation
+ * does NOT run reliably under React 18 strict mode (the dev double-
+ * mount short-circuits the internal `react-smooth` lifecycle, so
+ * `<Area>` re-renders with the full path on first paint). CSS
+ * clip-path on the parent <g> is deterministic — it always animates,
+ * always over the same duration, no JS lifecycle dependencies.
  *
- * `.animate-glp-chart-reveal` is kept as a no-op class so existing
- * call sites don't error; it intentionally has no animation.
+ * Sequence:
+ *   0 – 800ms   chart card visible, axes drawn, no line yet
+ *   800 – 4300ms area + line clip-path animates from inset(0 100% 0 0)
+ *               to inset(0 0 0 0) — line "grows" L→R over 3.5s
+ *   4300ms+     fully revealed, line stays in place
+ *
+ * Honors prefers-reduced-motion: skips the clip-path animation.
+ *
+ * Pattern source: Stripe Dashboard / Linear Insights / Vercel
+ * Analytics first-render — chart card paints instantly, data line
+ * draws in afterward as a focal moment.
  */
+.glp-intake-chart-card .recharts-area {
+  animation: glp-area-line-reveal 3500ms cubic-bezier(0.22, 1, 0.36, 1) 800ms both;
+  clip-path: inset(0 100% 0 0);
+}
+@keyframes glp-area-line-reveal {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* `.animate-glp-chart-reveal` is kept as a no-op for compatibility */
 .animate-glp-chart-reveal {
-  /* intentionally no animation — line-only draw is handled inside Recharts */
+  /* intentionally no animation */
 }
 
 @media (prefers-reduced-motion: reduce) {
   .animate-glp-step2-rise {
     animation: none;
+  }
+  .glp-intake-chart-card .recharts-area {
+    animation: none;
+    clip-path: none;
   }
 }
 
