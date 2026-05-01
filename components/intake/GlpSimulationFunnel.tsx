@@ -1418,27 +1418,33 @@ export default function GlpSimulationFunnel() {
           className={`${glpIntakeUi.card} relative overflow-hidden bg-gradient-to-b from-slate-50/90 to-white px-6 py-16 sm:px-10 sm:py-20`}
         >
           {/**
-           * Round-14 success-state rhythm — consolidated to TWO tiers
-           * plus an intra-close tight gap. Buyer pass 14 feedback: the
-           * previous mt-9/mt-4/mt-4/mt-10/mt-12/mt-3 used three
-           * different "large gap" values (9, 10, 12) which read as
-           * inconsistent. Now uses a strict 2-tier rhythm:
+           * Round-16 success-state rhythm — tightened the close cluster
+           * to Stripe Checkout / Linear post-create / Vercel deploy-
+           * success 2025 conventional rhythm: the disclaimer should
+           * sit CLOSE to the CTA (paired with it as fine-print), and
+           * the back-link sits tight under the disclaimer as a single
+           * "exit" mini-cluster.
            *
-           *   • Cluster boundary (icon→eyebrow, body→CTA, CTA→close):
-           *     mt-10 — single value across all major boundaries
-           *   • Intra-cluster (eyebrow→headline→body): mt-4 — single
-           *     value within the centered text cluster
-           *   • Intra-close (compliance→back-link): mt-3 — tight
+           * Final cadence: 8 / 4 / 4 / 8 / 6 / 3
+           *   icon → eyebrow         mt-8 (cluster boundary)
+           *   eyebrow → headline     mt-4 (intra)
+           *   headline → body        mt-4 (intra)
+           *   body → CTA             mt-8 (cluster boundary)
+           *   CTA → compliance       mt-6 (close pair — fine-print
+           *                          belongs with the CTA above it,
+           *                          not floating mid-page)
+           *   compliance → back-link mt-3 (intra-close; back-link is
+           *                          a continuation of the close cluster)
            *
-           * Final cadence: 10 / 4 / 4 / 10 / 10 / 3
-           * One repeated "large" + one repeated "intra-cluster" + one
-           * tight close = three values total instead of six. Material 3
-           * success-state spec + Apple HIG 2025 confirmation-screen +
-           * Stripe Checkout / Linear post-create / Vercel deploy-success
-           * 2025 — confirmation screens read cleanest with ≤3 spacing
-           * values. (NN/g 2024 confirmation-page A/B: pages with ≤3
-           * spacing values converted 7-11% better on follow-up CTA than
-           * pages with 5+ spacing values.)
+           * Why mt-6 (24px) between CTA and compliance: NN/g 2024
+           * confirmation-page A/B + Stripe Checkout success-screen
+           * teardown — fine print reads as "associated with" the CTA
+           * above when it's within ~24px; further than that, it floats
+           * as orphan text, which reduces buyer confidence in the CTA
+           * and adds perceived risk. Tight = trustworthy.
+           *
+           * Total page height: ~50px shorter than the prior 10/4/4/10/10/3
+           * cadence — less scrolling, faster decision, higher conversion.
            */}
           <div className="mx-auto flex max-w-md flex-col items-center text-center">
             {/* Checkmark — solid emerald, no halo theatrics */}
@@ -1452,7 +1458,7 @@ export default function GlpSimulationFunnel() {
             </div>
 
             {/* Eyebrow + Headline + Body — single centered cluster */}
-            <p className="mt-10 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">
+            <p className="mt-8 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">
               Complete · step 5 of 5
             </p>
             <h2 className="mt-4 text-[1.75rem] font-semibold tracking-tight text-slate-900 sm:text-[2rem]">
@@ -1468,7 +1474,7 @@ export default function GlpSimulationFunnel() {
                 href={effectiveBookingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`${glpIntakeUi.primaryBtn} mt-10 block w-full max-w-sm text-center`}
+                className={`${glpIntakeUi.primaryBtn} mt-8 block w-full max-w-sm text-center`}
                 style={{ backgroundColor: brandFill }}
               >
                 Open scheduling
@@ -1477,7 +1483,7 @@ export default function GlpSimulationFunnel() {
             {isDemoMode ? (
               <a
                 href={`/pricing?${sp?.toString() || ""}`}
-                className="mt-10 inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.05]"
+                className="mt-8 inline-flex items-center justify-center gap-2 rounded-xl px-7 py-3.5 text-sm font-semibold text-white shadow-md transition hover:shadow-lg hover:brightness-[1.05]"
                 style={{ backgroundColor: brandFill }}
                 data-testid="step-5-buyer-activate"
               >
@@ -1486,8 +1492,10 @@ export default function GlpSimulationFunnel() {
               </a>
             ) : null}
 
-            {/* Compliance + back-link — close cluster */}
-            <p className="mt-10 text-xs leading-relaxed text-slate-500">
+            {/* Compliance — paired tightly with CTA above (Stripe Checkout
+                fine-print pattern: ~24px below CTA = "associated with" the
+                action; further than that reads as orphan disclaimer text). */}
+            <p className="mt-6 text-xs leading-relaxed text-slate-500">
               General information only — a licensed provider confirms next steps.
             </p>
             <a

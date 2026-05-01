@@ -60,15 +60,19 @@ export default function GlpJourneyProgressChart({
   const pulseId = `glpJourneyPulse-${gid}`;
 
   /**
-   * Defer the area path's first draw by 60ms after mount so React has
-   * a tick to lay out the SVG before Recharts begins its `animationDuration`
-   * draw. Buyer pass 15: card paints normally with the rest of step 2;
-   * only the LINE animates slowly L→R (controlled by the Recharts
-   * `animationDuration` prop on the <Area> element below).
+   * Defer the area path's first draw by 800ms after mount. Buyer pass
+   * 16: page should load normally first, THEN the line draws slowly
+   * L→R as a focal moment. The 800ms hold lets step 2's surrounding
+   * content (header, kicker, legend, axes) settle visually so the
+   * buyer's eye is on the chart card BEFORE the line begins drawing.
+   * Then Recharts animates the area over `animationDuration` (3500ms
+   * below) for a slow, deliberate left-to-right paint. Stripe Sigma /
+   * Linear Insights / Vercel Analytics OG videos use the same
+   * "card-first, line-after" sequence on their hero data-viz.
    */
   const [revealed, setRevealed] = useState(false);
   useEffect(() => {
-    const id = window.setTimeout(() => setRevealed(true), 60);
+    const id = window.setTimeout(() => setRevealed(true), 800);
     return () => window.clearTimeout(id);
   }, []);
 
@@ -87,7 +91,7 @@ export default function GlpJourneyProgressChart({
     }
   }, []);
 
-  /** Animated % ticker — syncs to the 3s area draw (Stripe / data-viz "count-up" payoff). */
+  /** Animated % ticker — syncs to the 3.5s area draw (Stripe / data-viz "count-up" payoff). */
   const targetProgressPct = points.length >= 2 ? (points[points.length - 1]?.progress ?? 0) : 0;
   const [displayPct, setDisplayPct] = useState(0);
   useEffect(() => {
@@ -97,7 +101,7 @@ export default function GlpJourneyProgressChart({
       return;
     }
     setDisplayPct(0);
-    const dur = 3000;
+    const dur = 3500;
     const t0 = performance.now();
     let raf = 0;
     const tick = (now: number) => {
@@ -491,7 +495,7 @@ export default function GlpJourneyProgressChart({
                   strokeLinejoin="round"
                   fill={`url(#${gradId})`}
                   isAnimationActive={animate}
-                  animationDuration={animate ? 3000 : 0}
+                  animationDuration={animate ? 3500 : 0}
                   animationEasing="ease-out"
                   activeDot={{ r: 6, strokeWidth: 2, stroke: "#fff" }}
                   dot={areaDot as never}
