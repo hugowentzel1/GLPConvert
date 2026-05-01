@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
 import { buildIntakePricingHref } from "@/lib/glp-intake-nav-href";
+import { redirectToStripeCheckout } from "@/lib/stripe-checkout-client";
 import { LAUNCH_BRANDED_CTA_LABEL } from "@/lib/product-identity";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
 import { getAccessibleBrandFill } from "@/lib/glp-intake-brand-contrast";
@@ -99,6 +100,7 @@ function DemoHeaderActions({
   pricingHref: string;
 }) {
   const [copied, setCopied] = useState(false);
+  const [activating, setActivating] = useState(false);
   const onCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
@@ -109,6 +111,24 @@ function DemoHeaderActions({
     }
   }, []);
 
+  /**
+   * Buyer pass 22: top intake CTA "Launch Your Branded Version Now"
+   * now POSTs directly to Stripe Checkout (one click, no /pricing
+   * intermediate). Cold-email landings convert best when the hero
+   * CTA goes straight to commitment — Stripe Atlas, Linear, Pipe,
+   * Ramp 2025 SaaS teardowns all converge on this. Falls back to
+   * `pricingHref` if the request fails so the buyer never dead-ends.
+   */
+  const onActivateClick = useCallback(
+    async (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      if (activating) return;
+      setActivating(true);
+      await redirectToStripeCheckout({ fallbackHref: pricingHref });
+    },
+    [activating, pricingHref],
+  );
+
   const hover = useMarketingHover(reduceMotion);
 
   return (
@@ -118,19 +138,33 @@ function DemoHeaderActions({
       </span>
       <motion.a
         href={pricingHref}
-        className={`${glpIntakeUi.primaryBtn} relative w-full !inline-flex !min-h-[52px] !flex-row !items-center !justify-center !gap-0 !rounded-xl !px-5 !py-3.5 !shadow-md ring-offset-white`}
+        onClick={onActivateClick}
+        aria-busy={activating || undefined}
+        className={`${glpIntakeUi.primaryBtn} relative w-full !inline-flex !min-h-[52px] !flex-row !items-center !justify-center !gap-0 !rounded-xl !px-5 !py-3.5 !shadow-md ring-offset-white ${activating ? "pointer-events-none opacity-90" : ""}`}
         style={{ backgroundColor: accent }}
         data-demo-activate-intake
         data-intake-hero-activate
         aria-label={LAUNCH_BRANDED_CTA_LABEL}
         {...hover.primary}
       >
-        <span className="relative z-10 mr-3 shrink-0 text-xl leading-none sm:text-2xl" aria-hidden>
-          ⚡
-        </span>
-        <span className="relative z-10 text-center text-sm font-semibold leading-snug sm:text-base">
-          {LAUNCH_BRANDED_CTA_LABEL}
-        </span>
+        {activating ? (
+          <span className="relative z-10 inline-flex items-center gap-2 text-sm font-semibold sm:text-base">
+            <span
+              aria-hidden
+              className="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/40 border-t-white motion-reduce:animate-none"
+            />
+            Activating…
+          </span>
+        ) : (
+          <>
+            <span className="relative z-10 mr-3 shrink-0 text-xl leading-none sm:text-2xl" aria-hidden>
+              ⚡
+            </span>
+            <span className="relative z-10 text-center text-sm font-semibold leading-snug sm:text-base">
+              {LAUNCH_BRANDED_CTA_LABEL}
+            </span>
+          </>
+        )}
       </motion.a>
 
       <motion.button

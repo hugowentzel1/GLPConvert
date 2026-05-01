@@ -59,3 +59,36 @@ export function buildStripeCheckoutClientPayload(): StripeCheckoutClientPayload 
     client_reference_id,
   };
 }
+
+/**
+ * One-click "Activate" → Stripe Checkout. POSTs to
+ * `/api/stripe/create-checkout-session` and redirects to the returned
+ * Stripe URL. If the request fails (rate limit, missing env var,
+ * network), navigates to `fallbackHref` (typically `/pricing?...`) so
+ * the buyer never lands on a dead end. Used by every "buying" CTA on
+ * the site (intake hero, intake nav, owner-panel Activate, Step 5
+ * Activate, etc.) so cold-email landings reach checkout in a single
+ * click — best-practice pattern from Stripe Atlas / Linear / Vercel /
+ * Pipe / Ramp 2025 SaaS teardowns.
+ */
+export async function redirectToStripeCheckout(opts: { fallbackHref: string }): Promise<void> {
+  if (typeof window === "undefined") return;
+  try {
+    const payload = buildStripeCheckoutClientPayload();
+    const res = await fetch("/api/stripe/create-checkout-session", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error(`stripe checkout responded ${res.status}`);
+    const data = (await res.json()) as { url?: unknown };
+    if (typeof data?.url === "string" && data.url.length > 0) {
+      window.location.href = data.url;
+      return;
+    }
+    throw new Error("stripe checkout returned no url");
+  } catch (err) {
+    console.error("[redirectToStripeCheckout] failed, falling back", err);
+    window.location.href = opts.fallbackHref;
+  }
+}

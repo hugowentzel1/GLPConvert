@@ -10,6 +10,7 @@ import { usePreviewQuota } from "@/src/demo/usePreviewQuota";
 import { track } from "@/src/demo/track";
 import { isIntakeBrandedMarketingMode } from "@/lib/glp-intake-demo-mode";
 import { LAUNCH_BRANDED_CTA_LABEL } from "@/lib/product-identity";
+import { redirectToStripeCheckout } from "@/lib/stripe-checkout-client";
 import { INTAKE_DEMO_BANNER_DISMISS_EVENT, INTAKE_DEMO_BANNER_DISMISS_KEY } from "@/lib/intake-demo-banner-dismiss";
 import { parseGlpIntakeQueryBranding } from "@/lib/glp-intake-query-branding";
 import {
@@ -173,8 +174,12 @@ export default function IntakeDemoSiteHeader() {
               Support
             </Link>
             {" "}
-            <Link
+            <a
               href={pricingHref}
+              onClick={(e) => {
+                e.preventDefault();
+                void redirectToStripeCheckout({ fallbackHref: pricingHref });
+              }}
               className="btn-primary inline-flex shrink-0 items-center justify-center px-5 py-2.5 text-sm font-semibold"
               data-intake-nav-activate
             >
@@ -182,7 +187,7 @@ export default function IntakeDemoSiteHeader() {
                 ⚡
               </span>
               <span>{LAUNCH_BRANDED_CTA_LABEL}</span>
-            </Link>
+            </a>
           </nav>
         ) : null}
       </div>
