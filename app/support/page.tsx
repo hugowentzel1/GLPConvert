@@ -461,11 +461,12 @@ export default function SupportPage() {
            * Placement"); same content at the foot is read by compliance reviewers
            * and ignored by users with a routine question.
            */}
-          {/* Buyer pass 25: vertically centered between the FAQ block above
-              and the page footer below — equal mt-16 above and mb-16 below
-              so the compliance note sits balanced in its own breathing
-              room. Stripe Support / Notion Help footer-disclaimer pattern. */}
-          <p className="mx-auto my-16 max-w-3xl text-center text-xs leading-relaxed text-neutral-500">
+          {/* Buyer pass 28: footer gap normalized to match pricing page
+              (~56px above footer from natural Section padding). Was
+              my-16 which added 64px below, putting compliance paragraph
+              120px from footer (visibly looser than pricing). Now
+              mt-16 (top breathing only). */}
+          <p className="mx-auto mt-16 max-w-3xl text-center text-xs leading-relaxed text-neutral-500">
             For compliance context, U.S. clinics often reference the{" "}
             <a
               className="text-neutral-700 underline"

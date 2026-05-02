@@ -182,18 +182,19 @@ export default function PartnersPage() {
                     </div>
                   </Card>
 
-                  {/* Buyer pass 27: revert to items-start (top-aligned) — the
-                      JR avatar pairs with the FIRST line of the quote like a
-                      reading-order anchor (Stripe Customer Stories / Linear
-                      Customer Highlights / HubSpot Service Hub canonical
-                      pattern). With items-center the avatar floated to the
-                      visual middle of a multi-line block which read as
-                      decorative, not as "this person said this".
-                      Refined gap-5 (was gap-4) + tightened paragraph rhythm
-                      so the quote + attribution form a single attribution
-                      cluster anchored to the avatar. */}
+                  {/* Buyer pass 28: canonical "header attribution + quote
+                      below" testimonial pattern (Stripe Customer Stories /
+                      Webflow Customer Stories / Vercel Customer Stories /
+                      Linear Customer Highlights 2024-26). Avatar circle
+                      pairs with the role line inline ON TOP as the
+                      attribution header; quote sits BELOW spanning the
+                      full card width. Eliminates the awkward "JR floats
+                      next to first line of quote, attribution far away"
+                      visual the buyer flagged. Single attribution cluster
+                      = clear "who said this" + clear quote = clear "what
+                      they said". */}
                   <Card>
-                    <div className="flex items-start gap-5">
+                    <div className="flex items-center gap-4">
                       <div
                         className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
                         style={{
@@ -206,15 +207,18 @@ export default function PartnersPage() {
                       >
                         <span className="font-semibold text-gray-800" style={{ fontSize: '16px', lineHeight: 1 }}>JR</span>
                       </div>
-                      <div className="flex-1">
-                        <p className="text-[15px] italic leading-[1.7] text-neutral-700 sm:text-base">
-                          &ldquo;Partnering with GLPConvert gave our agency a repeatable way to help clinics launch faster with better-qualified consult requests.&rdquo;
+                      <div>
+                        <p className="text-[14px] font-semibold leading-tight text-slate-900 sm:text-[15px]">
+                          Agency partner
                         </p>
-                        <p className="mt-3 text-[13px] font-medium text-neutral-500 sm:text-sm">
-                          — Agency partner, healthcare growth consultancy
+                        <p className="mt-0.5 text-[12px] leading-snug text-slate-500 sm:text-[13px]">
+                          Healthcare growth consultancy
                         </p>
                       </div>
                     </div>
+                    <p className="mt-5 text-[15px] italic leading-[1.7] text-slate-700 sm:text-base">
+                      &ldquo;Partnering with GLPConvert gave our agency a repeatable way to help clinics launch faster with better-qualified consult requests.&rdquo;
+                    </p>
                   </Card>
                 </Stack>
               </div>
@@ -366,12 +370,14 @@ export default function PartnersPage() {
            * the same content at the foot of the page is read by the audience
            * that needs it without taxing top-of-page comprehension.)
            */}
-          {/* Buyer pass 25: vertically centered between the offer block
-              above and page footer below — equal my-16 so the partner
-              terms paragraph floats with balanced breathing room.
-              Stripe Partners / Atlassian Marketplace footer-disclaimer
-              pattern. */}
-          <p className="mx-auto my-16 max-w-2xl text-center text-xs leading-relaxed text-neutral-500">
+          {/* Buyer pass 28: footer gap normalized — pricing page sits
+              ~56px above the footer (natural Section padding); partners
+              previously had my-16 which added 64px below the paragraph,
+              putting it 120px from the footer (visibly looser than the
+              other pages). Switched to `mt-16` (top breathing only) so
+              the bottom gap reverts to the Section default and matches
+              pricing. Same change on /support. */}
+          <p className="mx-auto mt-16 max-w-2xl text-center text-xs leading-relaxed text-neutral-500">
             Partner terms are governed by our{" "}
             <Link href={buildMarketingPathHref(searchParams, "/legal/terms")} className="text-neutral-700 underline">
               Terms

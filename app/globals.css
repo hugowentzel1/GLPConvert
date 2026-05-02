@@ -206,7 +206,31 @@ html {
   transform: translateZ(0);
 }
 
-.glp-intake-chart-card .recharts-area,
+/* Buyer pass 28 milestone-pop fix: dots split off from the parent
+ * .recharts-area clip-path so they DON'T pop into existence as the
+ * line draw passes each milestone X position. Previously the dots
+ * were inside .recharts-area, so the parent's clip-path uncovered
+ * them one at a time as the line crossed each x-coordinate — each
+ * dot's instant rasterization at clip-time created the perceived
+ * "milestone flicker" the buyer reported.
+ *
+ * New behavior:
+ *   • .recharts-area-area (fill) + .recharts-area-curve (line stroke)
+ *     get clip-path L→R from 400ms-3400ms (synchronized).
+ *   • .recharts-line (sheen + glow + brand-pulse Lines) gets the same
+ *     clip-path so they reveal in lockstep with the main line.
+ *   • .recharts-area-dots: opacity 0 through the entire reveal, fades
+ *     to 1 over 400ms after the line completes (3400ms-3800ms). The
+ *     dots APPEAR ALL AT ONCE as a soft fade, not as discrete pops.
+ *
+ * NOTE: .recharts-area-area / .recharts-area-curve are children of
+ * .recharts-area, so they could inherit a parent clip-path if applied
+ * to the parent. Targeting them DIRECTLY (not the parent) leaves
+ * .recharts-area-dots unclipped — the dots are then controlled
+ * independently via opacity instead.
+ */
+.glp-intake-chart-card .recharts-area-area,
+.glp-intake-chart-card .recharts-area-curve,
 .glp-intake-chart-card .recharts-line {
   clip-path: inset(0 100% 0 0);
   will-change: clip-path;
@@ -221,6 +245,23 @@ html {
   }
 }
 
+/* Dots: hidden during the line draw so milestone X positions don't
+   "pop" each dot into existence as the clip-path crosses them. After
+   the line completes, the entire dot row fades in together. */
+.glp-intake-chart-card .recharts-area-dots {
+  opacity: 0;
+  will-change: opacity;
+  animation: glp-dots-fadein 400ms ease-out 3400ms both;
+}
+@keyframes glp-dots-fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 /* `.animate-glp-chart-reveal` is kept as a no-op for compatibility */
 .animate-glp-chart-reveal {
   /* intentionally no animation */
@@ -230,10 +271,15 @@ html {
   .animate-glp-step2-rise {
     animation: none;
   }
-  .glp-intake-chart-card .recharts-area,
+  .glp-intake-chart-card .recharts-area-area,
+  .glp-intake-chart-card .recharts-area-curve,
   .glp-intake-chart-card .recharts-line {
     animation: none;
     clip-path: none;
+  }
+  .glp-intake-chart-card .recharts-area-dots {
+    animation: none;
+    opacity: 1;
   }
 }
 
