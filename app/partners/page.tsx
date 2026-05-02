@@ -85,7 +85,7 @@ export default function PartnersPage() {
       data-brand
       role="main"
     >
-      <Section className="!pb-2 md:!pb-4">
+      <Section className="!pb-10">
         <Container>
           <Stack>
             {/* Back Button */}
@@ -362,12 +362,11 @@ export default function PartnersPage() {
            * the same content at the foot of the page is read by the audience
            * that needs it without taxing top-of-page comprehension.)
            */}
-          {/* Buyer pass 30: REVERTED paragraph spacing back to mt-16 (the
-              original "this morning" rhythm — paragraph sits 64px below
-              the testimonial card). The card-to-footer gap reduction is
-              handled separately by tightening Section's bottom padding
-              below — only the empty space BELOW the paragraph shrinks. */}
-          <p className="mx-auto mt-16 max-w-2xl text-center text-xs leading-relaxed text-neutral-500">
+          {/* Buyer pass 31: VERTICALLY CENTERED — equal mt-10 above
+              (40px from card) and Section !pb-10 below (40px to footer)
+              so the paragraph floats exactly between the testimonial
+              card and the page footer. */}
+          <p className="mx-auto mt-10 max-w-2xl text-center text-xs leading-relaxed text-neutral-500">
             Partner terms are governed by our{" "}
             <Link href={buildMarketingPathHref(searchParams, "/legal/terms")} className="text-neutral-700 underline">
               Terms

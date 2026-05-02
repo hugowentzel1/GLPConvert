@@ -186,28 +186,41 @@ html {
  *     • Mixpanel 2024 dashboard mounts — frame instant, fill +
  *       line + dots all draw together L→R.
  */
-/* Buyer pass 30 — REVERTED to round-28 line-loading behavior:
- * sheen + glow + brand-pulse Lines (.recharts-line) animate WITH
- * the main line stroke + area fill via the SAME shared clip-path
- * keyframe. This restores the visual "the entire line + its sheen +
- * its glow + its brand pulse all draw together L→R" feel the buyer
- * had earlier today and confirmed was the correct loading behavior.
+/* Buyer pass 31 — dots BACK in the reveal (clipped via parent
+ * .recharts-area so they load WITH the line + fill + sheen + glow
+ * + pulse). Per user: "It was loading better earlier when it was
+ * loading with the bullet points in it, now its not. Make it load
+ * like that again just without the flickering."
  *
- * The user's flicker complaint was specifically about the DOTS
- * popping in at each milestone X position. That fix stays:
- * .recharts-area-dots is NOT clipped and stays opacity 0 until
- * after the line completes, then fades in as a single soft batch.
+ * Layered behavior:
+ *   • .recharts-area (parent <g> containing fill polygon + line
+ *     stroke + dots): clip-path L→R 400-3400ms. Clipping the parent
+ *     automatically clips ALL children including .recharts-area-dots,
+ *     so dots reveal in lockstep with the line as the clip-edge
+ *     crosses each milestone X position.
+ *   • .recharts-line (sheen + glow + brand-pulse <Line> overlays —
+ *     SIBLINGS of .recharts-area, not children): same clip-path
+ *     animation so the decorative strokes reveal in sync with the
+ *     main line.
  *
- * CSS containment on the chart card stays (paint isolation from
- * surrounding axis labels). No transform: translateZ — that was a
- * source of WebKit clip-edge antialiasing drift.
+ * Anti-flicker fixes that PRESERVED across this change:
+ *   • CSS containment on the chart card (.glp-intake-chart-card has
+ *     `contain: layout paint`) — paint boundary stops repaints from
+ *     cascading to surrounding axis labels.
+ *   • Lux-shimmer wrapper held at opacity 0 until 3500ms (no static
+ *     overlay blending over the chart during the clip animation).
+ *   • Sparkle-twinkle CSS animation delayed to 3500ms.
+ *   • All SVG <animate> begins on dot-pulse halos + sheen/pulse
+ *     gradient stops set to ≥3.5s (no continuous gradient drift on
+ *     the line during the reveal).
+ *   • No `transform: translateZ(0)` (that was causing WebKit clip-
+ *     edge antialiasing drift on the SVG paths).
  */
 .glp-intake-chart-card {
   contain: layout paint;
 }
 
-.glp-intake-chart-card .recharts-area-area,
-.glp-intake-chart-card .recharts-area-curve,
+.glp-intake-chart-card .recharts-area,
 .glp-intake-chart-card .recharts-line {
   clip-path: inset(0 100% 0 0);
   animation: glp-data-reveal-ltr 3000ms cubic-bezier(0.22, 1, 0.36, 1) 400ms both;
@@ -221,22 +234,6 @@ html {
   }
 }
 
-/* Dots stay hidden through the line draw → fade in together AFTER
-   the stroke completes, eliminating the per-milestone "pop" flicker
-   without disturbing the line+sheen+glow+pulse synchronized reveal. */
-.glp-intake-chart-card .recharts-area-dots {
-  opacity: 0;
-  animation: glp-decoration-fadein 500ms ease-out 3400ms both;
-}
-@keyframes glp-decoration-fadein {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
 /* `.animate-glp-chart-reveal` is kept as a no-op for compatibility */
 .animate-glp-chart-reveal {
   /* intentionally no animation */
@@ -246,15 +243,10 @@ html {
   .animate-glp-step2-rise {
     animation: none;
   }
-  .glp-intake-chart-card .recharts-area-area,
-  .glp-intake-chart-card .recharts-area-curve,
+  .glp-intake-chart-card .recharts-area,
   .glp-intake-chart-card .recharts-line {
     animation: none;
     clip-path: none;
-  }
-  .glp-intake-chart-card .recharts-area-dots {
-    animation: none;
-    opacity: 1;
   }
 }
 

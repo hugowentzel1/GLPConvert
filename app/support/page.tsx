@@ -118,7 +118,7 @@ export default function SupportPage() {
       data-brand
       role="main"
     >
-      <Section className="!pb-2 md:!pb-4">
+      <Section className="!pb-10">
         <Container className="max-w-4xl">
           <Stack>
             {/* Back Button */}
@@ -461,10 +461,10 @@ export default function SupportPage() {
            * Placement"); same content at the foot is read by compliance reviewers
            * and ignored by users with a routine question.
            */}
-          {/* Buyer pass 30: REVERTED to mt-16 (paragraph 64px below FAQ).
-              Section bottom padding tightened below — only the empty
-              space BELOW the paragraph shrinks. */}
-          <p className="mx-auto mt-16 max-w-3xl text-center text-xs leading-relaxed text-neutral-500">
+          {/* Buyer pass 31: VERTICALLY CENTERED — equal mt-10 above (40px
+              from FAQ block) and Section !pb-10 below (40px to footer)
+              so the compliance paragraph floats exactly centered. */}
+          <p className="mx-auto mt-10 max-w-3xl text-center text-xs leading-relaxed text-neutral-500">
             For compliance context, U.S. clinics often reference the{" "}
             <a
               className="text-neutral-700 underline"
