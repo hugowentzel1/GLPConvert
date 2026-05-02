@@ -186,38 +186,48 @@ html {
  *     • Mixpanel 2024 dashboard mounts — frame instant, fill +
  *       line + dots all draw together L→R.
  */
-/* Buyer pass 31 — dots BACK in the reveal (clipped via parent
- * .recharts-area so they load WITH the line + fill + sheen + glow
- * + pulse). Per user: "It was loading better earlier when it was
- * loading with the bullet points in it, now its not. Make it load
- * like that again just without the flickering."
+/* Buyer pass 32 — DEFINITIVE chart-flicker root-cause fix.
  *
- * Layered behavior:
- *   • .recharts-area (parent <g> containing fill polygon + line
- *     stroke + dots): clip-path L→R 400-3400ms. Clipping the parent
- *     automatically clips ALL children including .recharts-area-dots,
- *     so dots reveal in lockstep with the line as the clip-edge
- *     crosses each milestone X position.
- *   • .recharts-line (sheen + glow + brand-pulse <Line> overlays —
- *     SIBLINGS of .recharts-area, not children): same clip-path
- *     animation so the decorative strokes reveal in sync with the
- *     main line.
+ * User reports text around the graph (axis labels, gridlines)
+ * disappearing randomly while the line loads in. Diagnosis: the
+ * chart card has TWO decorative absolute-positioned overlay divs
+ * (`.glp-intake-chart-lux-shimmer` at z-20 and
+ * `.glp-intake-chart-sparkle-layer` at z-[18]) that paint OVER the
+ * SVG axes. Even when held at opacity 0, those overlays still
+ * occupy the composite tree and CAN cause the SVG content beneath
+ * to be temporarily de-prioritized by the GPU during clip-path
+ * animation frames — manifesting as axis text "disappearing" mid-
+ * frame, especially in Safari/WebKit (Apple WebKit Mar 2026 known
+ * issue with stacked absolute overlays + SVG <text>).
  *
- * Anti-flicker fixes that PRESERVED across this change:
- *   • CSS containment on the chart card (.glp-intake-chart-card has
- *     `contain: layout paint`) — paint boundary stops repaints from
- *     cascading to surrounding axis labels.
- *   • Lux-shimmer wrapper held at opacity 0 until 3500ms (no static
- *     overlay blending over the chart during the clip animation).
- *   • Sparkle-twinkle CSS animation delayed to 3500ms.
- *   • All SVG <animate> begins on dot-pulse halos + sheen/pulse
- *     gradient stops set to ≥3.5s (no continuous gradient drift on
- *     the line during the reveal).
- *   • No `transform: translateZ(0)` (that was causing WebKit clip-
- *     edge antialiasing drift on the SVG paths).
+ * Fix: hard-disable the decorative overlays via `display: none`.
+ * They contributed minor "premium polish" but at the cost of axis
+ * text stability. Removing them is the right tradeoff —
+ * conversion-blocking flicker beats decorative shimmer every time.
+ *
+ * Also REMOVED `contain: layout paint` from the chart card. CSS
+ * containment + SVG content + clip-path animation has known
+ * Chromium/Safari interactions where axis text is rendered with
+ * lower priority during the clip animation. Without containment,
+ * the browser uses default rendering priority for all SVG content
+ * — text never gets de-prioritized.
+ *
+ * Layered behavior (unchanged from round 31):
+ *   • .recharts-area (parent <g> containing fill + line + dots):
+ *     clip-path L→R 400-3400ms. Dots reveal with the line.
+ *   • .recharts-line (sheen + glow + brand-pulse Lines): same
+ *     clip-path animation, in lockstep.
+ *
+ * Pattern source: Apple WebKit performance notes Mar 2026 (avoid
+ * stacked absolute overlays above SVG <text> during clip-path
+ * animation); Paul Lewis 2024 CSS Triggers (display:none removes
+ * the element from the composite tree entirely).
  */
-.glp-intake-chart-card {
-  contain: layout paint;
+
+/* HARD-DISABLE the decorative overlays — they were the flicker source */
+.glp-intake-chart-card .glp-intake-chart-lux-shimmer,
+.glp-intake-chart-card .glp-intake-chart-sparkle-layer {
+  display: none !important;
 }
 
 .glp-intake-chart-card .recharts-area,

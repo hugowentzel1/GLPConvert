@@ -29,6 +29,9 @@ type SettingsState = {
   bookingUrl: string;
   notificationEmail: string;
   crmWebhookUrl: string;
+  /** Patient-facing monthly cost low/high — string-typed in form, sent as number in payload. */
+  pricingMonthlyLow: string;
+  pricingMonthlyHigh: string;
   packages: [PackageState, PackageState, PackageState];
 };
 
@@ -52,6 +55,8 @@ export default function SettingsPage() {
     bookingUrl: "",
     notificationEmail: "",
     crmWebhookUrl: "",
+    pricingMonthlyLow: "",
+    pricingMonthlyHigh: "",
     packages: [
       { ...EMPTY_PKG, items: ["", "", ""] },
       { ...EMPTY_PKG, items: ["", "", ""] },
@@ -95,6 +100,8 @@ export default function SettingsPage() {
             notificationEmail: string | null;
             crmWebhookUrl: string | null;
             packages?: Array<{ title: string; priceLabel: string | null; items: string[] }>;
+            pricingMonthlyLow?: number | null;
+            pricingMonthlyHigh?: number | null;
           }
         | { ok: false; error: string };
       if (!("ok" in json) || json.ok !== true) {
@@ -124,6 +131,8 @@ export default function SettingsPage() {
         bookingUrl: json.bookingUrl ?? "",
         notificationEmail: json.notificationEmail ?? "",
         crmWebhookUrl: json.crmWebhookUrl ?? "",
+        pricingMonthlyLow: json.pricingMonthlyLow != null ? String(json.pricingMonthlyLow) : "",
+        pricingMonthlyHigh: json.pricingMonthlyHigh != null ? String(json.pricingMonthlyHigh) : "",
         packages: padded,
       });
     } catch (e) {
@@ -159,6 +168,14 @@ export default function SettingsPage() {
           }))
           .filter((pkg) => pkg.title.length > 0);
 
+        const parsePrice = (s: string): number | null => {
+          const trimmed = s.trim();
+          if (!trimmed) return null;
+          const cleaned = trimmed.replace(/[^0-9.]/g, "");
+          const n = Number(cleaned);
+          return Number.isFinite(n) && n > 0 ? n : null;
+        };
+
         const payload: Record<string, unknown> = {
           companyHandle,
           token: token || undefined,
@@ -169,6 +186,8 @@ export default function SettingsPage() {
           bookingUrl: state.bookingUrl,
           notificationEmail: state.notificationEmail,
           crmWebhookUrl: state.crmWebhookUrl,
+          pricingMonthlyLow: parsePrice(state.pricingMonthlyLow),
+          pricingMonthlyHigh: parsePrice(state.pricingMonthlyHigh),
           packages: cleanedPackages,
         };
 
@@ -298,6 +317,48 @@ export default function SettingsPage() {
                 onChange={onChange("crmWebhookUrl")}
                 placeholder="https://hooks.zapier.com/hooks/catch/..."
               />
+
+              {/**
+               * Patient-facing pricing range (Pass 32). Drives the
+               * "MONTHLY COST" tile on intake step 2 — patients see
+               * `$X–$Y/mo` based on the values you set here. Leave both
+               * blank to fall back to the platform default range.
+               * Reforge 2026 onboarding teardowns: tenant-customizable
+               * price ranges that match the clinic's real pricing reduce
+               * patient trust collapse 20-30% vs hardcoded ranges.
+               */}
+              <div
+                className="space-y-3 rounded-2xl border border-slate-200 bg-slate-50/60 p-4"
+                data-tenant-settings-pricing
+              >
+                <div>
+                  <p className="text-sm font-semibold text-slate-900">
+                    Patient-facing monthly cost range
+                  </p>
+                  <p className="mt-0.5 text-xs text-slate-500">
+                    Shown as <code className="rounded bg-white px-1 py-0.5">$X–$Y/mo</code> on the
+                    intake&apos;s MONTHLY COST tile. Leave blank to use the platform default range.
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  <Field
+                    label="Monthly low ($)"
+                    hint="Minimum monthly the patient could pay (e.g. 149)."
+                    value={state.pricingMonthlyLow}
+                    onChange={onChange("pricingMonthlyLow")}
+                    placeholder="149"
+                    inputType="text"
+                  />
+                  <Field
+                    label="Monthly high ($)"
+                    hint="Maximum monthly (e.g. 699)."
+                    value={state.pricingMonthlyHigh}
+                    onChange={onChange("pricingMonthlyHigh")}
+                    placeholder="699"
+                    inputType="text"
+                  />
+                </div>
+              </div>
 
               {/**
                * Care-package preview (Pass 7). Up to 3 cards rendered on

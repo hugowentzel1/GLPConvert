@@ -85,6 +85,9 @@ export async function POST(req: NextRequest) {
       tokenEmail: payload.email ?? null,
       /** Care packages configured by the buyer (Pass 7). */
       packages: cfg.packages,
+      /** Patient-facing monthly cost range (Pass 32 — populates the "Monthly cost" tile on intake step 2). */
+      pricingMonthlyLow: cfg.pricingMonthlyLow,
+      pricingMonthlyHigh: cfg.pricingMonthlyHigh,
     });
   } catch (err) {
     console.error("[verify-magic-link] error:", err);

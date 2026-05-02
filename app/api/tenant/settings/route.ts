@@ -71,6 +71,9 @@ export async function POST(req: NextRequest) {
         priceLabel?: string | null;
         items?: Array<string | null> | null;
       }>;
+      /** Pass-32: patient-facing monthly cost range — drives intake step-2 "Monthly cost" tile. */
+      pricingMonthlyLow?: number | null;
+      pricingMonthlyHigh?: number | null;
     };
 
     const requested = slugifyHandle(body.companyHandle ?? "");
@@ -150,7 +153,9 @@ export async function POST(req: NextRequest) {
      */
     const wantsBookingUrl = body.bookingUrl != null;
     const wantsPackages = Array.isArray(body.packages);
-    if (wantsBookingUrl || wantsPackages) {
+    const wantsPricingLow = body.pricingMonthlyLow != null;
+    const wantsPricingHigh = body.pricingMonthlyHigh != null;
+    if (wantsBookingUrl || wantsPackages || wantsPricingLow || wantsPricingHigh) {
       const existing = await findTenantByHandle(requested);
       let merged: Record<string, unknown> = {};
       const raw = existing?.[TENANT_FIELDS.CRM_KEYS] as string | undefined;
@@ -172,6 +177,38 @@ export async function POST(req: NextRequest) {
           );
         }
         merged.booking_url = v;
+      }
+
+      if (wantsPricingLow) {
+        const v = body.pricingMonthlyLow;
+        if (v === null || v === 0) {
+          delete merged.intake_monthly_low;
+        } else {
+          const n = typeof v === "number" ? v : Number(v);
+          if (!Number.isFinite(n) || n < 0 || n > 100000) {
+            return NextResponse.json(
+              { ok: false, error: "pricingMonthlyLow must be a positive number ≤ 100000 or null" },
+              { status: 400 },
+            );
+          }
+          merged.intake_monthly_low = Math.round(n);
+        }
+      }
+
+      if (wantsPricingHigh) {
+        const v = body.pricingMonthlyHigh;
+        if (v === null || v === 0) {
+          delete merged.intake_monthly_high;
+        } else {
+          const n = typeof v === "number" ? v : Number(v);
+          if (!Number.isFinite(n) || n < 0 || n > 100000) {
+            return NextResponse.json(
+              { ok: false, error: "pricingMonthlyHigh must be a positive number ≤ 100000 or null" },
+              { status: 400 },
+            );
+          }
+          merged.intake_monthly_high = Math.round(n);
+        }
       }
 
       if (wantsPackages) {
