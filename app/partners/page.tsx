@@ -85,7 +85,7 @@ export default function PartnersPage() {
       data-brand
       role="main"
     >
-      <Section className="pb-2 md:pb-4">
+      <Section className="!pb-2 md:!pb-4">
         <Container>
           <Stack>
             {/* Back Button */}

@@ -118,7 +118,7 @@ export default function SupportPage() {
       data-brand
       role="main"
     >
-      <Section className="pb-2 md:pb-4">
+      <Section className="!pb-2 md:!pb-4">
         <Container className="max-w-4xl">
           <Stack>
             {/* Back Button */}
