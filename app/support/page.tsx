@@ -118,7 +118,7 @@ export default function SupportPage() {
       data-brand
       role="main"
     >
-      <Section className="py-14 sm:py-20">
+      <Section className="pb-2 md:pb-4">
         <Container className="max-w-4xl">
           <Stack>
             {/* Back Button */}
@@ -461,11 +461,9 @@ export default function SupportPage() {
            * Placement"); same content at the foot is read by compliance reviewers
            * and ignored by users with a routine question.
            */}
-          {/* Buyer pass 28: footer gap normalized to match pricing page
-              (~56px above footer from natural Section padding). Was
-              my-16 which added 64px below, putting compliance paragraph
-              120px from footer (visibly looser than pricing). Now
-              mt-16 (top breathing only). */}
+          {/* Buyer pass 30: REVERTED to mt-16 (paragraph 64px below FAQ).
+              Section bottom padding tightened below — only the empty
+              space BELOW the paragraph shrinks. */}
           <p className="mx-auto mt-16 max-w-3xl text-center text-xs leading-relaxed text-neutral-500">
             For compliance context, U.S. clinics often reference the{" "}
             <a

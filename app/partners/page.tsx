@@ -85,7 +85,7 @@ export default function PartnersPage() {
       data-brand
       role="main"
     >
-      <Section>
+      <Section className="pb-2 md:pb-4">
         <Container>
           <Stack>
             {/* Back Button */}
@@ -182,17 +182,9 @@ export default function PartnersPage() {
                     </div>
                   </Card>
 
-                  {/* Buyer pass 28: canonical "header attribution + quote
-                      below" testimonial pattern (Stripe Customer Stories /
-                      Webflow Customer Stories / Vercel Customer Stories /
-                      Linear Customer Highlights 2024-26). Avatar circle
-                      pairs with the role line inline ON TOP as the
-                      attribution header; quote sits BELOW spanning the
-                      full card width. Eliminates the awkward "JR floats
-                      next to first line of quote, attribution far away"
-                      visual the buyer flagged. Single attribution cluster
-                      = clear "who said this" + clear quote = clear "what
-                      they said". */}
+                  {/* Round-28 attribution-header pattern (Stripe Customer
+                      Stories / Webflow / Vercel canonical): avatar +
+                      role pair on top, quote spans full card width below. */}
                   <Card>
                     <div className="flex items-center gap-4">
                       <div
@@ -370,13 +362,11 @@ export default function PartnersPage() {
            * the same content at the foot of the page is read by the audience
            * that needs it without taxing top-of-page comprehension.)
            */}
-          {/* Buyer pass 28: footer gap normalized — pricing page sits
-              ~56px above the footer (natural Section padding); partners
-              previously had my-16 which added 64px below the paragraph,
-              putting it 120px from the footer (visibly looser than the
-              other pages). Switched to `mt-16` (top breathing only) so
-              the bottom gap reverts to the Section default and matches
-              pricing. Same change on /support. */}
+          {/* Buyer pass 30: REVERTED paragraph spacing back to mt-16 (the
+              original "this morning" rhythm — paragraph sits 64px below
+              the testimonial card). The card-to-footer gap reduction is
+              handled separately by tightening Section's bottom padding
+              below — only the empty space BELOW the paragraph shrinks. */}
           <p className="mx-auto mt-16 max-w-2xl text-center text-xs leading-relaxed text-neutral-500">
             Partner terms are governed by our{" "}
             <Link href={buildMarketingPathHref(searchParams, "/legal/terms")} className="text-neutral-700 underline">

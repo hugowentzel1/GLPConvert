@@ -186,54 +186,30 @@ html {
  *     • Mixpanel 2024 dashboard mounts — frame instant, fill +
  *       line + dots all draw together L→R.
  */
-/* Buyer pass 27 flicker fix: CSS containment on the chart card.
- * `contain: layout paint` tells the browser this element is a paint
- * boundary — repaints inside the card never cascade to siblings, AND
- * layout changes outside the card never invalidate the card's paint.
- * This stops the GPU from re-rasterizing surrounding elements (axis
- * tick text, gridlines, card border) every time the data layers'
- * clip-path advances by a frame. Source: MDN CSS Containment / Paul
- * Lewis "When everything's important, nothing is" 2024 — `contain`
- * is the single most-impactful property for animation-stability on
- * SVG-heavy charts.
+/* Buyer pass 30 — REVERTED to round-28 line-loading behavior:
+ * sheen + glow + brand-pulse Lines (.recharts-line) animate WITH
+ * the main line stroke + area fill via the SAME shared clip-path
+ * keyframe. This restores the visual "the entire line + its sheen +
+ * its glow + its brand pulse all draw together L→R" feel the buyer
+ * had earlier today and confirmed was the correct loading behavior.
  *
- * `transform: translateZ(0)` forces the chart card onto its own GPU
- * composite layer. Same effect as will-change but applies to the
- * whole card, so all child rasterization happens on the compositor
- * thread, not the main thread. */
+ * The user's flicker complaint was specifically about the DOTS
+ * popping in at each milestone X position. That fix stays:
+ * .recharts-area-dots is NOT clipped and stays opacity 0 until
+ * after the line completes, then fades in as a single soft batch.
+ *
+ * CSS containment on the chart card stays (paint isolation from
+ * surrounding axis labels). No transform: translateZ — that was a
+ * source of WebKit clip-edge antialiasing drift.
+ */
 .glp-intake-chart-card {
   contain: layout paint;
-  transform: translateZ(0);
 }
 
-/* Buyer pass 28 milestone-pop fix: dots split off from the parent
- * .recharts-area clip-path so they DON'T pop into existence as the
- * line draw passes each milestone X position. Previously the dots
- * were inside .recharts-area, so the parent's clip-path uncovered
- * them one at a time as the line crossed each x-coordinate — each
- * dot's instant rasterization at clip-time created the perceived
- * "milestone flicker" the buyer reported.
- *
- * New behavior:
- *   • .recharts-area-area (fill) + .recharts-area-curve (line stroke)
- *     get clip-path L→R from 400ms-3400ms (synchronized).
- *   • .recharts-line (sheen + glow + brand-pulse Lines) gets the same
- *     clip-path so they reveal in lockstep with the main line.
- *   • .recharts-area-dots: opacity 0 through the entire reveal, fades
- *     to 1 over 400ms after the line completes (3400ms-3800ms). The
- *     dots APPEAR ALL AT ONCE as a soft fade, not as discrete pops.
- *
- * NOTE: .recharts-area-area / .recharts-area-curve are children of
- * .recharts-area, so they could inherit a parent clip-path if applied
- * to the parent. Targeting them DIRECTLY (not the parent) leaves
- * .recharts-area-dots unclipped — the dots are then controlled
- * independently via opacity instead.
- */
 .glp-intake-chart-card .recharts-area-area,
 .glp-intake-chart-card .recharts-area-curve,
 .glp-intake-chart-card .recharts-line {
   clip-path: inset(0 100% 0 0);
-  will-change: clip-path;
   animation: glp-data-reveal-ltr 3000ms cubic-bezier(0.22, 1, 0.36, 1) 400ms both;
 }
 @keyframes glp-data-reveal-ltr {
@@ -245,15 +221,14 @@ html {
   }
 }
 
-/* Dots: hidden during the line draw so milestone X positions don't
-   "pop" each dot into existence as the clip-path crosses them. After
-   the line completes, the entire dot row fades in together. */
+/* Dots stay hidden through the line draw → fade in together AFTER
+   the stroke completes, eliminating the per-milestone "pop" flicker
+   without disturbing the line+sheen+glow+pulse synchronized reveal. */
 .glp-intake-chart-card .recharts-area-dots {
   opacity: 0;
-  will-change: opacity;
-  animation: glp-dots-fadein 400ms ease-out 3400ms both;
+  animation: glp-decoration-fadein 500ms ease-out 3400ms both;
 }
-@keyframes glp-dots-fadein {
+@keyframes glp-decoration-fadein {
   0% {
     opacity: 0;
   }

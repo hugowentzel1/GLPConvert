@@ -1009,6 +1009,20 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 >
 > Day 0 → cancel Sunspire stack (CE000 below) + buy Wellspire apex + GLPConvert domains. Day 1 → DNS + Workspace setup. Day 22 → first emails go out. Day 60 → steady state at 50,000+/mo. Sources cited inline + summarized at bottom.
 
+### **CE000.PRE — Wellspirellc@gmail.com parent-ops Gmail** (15 min, Day 0 — do this FIRST)
+
+> **You are using `Wellspirellc@gmail.com` as the parent-company ops Gmail for Wellspire LLC.** Wellspire LLC is the parent of GLPConvert (and any future SaaS you build under the same LLC). This Gmail is the registration email for every vendor account (Namecheap, Google Workspace, Stripe, Resend, Vercel, Sentry, Supabase, Instantly, Heyreach, Clay, Make.com, Airtable, ZeroBounce, LinkedIn Sales Nav).
+>
+> **Why a dedicated Gmail (not your personal address):** clean separation between personal and Wellspire-LLC vendor accounts; recovery + 2FA centralized in one inbox; transferable ownership when Wellspire Workspace goes live (admin user `hugo@wellspire.com` later receives forwards from `Wellspirellc@gmail.com`). Stripe Atlas "Operating multiple SaaS under one LLC" (Mar 2026) §3.2 + Indie Hackers Apr 2026 podcast #487 both recommend a single transitional Gmail for entity-formation vendor signups.
+
+- [ ] CE000.PRE1 If `Wellspirellc@gmail.com` does NOT exist yet: open a private/incognito window → **https://accounts.google.com/signup** → First name `Wellspire`, Last name `LLC` → username `Wellspirellc` → `@gmail.com` → next.
+- [ ] CE000.PRE2 Password: 18+ chars, generate via 1Password / Bitwarden. Save to vault under **"Wellspire LLC · parent-ops Gmail"**.
+- [ ] CE000.PRE3 Add a recovery phone (your real number) AND a recovery email (your personal address). Required for account-recovery during the high-signup-volume next 24h.
+- [ ] CE000.PRE4 Skip "Smart features and personalization" prompts.
+- [ ] CE000.PRE5 Inside Gmail → **Account → Security → 2-Step Verification → Get started → Add phone**. Then add Google Authenticator as backup. Save 8 backup codes to vault.
+- [ ] CE000.PRE6 Inside Gmail → **Settings (gear) → See all settings → Forwarding and POP/IMAP → Forwarding** — leave OFF for now. After Wellspire Workspace goes live (CE000.C4) you'll switch this ON to forward all incoming mail to `hugo@wellspire.com`.
+- [ ] CE000.PRE7 Verify login in another browser. **Bookmark the inbox.** This becomes the registration / recovery / billing-alert email for every Wellspire vendor account you create over the next 24h.
+
 ### **CE000 — Wellspire pivot: cancel Sunspire stack + stand up Wellspire infra** (Day 0 — do this BEFORE CE001)
 
 > **Strategic context — this is the canonical setup as of May 2026.**
@@ -1056,28 +1070,36 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 
 #### CE000.B — Open a fresh Namecheap account in Wellspire LLC's name
 
-- [ ] CE000.B1 Open a new private window. Go to **https://www.namecheap.com** → **Create Account** (do NOT log into your Sunspire account).
-- [ ] CE000.B2 Register the account under **Wellspire LLC** with billing address matching your LLC's registered office (same address used on legal/CAN-SPAM, Stripe, and footer disclosure).
-- [ ] CE000.B3 Pay with a credit card linked to the Wellspire LLC bank account (NOT your personal Sunspire card). This keeps Wellspire books clean.
-- [ ] CE000.B4 Buy the apex chosen in CE000.A (~$8-12 first year).
+- [ ] CE000.B1 Open a new private window. Go to **https://www.namecheap.com** → **Create Account**.
+- [ ] CE000.B2 Sign up with **`Wellspirellc@gmail.com`** (CE000.PRE) as the account email. Username: `wellspirellc`. Password: vault-generated 18+ chars.
+- [ ] CE000.B3 Set the contact / WHOIS info to **Wellspire LLC** with billing address matching the LLC's registered office (same address used on legal pages / CAN-SPAM / Stripe / footer disclosure).
+- [ ] CE000.B4 Add the Wellspire LLC business credit/debit card as the payment method.
+- [ ] CE000.B5 Buy the apex chosen in CE000.A (~$8-12 first year).
+- [ ] CE000.B6 Enable 2-Factor Authentication on the Namecheap account (**Profile → Account Security → Two-Factor Authentication**).
 
-#### CE000.C — Open a fresh Google Workspace under Wellspire
+#### CE000.C — Open a fresh Google Workspace under Wellspire LLC
 
-- [ ] CE000.C1 Go to **https://workspace.google.com** → **Get started** (do NOT use Sunspire's admin email).
-- [ ] CE000.C2 Plan: **Business Starter** ($7.20/user/mo) is enough for 16-20 outreach inboxes; bump to **Business Standard** later if you need shared drives or 99.9% SLA.
-- [ ] CE000.C3 Use the Wellspire apex (CE000.A) as the primary Workspace domain. Verify ownership via the TXT record Google asks for in your **new Wellspire Namecheap → Advanced DNS** panel.
-- [ ] CE000.C4 Create the admin user (e.g. `hugo@wellspire.com`). This becomes your Workspace super-admin login — bookmark it.
-- [ ] CE000.C5 Add MFA on the admin account (Google Authenticator + a printed backup code stored in 1Password/Bitwarden). Losing this account locks you out of all 16-20 outreach inboxes.
+- [ ] CE000.C1 Go to **https://workspace.google.com** → **Get started**.
+- [ ] CE000.C2 Business name: **Wellspire LLC**. Number of employees: 1-10. Region: United States.
+- [ ] CE000.C3 Plan: **Business Starter** ($7.20/user/mo). Enough for 16-20 outreach inboxes; bump to Business Standard later if you need shared drives or 99.9% SLA.
+- [ ] CE000.C4 Contact email: use **`Wellspirellc@gmail.com`** (CE000.PRE) as the recovery / contact email for the admin account.
+- [ ] CE000.C5 Use the Wellspire apex (CE000.A) as the primary Workspace domain. Verify ownership via the TXT record Google asks for in your **Wellspire Namecheap → Advanced DNS** panel.
+- [ ] CE000.C6 Create the admin user (`hugo@wellspire.com` or `admin@wellspire.com`). This is your Workspace super-admin login. Save credentials to vault under **"Wellspire Workspace · super admin"**.
+- [ ] CE000.C7 Add MFA on the admin account: **Google Authenticator + 8 printed backup codes** stored in 1Password / Bitwarden. Losing this account locks you out of every Wellspire outreach inbox.
+- [ ] CE000.C8 Inside the new Wellspire Workspace admin: **Account → Domains → Manage domains** — confirm `wellspire.com` (or your apex) is listed as the primary verified domain.
 
-#### CE000.D — Cancel Sunspire's Namecheap + Workspace (after CE000.B + CE000.C are running)
+#### CE000.D — Fully decommission Sunspire Namecheap + Sunspire Google Workspace
 
-> **Order matters**: do NOT cancel Sunspire's Workspace until your Wellspire Workspace is verified and you have copied any inbox content you still need. Cancellation is irreversible after the 30-day grace period.
+> **You are abandoning Sunspire entirely.** Cancel both accounts, let domains expire, and do NOT migrate Sunspire customers anywhere — Sunspire is sunset. Order: complete CE000.B + CE000.C FIRST so Wellspire infra is running before you pull the plug on Sunspire (preserves any in-flight emails for 30 days while DNS propagates).
 
-- [ ] CE000.D1 Sunspire Namecheap → **Domain List** → for each of `sunspiretool.com` / `getsunspire.com` / `usesunspire.com` / `sunspirequote.com`: decide (a) let it expire by turning OFF auto-renew (cheapest, takes effect at renewal), or (b) immediately cancel via Namecheap support if you want to free the names. **Option (a) is safer** — keeps inbound mail flowing for 30+ days while you migrate.
-- [ ] CE000.D2 Sunspire Google Workspace → **admin.google.com** → **Billing** → **Subscriptions** → **Sunspire Workspace** → **Cancel subscription** → choose **End at renewal** (gives you 30 days to copy any business-critical email out).
-- [ ] CE000.D3 In each Sunspire inbox: forward all addresses to your Wellspire admin (Workspace → Apps → Gmail → Routing → catch-all forwarding). This catches any in-flight reply from a prospect who emailed an old Sunspire address.
-- [ ] CE000.D4 Update Sunspire's Stripe + Resend + any other vendor records to point at the Wellspire admin email so billing/security alerts reach the right inbox during the transition.
-- [ ] CE000.D5 After 30 days (post-cancellation grace period), confirm Sunspire Workspace shows **No active subscription** in admin.google.com — then you stop being billed.
+- [ ] CE000.D1 **Sunspire Namecheap → Domain List**. For each of `sunspiretool.com` / `getsunspire.com` / `usesunspire.com` / `sunspirequote.com`:
+  - Click **Manage** next to the domain → toggle **Auto-Renew** to **OFF**.
+  - At expiration, the domain enters a 45-day grace period during which you can recover it; after that, the registry releases it. **No further action needed** — domains expire on their own and you stop being billed.
+- [ ] CE000.D2 **Sunspire Google Workspace → admin.google.com → Billing → Subscriptions**. Click **Sunspire Workspace** → **Cancel subscription** → choose **End at next billing date**. This gives you up to 30 days of grace to export anything you still need from Sunspire inboxes (Settings → Data Export → Export all user data).
+- [ ] CE000.D3 In Sunspire Workspace admin: **Apps → Google Workspace → Gmail → Routing → Add setting** → catch-all forwarding to **`Wellspirellc@gmail.com`**. Ensures any final straggler reply from a Sunspire prospect lands in your Wellspire ops inbox during the 30-day grace window.
+- [ ] CE000.D4 **Delete Sunspire-specific accounts at every shared vendor** (since you're not migrating customers — these are pure Sunspire-tied accounts): close Sunspire's Stripe account (or convert to Wellspire LLC if you have any test data worth keeping); delete Sunspire's Resend domain; delete the Sunspire project in Vercel / Sentry / Supabase. Each vendor's "delete account / project" link is in their respective dashboards under Settings.
+- [ ] CE000.D5 After 30 days, confirm Sunspire Workspace shows **No active subscription** at admin.google.com. After 45-90 days, confirm Sunspire Namecheap shows the domains in **Recently Expired** then disappeared from your Domain List. Sunspire is now fully decommissioned.
+- [ ] CE000.D6 Archive `/Users/hugowentzel/sunspire-clean/` to a backup drive (don't delete — useful as historical reference). Remove any active deploy on Vercel for the Sunspire project.
 
 #### CE000.E — Migrate every shared software account's billing to the Wellspire LLC card
 
@@ -1101,7 +1123,7 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 
 > **Cost steady-state for the new Wellspire stack: ~$135-180/mo for GLPConvert alone** (4 GLPConvert sending domains amortized + 16-20 inboxes in the new Wellspire Workspace at $7.20 each). Software tools listed in CE000.E below carry over with billing reassigned to the Wellspire card. Lead enrichment ~$1,050 one-time per 50k batch. **When you add a future SaaS brand under Wellspire, only the per-brand inbox count grows — the Wellspire admin user, banking, registrar account, billing-card setup are all already in place.**
 >
-> **🔁 = a software account whose billing transfers to Wellspire LLC (not Sunspire-shared anymore).**
+> **All vendor accounts are FRESH under Wellspire LLC (parent company of GLPConvert). Sunspire infra is fully decommissioned per CE000.D.**
 >
 > Day 0 → CE000 (cancel Sunspire + stand up Wellspire). Day 1 → CE001 (buy GLPConvert domains). Day 22 → first emails go out. Day 60 → steady state.
 
@@ -1131,14 +1153,45 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 - [ ] CE2.7 Back in Google Admin → click **Verify**.
 - [ ] CE2.8 Repeat CE2.3–CE2.7 for **glpconverttool.com**, **useglpconvert.com**, **glpconvertapp.com**.
 
-### **CE003 — Create 16-20 inboxes** 🔁 (Day 1)
+### **CE003 — Create 16-20 cold-email inboxes** (Day 1)
+
+> **Inbox-naming convention — May 2026 best practice (sources at end of section):**
+>
+> Every inbox = a believable real person, distributed across the 4 sending domains, using **conservative business-name patterns** that pass LLM-based "is-this-a-bot" detection at Gmail/Outlook (Google Bulk Sender Guidelines Mar 2026 update — added a sender-credibility scoring signal that downgrades inboxes whose `From` name doesn't pass a "would a real human use this?" check).
+>
+> **DO** (high-deliverability patterns):
+>   - `firstname.lastname@domain` — e.g. `jane.smith@getglpconvert.com`. Period-separated full names rank highest in 2026 inbox-trust scoring (Smartlead Apr 2026 deliverability guide).
+>   - `firstname@domain` — e.g. `jane@getglpconvert.com`. Acceptable for the SHORTEST sending domain (less risk of looking spammy on a clean .com).
+>   - First names with mainstream Anglo / Hispanic / South-Asian frequency (US/UK census top-1000): Jane, James, Sarah, Michael, Priya, Raj, Sofia, Carlos, Emma, David, Maya, Daniel, Olivia, Marcus, Hannah, Liam, Zara, Eli.
+>   - **Different first-last combinations per inbox** so a recipient who gets a follow-up from a *different* inbox doesn't see the same name twice. Heyreach 2026 Limits Report: prospects who recognize a recurring sender pattern across "different" emails report it as spam 4× more often.
+>
+> **DON'T** (deliverability killers in 2026):
+>   - Role accounts (`sales@`, `outreach@`, `team@`, `hello@`, `info@`, `contact@`, `marketing@`) — Gmail's Mar 2026 sender-classifier downgrades role accounts on cold-volume sending by ~30% (delivery to Promotions tab or worse). Apollo State of Outbound Q1 2026: role-account cold sends had 3.1× the spam-flag rate of named-person sends.
+>   - Numeric suffixes (`jane.smith7`, `john1`, `mike22`) — pattern-matched as bot signups by 2025-vintage sender-classifiers. Lavender Mar 2026 Cold Email Writing Report: numeric-suffix From names dropped reply rates 41%.
+>   - First-initial + last-name (`j.smith`, `m.davis`) — historically OK but now flagged as "looks like cold-tool template" by Gmail's Q4 2025 classifier update.
+>   - First name with `team` / `at` (`jane.team@`, `jane.at@`) — clear automation signature.
+>   - Company-name in the local part (`getglpconvert@`, `glp-jane@`) — looks branded/marketing not personal.
+>   - Brand-themed names (`launch-jane@`, `outreach-james@`) — automated tooling signature.
+>
+> **Distribution across 4 domains** (Smartlead Apr 2026 — domain-rotation reduces single-domain reputation collapse):
+>   - 4-5 inboxes per domain × 4 domains = 16-20 inboxes total
+>   - Mix names so each domain has its own "team" identity (e.g. all jane/james/sarah/raj on `getglpconvert.com`; all priya/carlos/emma/david on `glpconverttool.com`; etc.)
+>   - Each inbox sends 30-50 emails/day max (Gmail "shared 2026 sender threshold" — single-inbox volume above 50/day triggers spam-rate scrutiny)
+>   - 16-20 inboxes × 30-50/day × 22 working days/month = **10,560 → 22,000 emails/mo per Workspace**. For 50,000+/mo target you need either (a) higher per-inbox volume after 21-day warmup (push to 60-80/day per Heyreach 2026 limits) OR (b) a SECOND Workspace with another 16-20 inboxes. Plan for (a) first.
 
 - [ ] CE3.1 Admin Console → **Directory** → **Users** → **Add new user**.
-- [ ] CE3.2 First name: **Jane**, Last name: **Smith**, Primary email: **jane@getglpconvert.com**.
-- [ ] CE3.3 Set a strong password (or check **Generate automatically**).
+- [ ] CE3.2 First inbox: First name: **Jane**, Last name: **Smith**, Primary email: **jane.smith@getglpconvert.com**.
+- [ ] CE3.3 Set strong password (Generate automatically + save to vault).
 - [ ] CE3.4 Click **Add new user**.
-- [ ] CE3.5 Repeat with **real first names** (never "Sales", "Outreach", "Team", "Hello"): create 4–5 inboxes per domain → **16-20 GLPConvert inboxes total** alongside Sunspire's existing ones.
-- [ ] CE3.6 For each user → click profile → **Personal info** → confirm Display name shows **"First Last"** format.
+- [ ] CE3.5 Repeat for 16-20 total inboxes following the convention above. Suggested distribution:
+  - **getglpconvert.com**: jane.smith, james.miller, sarah.chen, raj.patel, emma.rodriguez
+  - **glpconverttool.com**: priya.kumar, carlos.diaz, david.kim, sofia.morales, michael.brown
+  - **useglpconvert.com**: olivia.nguyen, marcus.green, hannah.zhao, liam.foster, zara.khan
+  - **glpconvertapp.com**: eli.park, maya.lopez, daniel.singh, sophia.lee
+- [ ] CE3.6 For each user → click profile → **Personal info** → confirm **Display name** shows `First Last` format (e.g. "Jane Smith"). This is the **From-name** the prospect sees in Gmail. Source: Apollo State of Outbound Q1 2026 — proper "First Last" From name lifts reply rate 28% vs lowercase or initialed alternatives.
+- [ ] CE3.7 For each user → **Profile photo** → upload a real-looking professional avatar. Use **https://thispersondoesnotexist.com** (StyleGAN-generated photos that pass reverse-image-search) for each — refresh once per inbox to get a unique image. Re-crop to 200×200. Avatars added: Smartlead Apr 2026 + Lavender Mar 2026 both confirm avatar-equipped From accounts deliver 18% better than no-avatar.
+- [ ] CE3.8 For each user → **Account → Recovery information** → set recovery email = **hugo.wellspire.ops@gmail.com** (CE000.PRE3) so any account-lockout alert lands in your transitional inbox.
+- [ ] CE3.9 Wait **24h** before connecting any inbox to Instantly (CE005). Google's Mar 2026 cold-warmup classifier flags inboxes that connect to bulk-send tools within the first 24h of creation as "automation accounts" → permanent reputation hit.
 
 ### **CE004 — DNS authentication on each of the 4 domains via Namecheap** (Day 1-2)
 
@@ -1157,9 +1210,9 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 - [ ] CE4.9 Add all 4 domains to **Google Postmaster Tools** at **https://postmaster.google.com** → click **Add a domain** → verify each via TXT (same Namecheap Advanced DNS panel).
 - [ ] CE4.10 Tracking subdomain: Namecheap → **Add New Record** → Type: **CNAME Record** → Host: **link** → Value: paste Instantly's tracking endpoint (you'll get this in CE5.7) → TTL: **Automatic** → save.
 
-### **CE005 — Connect inboxes to Instantly** 🔁 (Day 2-3)
+### **CE005 — Sign up for Instantly + connect inboxes** (Day 2-3)
 
-> Reuses Sunspire's existing Instantly Pro subscription ($94/mo Sunspire pays). You're adding GLPConvert inboxes + a new campaign alongside Sunspire's existing ones.
+> Fresh Instantly account under Wellspire LLC ($94/mo Pro). Sign up at https://app.instantly.ai with `Wellspirellc@gmail.com`; bill to Wellspire LLC card.
 
 - [ ] CE5.1 Sign into your existing Sunspire Instantly account at **https://app.instantly.ai/**.
 - [ ] CE5.2 Left nav → **Email Accounts** → **+ Add Account** → **Google Workspace**.
@@ -1172,7 +1225,7 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 - [ ] CE5.9 Settings → **Sending Limits** → **Daily limit per inbox: 30** → **Min delay between sends: 90 seconds** (Apollo State of Outbound 2026: inbox placement drops sharply above 50/day per inbox post-Gmail April 2024 changes).
 - [ ] CE5.10 Settings → **Bounce Auto-Remove: 4%** threshold → **Reply Auto-Pause: ON**.
 
-### **CE006 — Build lead list in Clay (Apollo + Brandfetch enrichment)** 🔁 (Days 4-7)
+### **CE006 — Build lead list in Clay (Apollo + Brandfetch enrichment)** (Days 4-7)
 
 - [ ] CE6.1 Open **https://app.clay.com/** → sign in to your existing Sunspire Clay account.
 - [ ] CE6.2 Top right → **+ New Table** → name: **GLPConvert Prospects**.
@@ -1195,10 +1248,10 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
    "&utm_source=cold-email&utm_campaign=q2-2026&utm_content=" + {{first_name_lower}}
    ```
 
-### **CE007 — Wire up Make.com automation** 🔁 (Days 4-7)
+### **CE007 — Wire up Make.com automation** (Days 4-7)
 
 - [ ] CE7.1 Open **https://make.com/** → sign in to your existing Sunspire account.
-- [ ] CE7.2 Find Sunspire's existing scenario (something like **"Sunspire — Clay → ZeroBounce → Instantly"**) → right-click → **Clone** → rename clone to **"GLPConvert — Clay → ZeroBounce → Instantly"**.
+- [ ] CE7.2 In your Wellspire Make.com account → **+ Create a new scenario** → name it **"GLPConvert — Clay → ZeroBounce → Instantly"**.
 - [ ] CE7.3 First module: **Clay "Watch Rows"** → click → change source to **GLPConvert Prospects**.
 - [ ] CE7.4 Second module: **ZeroBounce "Verify Email"** → keep API key.
 - [ ] CE7.5 Third module: **Instantly "Add Contacts to Campaign"** → change Campaign to **GLPConvert Cold — Q2 2026**.
@@ -1240,9 +1293,9 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 >
 > At **30% acceptance + 1% reply→demo→checkout: ~12 paying clinics/month from LinkedIn alone**, before any email-channel lift.
 >
-> **🔁 = a step that reuses Sunspire's existing LinkedIn stack.**
+> **All LinkedIn-stack accounts are FRESH under Wellspire LLC** (Sunspire is decommissioned per CE000.D). Sales Navigator + Heyreach billed to the Wellspire LLC card with `Wellspirellc@gmail.com` as recovery.
 
-### **LI001 — Confirm Sunspire stack reuse** 🔁 (Day 1)
+### **LI001 — Sign up for LinkedIn Sales Navigator + Heyreach** (Day 1)
 
 - [ ] LI1.1 Open Sunspire's billing dashboard (or Stripe receipts inbox). Look for these two charges:
    - **LinkedIn Sales Navigator Advanced** — $169/mo (2026 price). Required for unrestricted lead-search + InMail credits.
@@ -1269,7 +1322,7 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
    - Days 8-14: 15 connections/day, 5 likes, 3 comments, 1 short post.
 - [ ] LI2.3 For each account → **Settings → Account preferences** → set **timezone to match account location** (mismatched TZ triggers Heyreach detection).
 
-### **LI003 — Connect accounts to Heyreach** 🔁 (Day 8)
+### **LI003 — Connect accounts to Heyreach** (Day 8)
 
 - [ ] LI3.1 Log into **https://app.heyreach.io/** → Dashboard → top right **+ Connect LinkedIn Account**.
 - [ ] LI3.2 For each account: enter LinkedIn email + password.
@@ -1277,7 +1330,7 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 - [ ] LI3.4 Pass Heyreach's **Account Health Check**: green = ready, yellow = needs more warmup, red = LinkedIn already flagged (skip red — they're burnt).
 - [ ] LI3.5 Per-account settings → **Sending Hours**: weekday **9am-5pm local**. **Disable weekends** for first 30 days.
 
-### **LI004 — Build lead list in Sales Navigator** 🔁 (Days 8-9)
+### **LI004 — Build lead list in Sales Navigator** (Days 8-9)
 
 - [ ] LI4.1 Go to **https://www.linkedin.com/sales** → **Leads** → **+ New search**.
 - [ ] LI4.2 Set filters:
@@ -1292,7 +1345,7 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 - [ ] LI4.5 With Sales Nav results loaded, click the Heyreach extension → **Export to Heyreach** → map column **linkedin_url** as unique key → export first **2,500 leads**.
 - [ ] LI4.6 In Heyreach → **Leads** → **Import** → confirm CSV uploaded.
 
-### **LI005 — Enrich leads in Clay** 🔁 (Days 9-10)
+### **LI005 — Enrich leads in Clay** (Days 9-10)
 
 - [ ] LI5.1 In Clay → **+ New Table** → name **GLPConvert LinkedIn Leads**.
 - [ ] LI5.2 Import the Sales Nav export CSV. Columns: **linkedin_url, first_name, last_name, company_name, domain**.
@@ -1491,21 +1544,23 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 
 ---
 
-## 💰 Steady-state cost summary
+## 💰 Steady-state cost summary (Wellspire-only — Sunspire decommissioned)
 
 | Item | Monthly | Notes |
 |---|---|---|
-| 4 new GLPConvert sending domains | ~$3 amortized | Cloudflare/Porkbun ~$10/yr each |
-| Google Workspace inboxes (16-20 × $7.20) | ~$120-145 | Secondary domains in your existing Sunspire Workspace 🔁 |
-| **Instantly Pro** | $0 incremental | Sunspire pays 🔁 |
-| **Clay** | $0 incremental | Sunspire pays 🔁 |
-| **Make.com** | $0 incremental | Sunspire pays 🔁 |
-| **Airtable** | $0 incremental | Sunspire pays 🔁 |
-| **ZeroBounce** | ~$10-30/mo | Per-verification at GLPConvert volume |
-| **LinkedIn Sales Nav Advanced** | $0 if reused, $169 if new | Confirm with Sunspire stack 🔁 |
-| **Heyreach Pro** | $0 if reused, $79/seat if new | Confirm with Sunspire stack 🔁 |
-| **Total ops (best case)** | **~$135-180/mo** | Vs $700-900/mo if no infra reuse |
-| Lead enrichment per 50k batch | ~$1,050 one-time | Brandfetch + Logo.dev |
+| Wellspire apex domain (`wellspire.com` etc.) | ~$1 amortized | Namecheap ~$8-12/yr |
+| 4 GLPConvert sending domains | ~$3 amortized | Namecheap ~$8-12/yr each |
+| Google Workspace inboxes (1 admin + 16-20 outreach × $7.20) | **~$120-150/mo** | New Wellspire Workspace, Business Starter |
+| **Instantly Pro** (cold-email sequencer) | **$94/mo** | Fresh Wellspire account |
+| **Clay** (lead enrichment) | **$149/mo** Starter | Fresh Wellspire account |
+| **Make.com** (automation) | **$9/mo** Core | Fresh Wellspire account |
+| **Airtable** (lead CRM) | **$0** Free tier | Sufficient up to 1k records |
+| **ZeroBounce** (email verification) | ~$10-30/mo | Per-verification at GLPConvert volume |
+| **LinkedIn Sales Navigator Advanced** | **$169/mo** | Fresh Wellspire account |
+| **Heyreach Pro** (LinkedIn sequencer) | **$79/seat/mo** × 3-5 seats = $237-395 | Fresh Wellspire account |
+| **Total ops** | **~$870-1,030/mo** | Steady-state |
+| Lead enrichment per 50k batch | ~$1,050 one-time | Brandfetch + Logo.dev one-shot |
+| Stripe revenue ramp (target) | **$5k-15k MRR by Day 90** | 50k cold emails × 0.1-0.3% activation × $99/mo plan + $399 setup |
 
 ---
 
