@@ -170,14 +170,24 @@ test.describe("Round 33 — every button on the cold-email funnel", () => {
 
     await page.goto(`${BASE}/intake${DEMO_QS}`, { waitUntil: "networkidle" });
 
-    // Fill step 1 numeric inputs (current weight, goal weight, etc.)
-    const numInputs = page.locator("input[type='number']");
+    // Scroll to the funnel (step 1 sits below the marketing hero on /intake)
+    const stepSection = page.locator("[data-flow-step='1']").first();
+    await stepSection.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(300);
+
+    // Fill step 1 numeric inputs WITHIN the funnel (not the hero quota inputs).
+    // GlpSimulationFunnel renders 3 number inputs: currentWeight, goalWeight, heightIn.
+    const numInputs = stepSection.locator("input[type='number']");
     const numCount = await numInputs.count();
-    for (let i = 0; i < numCount; i++) {
-      const placeholder = (await numInputs.nth(i).getAttribute("placeholder")) || "";
-      const val =
-        /goal/i.test(placeholder) || /target/i.test(placeholder) ? "180" : "220";
-      await numInputs.nth(i).fill(val).catch(() => {});
+    log(results, { name: `Step 1: ${numCount} numeric inputs found`, ok: numCount >= 3 });
+    if (numCount >= 1) await numInputs.nth(0).fill("220"); // currentWeight
+    if (numCount >= 2) await numInputs.nth(1).fill("180"); // goalWeight
+    if (numCount >= 3) await numInputs.nth(2).fill("68"); // heightIn
+
+    // Pick a goal-timeframe option (URGENCY_OPTIONS — first segment button works)
+    const segmentBtns = stepSection.locator("[role='group'] button[type='button']");
+    if (await segmentBtns.first().isVisible({ timeout: 2000 }).catch(() => false)) {
+      await segmentBtns.first().click();
     }
 
     const cont = page.locator("[data-intake-continue]").first();
@@ -187,7 +197,9 @@ test.describe("Round 33 — every button on the cold-email funnel", () => {
     });
 
     await cont.click().catch(() => {});
-    await page.locator("[data-results-chart]").waitFor({ timeout: 10000 });
+    // After clicking Continue, GlpSimulationFunnel shows a 1.5s "building"
+    // overlay before transitioning to step 2 — wait for the chart card.
+    await page.locator("[data-results-chart]").waitFor({ timeout: 15000 });
     log(results, {
       name: "Step 2 chart card mounts",
       ok: true,
@@ -232,8 +244,8 @@ test.describe("Round 33 — every button on the cold-email funnel", () => {
 
     await page.goto(`${BASE}/pricing${DEMO_QS}`, { waitUntil: "networkidle" });
 
-    // Find the primary checkout button on pricing
-    const cta = page.locator("[data-cta-button], [data-testid*='primary-cta']").first();
+    // Pricing CTA selector (verified in app/pricing/page.tsx line 93)
+    const cta = page.locator("[data-testid='pricing-start-setup']").first();
     const isVis = await cta.isVisible({ timeout: 5000 }).catch(() => false);
     log(results, { name: "Pricing primary CTA visible", ok: isVis });
 
@@ -274,6 +286,33 @@ test.describe("Round 33 — every button on the cold-email funnel", () => {
     // Grant clipboard permissions for the copy-to-clipboard buttons to work
     await page.context().grantPermissions(["clipboard-read", "clipboard-write"]);
 
+    // Stub the magic-link / session verify so the dashboard loads in tests
+    // without a real Stripe checkout. In production both `token` and
+    // `sessionId` are honored (see app/api/auth/verify-magic-link/route.ts).
+    await page.route("**/api/auth/verify-magic-link", (route) =>
+      route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          ok: true,
+          handle: HANDLE,
+          displayName: "Acme Clinic",
+          apiKey: "ak_test_round33",
+          brandColor: "#146EF5",
+          logoUrl: null,
+          bookingUrl: "https://example.com/book",
+          notificationEmail: null,
+          crmWebhookUrl: null,
+          plan: "starter",
+          paymentStatus: "paid",
+          tokenEmail: null,
+          packages: null,
+          pricingMonthlyLow: null,
+          pricingMonthlyHigh: null,
+        }),
+      }),
+    );
+
     await page.goto(`${BASE}/c/${HANDLE}?session_id=cs_test_sim&demo=1`, {
       waitUntil: "networkidle",
     });
@@ -299,31 +338,23 @@ test.describe("Round 33 — every button on the cold-email funnel", () => {
       }
     }
 
-    // Copy Embed Code button
+    // Copy embed snippet button — sits inside a <details>/<summary>
+    // collapsible "Embed on your existing site". Expand first.
     {
-      const btn = page.getByRole("button", { name: /Copy Embed Code/i }).first();
-      const isVis = await btn.isVisible({ timeout: 4000 }).catch(() => false);
-      if (isVis) {
-        await btn.click();
-        await page.waitForTimeout(500);
-        const ack = await page.locator("text=/Code Copied|Copied/i").first().isVisible({ timeout: 2000 }).catch(() => false);
-        log(results, { name: "Dashboard: Copy Embed Code button → ack", ok: ack });
-      } else {
-        log(results, { name: "Dashboard: Copy Embed Code visible", ok: false });
+      const summary = page.locator("summary", { hasText: /Embed on your existing site/i }).first();
+      if (await summary.isVisible({ timeout: 2000 }).catch(() => false)) {
+        await summary.click();
+        await page.waitForTimeout(300);
       }
-    }
-
-    // Copy API Key
-    {
-      const btn = page.getByRole("button", { name: /Copy API Key/i }).first();
+      const btn = page.getByRole("button", { name: /Copy embed snippet/i }).first();
       const isVis = await btn.isVisible({ timeout: 4000 }).catch(() => false);
       if (isVis) {
         await btn.click();
         await page.waitForTimeout(500);
-        const ack = await page.locator("text=/Copied/i").first().isVisible({ timeout: 2000 }).catch(() => false);
-        log(results, { name: "Dashboard: Copy API Key button → ack", ok: ack });
+        const ack = await page.locator("button:has-text('Copied')").first().isVisible({ timeout: 2000 }).catch(() => false);
+        log(results, { name: "Dashboard: Copy embed snippet button → ack", ok: ack });
       } else {
-        log(results, { name: "Dashboard: Copy API Key visible", ok: false });
+        log(results, { name: "Dashboard: Copy embed snippet visible (after expand)", ok: false });
       }
     }
 

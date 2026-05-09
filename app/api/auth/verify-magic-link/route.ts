@@ -23,35 +23,73 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifyMagicLinkToken } from "@/src/server/auth/jwt";
 import { findTenantByHandle, TENANT_FIELDS } from "@/src/lib/storage";
 import { extractPublicIntakeConfig } from "@/lib/tenant-intake-public";
+import { getStripe } from "@/src/lib/stripe";
 
 function slugifyHandle(s: string): string {
   return (s || "").toLowerCase().replace(/[^a-z0-9-]/g, "-");
+}
+
+/**
+ * Round 33 — also accept Stripe `sessionId` (post-checkout). Stripe's
+ * `success_url` redirects buyers to `/c/[handle]?session_id={CHECKOUT_SESSION_ID}`,
+ * and the dashboard calls this endpoint immediately to authenticate. Before
+ * this change the endpoint only honored a JWT magic-link token, so the
+ * dashboard would render "Sign-in required" until the buyer clicked the
+ * onboarding email — a noticeable activation gap. Symmetric with
+ * `/api/tenant` and `/api/tenant/settings` which already accept either
+ * auth path.
+ */
+async function tenantHandleFromStripeSession(
+  sessionId: string,
+): Promise<string | null> {
+  try {
+    const stripe = getStripe();
+    const session = await stripe.checkout.sessions.retrieve(sessionId, { expand: [] });
+    if (session.payment_status !== "paid") return null;
+    const meta = (session.metadata ?? {}) as Record<string, string>;
+    const handle = slugifyHandle(meta.tenant_handle ?? meta.company ?? "");
+    return handle || null;
+  } catch {
+    return null;
+  }
 }
 
 export async function POST(req: NextRequest) {
   try {
     const body = (await req.json().catch(() => ({}))) as {
       token?: string;
+      sessionId?: string;
       companyHandle?: string;
     };
     const token = (body.token ?? "").trim();
+    const sessionId = (body.sessionId ?? "").trim();
     const requested = slugifyHandle(body.companyHandle ?? "");
-    if (!token || !requested) {
+    if ((!token && !sessionId) || !requested) {
       return NextResponse.json(
-        { ok: false, error: "token and companyHandle are required" },
+        { ok: false, error: "token (or sessionId) and companyHandle are required" },
         { status: 400 },
       );
     }
 
-    const payload = await verifyMagicLinkToken(token);
-    if (!payload || !payload.company) {
+    let authedHandle: string | null = null;
+    let tokenEmail: string | null = null;
+    if (token) {
+      const payload = await verifyMagicLinkToken(token);
+      if (payload?.company) {
+        authedHandle = slugifyHandle(payload.company);
+        tokenEmail = payload.email ?? null;
+      }
+    }
+    if (!authedHandle && sessionId) {
+      authedHandle = await tenantHandleFromStripeSession(sessionId);
+    }
+    if (!authedHandle) {
       return NextResponse.json(
         { ok: false, error: "Invalid or expired link" },
         { status: 401 },
       );
     }
-    const tokenHandle = slugifyHandle(payload.company);
-    if (tokenHandle !== requested) {
+    if (authedHandle !== requested) {
       return NextResponse.json(
         { ok: false, error: "Token does not belong to this dashboard" },
         { status: 403 },
@@ -82,7 +120,7 @@ export async function POST(req: NextRequest) {
         (tenant[TENANT_FIELDS.CAPTURE_URL] as string | undefined) ?? null,
       plan: tenant[TENANT_FIELDS.PLAN] ?? null,
       paymentStatus: tenant[TENANT_FIELDS.PAYMENT_STATUS] ?? null,
-      tokenEmail: payload.email ?? null,
+      tokenEmail,
       /** Care packages configured by the buyer (Pass 7). */
       packages: cfg.packages,
       /** Patient-facing monthly cost range (Pass 32 — populates the "Monthly cost" tile on intake step 2). */
