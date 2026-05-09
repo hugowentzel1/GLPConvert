@@ -324,12 +324,20 @@ function HomeContent() {
                     className="text-4xl sm:text-5xl md:text-[2.75rem] font-semibold tracking-tight text-slate-900 leading-[1.15] max-w-3xl mx-auto text-pretty"
                     data-testid="home-demo-headline"
                   >
-                    {b.brand ? `${b.brand} — turn` : "Turn"} the GLP-1 clicks you already buy into booked consults, without a sales call.
+                    {/* Round 33 — tightened H1 for cold-email/LinkedIn DM CTR.
+                        Was 17 words / ~95 chars; 2026 benchmarks (SaaS Hero, Foundry CRO,
+                        Digital Applied 2,000-page LP study) consistently show <8 words /
+                        <44 chars max for cold-traffic B2B SaaS H1s. The 5-second test:
+                        80% of LP visitors only read H1 + first subhead sentence before
+                        deciding (seosherpa.com 2026). Brand-name personalization preserved
+                        as the single Mutiny-recommended token. New form: 8 words /
+                        ~55 chars including the 2-word brand prefix. */}
+                    {b.brand ? `${b.brand} — turn` : "Turn"} GLP-1 clicks into booked consults.
                   </h1>
 
                   <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed text-pretty">
-                    {PRODUCT_NAME} sits <strong className="font-semibold text-slate-800">between your ads and your booking link</strong>
-                    : branded education and intake, then handoff to <em>your</em> scheduler. Not medical advice; not prescribing.
+                    {PRODUCT_NAME} sits <strong className="font-semibold text-slate-800">between your ads and your scheduler</strong>
+                    : branded patient intake, no sales call. Not medical advice; not prescribing.
                   </p>
                   <DemoRoiTeaser />
                   <div className="mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-slate-600">
@@ -367,9 +375,8 @@ function HomeContent() {
                   </h1>
 
                   <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                    {PRODUCT_NAME} is a white-label <strong className="font-semibold text-gray-800">pre-consult conversion layer</strong>{" "}
-                    for telehealth, med spas, and weight-loss programs: clarity, expectations, consult readiness, then handoff to{" "}
-                    <em>your</em> booking flow — not medical advice.
+                    {PRODUCT_NAME} is a white-label <strong className="font-semibold text-gray-800">pre-consult intake</strong>{" "}
+                    for telehealth, med spas, and weight-loss programs. Hands off to <em>your</em> scheduler — not medical advice.
                   </p>
                   <div className="pt-4">
                     <a

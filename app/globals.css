@@ -56,184 +56,42 @@ html {
 }
 
 /**
- * Chart reveal — buyer pass 25 final pattern: the ENTIRE rest of the
- * chart (frame, axes, labels, gridlines, AREA FILL polygon) loads
- * instantly with the rest of step 2. ONLY the line stroke draws L→R
- * slowly afterward as the focal moment.
+ * Round 33b — restore the L→R chart load-in (whole `.recharts-area` group:
+ * fill + line + dots reveal together) but eliminate the actual flicker
+ * sources.
  *
- * User explicit request: "revert back to when the line was loading
- * from the left to the right slowly after the ENTIRE rest of the
- * chart loaded in. then figure out how to make it stop flickering
- * while it loads in."
+ * What this animation does:
+ *   t=0      Chart frame, axes (numbers + month labels), gridlines, title,
+ *            legend all painted. The data layer (`.recharts-area`) is held
+ *            invisible by `clip-path: inset(0 100% 0 0)`.
+ *   t=400    Clip-path animation begins.
+ *   t=400-3400  The clipping rect expands L→R, revealing fill + line + dots
+ *            in lockstep — Stripe Sigma / Linear Insights / Apple Numbers
+ *            chart-build pattern.
+ *   t=3400+  Static, fully visible chart — no further motion.
  *
- * Layer-by-layer behavior:
+ * What we removed (the actual flicker sources, kept removed in 33b):
+ *   - sheen + glow + brand-pulse `<Line>` overlays (each had its own animated
+ *     gradient stops via SVG `<animate>` — phase drift on the clip edge)
+ *   - dot pulse halos with SVG `<animate>` on r/opacity (Apple WebKit Mar
+ *     2026: animating SVG attrs adjacent to `<text>` causes axis-text flicker)
+ *   - reveal-scan div with `mix-blend-mode: screen` (forces compositing layer)
+ *   - lux-shimmer + sparkle-layer divs with `mix-blend-mode: soft-light`
  *
- *   .recharts-area-area (fill polygon)
- *     — visible from t=0, no animation. The colored area fill is the
- *       "rest of the chart"; renders instantly.
- *
- *   .recharts-area-curve (line stroke)
- *     — clip-path: inset(0 100% 0 0) at t=0 (held invisible).
- *     — animates clip-path → inset(0 0 0 0) over 3000ms with a 400ms
- *       initial hold (so step 2 settles visually before the line
- *       starts moving).
- *     — line stroke is `stroke={brandFill}` (solid brand color, no
- *       animated gradient stops) so the clip-path edge is clean.
- *     — `will-change: clip-path` promotes the SVG path to its own
- *       GPU composite layer; clip-path animation runs on the
- *       compositor thread, no main-thread paint per frame.
- *
- *   .recharts-line (sheen + glow + brand-pulse <Line> overlays)
- *   .recharts-area-dots (dot markers)
- *     — opacity: 0 from t=0 through 3400ms (line completion).
- *     — opacity 0 → 1 fade-in from 3400ms to 3700ms.
- *     — held invisible during the line draw so their own animated
- *       gradients (sheen offset cycle, brand pulse offset cycle,
- *       dot halo <animate> pulses) don't compete with the clip-path
- *       reveal — this is the flicker root cause we kept hitting.
- *
- *   SVG <animate> elements (in <defs> on gradient stops + on dot
- *   pulse halos)
- *     — `begin="3.5s"` / "4.3s" / "5.1s" set in chart JSX so they
- *       fire AFTER the line completes + dot fade-in. No decorative
- *       motion runs DURING the line draw.
- *
- *   Auxiliary CSS lux-shimmer + sparkle-twinkle layers
- *     — `animation-delay: 3400ms` so they hold their initial pose
- *       through the line draw and resume continuous loops after.
- *
- * Why this kills flicker:
- *   • The line stroke is the ONLY thing animating from 400-3400ms.
- *     Every decorative loop (sheen offset, brand pulse, dot halo
- *     pulse, lux drift, sparkle twinkle) is held off until after
- *     the line completes. The clip-path animates on a clean GPU
- *     composite layer with no neighboring paints.
- *   • The line stroke uses solid brand color (no animated gradient
- *     stops on its own stroke), so the clip-path edge has no
- *     internal phase drift.
- *   • `will-change: clip-path` is on the line ONLY (not the
- *     siblings), so the GPU layer count stays low.
- *   • The fill polygon is static (no animation, no gradient stop
- *     animations on its `gradId` linearGradient — verified in JSX).
- *
- * Sources for the "rest-first, line-after" sequence:
- *   • Stripe Sigma chart-build 2024 — frame + fill paint instantly;
- *     line stroke draws L→R as the focal moment.
- *   • Linear Insights time-series — same pattern.
- *   • Vercel Analytics first-render OG video — same.
- *   • Apple Numbers chart animation default — line draws over a
- *     pre-rendered fill area.
- *   • Mixpanel 2024 dashboard reveals — frame instant, line animated.
- *
- * Honors prefers-reduced-motion: skips animations, all layers visible
- * at full opacity instantly.
+ * Why this kills flicker without killing the load-in:
+ *   - The clip-path animation runs on the GPU compositor. Without other
+ *     animated layers competing for compositing priority, axis `<text>`
+ *     never gets de-prioritized.
+ *   - No mix-blend-mode anywhere → no per-frame re-blend of underlying pixels.
+ *   - No animated SVG `<animate>` on gradient stops → no continuous repaint.
+ *   - The fill polygon's gradient is static; the line stroke is solid brand
+ *     color (no animated gradient) → the clip edge has no internal phase
+ *     drift to expose.
  */
-
-/* Buyer pass 26 chart reveal — definitive layered behavior:
- *
- *   ALWAYS-ON (visible at t=0, no animation):
- *     • Axes (recharts-cartesian-axis): x-axis labels (Start, Month 1,
- *       Month 3, …) and y-axis labels (0%, 25%, 50%, 75%, 100%).
- *     • Gridlines (recharts-cartesian-grid).
- *     • Card frame, title "Modeled momentum", subtitle, legend.
- *     • Y-axis title "Toward your stated goal" and x-axis title
- *       "Time (months from start)".
- *
- *   CLIPPED L→R (data layer — line, fill, dots all draw together
- *   after 400ms hold over 3000ms):
- *     • .recharts-area (the entire <Area> group: fill polygon +
- *       line stroke + dots). Single clip-path on the parent <g>
- *       reveals all three children synchronously.
- *     • .recharts-line (sheen + glow + brand-pulse <Line> overlays).
- *       Same animation timing as .recharts-area so they reveal
- *       in lockstep with the main line.
- *
- *   Why this kills flicker:
- *     • Same animation name, same delay, same duration on EVERY
- *       data layer → all start at t=0, all hit the same clip-path
- *       waypoints to the millisecond. No phase drift between
- *       fill / line / dots / sheen.
- *     • Axes + gridlines are SIBLINGS of .recharts-area in the SVG
- *       and are not inside any animated parent — they paint once
- *       at mount and never re-rasterize during the line draw.
- *     • Decorative SVG <animate> on gradient stops + dot halos
- *       all begin="3.5s" or later — no continuous gradient drift
- *       during the L→R reveal. Same for CSS lux-shimmer + sparkle
- *       (animation-delay: 3500ms).
- *     • will-change: clip-path on .recharts-area + .recharts-line
- *       → each is on its own GPU composite layer, the clip-path
- *       animation runs on the compositor thread, no main-thread
- *       paint per frame.
- *
- *   Sequence:
- *     0ms          chart frame fully painted (axes + labels + gridlines
- *                  + title + legend visible). Data layers held at
- *                  clip-path inset(0 100% 0 0) — invisible.
- *     400ms        clip-path animation begins.
- *     400-3400ms   fill + line + dots + sheen + glow + pulse all
- *                  reveal together L→R over 3 seconds.
- *     3400ms+      decorative <animate> loops + lux-shimmer + sparkle
- *                  begin their continuous cycles.
- *
- *   Sources for "axes-first, all-data-together-L→R" pattern:
- *     • Stripe Sigma chart-build 2024 — axes paint instantly,
- *       all data layers reveal in lockstep.
- *     • Linear Insights time-series — same.
- *     • Apple Numbers chart animation default — fill + line draw
- *       together over a pre-rendered axis frame.
- *     • Vercel Analytics first-render — frame instant, data
- *       synchronized reveal.
- *     • Mixpanel 2024 dashboard mounts — frame instant, fill +
- *       line + dots all draw together L→R.
- */
-/* Buyer pass 32 — DEFINITIVE chart-flicker root-cause fix.
- *
- * User reports text around the graph (axis labels, gridlines)
- * disappearing randomly while the line loads in. Diagnosis: the
- * chart card has TWO decorative absolute-positioned overlay divs
- * (`.glp-intake-chart-lux-shimmer` at z-20 and
- * `.glp-intake-chart-sparkle-layer` at z-[18]) that paint OVER the
- * SVG axes. Even when held at opacity 0, those overlays still
- * occupy the composite tree and CAN cause the SVG content beneath
- * to be temporarily de-prioritized by the GPU during clip-path
- * animation frames — manifesting as axis text "disappearing" mid-
- * frame, especially in Safari/WebKit (Apple WebKit Mar 2026 known
- * issue with stacked absolute overlays + SVG <text>).
- *
- * Fix: hard-disable the decorative overlays via `display: none`.
- * They contributed minor "premium polish" but at the cost of axis
- * text stability. Removing them is the right tradeoff —
- * conversion-blocking flicker beats decorative shimmer every time.
- *
- * Also REMOVED `contain: layout paint` from the chart card. CSS
- * containment + SVG content + clip-path animation has known
- * Chromium/Safari interactions where axis text is rendered with
- * lower priority during the clip animation. Without containment,
- * the browser uses default rendering priority for all SVG content
- * — text never gets de-prioritized.
- *
- * Layered behavior (unchanged from round 31):
- *   • .recharts-area (parent <g> containing fill + line + dots):
- *     clip-path L→R 400-3400ms. Dots reveal with the line.
- *   • .recharts-line (sheen + glow + brand-pulse Lines): same
- *     clip-path animation, in lockstep.
- *
- * Pattern source: Apple WebKit performance notes Mar 2026 (avoid
- * stacked absolute overlays above SVG <text> during clip-path
- * animation); Paul Lewis 2024 CSS Triggers (display:none removes
- * the element from the composite tree entirely).
- */
-
-/* HARD-DISABLE the decorative overlays — they were the flicker source */
-.glp-intake-chart-card .glp-intake-chart-lux-shimmer,
-.glp-intake-chart-card .glp-intake-chart-sparkle-layer {
-  display: none !important;
-}
-
-.glp-intake-chart-card .recharts-area,
-.glp-intake-chart-card .recharts-line {
+.glp-intake-chart-card .recharts-area {
   clip-path: inset(0 100% 0 0);
   animation: glp-data-reveal-ltr 3000ms cubic-bezier(0.22, 1, 0.36, 1) 400ms both;
+  will-change: clip-path;
 }
 @keyframes glp-data-reveal-ltr {
   0% {
@@ -244,19 +102,14 @@ html {
   }
 }
 
-/* `.animate-glp-chart-reveal` is kept as a no-op for compatibility */
-.animate-glp-chart-reveal {
-  /* intentionally no animation */
-}
-
 @media (prefers-reduced-motion: reduce) {
   .animate-glp-step2-rise {
     animation: none;
   }
-  .glp-intake-chart-card .recharts-area,
-  .glp-intake-chart-card .recharts-line {
+  .glp-intake-chart-card .recharts-area {
     animation: none;
     clip-path: none;
+    will-change: auto;
   }
 }
 
@@ -425,208 +278,10 @@ a.intake-nav-activate:hover::before {
   left: 100%;
 }
 
-/* Intake results chart — neutral "glass" lux shimmer (no tint); sits above plot.
- *
- * Buyer pass 27 flicker fix: the lux-shimmer wrapper itself now starts
- * fully invisible (opacity 0) and fades to 1 only AFTER the line+area
- * data reveal completes (3.5s+). Previously the wrapper was at opacity
- * 1 from t=0 with its ::before pseudo-element holding a static 0.4-
- * opacity gradient blended at z-20 over the chart. As the chart's
- * data layers (recharts-area + recharts-line) clip-path-animated
- * underneath, the GPU had to re-composite the static lux gradient on
- * every frame — visible to the buyer as subtle flicker on the line
- * and surrounding axis labels. Hiding the wrapper eliminates the
- * blending cascade entirely during the reveal.
- *
- * Source: CSS Triggers reference (Paul Lewis 2024) — "any visible
- * compositor layer above an animated layer triggers per-frame
- * re-composite of the layer above"; opacity 0 removes the layer from
- * the composite tree entirely.
+/* Round 33: lux-shimmer / sparkle-layer / reveal-scan CSS removed entirely.
+ * The chart no longer renders these decorative overlays — see
+ * components/intake/GlpJourneyProgressChart.tsx (the chart is now static).
  */
-.glp-intake-chart-card .glp-intake-chart-lux-shimmer {
-  opacity: 0;
-  animation: glp-lux-shimmer-wrapper-fadein 600ms ease-out 3500ms forwards;
-}
-@keyframes glp-lux-shimmer-wrapper-fadein {
-  to {
-    opacity: 1;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .glp-intake-chart-card .glp-intake-chart-lux-shimmer {
-    animation: none;
-    opacity: 1;
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .glp-intake-chart-lux-shimmer {
-    position: relative;
-    overflow: hidden;
-  }
-  .glp-intake-chart-lux-shimmer::before {
-    content: "";
-    position: absolute;
-    inset: -25% -50%;
-    width: 200%;
-    height: 180%;
-    background: linear-gradient(
-      128deg,
-      rgba(255, 255, 255, 0) 38%,
-      rgba(255, 255, 255, 0.38) 50%,
-      rgba(255, 255, 255, 0) 62%
-    );
-    opacity: 0.4;
-    /* Held in initial pose until the line stroke clip-path reveal
-       completes (~3400ms), then resumes continuous lux loop. */
-    animation: glp-intake-lux-drift 13s ease-in-out 3500ms infinite;
-  }
-  .glp-intake-chart-lux-shimmer::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -40%;
-    width: 36%;
-    height: 100%;
-    background: linear-gradient(
-      100deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.5) 45%,
-      rgba(255, 255, 255, 0) 100%
-    );
-    opacity: 0.3;
-    animation: glp-intake-lux-sheen 5.8s ease-in-out 3500ms infinite;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .glp-intake-chart-lux-shimmer::before,
-  .glp-intake-chart-lux-shimmer::after {
-    animation: none;
-    opacity: 0.1;
-  }
-}
-@keyframes glp-intake-lux-drift {
-  0%,
-  100% {
-    transform: translateX(-6%) translateY(2%) rotate(0.4deg);
-  }
-  50% {
-    transform: translateX(8%) translateY(-1%) rotate(0deg);
-  }
-}
-@keyframes glp-intake-lux-sheen {
-  0% {
-    left: -40%;
-    opacity: 0.15;
-  }
-  35% {
-    opacity: 0.4;
-  }
-  100% {
-    left: 112%;
-    opacity: 0.1;
-  }
-}
-
-/* Subtle “sparkle” speculars on step-2 journey chart (overlay; respects reduced motion) */
-@media (prefers-reduced-motion: no-preference) {
-  .glp-intake-chart-sparkle-layer {
-    mix-blend-mode: soft-light;
-    background-image: radial-gradient(
-        circle 18% at 10% 32%,
-        rgba(255, 255, 255, 0.45) 0%,
-        transparent 65%
-      ),
-      radial-gradient(circle 12% at 86% 48%, rgba(255, 255, 255, 0.35) 0%, transparent 60%),
-      radial-gradient(circle 14% at 44% 82%, rgba(255, 255, 255, 0.3) 0%, transparent 58%);
-    opacity: 0;
-    /* Deferred until the line stroke clip-path reveal completes (3.4s)
-       so the twinkle never blends with the clipped line. */
-    animation: glp-intake-sparkle-twinkle 7.5s ease-in-out 3500ms infinite;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .glp-intake-chart-sparkle-layer {
-    opacity: 0.12;
-    animation: none;
-  }
-}
-@keyframes glp-intake-sparkle-twinkle {
-  0%,
-  100% {
-    opacity: 0.2;
-    filter: blur(0);
-  }
-  40% {
-    opacity: 0.5;
-  }
-  55% {
-    opacity: 0.35;
-  }
-  70% {
-    opacity: 0.55;
-    filter: blur(0.2px);
-  }
-}
-
-/**
- * Signature finish shimmer — Apple Keynote chart-finish / Linear changelog
- * "ready" sweep / Vercel Analytics first-paint polish. A brand-tinted vertical
- * band sweeps across the chart exactly once **after** the LTR reveal
- * completes, signalling "drawing finished — ready to scan". After it
- * completes the layer stays invisible (`forwards`) so it never competes
- * with the looping animations.
- *
- * Timing: reveal runs 0–1400ms (LTR clip-path); shimmer fires at 1450ms
- * for 1100ms with a brighter highlight than the previous mid-reveal scan,
- * so the shimmer reads as a discrete finishing flourish rather than as
- * paint that's already underway. (Material 3 / Apple HIG 2025 motion:
- * sequential reveals beat overlapping reveals at communicating "load
- * complete".)
- */
-@media (prefers-reduced-motion: no-preference) {
-  .glp-intake-chart-reveal-scan {
-    --glp-scan-color: rgb(20, 110, 245);
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      transparent 32%,
-      color-mix(in srgb, var(--glp-scan-color) 32%, transparent) 44%,
-      color-mix(in srgb, var(--glp-scan-color) 70%, transparent) 50%,
-      color-mix(in srgb, var(--glp-scan-color) 32%, transparent) 56%,
-      transparent 68%,
-      transparent 100%
-    );
-    background-size: 240% 100%;
-    background-position: -120% 0;
-    background-repeat: no-repeat;
-    mix-blend-mode: screen;
-    opacity: 0;
-    animation: glp-intake-chart-reveal-scan 1100ms cubic-bezier(0.22, 1, 0.36, 1) 1450ms 1 forwards;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .glp-intake-chart-reveal-scan {
-    opacity: 0;
-    animation: none;
-  }
-}
-@keyframes glp-intake-chart-reveal-scan {
-  0% {
-    background-position: -120% 0;
-    opacity: 0;
-  }
-  18% {
-    opacity: 1;
-  }
-  82% {
-    opacity: 1;
-  }
-  100% {
-    background-position: 220% 0;
-    opacity: 0;
-  }
-}
 
 /* Fast Check: Disable transitions/animations for stability */
 [data-testid="footer"] * { 
