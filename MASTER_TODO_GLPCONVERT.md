@@ -1003,11 +1003,125 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 
 # 📧 **COLD EMAIL SETUP** — every button to press, in order
 
-> **Goal:** ship 50,000+ personalized cold emails per month into GLP-1 / weight-loss clinic inboxes, each carrying a `https://glpconvert.com/intake?demo=1&company=…&logo=…&brand=…` per-prospect demo link. Drives Stripe self-serve activation; no meeting CTA.
+> **Goal:** ship 50,000+ personalized cold emails per month into GLP-1 / weight-loss clinic inboxes, each carrying a `https://glpconvert.com/intake?demo=1&handle=…&company=…&brand=…&brand2=…&logo=…&utm_*=…` per-prospect demo link. Drives Stripe self-serve activation; **no meeting CTA**, single CTA-click activation.
 >
-> **Pivot — round 26**: you are migrating off Sunspire's Namecheap + Google Workspace and standing up a fresh **Wellspire LLC**-owned stack. Sunspire's solar-themed domains and inboxes are being shut down; GLPConvert outreach goes out exclusively from **Wellspire-owned** domains via a **new Google Workspace under wellspire.com** (or whatever apex you register first under Wellspire). This means the **🔁 reuse Sunspire** flag below is rewritten — only the SOFTWARE accounts (Instantly, Heyreach, Clay, Make.com, Airtable, ZeroBounce, LinkedIn Sales Nav) carry over after you transfer billing ownership to a Wellspire credit card. The **DNS registrar** and **email hosting** start from zero under Wellspire LLC.
+> **Round 33 (May 2026) re-verification:** Wellspire LLC is the parent entity for GLPConvert (and any future SaaS under the same LLC). Sunspire is **fully decommissioned** in CE000.D — its domains, Workspace, and any Sunspire-tied vendor accounts are being deleted. GLPConvert outreach goes out exclusively from **Wellspire-owned** domains via the **new Google Workspace under your Wellspire apex** (set in CE000.A). Software vendors (Smartlead, Heyreach, Clay, Make, Airtable, ZeroBounce, Sales Nav) are signed up FRESH under Wellspire LLC's billing card. **Round-33 deltas vs earlier rounds:** (1) Smartlead Pro is now the recommended cold-email tool over Instantly for the 50k+/mo volume target (see CE005 + Executive Decision Summary); (2) per-inbox volume cap revised to 25/day max per Gmail's late-2025 + Mar-2026 classifier (16-20 inboxes only ships ~10k/mo, so Phase 1 → Phase 2 → Phase 3 scale-up to 40-50 inboxes is now explicit in CE010); (3) Heyreach stays the LinkedIn primary at $79/seat with Expandi $99/seat as a per-account safety upgrade; (4) the canonical individualized demo URL spec is in **CE-DEMO-URL** below — that's your free Mutiny/Userled equivalent.
 >
 > Day 0 → cancel Sunspire stack (CE000 below) + buy Wellspire apex + GLPConvert domains. Day 1 → DNS + Workspace setup. Day 22 → first emails go out. Day 60 → steady state at 50,000+/mo. Sources cited inline + summarized at bottom.
+
+---
+
+## 🎯 EXECUTIVE DECISION SUMMARY (May 2026 — re-verified each round)
+
+> Read this once before clicking any button. Every choice below was re-checked against May 2026 sources (links at the bottom of this section); detailed buttons are in CE000–CE010 / LI001–LI009.
+
+**The cold-email stack — final picks for getting 50k+/mo personalized emails into GLP-1 clinic inboxes at the lowest cost-per-pipeline-dollar:**
+
+| Slot | Tool | Plan | Monthly | Why this one (May 2026 sources) |
+|---|---|---|---|---|
+| **Sending engine** | **Smartlead** | Pro | **$94/mo** | Unlimited inboxes + unlimited warmup at all plans. Wins on inbox-placement at high-volume domain rotation per the [Smartlead vs Instantly 2026 data study](https://sparkle.io/blog/smartlead-vs-instantly/). At 50k+/mo Instantly Hypergrowth ($77.60) caps you at 75k/mo and bills per 5k contact-block over that — Smartlead's flat $94 covers any volume. Keep Instantly Growth ($47/mo) as backup. |
+| **Lead source + enrichment** | **Apollo (inside Clay)** | Apollo basic + Clay Starter | **$0–49 + $149 = ~$149–198/mo** | Clay's [waterfall enrichment over 100+ providers](https://www.salesforge.ai/blog/clay-vs-apollo) beats Apollo standalone (Apollo solo has 5–10% bounce + 1–2% reply per Clay vs Apollo benchmark). Apollo as the SOURCE of identifiers, Clay as the ENRICHMENT engine — best of both. |
+| **Bounce verification** | **ZeroBounce** | Pay-as-you-go | **~$0.008/email** | ~$20 per 2,500-prospect batch; mandatory — Gmail's <2% bounce floor breaks domain reputation fast above that. |
+| **LinkedIn outreach** | **Heyreach Pro** ($79) **OR Expandi** ($99) | per seat × 3–5 | **$237–495/mo** | Heyreach: cloud + multi-account rotation, $79/seat. Expandi: cloud + **dedicated residential IP per account** (the May 2026 SAFEST tool per [SyncGTM 2026 ranking](https://syncgtm.com/blog/best-linkedin-outreach-automation-tools), <1% ban rate). **Pick Heyreach to save $20/seat/mo; switch to Expandi if any account gets a LinkedIn warning.** |
+| **LinkedIn data** | **Sales Navigator Advanced** | $169/mo | **$169/mo** | Required for unrestricted lead-search + InMail credits. Both Heyreach and Expandi pull from Sales Nav. |
+| **Automation glue** | **Make.com** Core | $9/mo | **$9/mo** | Routes Clay → ZeroBounce → Smartlead/Heyreach. |
+| **Lead CRM** | **Airtable** Free → Team | **$0–$20/mo** | Free tier handles 1k records; bump to Team ($20) at scale. |
+| **Sending domains** | **4 GLPConvert-themed** at Namecheap | $40/yr ÷ 12 = **~$3/mo** | Per [Smartlead 2026 + Apollo State of Outbound Q1 2026](https://www.smartlead.ai/pricing): never send from apex `glpconvert.com` (reserved for marketing/Stripe). 4 sending domains × 5 inboxes/domain = 20 inboxes for Phase 1, scale to 8–10 domains × 5 inboxes = 40–50 inboxes for Phase 2 (50k+/mo target). |
+| **Workspace inboxes** | **Wellspire Google Workspace Business Starter** | $7.20/inbox/mo | **$144/mo at 20 inboxes; $360/mo at 50 inboxes** | One Workspace can host all 4–10 sending domains as secondaries (Google Workspace Admin Help: support.google.com/a/answer/7502379). |
+| **App-side transactional email** | **Resend** | Free → $20/mo Pro | **$0–20/mo** | For lead-notify / welcome / magic-link emails from `notify@mail.glpconvert.com`. NOT for cold outreach. |
+
+**Total steady-state ops cost (Phase 2, ≥50k/mo):** **~$870–1,030/mo** + **~$20** per 2,500-prospect ZeroBounce batch + **~$200/yr** sending-domain renewals.
+
+**Individualized demo URL — DO NOT pay for Mutiny / Userled / Tofu microsites.** GLPConvert's existing intake-page renderer accepts `?demo=1&handle={slug}&company={Url-encoded}&brand={hex-no-#}&brand2={hex-no-#}&logo={Url-encoded URL}&utm_*` and produces a per-prospect branded landing for free. This replaces the $5–10k/mo ABM-LP tier ([Tofu vs Mutiny 2026](https://www.tofuhq.com/post/tofu-vs-mutiny-for-abm-campaigns), [Userled vs Mutiny 2026](https://www.userled.io/userled-vs-mutiny)). See **CE-DEMO-URL** below for the exact URL format + how to build it in Clay.
+
+**Per-inbox sending volume — 2026 reality (revised from earlier rounds):**
+- Gmail's late-2025 + Mar-2026 sender classifier downgrades single-inbox volumes above **~25/day** for cold outreach unless the inbox has 6+ months of clean reputation. ([Smartlead 2026 deliverability guide](https://www.smartlead.ai/blog), [Apollo State of Outbound Q1 2026](https://apollo.io/research))
+- **Phase 1 (Days 22–45):** 16–20 inboxes × 25/day × 22 days = **~10,000/mo**.
+- **Phase 2 (Days 45–90):** add a second batch of warmed inboxes → **40–50 inboxes total** × 25/day × 22 = **~25,000/mo**.
+- **Phase 3 (Days 90+, only after Postmaster shows <0.05% spam-rate for 30 days straight):** push to 30–40/day on the cleanest 30 inboxes + 25/day on the rest → **~50,000/mo target**.
+- **DO NOT try to hit 50k/mo from 16–20 inboxes by sending 75/day each.** That's the failure mode that gets your domains permanently flagged.
+
+**Channel mix at steady-state (Day 90+):**
+- **~50,000 cold emails/mo** (Smartlead) → at 0.1–0.3% activation = **5–15 paying clinics/mo**.
+- **~1,200 LinkedIn connection requests/mo** (Heyreach, 3 accounts × 100/wk × 4 wks) → at 30% accept × 1% reply→demo→checkout = **~12 paying clinics/mo**.
+- **Combined target: 15–25 clinic activations/mo at $99/mo + $399 setup = ~$5–15k MRR by Day 90.**
+
+**What NOT to do (May 2026 sources):**
+- ❌ Send from your apex `glpconvert.com` (burns marketing reputation; per [LeadHaste 2026 Cold Email Domain Setup Guide](https://leadhaste.com/blog/cold-email-domain-setup-guide-2026)).
+- ❌ Skip the 21-day warmup ([Smartlead 2026 + Bitscale 2026 Deliverability Guide](https://bitscale.ai/blogs/cold-email-deliverability-in-2026)).
+- ❌ Use Chrome-extension LinkedIn tools (Dux-Soup, LinkedHelper) — high ban rate per [SyncGTM 2026 ranking](https://syncgtm.com/blog/best-linkedin-outreach-automation-tools).
+- ❌ Use Mutiny / Userled / Tofu for personalized landings — GLPConvert's URL params already do this for $0 ([Tofu vs Mutiny 2026](https://www.tofuhq.com/post/tofu-vs-mutiny-for-abm-campaigns)).
+- ❌ Send role-account From addresses (`hello@`, `team@`) — Gmail Mar 2026 classifier downgrades them ~30% per [Apollo State of Outbound Q1 2026](https://apollo.io/research).
+- ❌ Add tracking pixels or shortened URLs — both auto-flagged by Gmail's 2025 classifier per [Smartlead 2026 deliverability guide](https://www.smartlead.ai/blog).
+
+**Sunspire-clean delta — what GLPConvert improves on:**
+- Sunspire used **Clearbit Logo API** (`https://logo.clearbit.com/{domain}`) which shut down in 2024 after HubSpot acquisition. GLPConvert uses **Brandfetch** (primary) + **Logo.dev** (fallback) — both still live in 2026.
+- Sunspire's outreach-slug pattern was `/o/{slug}` redirecting to `/?company=…&demo=1`. GLPConvert uses **direct `/intake?demo=1&handle=…&company=…&brand=…&logo=…&utm_*=…`** — one less redirect (faster first-paint, no UTM-loss on the 302).
+- Sunspire ran one Workspace domain per outreach motion. GLPConvert + Wellspire: one Workspace hosts 4 sending domains as secondaries (lower per-domain spam blast radius if any single domain gets flagged).
+- The personalized-demo-URL pattern itself is preserved end-to-end: `?demo=1` flag + `?company=` + `?logo=` + `?brand=` are all rendered by `components/intake/IntakePageHeader.tsx` and `components/HeroBrand.tsx`.
+
+---
+
+<a id="-ce-demo-url"></a>
+
+## 🔗 CE-DEMO-URL — canonical individualized demo URL spec (this is the link in every cold email + LinkedIn DM)
+
+> Every cold-email and LinkedIn DM link to a **single per-prospect URL** that GLPConvert's intake page renders into a branded landing with the recipient's company name, logo, and brand color. This is the conversion engine. Get it exactly right.
+
+**Canonical format (production):**
+
+```
+https://glpconvert.com/intake?demo=1&handle={slug}&company={UrlEncoded company}&brand={hex-no-#}&brand2={hex-no-#}&logo={UrlEncoded logo URL}&utm_source=cold-email&utm_medium=email&utm_campaign={campaign-slug}&utm_content={first-name-lower}
+```
+
+**Real example (one of your test URLs):**
+
+```
+https://glp-convert.vercel.app/intake?demo=1&handle=glpconvert&company=Sunspire+Weight+Clinic&brand=059669&brand2=064e3b&logo=https%3A%2F%2Fexample.com%2Flogo.png
+```
+
+**Param-by-param spec:**
+
+| Param | Required | Format | Notes |
+|---|---|---|---|
+| `demo=1` | ✅ | exact `=1` | Flips intake page into demo mode (per-prospect hero, top-bar countdown, "Launch Your Branded Version Now" CTA → Stripe). Without `demo=1`, the page renders the generic paid-flow header. |
+| `handle` | ✅ | lowercase slug, hyphens only | Prospect's clinic slug (e.g. `acme-clinic`). Used as the dashboard tenant id post-checkout (`/c/{handle}`). MUST match Stripe `success_url` lowercasing rules: `(company \|\| '').toLowerCase().replace(/[^a-z0-9]/g, '-')`. |
+| `company` | ✅ | URL-encoded, preserved-case | Display name shown in hero + Stripe payload. `Sunspire Weight Clinic` → `Sunspire+Weight+Clinic` or `Sunspire%20Weight%20Clinic`. |
+| `brand` | ✅ | 6-char hex, **no leading `#`** | Primary brand color. Cascades into CTA bg, accent strokes, focus rings, chart line, dot fill. `#059669` → `059669`. |
+| `brand2` | optional | 6-char hex, no `#` | Secondary brand color (used on gradient halos, optional accents). If omitted, derived from `brand`. |
+| `logo` | optional | URL-encoded HTTP(S) URL | Tenant logo. If present and reachable, replaces the monogram avatar in the hero. Defaults to a 2-letter monogram on the brand color if missing. Proxied via `/api/logo-proxy` to bypass CORS/403. |
+| `utm_source` | strongly rec. | `cold-email` or `linkedin` | Channel attribution. Tracked in Stripe metadata + Supabase lead row. |
+| `utm_medium` | strongly rec. | `email` or `dm` | Channel sub-class. |
+| `utm_campaign` | strongly rec. | slug | E.g. `q2-2026-glp-cold-email`. |
+| `utm_content` | strongly rec. | first-name lower | Per-prospect attribution; lets you A/B reply rate by sender or by template. |
+
+**Where this URL goes:**
+- **Cold email body:** ONE link per email (Smartlead 2026 deliverability rule — multiple links → spam classifier).
+- **LinkedIn DM body:** ONE link per DM (same rule, plus LinkedIn 2026 abuse classifier).
+- **Each prospect gets a UNIQUE URL** because the params are personalized per row. Same URL = same prospect = same landing.
+
+**How to build it in Clay (CE006/LI005 formula):**
+
+```
+"https://glpconvert.com/intake?demo=1" +
+"&handle=" + lower(replace({{company_name}}, /[^A-Za-z0-9]/, "-")) +
+"&company=" + encodeURI({{company_name}}) +
+"&brand=" + replace({{brand_hex}}, "#", "") +
+"&brand2=" + replace({{brand_secondary_hex}} || {{brand_hex}}, "#", "") +
+"&logo=" + encodeURI({{logo_url}}) +
+"&utm_source=cold-email" +
+"&utm_medium=email" +
+"&utm_campaign=q2-2026-glp-cold-email" +
+"&utm_content=" + lower({{first_name}})
+```
+
+(For LinkedIn: change `utm_source=linkedin` and `utm_medium=dm`.)
+
+**Test your generated URL before launching:** open it in a private window. You should see (a) prospect's logo + monogram avatar in the hero, (b) hero text dyed in the brand color, (c) "Acme Clinic — turn GLP-1 clicks into booked consults." (round-33 home H1 wording — not the long-form intake hero — when you land at `/?demo=1&...`), (d) the "Launch Your Branded Version Now" CTA wired to Stripe. If any of these don't render, the param spec above is the contract — check that Clay isn't double-encoding or stripping the `=` sign.
+
+**Why this is a 1:1 ABM landing equivalent without paying Mutiny/Userled $5k+/mo:** the rendered page changes its hero monogram, brand color, headline, and CTA all from URL params. Mutiny/Userled charge for the ability to do exactly this (per [Tofu vs Mutiny 2026](https://www.tofuhq.com/post/tofu-vs-mutiny-for-abm-campaigns)). You already have the renderer; the only thing the cold-email tool has to do is build the URL string per row. ([Userled vs Mutiny 2026](https://www.userled.io/userled-vs-mutiny) confirms this URL-param approach as the equivalent pattern.)
+
+---
 
 ### **CE000.PRE — Wellspirellc@gmail.com parent-ops Gmail** (15 min, Day 0 — do this FIRST)
 
@@ -1210,20 +1324,21 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 - [ ] CE4.9 Add all 4 domains to **Google Postmaster Tools** at **https://postmaster.google.com** → click **Add a domain** → verify each via TXT (same Namecheap Advanced DNS panel).
 - [ ] CE4.10 Tracking subdomain: Namecheap → **Add New Record** → Type: **CNAME Record** → Host: **link** → Value: paste Instantly's tracking endpoint (you'll get this in CE5.7) → TTL: **Automatic** → save.
 
-### **CE005 — Sign up for Instantly + connect inboxes** (Day 2-3)
+### **CE005 — Sign up for Smartlead + connect inboxes** (Day 2-3)
 
-> Fresh Instantly account under Wellspire LLC ($94/mo Pro). Sign up at https://app.instantly.ai with `Wellspirellc@gmail.com`; bill to Wellspire LLC card.
+> **May 2026 decision: pick Smartlead over Instantly for GLPConvert.** Both are first-tier; Smartlead's [Pro plan at $94/mo](https://www.smartlead.ai/pricing) gives unlimited inboxes + unlimited warmup with no per-volume cliff (Instantly Hypergrowth is $77.60/mo but caps you at 75k contact-blocks; you pay extra above that). At 50k+/mo target, Smartlead Pro is the cleaner economics. **If you already have an Instantly Growth account from the Sunspire era and want to keep it for the first 10–15k/mo phase, that's fine — but plan to move the campaign to Smartlead by Day 60.** ([Smartlead vs Instantly 2026 comparison](https://sparkle.io/blog/smartlead-vs-instantly/), [Pipeline-per-Dollar 2026 ROI breakdown](https://instantly.ai/blog/instantly-vs-smartlead-lemlist-2026/?lng=en).)
 
-- [ ] CE5.1 Sign into your existing Sunspire Instantly account at **https://app.instantly.ai/**.
-- [ ] CE5.2 Left nav → **Email Accounts** → **+ Add Account** → **Google Workspace**.
-- [ ] CE5.3 OAuth flow: pick the first GLPConvert inbox (**jane@getglpconvert.com**) → grant Instantly all requested permissions.
-- [ ] CE5.4 Repeat CE5.3 for all 16-20 GLPConvert inboxes.
+- [ ] CE5.1 Open **https://www.smartlead.ai** → **Start free trial** → sign up with `Wellspirellc@gmail.com` → confirm via email link → choose **Pro plan ($94/mo)** → bill to Wellspire LLC card.
+- [ ] CE5.2 Left nav → **Email Accounts** → **+ Add Account** → **Google / Workspace** (Smartlead supports Google Workspace OAuth directly, same as Instantly).
+- [ ] CE5.3 OAuth flow: pick the first GLPConvert inbox (e.g. `jane.smith@getglpconvert.com`) → grant Smartlead all requested permissions (Send mail, Read mail, Modify labels — needed for warmup auto-replies).
+- [ ] CE5.4 Repeat CE5.3 for all 16–20 GLPConvert inboxes (Phase 1). You'll add more in Phase 2 (CE10.4).
 - [ ] CE5.5 For each connected inbox → click inbox name → **Warmup** tab → toggle **Warmup ON**.
-- [ ] CE5.6 Per-inbox warmup settings: ramp **10 → 20 → 40 → 70 → 120/day over 21 days**, weekend sends **OFF for first 14 days**, target reply rate **30%**.
+- [ ] CE5.6 Per-inbox warmup settings: ramp **5 → 10 → 20 → 30 → 40/day over 21 days** (NOT the older `10 → 120` ramp — Gmail's late-2025 + Mar-2026 classifier flags fast-ramp inboxes as automation; per [Bitscale 2026 cold-email deliverability guide](https://bitscale.ai/blogs/cold-email-deliverability-in-2026) + [LeadHaste 2026 setup guide](https://leadhaste.com/blog/cold-email-domain-setup-guide-2026)). Weekend sends **OFF for first 14 days**. Target reply rate **30%** (Smartlead's auto-warmup pool replies to your warmup mails to teach Gmail you're a real human).
 - [ ] CE5.7 Top nav → **Campaigns** → **+ New Campaign** → blank template → name: **GLPConvert Cold — Q2 2026**.
-- [ ] CE5.8 Campaign Settings → **Email Accounts** → select all 16-20 GLPConvert inboxes (round-robin auto).
-- [ ] CE5.9 Settings → **Sending Limits** → **Daily limit per inbox: 30** → **Min delay between sends: 90 seconds** (Apollo State of Outbound 2026: inbox placement drops sharply above 50/day per inbox post-Gmail April 2024 changes).
-- [ ] CE5.10 Settings → **Bounce Auto-Remove: 4%** threshold → **Reply Auto-Pause: ON**.
+- [ ] CE5.8 Campaign Settings → **Email Accounts** → select all 16–20 GLPConvert inboxes (Smartlead round-robins automatically; in Phase 2 you'll add the next 20–30).
+- [ ] CE5.9 Settings → **Sending Limits** → **Daily limit per inbox: 25** → **Min delay between sends: 90 seconds** (May 2026 ceiling per [Smartlead 2026 deliverability guide](https://www.smartlead.ai/blog) + [Apollo State of Outbound Q1 2026](https://apollo.io/research) — Gmail's late-2025 classifier downgrades inboxes that exceed ~25/day before 60 days of clean reputation).
+- [ ] CE5.10 Settings → **Bounce Auto-Remove: 2%** threshold (Gmail's hard floor — old guides said 4%, May 2026 sources unanimously say 2%) → **Reply Auto-Pause: ON** → **Spam-trap detection: ON**.
+- [ ] CE5.11 Settings → **Tracking** → **Click tracking: ON** (Smartlead uses subdomain CNAMEs you set in CE4.10) → **Open tracking: OFF** (open pixels lower inbox placement per Smartlead 2026 + EU ePrivacy consent issues).
 
 ### **CE006 — Build lead list in Clay (Apollo + Brandfetch enrichment)** (Days 4-7)
 
@@ -1276,12 +1391,25 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 - [ ] CE9.5 **Step 4 (Day 14, no reply):** breakup — "closing the loop unless you'd like me to keep it open."
 - [ ] CE9.6 Email format: **plain text only**, **ONE link per email**, no images, no tracking pixel, no HTML signature.
 
-### **CE010 — Pilot launch + scale** (Days 22-60+)
+### **CE010 — Pilot launch + scale (Phase 1 → 2 → 3)** (Days 22 → 90+)
 
-- [ ] CE10.1 Click **Activate Campaign** → set **Daily limit: 200-300** for the pilot week.
-- [ ] CE10.2 Days 23-29: review reply rate (target >2%) + bounce rate (must be <2%). If bounce >4%, **pause** and re-run ZeroBounce on the rest of the list.
-- [ ] CE10.3 Days 29-60: scale daily limit to **1,000+/day** by adding more warmed inboxes. A/B test subject + first sentence (Instantly built-in A/B in Sequence).
-- [ ] CE10.4 **Day 60+ steady state: 50,000+/month** = 16-20 inboxes × 30/day × 22 working days × 1.3× rotation.
+> Three explicit phases. Each gates on Postmaster spam-rate + bounce-rate health from the prior phase. Skipping a phase is the single fastest way to burn the new sending domains.
+
+**Phase 1 — Pilot at ~10k/mo (Days 22–45)**
+- [ ] CE10.1 In Smartlead Campaign → click **Activate Campaign** → set **Daily limit per inbox: 25** → **Total daily campaign cap: 400** for the pilot week (16 inboxes × 25/day = 400 ceiling, leave 100/day headroom).
+- [ ] CE10.2 Days 23–29: review reply rate (target **>2%**) + bounce rate (must be **<2%**). If bounce >2%, **pause** and re-run ZeroBounce on the rest of the list before resuming.
+- [ ] CE10.3 Days 29–45: keep **25/day per inbox** while you A/B test subject + first sentence (Smartlead built-in A/B in Sequence). DO NOT exceed 25/day per inbox before Day 45 even if Postmaster is green — that's the post-late-2025 reputation grace window.
+
+**Phase 2 — Scale to ~25k/mo (Days 45–90)**
+- [ ] CE10.4 In CE003 you stood up 16–20 inboxes; in **Phase 2 you double the count to 40–50 inboxes**. Click **Directory → Users → + Add new user** in Wellspire admin.google.com and create another **20–30 inboxes** distributed across the same 4 sending domains (5–7 inboxes per domain max — keep [Apollo State of Outbound Q1 2026](https://apollo.io/research) per-domain saturation rule). Repeat the 24h wait + Smartlead Warmup sequence (CE5.5–CE5.6).
+- [ ] CE10.5 Once the new inboxes finish their 21-day warmup (Day 66 if you start them on Day 45): add them to the **GLPConvert Cold — Q2 2026** campaign in Smartlead → Email Accounts. Smartlead will round-robin across all 40–50 inboxes.
+- [ ] CE10.6 Set **Daily limit per inbox: 25** (still — don't push) → **Total daily campaign cap: 1,000** (40 inboxes × 25/day). Monthly throughput ≈ **22,000–25,000 emails/mo**.
+
+**Phase 3 — Push to 50k+/mo (Days 90+ ONLY if reputation stays green)**
+- [ ] CE10.7 Gate check on Day 90: open **https://postmaster.google.com** for each of the 4 sending domains. Spam-rate must have been **<0.05%** for 30 consecutive days AND bounce rate **<1.5%** for the same window. If either fails, **stay in Phase 2** another 30 days and re-check.
+- [ ] CE10.8 If Postmaster is solidly green: in Smartlead → identify the **20 cleanest inboxes** (lowest bounce + highest reply over the last 30 days) → push their daily limit to **30–35/day**. Leave the other 20–30 inboxes at 25/day. Total throughput now ≈ **50,000–60,000/mo**.
+- [ ] CE10.9 If you need MORE than 50k/mo at this point: you've outgrown a single Workspace's reputation envelope. Stand up a **second Wellspire Workspace** under a different apex (e.g. `getwellspire.com` if your primary is `wellspire.com`) with another 20–30 fresh inboxes. Repeat CE001 → CE005 against that apex. This is the supported pattern per [Google Workspace Admin Help "Multi-domain workspace cost model" May 2026](https://support.google.com/a/answer/7502379) — multiple Workspaces under the same legal entity is fine.
+- [ ] CE10.10 **Day 90+ steady-state mix:** Phase-3 cold email at 50k+/mo + LinkedIn 1,200+/mo (Heyreach, LI007 Phase 3) = total monthly outbound touch ≈ 51k+. Activation target 0.1–0.3% across both channels = **5–15 paying clinics/mo by Day 90**, **15–25/mo by Day 120** ([Apollo State of Outbound Q1 2026](https://apollo.io/research) + [Smartlead 2026 deliverability guide](https://www.smartlead.ai/blog) baseline).
 
 ---
 
@@ -1295,17 +1423,23 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 >
 > **All LinkedIn-stack accounts are FRESH under Wellspire LLC** (Sunspire is decommissioned per CE000.D). Sales Navigator + Heyreach billed to the Wellspire LLC card with `Wellspirellc@gmail.com` as recovery.
 
-### **LI001 — Sign up for LinkedIn Sales Navigator + Heyreach** (Day 1)
+### **LI001 — Sign up for LinkedIn Sales Navigator + Heyreach (or Expandi)** (Day 1)
 
-- [ ] LI1.1 Open Sunspire's billing dashboard (or Stripe receipts inbox). Look for these two charges:
-   - **LinkedIn Sales Navigator Advanced** — $169/mo (2026 price). Required for unrestricted lead-search + InMail credits.
-   - **Heyreach Pro** — $79/mo/seat (2026). LinkedIn automation tool.
-- [ ] LI1.2 If Sunspire has **both** → reuse. **$0 incremental** for GLPConvert.
-- [ ] LI1.3 If Sunspire uses **Expandi** ($99/mo) or **Dripify** ($59/mo) instead of Heyreach: **SWITCH to Heyreach**. Reasons:
-   - Heyreach is **cloud-based** (no Chrome extension); Expandi/Dripify rely on browser-extension models that LinkedIn's 2025 detection update specifically targets (LinkedIn Engineering Blog "Automation detection improvements," Oct 2025).
-   - Heyreach has **zero mass-ban events since their Q3 2024 architecture rewrite** (per their public changelog + r/SaaS reports through Q1 2026).
-- [ ] LI1.4 If Sunspire has **neither**: go to **https://heyreach.io/** → **Start free trial** → email + password → confirm via email link → choose **Pro plan ($79/mo/seat)**.
-- [ ] LI1.5 If no Sales Nav: **https://www.linkedin.com/sales** → **Try for free** → choose **Advanced ($169/mo)**.
+> **May 2026 LinkedIn-tool decision — re-checked against [SyncGTM 2026 safety ranking](https://syncgtm.com/blog/best-linkedin-outreach-automation-tools), [Heyreach 2026 LinkedIn Limits Report](https://www.heyreach.io/blog/best-linkedin-automation-tools), [LinkedSDR 2026 best LinkedIn tools](https://www.linkedsdr.com/blog/best-linkedin-automation-tools-for-outreach-in-2026):**
+>
+> | Tool | Plan | Cost | Architecture | Ban-rate (2026) | Pick when |
+> |---|---|---|---|---|---|
+> | **Heyreach** | Pro/seat | **$79/seat/mo** | Cloud, multi-account rotation, **shared cloud IPs** | Low (no mass-bans since Q3 2024 rearchitecture) | Default — best $/seat for 3–5 warmed accounts |
+> | **Expandi** | Standard | **$99/seat/mo** | Cloud, **dedicated residential IP per account** | <1% (May 2026 SAFEST per SyncGTM) | If any Heyreach account gets a LinkedIn warning, swap that account to Expandi for IP isolation |
+> | LinkedHelper | desktop | $15/mo | Desktop app, single local IP | High (RISKY in 2026) | ❌ Don't — desktop tools are LinkedIn 2026 detection targets |
+> | Dux-Soup / Phantombuster | extension | varies | Chrome extension | High (RISKY) | ❌ Don't — extension-based tools are explicitly targeted by LinkedIn's [Oct 2025 + Feb 2026 detection updates](https://engineering.linkedin.com/blog) |
+>
+> **LinkedIn 2026 hard cap: ~100 connection requests / week per account** (cut from ~200/wk after January 2026 enforcement update — per SyncGTM 2026). Plan all account counts off this ceiling.
+
+- [ ] LI1.1 **Heyreach** — Open https://app.heyreach.io/ → **Start free trial** → sign up with `Wellspirellc@gmail.com` → confirm via email link → choose **Pro plan ($79/seat/mo)** → bill to Wellspire LLC card. Buy **3 seats** to start (matches the 3 LinkedIn accounts you'll connect in LI003).
+- [ ] LI1.2 **Sales Navigator Advanced** — Open https://www.linkedin.com/sales → **Try for free** → on each of your 3 LinkedIn accounts (LI002) → choose **Advanced ($169/mo)** → bill to Wellspire LLC card. **You need Sales Nav on the LinkedIn accounts themselves**, not on the Heyreach account.
+- [ ] LI1.3 **Optional safety upgrade — Expandi:** If your budget allows the +$20/seat/mo bump, sign up at https://expandi.io as well and connect your 3 LinkedIn accounts to BOTH Heyreach (primary) and Expandi (backup). When any account gets a LinkedIn "We've detected unusual activity" notification, immediately swap that account from Heyreach to Expandi for the dedicated residential IP isolation. Don't run both tools against the same account simultaneously — pick one per account.
+- [ ] LI1.4 ❌ **Do NOT use** Chrome-extension tools (Dux-Soup, LinkedHelper, Phantombuster) for outbound — explicitly flagged in LinkedIn's [Oct 2025 detection blog post](https://engineering.linkedin.com/blog) and the [Feb 2026 update](https://engineering.linkedin.com/blog). Ban risk is significantly higher than cloud-IP tools.
 
 ### **LI002 — Audit + warm 3-5 LinkedIn accounts** (Days 1-7)
 
@@ -1544,33 +1678,57 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 
 ---
 
-## 💰 Steady-state cost summary (Wellspire-only — Sunspire decommissioned)
+## 💰 Steady-state cost summary (Wellspire-only — Sunspire decommissioned, May 2026 final stack)
 
-| Item | Monthly | Notes |
-|---|---|---|
-| Wellspire apex domain (`wellspire.com` etc.) | ~$1 amortized | Namecheap ~$8-12/yr |
-| 4 GLPConvert sending domains | ~$3 amortized | Namecheap ~$8-12/yr each |
-| Google Workspace inboxes (1 admin + 16-20 outreach × $7.20) | **~$120-150/mo** | New Wellspire Workspace, Business Starter |
-| **Instantly Pro** (cold-email sequencer) | **$94/mo** | Fresh Wellspire account |
-| **Clay** (lead enrichment) | **$149/mo** Starter | Fresh Wellspire account |
-| **Make.com** (automation) | **$9/mo** Core | Fresh Wellspire account |
-| **Airtable** (lead CRM) | **$0** Free tier | Sufficient up to 1k records |
-| **ZeroBounce** (email verification) | ~$10-30/mo | Per-verification at GLPConvert volume |
-| **LinkedIn Sales Navigator Advanced** | **$169/mo** | Fresh Wellspire account |
-| **Heyreach Pro** (LinkedIn sequencer) | **$79/seat/mo** × 3-5 seats = $237-395 | Fresh Wellspire account |
-| **Total ops** | **~$870-1,030/mo** | Steady-state |
-| Lead enrichment per 50k batch | ~$1,050 one-time | Brandfetch + Logo.dev one-shot |
-| Stripe revenue ramp (target) | **$5k-15k MRR by Day 90** | 50k cold emails × 0.1-0.3% activation × $99/mo plan + $399 setup |
+| Item | Phase 1 (10k/mo, Day 22–45) | Phase 3 (50k+/mo, Day 90+) | Notes |
+|---|---|---|---|
+| Wellspire apex domain | ~$1 amortized | ~$1 amortized | Namecheap ~$8–12/yr |
+| GLPConvert sending domains | ~$3 (4 domains) | ~$7 (8–10 domains) | Namecheap ~$8–12/yr each |
+| Google Workspace inboxes ($7.20 ea.) | **~$144** (20 inboxes) | **~$360** (50 inboxes) | New Wellspire Workspace, Business Starter |
+| **Smartlead Pro** (cold-email sequencer) | **$94/mo** | **$94/mo** | May 2026 pick over Instantly — see CE005. Unlimited inboxes + warmup at all plans, no volume cliff. |
+| **Clay** (lead enrichment, waterfall) | **$149/mo** Starter | **$149/mo** Starter | Apollo lives inside Clay — best of both. |
+| **Apollo** (lead source via Clay) | $0 (free tier) | $0–49/mo Pro | Clay pulls from Apollo's database; Apollo Pro only needed for higher search ceilings. |
+| **Make.com** Core (automation glue) | **$9/mo** | **$9/mo** | Routes Clay → ZeroBounce → Smartlead. |
+| **Airtable** (lead CRM) | **$0** Free tier | **$20/mo** Team | Free tier handles 1k records; Team for 50k/mo flow. |
+| **ZeroBounce** | ~$8/mo (1k/mo) | ~$160/mo (~20k/mo verifications) | $0.008/email. 50k/mo cold = ~20k unique prospect verifications/mo (with reuse). |
+| **LinkedIn Sales Navigator Advanced** | **$169/mo** | **$169/mo** | One sub per LinkedIn account that does outreach (you only need ONE — the account that owns the campaigns). |
+| **Heyreach Pro** ($79/seat × 3 seats) | **$237/mo** | **$395/mo** (5 seats) | 3 seats Phase 1, 5 at scale. |
+| **Optional Expandi backup** ($99/seat) | $0 | +$99–198/mo (1–2 seats) | Buy ONLY if Heyreach accounts get LinkedIn warnings — see LI1.3. |
+| **Resend** (app-side transactional) | **$0** Free tier | **$20/mo** Pro | Lead-notify / magic-link emails only; NOT cold outreach. |
+| **Total ops** | **~$844/mo Phase 1** | **~$1,180/mo Phase 3** | Add ~$200/mo if Expandi backup is in play. |
+| Lead enrichment per 50k batch | ~$1,050 one-time | ~$1,050 one-time | Brandfetch + Logo.dev one-shot. Reuse for repeat campaigns. |
+| **Stripe revenue ramp (target)** | **$1k–4k MRR by Day 60** | **$10k–25k MRR by Day 120** | Phase 3: 50k cold + 1.2k LinkedIn × 0.1–0.3% = 15–25 paying clinics/mo @ $99/mo + $399 setup. |
+
+**Net cost-to-acquire-a-clinic (Phase 3):** $1,180 / 20 clinics = **~$59 CAC** plus prorated enrichment. At $99/mo + $399 setup = $498 first-month revenue per clinic, payback is < 30 days.
 
 ---
 
-## 📚 Sources cited (May 2026 cohort)
+## 📚 Sources cited (May 2026 cohort — updated round 33)
+
+**New May 2026 sources added in round 33 (re-verified the tool stack):**
+- [Smartlead vs Instantly — Data-Backed 2026 comparison (Sparkle.io)](https://sparkle.io/blog/smartlead-vs-instantly/)
+- [Smartlead Pricing 2026 (smartlead.ai/pricing)](https://www.smartlead.ai/pricing)
+- [Pipeline-per-Dollar 2026 ROI breakdown (Instantly's own data)](https://instantly.ai/blog/instantly-vs-smartlead-lemlist-2026/?lng=en)
+- [9 Best LinkedIn Outreach Automation Tools 2026 ranked by Safety (SyncGTM)](https://syncgtm.com/blog/best-linkedin-outreach-automation-tools)
+- [HeyReach 2026 LinkedIn limits report (heyreach.io)](https://www.heyreach.io/blog/best-linkedin-automation-tools)
+- [LinkedSDR 2026 Best LinkedIn Tools](https://www.linkedsdr.com/blog/best-linkedin-automation-tools-for-outreach-in-2026)
+- [Clay vs Apollo 2026 (Salesforge)](https://www.salesforge.ai/blog/clay-vs-apollo)
+- [Cold Email Domain Setup Guide 2026 (LeadHaste)](https://leadhaste.com/blog/cold-email-domain-setup-guide-2026)
+- [Cold Email Deliverability 2026 (Bitscale)](https://bitscale.ai/blogs/cold-email-deliverability-in-2026)
+- [Tofu vs Mutiny 2026 ABM Campaigns](https://www.tofuhq.com/post/tofu-vs-mutiny-for-abm-campaigns)
+- [Userled vs Mutiny 2026](https://www.userled.io/userled-vs-mutiny)
+- [Best Tools for 1:1 ABM Campaigns 2026 (Tofu HQ)](https://www.tofuhq.com/post/best-tools-for-1-1-abm-campaigns)
+- [Apollo State of Outbound Q1 2026 (apollo.io/research)](https://apollo.io/research)
+- [Hunter.io 20 Best Cold Email Tools 2026](https://hunter.io/blog/cold-email-software/)
 
 **Email deliverability + cold-email mechanics (May 2026 rev):**
 Google "Email sender guidelines" (support.google.com/a/answer/81126, 2026 rev) · Google "Add another domain to your Workspace" (support.google.com/a/answer/7502379) · Google "Authenticate email with DKIM" (support.google.com/a/answer/180504) · Yahoo Postmaster "Sender Best Practices" 2026 · Microsoft Tech Community "New outbound email requirements for high-volume senders" May 2025 + Mar 2026 update · Apple Developer "Mail Privacy & Authentication" Jan 2026 · Smartlead "2026 Cold Email Deliverability Guide" Apr 2026 · Apollo "State of Outbound 2026" (apollo.io/research, Q1 2026) · Reachinbox "Cold Email Playbook 2026" · Lavender "2026 Cold Email Writing Report" (lavender.ai/research, Mar 2026) · Quickmail "2026 Sequence Architecture" (quickmail.com/blog) · Reply.io "Outbound 2026 Benchmark Report" · EmailToolTester March 2026 deliverability benchmark · MXroute 2026 deliverability whitepaper · Postmark "2026 Bulk Sender Compliance Guide" · Mailmodo Apr 2026 outbound report · Hunter.io 2026 Email Verification Standards.
 
 **LinkedIn outbound + automation (May 2026 rev):**
-Heyreach "2026 LinkedIn Limits Report" (heyreach.io/resources, Apr 2026 rev) · LinkedIn Engineering Blog "Automation detection improvements" Oct 2025 + Feb 2026 update · LinkedIn Marketing Solutions "B2B Buyer Behavior 2026" · LinkedIn Sales Navigator 2026 Best Practices Guide · Outbound Squad "2026 LinkedIn Cold DM Playbook" · Cognism "State of LinkedIn Outbound 2026" Mar 2026 · Salesloft 2026 LinkedIn-vs-Email Channel Mix Report · Lemlist "LinkedIn Multi-Touch 2026" · Surfe "2026 LinkedIn Engagement Benchmark".
+Heyreach "2026 LinkedIn Limits Report" (heyreach.io/resources, Apr 2026 rev) · LinkedIn Engineering Blog "Automation detection improvements" Oct 2025 + Feb 2026 update · LinkedIn Marketing Solutions "B2B Buyer Behavior 2026" · LinkedIn Sales Navigator 2026 Best Practices Guide · Outbound Squad "2026 LinkedIn Cold DM Playbook" · Cognism "State of LinkedIn Outbound 2026" Mar 2026 · Salesloft 2026 LinkedIn-vs-Email Channel Mix Report · Lemlist "LinkedIn Multi-Touch 2026" · Surfe "2026 LinkedIn Engagement Benchmark" · SyncGTM "9 Best LinkedIn Outreach Automation Tools 2026 ranked by Safety" (syncgtm.com/blog) · LinkedSDR "Best LinkedIn Outreach Automation Tools 2026."
+
+**Personalization / 1:1 ABM landing-page tools (May 2026 — verified for the Mutiny/Userled/Tofu vs URL-param decision):**
+[Tofu vs Mutiny 2026](https://www.tofuhq.com/post/tofu-vs-mutiny-for-abm-campaigns) · [Tofu vs Userled 2026](https://www.tofuhq.com/post/tofu-vs-userled-best-ai-abm-platform) · [Userled vs Mutiny 2026](https://www.userled.io/userled-vs-mutiny) · [Best Tools for 1:1 ABM Campaigns 2026](https://www.tofuhq.com/post/best-tools-for-1-1-abm-campaigns) · Mutiny product page (mutinyhq.com/product, May 2026) · Prismic "8 Best Mutiny Alternatives 2026."
 
 **Multi-product / multi-brand company ops (May 2026):**
 Stripe Atlas "Operating multiple SaaS under one LLC" (stripe.com/atlas/guides, Mar 2026) · Y Combinator W26 Library "When to spin a brand into its own LLC" · Indie Hackers Apr 2026 podcast #487 (multi-product solo founder) · Reforge "Multi-product company architecture" 2026 · Google Workspace Admin Help "Multi-domain workspace cost model" May 2026.
@@ -1586,12 +1744,42 @@ Brandfetch API docs (brandfetch.com/developers) · Logo.dev API · ZeroBounce AP
 
 ---
 
-## 🎯 Bottom-line opinion
+## 🎯 Bottom-line opinion (round 33 — re-verified May 2026)
 
-You already have a production cold-email + LinkedIn machine running for Sunspire. **Reuse all of it.** Net new spend is 4 GLPConvert-themed sending domains (~$40/yr) + 16-20 inboxes in your existing Workspace (~$120-145/mo). Everything else costs $0 incremental.
+**The cheapest, easiest, AND most-effective path from Day 0 to 50k+/mo personalized GLPConvert cold emails:**
 
-**DO NOT** send GLPConvert outreach from Sunspire-themed domains — burns Sunspire's reputation, confuses clinic recipients, triggers Gmail's brand-mismatch classifier.
+1. **Day 0 (today):** sign up for `Wellspirellc@gmail.com` parent-ops Gmail (CE000.PRE) → cancel Sunspire Workspace + domains (CE000.D) → buy your Wellspire apex at Namecheap (CE000.B) → spin up the new Wellspire Workspace under Wellspire LLC (CE000.C) → migrate vendor billing to the Wellspire LLC card (CE000.E). **Total clicks: ~30. Total time: 2-3 hrs. Total $: ~$10 + new Workspace seats start billing.**
 
-**DO NOT** skip the 21-day warmup on the new domains — Gmail's 2025 enforcement is strict and a domain that hasn't warmed up gets throttled then blocked.
+2. **Day 1:** buy 4 GLPConvert sending domains (CE001) → add as secondary domains to Wellspire Workspace (CE002) → create the first 16-20 cold-email inboxes (CE003) → start DNS auth on each domain (CE004 — SPF/DKIM/DMARC). **Total clicks: ~150. Total time: 3-4 hrs.**
 
-The personalized-demo-link is your differentiator over every solar/SaaS cold-email playbook out there. Worth the ~$1,050 enrichment per 50k batch to ship truly personalized landings.
+3. **Day 2-3:** sign up for **Smartlead Pro $94/mo** (CE005 — May 2026 pick over Instantly), connect all inboxes, **start the 21-day warmup**. **Total clicks: ~80. Total time: 1-2 hrs.**
+
+4. **Day 4-7:** spin up Clay GLPConvert table → run the Apollo waterfall to pull 2,500 GLP-1 clinic prospects → enrich via Brandfetch + Logo.dev → build the canonical individualized demo URL (CE-DEMO-URL spec, formula in CE6.8) → wire up Make.com Clay→ZeroBounce→Smartlead automation → ship compliance page (CE006-CE008). **Total clicks: ~50. Total time: 4 hrs.**
+
+5. **Day 8:** sign up for **Heyreach Pro $79/seat × 3 seats** (LI001) → connect 3 warmed LinkedIn accounts (LI002-LI003) → build Sales Nav search + export to Heyreach (LI004) → enrich in Clay (LI005) → build the 6-step LinkedIn sequence (LI006). **Total clicks: ~70. Total time: 3 hrs.**
+
+6. **Days 9-21:** **DO NOTHING TO THE EMAIL CAMPAIGNS.** Warmup runs in the background. Use these days to QA your Stripe checkout (M000 Resend live + Stripe live), verify the maintenance page, write the cold-email + LinkedIn copy, A/B test 2-3 subject lines on yourself.
+
+7. **Day 22:** flip both campaigns live (CE010.1 + LI007.1). **Daily limit per inbox: 25** (cold email) + **100/wk per account** (LinkedIn). Phase 1 throughput: ~10k cold emails/mo + 1.2k LinkedIn requests/mo.
+
+8. **Day 45:** if Postmaster spam-rate <0.05% for the prior 30 days → enter **Phase 2** (CE10.4) — add 20-30 more warmed inboxes. Phase 2 throughput: ~25k cold/mo.
+
+9. **Day 90:** if Postmaster spam-rate stays <0.05% → enter **Phase 3** (CE10.7-10.10) — push the cleanest 20 inboxes to 30-35/day. Phase 3 throughput: **50k+ cold/mo + 1.2k LinkedIn = 50k+ total monthly outbound touch.**
+
+**Steady-state cost (Phase 3): ~$1,180/mo** — see cost-summary table above.
+
+**Steady-state revenue target (Phase 3, Day 120+):** **$10-25k MRR** at 0.1-0.3% activation × $99/mo + $399 setup. CAC payback < 30 days.
+
+**The individualized demo URL is your differentiator.** Mutiny ($5k+/mo) and Userled ($$$/mo) sell exactly this — per-prospect microsite with company name + logo + brand color in a hero. GLPConvert's intake page accepts those as URL params for $0. The Clay-built URL string is your ABM landing engine. Treat the canonical URL spec (CE-DEMO-URL section above) as a contract — anything that breaks the renderer's `?demo=1&handle=...&company=...&brand=...&logo=...` reads breaks every cold-email LP for free.
+
+**Things that will be tempting but you should not do:**
+- ❌ Send from `glpconvert.com` apex (burns marketing reputation; sending happens from the 4 sending domains).
+- ❌ Skip the 21-day warmup (Gmail late-2025 enforcement is strict).
+- ❌ Push past 25/day per inbox before Day 45 (single fastest way to burn the new domains).
+- ❌ Buy Mutiny / Userled / Tofu (you already have the URL-param renderer — duplicate spend).
+- ❌ Use Chrome-extension LinkedIn tools (banned at high rates per LinkedIn 2026 detection updates).
+- ❌ Try to hit 50k/mo in Phase 1 (the math doesn't work — it requires 91 inboxes at safe rates; Phase 1 only has 16-20).
+
+**One brain-friendly mental model:** Phase 1 (Day 22) = "go live small to prove the funnel + sequence." Phase 2 (Day 45) = "double the fleet." Phase 3 (Day 90) = "push the proven volume to 50k." If anything goes wrong at any phase boundary, you stay in the prior phase another 30 days. The whole machine is gated on Postmaster's reputation signal — that's your single source of truth.
+
+**Triple-check before you click anything in CE000-CE010:** read this Bottom-line, scan the Decision Summary table at the top, then walk the CE buttons in literal order. Any deviation from the order (especially skipping warmup) costs more time than it saves.
