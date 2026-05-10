@@ -1021,7 +1021,7 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 - [x] CE000.PRE — Wellspire parent-ops Gmail (`Wellspirellc@gmail.com`) ✅ done 2026-05-09
 - [x] CE000.A — Pick Wellspire apex domain → **wellspirellc.com** ✅ done 2026-05-10
 - [x] CE000.B — Open Wellspire Namecheap account + buy apex (`wellspirellc.com`, ~$11) ✅ done 2026-05-10
-- [ ] CE000.C — Open Wellspire Google Workspace + admin user + 2FA  ← **YOU ARE HERE**
+- [ ] CE000.C — Open Wellspire Google Workspace + admin user + 2FA  ← **YOU ARE HERE — on wizard screen 3 (CE000.C4 "Choose a way to set up your account")**
 - [ ] CE000.D — Wellspire LLC business card on every SaaS vendor (waits on LLC formation)
 
 **🛠️ PHASE 1A — GLPConvert sending infrastructure (Day 1, ~4 hrs)**
@@ -1283,22 +1283,23 @@ https://glp-convert.vercel.app/intake?demo=1&handle=acme-clinic&company=Acme+Wei
 >
 > Each screen below is a literal click. The wizard uses a side-panel layout — answer each prompt → click **Next** at bottom right. Total wizard time: ~10 min.
 
-- [ ] CE000.C1 Open a fresh private/incognito window → go to **https://workspace.google.com** → top-right click **"Start free trial"** (or **"Get started"** depending on what Google's homepage shows that day). **If Google routes you through the "Choose the email that is best for your business" comparison page with two cards:** click **"Try Google Workspace"** on the LEFT card ("Custom email and productivity features for your business"), NOT "Get a Gmail address" on the right.
-- [ ] CE000.C2 Wizard screen 1 — **"Tell us about your business"**:
+- [x] CE000.C1 Open a fresh private/incognito window → go to **https://workspace.google.com** → top-right click **"Start free trial"** (or **"Get started"** depending on what Google's homepage shows that day). **If Google routes you through the "Choose the email that is best for your business" comparison page with two cards:** click **"Try Google Workspace"** on the LEFT card ("Custom email and productivity features for your business"), NOT "Get a Gmail address" on the right. ✅ done 2026-05-10
+- [x] CE000.C2 Wizard screen 1 — **"Tell us about your business"**:
    - Business name: `Wellspire LLC`
    - Number of employees: `Just you` (or 1-10 — same plan tier)
    - Region: `United States`
-   - Click **Next**.
-- [ ] CE000.C3 Wizard screen 2 — **"What's your contact info?"**:
+   - Click **Next**. ✅
+- [x] CE000.C3 Wizard screen 2 — **"What's your contact info?"**:
    - First name: `Hugo` (or however you go on legal docs)
    - Last name: your last name
    - Current email: paste **`Wellspirellc@gmail.com`** (your CE000.PRE inbox) — this becomes the recovery / billing-alert email for the entire Workspace.
+   - Click **Next**. ✅
+- [ ] CE000.C4 Wizard screen 3 — **"Does your business have a domain?"** (Google sometimes labels this screen **"Choose a way to set up your account"** with two big card options instead — same decision):
+   - Two cards: **"Get a new custom domain"** (LEFT — buy through Google Domains, ~$12/yr, worse DNS control — DO NOT pick this) vs **"Set up using your existing domain"** (RIGHT — use a domain you already own).
+   - Click the **RIGHT card** ("Set up using your existing domain"). The card outlines blue when selected.
+   - Click **"Continue with this method"** (bottom right; un-greys once a card is picked).
+   - Next screen → type your apex: **`wellspirellc.com`** (your CE000.B purchase).
    - Click **Next**.
-- [ ] CE000.C4 Wizard screen 3 — **"Does your business have a domain?"**:
-   - Choose **"Yes, I have one I can use"**.
-   - Type your Wellspire apex: **`wellspirellc.com`** (your CE000.B purchase).
-   - Click **Next**.
-   - (If you accidentally pick "No, I need one to get started" Google walks you through buying one through Google Domains — back out and use Namecheap per CE000.B.)
 - [ ] CE000.C5 Wizard screen 4 — **"Use this domain to set up your account"**: confirm the domain you typed. Click **Next**.
 - [ ] CE000.C6 Wizard screen 5 — **"Do you want to use [domain] for newsletters or marketing?"** — choose **"No, only for my Workspace account"** (we'll add the cold-email sending domains as secondaries in CE002, not here). Click **Next**.
 - [ ] CE000.C7 Wizard screen 6 — **"How will you sign in?"**:
