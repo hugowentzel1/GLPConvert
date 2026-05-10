@@ -1021,7 +1021,7 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 - [x] CE000.PRE — Wellspire parent-ops Gmail (`Wellspirellc@gmail.com`) ✅ done 2026-05-09
 - [x] CE000.A — Pick Wellspire apex domain → **wellspirellc.com** ✅ done 2026-05-10
 - [x] CE000.B — Open Wellspire Namecheap account + buy apex (`wellspirellc.com`, ~$11) ✅ done 2026-05-10
-- [ ] CE000.C — Open Wellspire Google Workspace + admin user + 2FA  ← **YOU ARE HERE — on wizard screen 7 (CE000.C8 plan picker — pick Business Starter $8.40, NOT Plus $19.80)**
+- [ ] CE000.C — Open Wellspire Google Workspace + admin user + 2FA  ← **YOU ARE HERE — on wizard screen 9 (CE000.C10 Review and check out — add name, address, payment, then continue)**
 - [ ] CE000.D — Wellspire LLC business card on every SaaS vendor (waits on LLC formation)
 
 **🛠️ PHASE 1A — GLPConvert sending infrastructure (Day 1, ~4 hrs)**
@@ -1308,17 +1308,19 @@ https://glp-convert.vercel.app/intake?demo=1&handle=acme-clinic&company=Acme+Wei
    - Confirm password.
    - Tick "I'm not a robot" CAPTCHA.
    - Click **Agree and continue**. ✅
-- [ ] CE000.C8 Wizard screen 7 — **"Choose your plan" / "Try Google Workspace for 14 days"**:
+- [x] CE000.C8 Wizard screen 7 — **"Choose your plan" / "Try Google Workspace for 14 days"**:
    - ⚠️ **Google sometimes lands you on the "Plus" plan ($19.80–26.40/user/mo) by default.** DO NOT click "Start a trial" on Plus. You want **Business Starter** at **$8.40/user/mo**.
    - To find Business Starter on this screen: look for a horizontal carousel (left/right arrows on the card edges), plan-tab navigation at the top (`Business Starter` | `Standard` | `Plus` | `Enterprise`), pagination dots below the card, or scroll up to find a "See all plans" / "Compare plans" link. Sometimes you have to side-scroll the card carousel with trackpad/mouse to step LEFT through Plus → Standard → Starter.
    - On the **Business Starter** card (the cheapest, $8.40/user/mo, 30 GB storage per user, "Custom and secure business email"): click **"Start a trial"** / **"Continue"**.
-   - Bump to **Business Standard** ($14.40/user/mo) later only if you need shared drives or 99.9% SLA — not needed for cold-email outreach. **Plus and Enterprise are massive overkill for our use case** (extra storage, eDiscovery, Vault — all overhead you won't touch).
-- [ ] CE000.C9 Wizard screen 8 — **"How many users?"**: pick **1** for now (the admin). You'll add the 16-20 outreach inboxes later in CE003 (each one bills separately at $8.40/mo). Click **Next**.
-- [ ] CE000.C10 Wizard screen 9 — **"Review and pay"**:
-   - Confirm 14-day free trial → no charge today.
-   - Add Wellspire LLC business credit card (or personal card if LLC card not yet ready — you'll swap cards in CE000.D1 after LLC is formed).
-   - Billing address: Wellspire LLC's registered office (or your personal address temporarily; update after LLC formation).
-   - Click **Agree and continue** / **Buy**.
+   - Bump to **Business Standard** ($14.40/user/mo) later only if you need shared drives or 99.9% SLA — not needed for cold-email outreach. **Plus and Enterprise are massive overkill for our use case** (extra storage, eDiscovery, Vault — all overhead you won't touch). ✅ done 2026-05-10 (picked Starter)
+- [x] CE000.C9 Wizard screen 8 — **"How many users?"**: pick **1** for now (the admin). You'll add the 16-20 outreach inboxes later in CE003 (each one bills separately at $8.40/mo). Click **Next**. ✅ (Google's trial allows up to 10 users; effective count is 1 admin)
+- [ ] CE000.C10 Wizard screen 9 — **"Review and check out"** (sometimes labeled "Review and pay"):
+   - Cart shows: **Business Starter $8.40 monthly + tax** (14-day free trial, no charge today).
+   - Click **"Add name and address"** (blue + button) → fill: real name + home address (update to Wellspire LLC registered office later, after LLC is formed) → save.
+   - Click **"Add payment method"** (second + button) → enter personal card (swap to Wellspire LLC card later in CE000.D after LLC + business bank account exist).
+   - Heads-up: Google places a temporary **$10 authorization** on the card to verify it (refunded within a week — normal).
+   - "Add contact information before continuing" warning disappears once both filled → click **"Agree and Continue"** / **"Subscribe"** at the bottom.
+   - Set a **calendar reminder for Day 13** to confirm you want to keep the subscription before the trial converts to paid ($8.40/mo + tax automatic).
 - [ ] CE000.C11 Post-purchase screen — **"Verify your domain"**:
    - Google shows a TXT record: `google-site-verification=<long-random-string>`.
    - Open Namecheap (the Wellspire account from CE000.B) in another tab → **Domain List** → click **Manage** next to your apex → **Advanced DNS** tab → **Add New Record** → Type: `TXT Record` → Host: `@` → Value: paste Google's verification string → TTL: `Automatic` → green check to save.
