@@ -1021,7 +1021,7 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 - [x] CE000.PRE — Wellspire parent-ops Gmail (`Wellspirellc@gmail.com`) ✅ done 2026-05-09
 - [x] CE000.A — Pick Wellspire apex domain → **wellspirellc.com** ✅ done 2026-05-10
 - [x] CE000.B — Open Wellspire Namecheap account + buy apex (`wellspirellc.com`, ~$11) ✅ done 2026-05-10
-- [ ] CE000.C — Open Wellspire Google Workspace + admin user + 2FA  ← **YOU ARE HERE — on wizard screen 7 (CE000.C8 plan picker — pick Business Starter $7.20, NOT Plus $19.80)**
+- [ ] CE000.C — Open Wellspire Google Workspace + admin user + 2FA  ← **YOU ARE HERE — on wizard screen 7 (CE000.C8 plan picker — pick Business Starter $8.40, NOT Plus $19.80)**
 - [ ] CE000.D — Wellspire LLC business card on every SaaS vendor (waits on LLC formation)
 
 **🛠️ PHASE 1A — GLPConvert sending infrastructure (Day 1, ~4 hrs)**
@@ -1093,10 +1093,10 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 | **Automation glue** | **Make.com** Core | $9/mo | **$9/mo** | Routes Clay → ZeroBounce → Smartlead/Heyreach. |
 | **Lead CRM** | **Airtable** Free → Team | **$0–$20/mo** | Free tier handles 1k records; bump to Team ($20) at scale. |
 | **Sending domains** | **4 GLPConvert-themed** at Namecheap | $40/yr ÷ 12 = **~$3/mo** | Per [Smartlead 2026 + Apollo State of Outbound Q1 2026](https://www.smartlead.ai/pricing): never send from apex `glpconvert.com` (reserved for marketing/Stripe). 4 sending domains × 5 inboxes/domain = 20 inboxes for Phase 1, scale to 8–10 domains × 5 inboxes = 40–50 inboxes for Phase 2 (50k+/mo target). |
-| **Workspace inboxes** | **Wellspire Google Workspace Business Starter** | $7.20/inbox/mo | **$144/mo at 20 inboxes; $360/mo at 50 inboxes** | One Workspace can host all 4–10 sending domains as secondaries (Google Workspace Admin Help: support.google.com/a/answer/7502379). |
+| **Workspace inboxes** | **Wellspire Google Workspace Business Starter** | $8.40/inbox/mo | **$168/mo at 20 inboxes; $420/mo at 50 inboxes** | One Workspace can host all 4–10 sending domains as secondaries (Google Workspace Admin Help: support.google.com/a/answer/7502379). |
 | **App-side transactional email** | **Resend** | Free → $20/mo Pro | **$0–20/mo** | For lead-notify / welcome / magic-link emails from `notify@mail.glpconvert.com`. NOT for cold outreach. |
 
-**Total steady-state ops cost (Phase 2, ≥50k/mo):** **~$870–1,030/mo** + **~$20** per 2,500-prospect ZeroBounce batch + **~$200/yr** sending-domain renewals.
+**Total steady-state ops cost (Phase 2, ≥50k/mo):** **~$895–1,055/mo** + **~$20** per 2,500-prospect ZeroBounce batch + **~$200/yr** sending-domain renewals. (Bumped ~$25/mo from earlier rounds because Google Workspace Business Starter went $7.20 → $8.40/user/mo in 2026.)
 
 **Individualized demo URL — DO NOT pay for Mutiny / Userled / Tofu microsites.** GLPConvert's existing intake-page renderer accepts `?demo=1&handle={slug}&company={Url-encoded}&brand={hex-no-#}&brand2={hex-no-#}&logo={Url-encoded URL}&utm_*` and produces a per-prospect branded landing for free. This replaces the $5–10k/mo ABM-LP tier ([Tofu vs Mutiny 2026](https://www.tofuhq.com/post/tofu-vs-mutiny-for-abm-campaigns), [Userled vs Mutiny 2026](https://www.userled.io/userled-vs-mutiny)). See **CE-DEMO-URL** below for the exact URL format + how to build it in Clay.
 
@@ -1213,7 +1213,7 @@ https://glp-convert.vercel.app/intake?demo=1&handle=acme-clinic&company=Acme+Wei
 >
 >   - Workspace plan is per-USER, not per-domain. You add **secondary domains** for each SaaS brand (e.g. `wellspire.com` primary + `getglpconvert.com` / `glpconverttool.com` / `useglpconvert.com` / `glpconvertapp.com` secondary).
 >   - **Each user can have email at any of those domains.** Create dedicated GLPConvert-domain users (e.g. `jane@getglpconvert.com`) whose login IS that address — best for cold-email brand isolation.
->   - **For cold-email outreach**, 16-20 dedicated users spread across the 4 sending domains. Workspace seats at $7.20 each = $115–145/mo Phase 1 → $360/mo at 50 inboxes Phase 3.
+>   - **For cold-email outreach**, 16-20 dedicated users spread across the 4 sending domains. Workspace seats at $8.40 each = $168/mo Phase 1 → $420/mo at 50 inboxes Phase 3.
 >   - **For ops / billing / legal**, 1-2 `@wellspire.com` users (admin + ops).
 >   - **Sender reputation is per-DOMAIN, not per-Workspace.** Each sending domain builds its own Postmaster reputation; the Wellspire apex stays clean for ops.
 >
@@ -1230,7 +1230,7 @@ https://glp-convert.vercel.app/intake?demo=1&handle=acme-clinic&company=Acme+Wei
 >
 >   - **A** — Pick the Wellspire apex domain.
 >   - **B** — Open fresh Namecheap account in Wellspire LLC's name + buy the apex.
->   - **C** — Open fresh Google Workspace under Wellspire (Business Starter $7.20/user/mo).
+>   - **C** — Open fresh Google Workspace under Wellspire (Business Starter $8.40/user/mo).
 >   - **D** — Set up Wellspire LLC card on every SaaS vendor account (Stripe, Resend, Vercel, Sentry, Supabase, Smartlead, Heyreach, Clay, Make, Airtable, ZeroBounce, Sales Nav, Brandfetch/Logo.dev, Cloudflare).
 >
 > **Sources for the multi-brand parent-company ops pattern (May 2026):**
@@ -1309,11 +1309,11 @@ https://glp-convert.vercel.app/intake?demo=1&handle=acme-clinic&company=Acme+Wei
    - Tick "I'm not a robot" CAPTCHA.
    - Click **Agree and continue**. ✅
 - [ ] CE000.C8 Wizard screen 7 — **"Choose your plan" / "Try Google Workspace for 14 days"**:
-   - ⚠️ **Google sometimes lands you on the "Plus" plan ($19.80–26.40/user/mo) by default.** DO NOT click "Start a trial" on Plus. You want **Business Starter** at **$7.20/user/mo**.
+   - ⚠️ **Google sometimes lands you on the "Plus" plan ($19.80–26.40/user/mo) by default.** DO NOT click "Start a trial" on Plus. You want **Business Starter** at **$8.40/user/mo**.
    - To find Business Starter on this screen: look for a horizontal carousel (left/right arrows on the card edges), plan-tab navigation at the top (`Business Starter` | `Standard` | `Plus` | `Enterprise`), pagination dots below the card, or scroll up to find a "See all plans" / "Compare plans" link. Sometimes you have to side-scroll the card carousel with trackpad/mouse to step LEFT through Plus → Standard → Starter.
-   - On the **Business Starter** card (the cheapest, $7.20/user/mo, 30 GB storage per user, "Custom and secure business email"): click **"Start a trial"** / **"Continue"**.
+   - On the **Business Starter** card (the cheapest, $8.40/user/mo, 30 GB storage per user, "Custom and secure business email"): click **"Start a trial"** / **"Continue"**.
    - Bump to **Business Standard** ($14.40/user/mo) later only if you need shared drives or 99.9% SLA — not needed for cold-email outreach. **Plus and Enterprise are massive overkill for our use case** (extra storage, eDiscovery, Vault — all overhead you won't touch).
-- [ ] CE000.C9 Wizard screen 8 — **"How many users?"**: pick **1** for now (the admin). You'll add the 16-20 outreach inboxes later in CE003 (each one bills separately at $7.20/mo). Click **Next**.
+- [ ] CE000.C9 Wizard screen 8 — **"How many users?"**: pick **1** for now (the admin). You'll add the 16-20 outreach inboxes later in CE003 (each one bills separately at $8.40/mo). Click **Next**.
 - [ ] CE000.C10 Wizard screen 9 — **"Review and pay"**:
    - Confirm 14-day free trial → no charge today.
    - Add Wellspire LLC business credit card (or personal card if LLC card not yet ready — you'll swap cards in CE000.D1 after LLC is formed).
@@ -1841,7 +1841,7 @@ https://glp-convert.vercel.app/intake?demo=1&handle=acme-clinic&company=Acme+Wei
 |---|---|---|---|
 | Wellspire apex domain | ~$1 amortized | ~$1 amortized | Namecheap ~$8–12/yr |
 | GLPConvert sending domains | ~$3 (4 domains) | ~$7 (8–10 domains) | Namecheap ~$8–12/yr each |
-| Google Workspace inboxes ($7.20 ea.) | **~$144** (20 inboxes) | **~$360** (50 inboxes) | New Wellspire Workspace, Business Starter |
+| Google Workspace inboxes ($8.40 ea., 2026) | **~$168** (20 inboxes) | **~$420** (50 inboxes) | New Wellspire Workspace, Business Starter (was $7.20 in earlier years; bumped to $8.40 in 2026) |
 | **Smartlead Pro** (cold-email sequencer) | **$94/mo** | **$94/mo** | May 2026 pick over Instantly — see CE005. Unlimited inboxes + warmup at all plans, no volume cliff. |
 | **Clay** (lead enrichment, waterfall) | **$149/mo** Starter | **$149/mo** Starter | Apollo lives inside Clay — best of both. |
 | **Apollo** (lead source via Clay) | $0 (free tier) | $0–49/mo Pro | Clay pulls from Apollo's database; Apollo Pro only needed for higher search ceilings. |
@@ -1852,11 +1852,11 @@ https://glp-convert.vercel.app/intake?demo=1&handle=acme-clinic&company=Acme+Wei
 | **Heyreach Pro** ($79/seat × 3 seats) | **$237/mo** | **$395/mo** (5 seats) | 3 seats Phase 1, 5 at scale. |
 | **Optional Expandi backup** ($99/seat) | $0 | +$99–198/mo (1–2 seats) | Buy ONLY if Heyreach accounts get LinkedIn warnings — see LI1.3. |
 | **Resend** (app-side transactional) | **$0** Free tier | **$20/mo** Pro | Lead-notify / magic-link emails only; NOT cold outreach. |
-| **Total ops** | **~$844/mo Phase 1** | **~$1,180/mo Phase 3** | Add ~$200/mo if Expandi backup is in play. |
+| **Total ops** | **~$868/mo Phase 1** | **~$1,240/mo Phase 3** | Add ~$200/mo if Expandi backup is in play. (Workspace went $7.20→$8.40 in 2026.) |
 | Lead enrichment per 50k batch | ~$1,050 one-time | ~$1,050 one-time | Brandfetch + Logo.dev one-shot. Reuse for repeat campaigns. |
 | **Stripe revenue ramp (target)** | **$1k–4k MRR by Day 60** | **$10k–25k MRR by Day 120** | Phase 3: 50k cold + 1.2k LinkedIn × 0.1–0.3% = 15–25 paying clinics/mo @ $99/mo + $399 setup. |
 
-**Net cost-to-acquire-a-clinic (Phase 3):** $1,180 / 20 clinics = **~$59 CAC** plus prorated enrichment. At $99/mo + $399 setup = $498 first-month revenue per clinic, payback is < 30 days.
+**Net cost-to-acquire-a-clinic (Phase 3):** $1,240 / 20 clinics = **~$62 CAC** plus prorated enrichment. At $99/mo + $399 setup = $498 first-month revenue per clinic, payback is < 30 days.
 
 ---
 
@@ -1923,7 +1923,7 @@ Brandfetch API docs (brandfetch.com/developers) · Logo.dev API · ZeroBounce AP
 
 9. **Day 90:** if Postmaster spam-rate stays <0.05% → enter **Phase 3** (CE10.7-10.10) — push the cleanest 20 inboxes to 30-35/day. Phase 3 throughput: **50k+ cold/mo + 1.2k LinkedIn = 50k+ total monthly outbound touch.**
 
-**Steady-state cost (Phase 3): ~$1,180/mo** — see cost-summary table above.
+**Steady-state cost (Phase 3): ~$1,240/mo** — see cost-summary table above.
 
 **Steady-state revenue target (Phase 3, Day 120+):** **$10-25k MRR** at 0.1-0.3% activation × $99/mo + $399 setup. CAC payback < 30 days.
 
