@@ -1021,7 +1021,7 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 - [x] CE000.PRE — Wellspire parent-ops Gmail (`Wellspirellc@gmail.com`) ✅ done 2026-05-09
 - [x] CE000.A — Pick Wellspire apex domain → **wellspirellc.com** ✅ done 2026-05-10
 - [x] CE000.B — Open Wellspire Namecheap account + buy apex (`wellspirellc.com`, ~$11) ✅ done 2026-05-10
-- [ ] CE000.C — Open Wellspire Google Workspace + admin user + 2FA  ← **YOU ARE HERE — on wizard screen 9 (CE000.C10 Review and check out — add name, address, payment, then continue)**
+- [ ] CE000.C — Open Wellspire Google Workspace + admin user + 2FA  ← **YOU ARE HERE — on the "Add users to wellspirellc.com" prompt (CE000.C9b — click "Skip for now"; outreach inboxes get added in CE003)**
 - [ ] CE000.D — Wellspire LLC business card on every SaaS vendor (waits on LLC formation)
 
 **🛠️ PHASE 1A — GLPConvert sending infrastructure (Day 1, ~4 hrs)**
@@ -1314,7 +1314,12 @@ https://glp-convert.vercel.app/intake?demo=1&handle=acme-clinic&company=Acme+Wei
    - On the **Business Starter** card (the cheapest, $8.40/user/mo, 30 GB storage per user, "Custom and secure business email"): click **"Start a trial"** / **"Continue"**.
    - Bump to **Business Standard** ($14.40/user/mo) later only if you need shared drives or 99.9% SLA — not needed for cold-email outreach. **Plus and Enterprise are massive overkill for our use case** (extra storage, eDiscovery, Vault — all overhead you won't touch). ✅ done 2026-05-10 (picked Starter)
 - [x] CE000.C9 Wizard screen 8 — **"How many users?"**: pick **1** for now (the admin). You'll add the 16-20 outreach inboxes later in CE003 (each one bills separately at $8.40/mo). Click **Next**. ✅ (Google's trial allows up to 10 users; effective count is 1 admin)
-- [ ] CE000.C10 Wizard screen 9 — **"Review and check out"** (sometimes labeled "Review and pay"):
+- [ ] CE000.C9b Wizard post-checkout — **"Add users to wellspirellc.com"** screen (Google sometimes inserts this after payment, before domain verification):
+   - ⚠️ Form prompts for First name / Last name / Username + email-for-sign-in-instructions, with an **"Add user"** button (greyed out) and **"Skip for now"** link bottom right.
+   - **Click "Skip for now"** (bottom right, blue).
+   - Why skip: every extra user added here = +$8.40/mo charge after trial. Outreach inboxes (jane.smith@getglpconvert.com etc.) are added to a SENDING domain in CE003 — NOT to the apex `wellspirellc.com` here. Mixing them now = inboxes billing during warmup with no value, AND wrong domain identity (apex is for ops, sending domains are CE001-themed).
+   - Notice on the page confirms: "New users can access their account once you verify your domain" — you can't use additional users until C11 anyway.
+- [x] CE000.C10 Wizard screen 9 — **"Review and check out"** (sometimes labeled "Review and pay"):
    - Cart shows: **Business Starter $8.40 monthly + tax** (14-day free trial, no charge today).
    - Click **"Add name and address"** (blue + button) → fill: real name + home address (update to Wellspire LLC registered office later, after LLC is formed) → save.
    - Click **"Add payment method"** (second + button) → enter personal card (swap to Wellspire LLC card later in CE000.D after LLC + business bank account exist).
