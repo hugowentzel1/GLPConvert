@@ -1195,7 +1195,7 @@ https://glp-convert.vercel.app/intake?demo=1&handle=acme-clinic&company=Acme+Wei
 >
 > **Why a dedicated Gmail (not your personal address):** clean separation between personal and Wellspire-LLC vendor accounts; recovery + 2FA centralized in one inbox; transferable ownership when Wellspire Workspace goes live (admin user `hugo@wellspire.com` later receives forwards from `Wellspirellc@gmail.com`). Stripe Atlas "Operating multiple SaaS under one LLC" (Mar 2026) §3.2 + Indie Hackers Apr 2026 podcast #487 both recommend a single transitional Gmail for entity-formation vendor signups.
 
-- [ ] CE000.PRE1 If `Wellspirellc@gmail.com` does NOT exist yet: open a private/incognito window → **https://accounts.google.com/signup** → First name `Wellspire`, Last name `LLC` → username `Wellspirellc` → `@gmail.com` → next.
+- [ ] CE000.PRE1 If `Wellspirellc@gmail.com` does NOT exist yet: open a private/incognito window → **https://accounts.google.com/signup**. **If Google shows a "Choose the email that is best for your business" comparison page with two cards** (Workspace on the left, Gmail on the right): click **"Get a Gmail address"** (the RIGHT card, free). Do NOT click "Try Google Workspace" — that's CE000.C, you do that later. → Fill: First name `Wellspire`, Last name `LLC` → username `Wellspirellc` → `@gmail.com` → next.
 - [ ] CE000.PRE2 Password: 18+ chars, generate via 1Password / Bitwarden. Save to vault under **"Wellspire LLC · parent-ops Gmail"**.
 - [ ] CE000.PRE3 Add a recovery phone (your real number) AND a recovery email (your personal address). Required for account-recovery during the high-signup-volume next 24h.
 - [ ] CE000.PRE4 Skip "Smart features and personalization" prompts.
@@ -1243,29 +1243,93 @@ https://glp-convert.vercel.app/intake?demo=1&handle=acme-clinic&company=Acme+Wei
 
 #### CE000.A — Decide the apex domain for Wellspire LLC
 
-- [ ] CE000.A1 You need a Wellspire apex (suggested: **wellspire.com** if available, or **wellspirellc.com** / **getwellspire.com** as fallbacks). Check availability at **https://www.namecheap.com**.
-- [ ] CE000.A2 If `wellspire.com` is taken, check `wellspire.co`, `wellspirellc.com`, `wellspire.io` — pick whichever reads cleanest as a parent-company website.
-- [ ] CE000.A3 Once you pick: this becomes (a) your Wellspire LLC marketing site, (b) the primary domain of your new Google Workspace, (c) the From-domain of your operations email (legal, billing, partnerships).
+- [ ] CE000.A1 Open **https://www.namecheap.com** → top search bar → check availability of preferred apex names in this priority order: `wellspire.com` → `wellspirellc.com` → `getwellspire.com` → `wellspire.co` → `wellspire.io`. Pick the cleanest that's available.
+- [ ] CE000.A2 The apex you pick becomes (a) your Wellspire LLC marketing site, (b) the primary domain of your Google Workspace (CE000.C), (c) the From-domain of operations email (legal, billing, partnerships). It will NEVER send cold email — that's what the 4 GLPConvert sending domains are for (CE001).
+- [ ] CE000.A3 Don't add to cart yet — first open the Namecheap account in CE000.B, then come back and buy.
 
-#### CE000.B — Open a fresh Namecheap account in Wellspire LLC's name
+#### CE000.B — Open a fresh Namecheap account + buy the Wellspire apex
 
-- [ ] CE000.B1 Open a new private window. Go to **https://www.namecheap.com** → **Create Account**.
-- [ ] CE000.B2 Sign up with **`Wellspirellc@gmail.com`** (CE000.PRE) as the account email. Username: `wellspirellc`. Password: vault-generated 18+ chars.
-- [ ] CE000.B3 Set the contact / WHOIS info to **Wellspire LLC** with billing address matching the LLC's registered office (same address used on legal pages / CAN-SPAM / Stripe / footer disclosure).
-- [ ] CE000.B4 Add the Wellspire LLC business credit/debit card as the payment method.
-- [ ] CE000.B5 Buy the apex chosen in CE000.A (~$8-12 first year).
-- [ ] CE000.B6 Enable 2-Factor Authentication on the Namecheap account (**Profile → Account Security → Two-Factor Authentication**).
+> **No-LLC-yet fallback:** Namecheap does NOT require an LLC to register a domain. You can sign up as an individual today, register the apex on your personal card, and update WHOIS contact + billing card to Wellspire LLC after the LLC is formed. Don't let LLC paperwork block this step — domains are cheap and ownership transfers are free.
+
+- [ ] CE000.B1 Open a fresh private/incognito window → go to **https://www.namecheap.com** → top-right click **Sign Up**.
+- [ ] CE000.B2 **"Create your account"** form:
+   - Username: `wellspirellc`
+   - Password: vault-generated 18+ chars (1Password / Bitwarden) → save to vault under "Wellspire LLC · Namecheap"
+   - First name: `Hugo` (your real first name)
+   - Last name: your real last name
+   - Email: `Wellspirellc@gmail.com` (CE000.PRE)
+   - Click **Create Account and Continue**.
+- [ ] CE000.B3 Verify your email — check the `Wellspirellc@gmail.com` inbox for the Namecheap confirmation email → click the verification link.
+- [ ] CE000.B4 Sign in to namecheap.com with the new credentials.
+- [ ] CE000.B5 Top-right profile icon → **Profile → Account Information** → fill in contact info:
+   - **If LLC is formed:** organization = `Wellspire LLC`, address = registered office, phone = LLC business line
+   - **If LLC is NOT yet formed (you're starting today):** organization = leave blank or your name, address = your personal address (you'll update to LLC's registered office in Z000-style cleanup once formed). Don't block — you can fix this.
+- [ ] CE000.B6 Top-right profile → **Profile → Security** → **Two-Factor Authentication** → enable Google Authenticator. Save 8 backup codes to vault.
+- [ ] CE000.B7 Now buy the apex from CE000.A1: top search bar → type the apex (e.g. `wellspire.com`) → click **Search** → on the result card click **Add to Cart** → top-right cart icon → **View Cart**.
+- [ ] CE000.B8 Cart settings:
+   - Registration period: **1 year** (avoid multi-year — you don't want to be locked in if you typo'd the brand name)
+   - **WhoisGuard / Domain Privacy: ON** (free with Namecheap; hides your contact info from public WHOIS lookups)
+   - **Auto-Renew: ON** (Namecheap default — you don't want the apex to expire)
+   - Skip "PremiumDNS" upsell — Namecheap free DNS is plenty for our setup.
+   - Skip "SSL Certificate" upsell — Vercel + Cloudflare give you free SSL.
+   - Skip the upsell sidebar (Email Forwarding, Hosting, etc.).
+   - Click **Confirm Order**.
+- [ ] CE000.B9 Payment screen → enter Wellspire LLC business card if you have one, otherwise personal card (swap to LLC card later in CE000.D when LLC is formed) → click **Pay Now**. Total: ~$10 first year.
+- [ ] CE000.B10 Wait ~2-5 min → go to **Account → Domain List** in Namecheap. Your new apex should appear with a green check. Click **Manage** to confirm DNS panel works (you'll add records here in CE000.C11 + CE002 + CE004).
 
 #### CE000.C — Open a fresh Google Workspace under Wellspire LLC
 
-- [ ] CE000.C1 Go to **https://workspace.google.com** → **Get started**.
-- [ ] CE000.C2 Business name: **Wellspire LLC**. Number of employees: 1-10. Region: United States.
-- [ ] CE000.C3 Plan: **Business Starter** ($7.20/user/mo). Enough for 16-20 outreach inboxes; bump to Business Standard later if you need shared drives or 99.9% SLA.
-- [ ] CE000.C4 Contact email: use **`Wellspirellc@gmail.com`** (CE000.PRE) as the recovery / contact email for the admin account.
-- [ ] CE000.C5 Use the Wellspire apex (CE000.A) as the primary Workspace domain. Verify ownership via the TXT record Google asks for in your **Wellspire Namecheap → Advanced DNS** panel.
-- [ ] CE000.C6 Create the admin user (`hugo@wellspire.com` or `admin@wellspire.com`). This is your Workspace super-admin login. Save credentials to vault under **"Wellspire Workspace · super admin"**.
-- [ ] CE000.C7 Add MFA on the admin account: **Google Authenticator + 8 printed backup codes** stored in 1Password / Bitwarden. Losing this account locks you out of every Wellspire outreach inbox.
-- [ ] CE000.C8 Inside the new Wellspire Workspace admin: **Account → Domains → Manage domains** — confirm `wellspire.com` (or your apex) is listed as the primary verified domain.
+> **PREREQUISITE:** complete CE000.A + CE000.B FIRST so you actually own the Wellspire apex domain. Otherwise the wizard's "Does your business have a domain?" screen (C5 below) leaves you stuck OR upsells you a Google-Domains domain (~$12/yr, worse DNS control than Namecheap, defeats the cheap-domain rationale). Order: CE000.A → CE000.B → CE000.C.
+>
+> Each screen below is a literal click. The wizard uses a side-panel layout — answer each prompt → click **Next** at bottom right. Total wizard time: ~10 min.
+
+- [ ] CE000.C1 Open a fresh private/incognito window → go to **https://workspace.google.com** → top-right click **"Start free trial"** (or **"Get started"** depending on what Google's homepage shows that day). **If Google routes you through the "Choose the email that is best for your business" comparison page with two cards:** click **"Try Google Workspace"** on the LEFT card ("Custom email and productivity features for your business"), NOT "Get a Gmail address" on the right.
+- [ ] CE000.C2 Wizard screen 1 — **"Tell us about your business"**:
+   - Business name: `Wellspire LLC`
+   - Number of employees: `Just you` (or 1-10 — same plan tier)
+   - Region: `United States`
+   - Click **Next**.
+- [ ] CE000.C3 Wizard screen 2 — **"What's your contact info?"**:
+   - First name: `Hugo` (or however you go on legal docs)
+   - Last name: your last name
+   - Current email: paste **`Wellspirellc@gmail.com`** (your CE000.PRE inbox) — this becomes the recovery / billing-alert email for the entire Workspace.
+   - Click **Next**.
+- [ ] CE000.C4 Wizard screen 3 — **"Does your business have a domain?"**:
+   - Choose **"Yes, I have one I can use"**.
+   - Type your Wellspire apex (e.g. `wellspire.com` from CE000.B).
+   - Click **Next**.
+   - (If you accidentally pick "No, I need one to get started" Google walks you through buying one through Google Domains — back out and use Namecheap per CE000.B.)
+- [ ] CE000.C5 Wizard screen 4 — **"Use this domain to set up your account"**: confirm the domain you typed. Click **Next**.
+- [ ] CE000.C6 Wizard screen 5 — **"Do you want to use [domain] for newsletters or marketing?"** — choose **"No, only for my Workspace account"** (we'll add the cold-email sending domains as secondaries in CE002, not here). Click **Next**.
+- [ ] CE000.C7 Wizard screen 6 — **"How will you sign in?"**:
+   - Username: `hugo` (or `admin`) → so your full Workspace admin email becomes `hugo@wellspire.com` (or `admin@wellspire.com`). This is the Workspace super-admin login — different from `Wellspirellc@gmail.com` from CE000.PRE.
+   - Password: vault-generated 18+ chars (1Password / Bitwarden). Save to vault under **"Wellspire Workspace · super admin"**.
+   - Confirm password.
+   - Tick "I'm not a robot" CAPTCHA.
+   - Click **Agree and continue**.
+- [ ] CE000.C8 Wizard screen 7 — **"Choose your plan"**:
+   - Click **Business Starter** ($7.20/user/mo, 30GB storage per user). Enough for the 16-20 outreach inboxes. Bump to **Business Standard** ($14.40/user/mo) later only if you need shared drives or 99.9% SLA — not needed for cold-email outreach.
+   - Click **Next** / **Continue**.
+- [ ] CE000.C9 Wizard screen 8 — **"How many users?"**: pick **1** for now (the admin). You'll add the 16-20 outreach inboxes later in CE003 (each one bills separately at $7.20/mo). Click **Next**.
+- [ ] CE000.C10 Wizard screen 9 — **"Review and pay"**:
+   - Confirm 14-day free trial → no charge today.
+   - Add Wellspire LLC business credit card (or personal card if LLC card not yet ready — you'll swap cards in CE000.D1 after LLC is formed).
+   - Billing address: Wellspire LLC's registered office (or your personal address temporarily; update after LLC formation).
+   - Click **Agree and continue** / **Buy**.
+- [ ] CE000.C11 Post-purchase screen — **"Verify your domain"**:
+   - Google shows a TXT record: `google-site-verification=<long-random-string>`.
+   - Open Namecheap (the Wellspire account from CE000.B) in another tab → **Domain List** → click **Manage** next to your apex → **Advanced DNS** tab → **Add New Record** → Type: `TXT Record` → Host: `@` → Value: paste Google's verification string → TTL: `Automatic` → green check to save.
+   - Wait 2-5 min for DNS propagation.
+   - Back in the Workspace verification screen → click **Verify**. Should turn green within seconds. (If it says "still propagating" wait another 5 min and click Verify again.)
+- [ ] CE000.C12 Post-verification — **MX records prompt**: Google shows a single MX record: `smtp.google.com`, Priority `1`. **Skip this for now** — you'll set MX records on the SENDING domains in CE004.1, not on the Wellspire apex (the apex is for ops email, low volume; we set MX after we add secondary domains in CE002). If Google insists, click **Activate Gmail** → it will set MX on the apex (fine). The 4 sending domains get MX configured separately in CE004.1.
+- [ ] CE000.C13 You're now in the Workspace Admin Console (admin.google.com). Sidebar nav → **Account → Domains → Manage domains** — confirm your Wellspire apex (e.g. `wellspire.com`) is listed as the **Primary** verified domain.
+- [ ] CE000.C14 **Add MFA on the admin account** (CRITICAL — losing this account locks you out of every Wellspire outreach inbox):
+   - Top-right click your profile photo → **Manage your Google Account** → **Security** → **2-Step Verification** → **Turn on 2-Step Verification**.
+   - Add **Google Authenticator** as the primary 2FA method (NOT just SMS — SMS is SIM-swap-vulnerable).
+   - Generate **backup codes** → click **Print** or copy all 8 → save to 1Password / Bitwarden under "Wellspire Workspace · super admin · backup codes".
+- [ ] CE000.C15 Add **Wellspirellc@gmail.com** as an additional recovery email on the Workspace admin account:
+   - Same Security page → **Recovery email** → **Edit** → enter `Wellspirellc@gmail.com` → save. Now if you lose your password, recovery email lands in CE000.PRE, not somewhere else.
+- [ ] CE000.C16 Save Workspace admin credentials in vault: login URL (admin.google.com), admin username (`hugo@wellspire.com`), password, 2FA backup codes, recovery email (`Wellspirellc@gmail.com`).
 
 #### CE000.D — Wellspire LLC business card on every SaaS vendor account
 
