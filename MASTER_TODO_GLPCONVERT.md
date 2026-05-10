@@ -1021,7 +1021,7 @@ Stay on **test** (`sk_test_`, `pk_test_`, test `price_…`, test `whsec_`) until
 - [x] CE000.PRE — Wellspire parent-ops Gmail (`Wellspirellc@gmail.com`) ✅ done 2026-05-09
 - [x] CE000.A — Pick Wellspire apex domain → **wellspirellc.com** ✅ done 2026-05-10
 - [x] CE000.B — Open Wellspire Namecheap account + buy apex (`wellspirellc.com`, ~$11) ✅ done 2026-05-10
-- [ ] CE000.C — Open Wellspire Google Workspace + admin user + 2FA  ← **YOU ARE HERE — on wizard screen 3 (CE000.C4 "Choose a way to set up your account")**
+- [ ] CE000.C — Open Wellspire Google Workspace + admin user + 2FA  ← **YOU ARE HERE — on wizard screen 7 (CE000.C8 plan picker — pick Business Starter $7.20, NOT Plus $19.80)**
 - [ ] CE000.D — Wellspire LLC business card on every SaaS vendor (waits on LLC formation)
 
 **🛠️ PHASE 1A — GLPConvert sending infrastructure (Day 1, ~4 hrs)**
@@ -1294,23 +1294,25 @@ https://glp-convert.vercel.app/intake?demo=1&handle=acme-clinic&company=Acme+Wei
    - Last name: your last name
    - Current email: paste **`Wellspirellc@gmail.com`** (your CE000.PRE inbox) — this becomes the recovery / billing-alert email for the entire Workspace.
    - Click **Next**. ✅
-- [ ] CE000.C4 Wizard screen 3 — **"Does your business have a domain?"** (Google sometimes labels this screen **"Choose a way to set up your account"** with two big card options instead — same decision):
+- [x] CE000.C4 Wizard screen 3 — **"Does your business have a domain?"** (Google sometimes labels this screen **"Choose a way to set up your account"** with two big card options instead — same decision):
    - Two cards: **"Get a new custom domain"** (LEFT — buy through Google Domains, ~$12/yr, worse DNS control — DO NOT pick this) vs **"Set up using your existing domain"** (RIGHT — use a domain you already own).
    - Click the **RIGHT card** ("Set up using your existing domain"). The card outlines blue when selected.
    - Click **"Continue with this method"** (bottom right; un-greys once a card is picked).
    - Next screen → type your apex: **`wellspirellc.com`** (your CE000.B purchase).
-   - Click **Next**.
-- [ ] CE000.C5 Wizard screen 4 — **"Use this domain to set up your account"**: confirm the domain you typed. Click **Next**.
-- [ ] CE000.C6 Wizard screen 5 — **"Do you want to use [domain] for newsletters or marketing?"** — choose **"No, only for my Workspace account"** (we'll add the cold-email sending domains as secondaries in CE002, not here). Click **Next**.
-- [ ] CE000.C7 Wizard screen 6 — **"How will you sign in?"**:
+   - Click **Next**. ✅
+- [x] CE000.C5 Wizard screen 4 — **"Use this domain to set up your account"**: confirm the domain you typed. Click **Next**. ✅
+- [x] CE000.C6 Wizard screen 5 — **"Do you want to use [domain] for newsletters or marketing?"** — choose **"No, only for my Workspace account"** (we'll add the cold-email sending domains as secondaries in CE002, not here). Click **Next**. ✅
+- [x] CE000.C7 Wizard screen 6 — **"How will you sign in?"**:
    - Username: `hugo` (or `admin`) → so your full Workspace admin email becomes **`hugo@wellspirellc.com`** (or `admin@wellspirellc.com`). This is the Workspace super-admin login — different from `Wellspirellc@gmail.com` from CE000.PRE.
    - Password: vault-generated 18+ chars (1Password / Bitwarden). Save to vault under **"Wellspire Workspace · super admin"**.
    - Confirm password.
    - Tick "I'm not a robot" CAPTCHA.
-   - Click **Agree and continue**.
-- [ ] CE000.C8 Wizard screen 7 — **"Choose your plan"**:
-   - Click **Business Starter** ($7.20/user/mo, 30GB storage per user). Enough for the 16-20 outreach inboxes. Bump to **Business Standard** ($14.40/user/mo) later only if you need shared drives or 99.9% SLA — not needed for cold-email outreach.
-   - Click **Next** / **Continue**.
+   - Click **Agree and continue**. ✅
+- [ ] CE000.C8 Wizard screen 7 — **"Choose your plan" / "Try Google Workspace for 14 days"**:
+   - ⚠️ **Google sometimes lands you on the "Plus" plan ($19.80–26.40/user/mo) by default.** DO NOT click "Start a trial" on Plus. You want **Business Starter** at **$7.20/user/mo**.
+   - To find Business Starter on this screen: look for a horizontal carousel (left/right arrows on the card edges), plan-tab navigation at the top (`Business Starter` | `Standard` | `Plus` | `Enterprise`), pagination dots below the card, or scroll up to find a "See all plans" / "Compare plans" link. Sometimes you have to side-scroll the card carousel with trackpad/mouse to step LEFT through Plus → Standard → Starter.
+   - On the **Business Starter** card (the cheapest, $7.20/user/mo, 30 GB storage per user, "Custom and secure business email"): click **"Start a trial"** / **"Continue"**.
+   - Bump to **Business Standard** ($14.40/user/mo) later only if you need shared drives or 99.9% SLA — not needed for cold-email outreach. **Plus and Enterprise are massive overkill for our use case** (extra storage, eDiscovery, Vault — all overhead you won't touch).
 - [ ] CE000.C9 Wizard screen 8 — **"How many users?"**: pick **1** for now (the admin). You'll add the 16-20 outreach inboxes later in CE003 (each one bills separately at $7.20/mo). Click **Next**.
 - [ ] CE000.C10 Wizard screen 9 — **"Review and pay"**:
    - Confirm 14-day free trial → no charge today.
