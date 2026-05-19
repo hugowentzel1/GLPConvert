@@ -45,7 +45,7 @@ export default function IntakePageFooter() {
         {PRODUCT_NAME} · {PARENT_COMPANY_LEGAL_NAME}
       </p>
       <p className="mx-auto mt-3 max-w-lg text-xs leading-relaxed text-slate-500">
-        Pre-consult education and routing software — not medical care or prescribing. A licensed clinician decides
+        Pre-consult education and routing software, not medical care or prescribing. A licensed clinician decides
         treatment. Estimates are illustrative; pricing and plans depend on your provider.
       </p>
       <nav

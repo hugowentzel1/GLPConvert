@@ -193,7 +193,7 @@ export default function GlpDemoOwnerPanels({
             With GLPConvert
           </p>
           <p className="mt-2 text-sm font-medium leading-relaxed text-slate-900">
-            Same paid traffic, fewer dropped intakes. Patients finish a branded path that ends at your scheduling link —
+            Same paid traffic, fewer dropped intakes. Patients finish a branded path that ends at your scheduling link,
             so consults arrive primed, not cold.
           </p>
         </div>
@@ -356,7 +356,7 @@ export default function GlpDemoOwnerPanels({
           </div>
 
           <p className="mx-auto mt-4 max-w-md text-[13.5px] leading-relaxed text-slate-600 sm:text-[14px]">
-            The modeled gap between visitors who land at {companyName} and consults that actually book — closed by better intake.
+            The modeled gap between visitors who land at {companyName} and consults that actually book, closed by better intake.
           </p>
 
           <p

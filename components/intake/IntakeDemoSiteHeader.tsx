@@ -250,7 +250,7 @@ export default function IntakeDemoSiteHeader() {
                     fontVariantNumeric: "tabular-nums",
                   }}
                 >
-                  Exclusive preview for {b.brand} — expires in {countdown.days}d{" "}
+                  Exclusive preview for {b.brand}, expires in {countdown.days}d{" "}
                   {countdown.hours.toString().padStart(2, "0")}:
                   {countdown.minutes.toString().padStart(2, "0")}:
                   {countdown.seconds.toString().padStart(2, "0")}

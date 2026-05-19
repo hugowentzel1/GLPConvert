@@ -24,7 +24,7 @@ import type { Metadata } from "next";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: `Intake — ${PRODUCT_NAME}`,
+  title: `Intake | ${PRODUCT_NAME}`,
   description:
     "Branded pre-consult path: clarity, typical ranges, then your scheduling link. General information only.",
 };
@@ -190,7 +190,7 @@ export default function IntakePage({
                   style={{ backgroundColor: "var(--brand-primary)" }}
                 />
                 <p className="mx-auto mt-3 max-w-md text-[14px] font-medium leading-snug text-slate-700 sm:text-[15px]">
-                  Average lift in consult bookings — same paid traffic, fewer dropped intakes.
+                  Average lift in consult bookings: same paid traffic, fewer dropped intakes.
                 </p>
               </div>
 

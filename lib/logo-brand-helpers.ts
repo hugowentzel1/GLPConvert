@@ -1,10 +1,26 @@
 /**
  * Shared rules for demo / cold-email logos (HTTPS + allowlist).
- * Clearbit URLs are used when `domain=example.com` is present (or `company` is a bare domain).
+ *
+ * Resolution chain when `domain=clinic.com` is on the URL (the canonical cold-email pattern):
+ *   1. If `NEXT_PUBLIC_LOGO_DEV_TOKEN` is set → use logo.dev — the 2026 Clearbit successor,
+ *      free tier, full-resolution real brand logos. Sign up at https://logo.dev/ to get a token,
+ *      then add `NEXT_PUBLIC_LOGO_DEV_TOKEN=...` to .env.local + Vercel env.
+ *   2. Else → fall back to Google's favicon endpoint (free, no key, lower-res but real logo).
+ *   3. If the resolved URL fails to load in the browser, the funnel already shows a monogram avatar.
+ *
+ * The original Clearbit endpoint (`logo.clearbit.com`) was discontinued after the HubSpot
+ * acquisition and no longer resolves DNS. It stays in the allowlist only so legacy URLs
+ * built before this refactor still pass sanitization (the host is dead so they 0-byte; the
+ * <img> falls through to the monogram fallback).
  */
 
+const LOGO_DEV_TOKEN =
+  (typeof process !== "undefined" ? process.env.NEXT_PUBLIC_LOGO_DEV_TOKEN : "") || "";
+
 const ALLOWED_LOGO_HOSTS = new Set([
-  "logo.clearbit.com",
+  "img.logo.dev",        // primary 2026 (Clearbit successor); needs NEXT_PUBLIC_LOGO_DEV_TOKEN
+  "www.google.com",      // free favicon fallback, no key
+  "logo.clearbit.com",   // legacy (dead host); kept for back-compat sanitization only
   "res.cloudinary.com",
   "i.imgur.com",
   "images.unsplash.com",
@@ -29,10 +45,28 @@ export function normalizeDomainForClearbit(raw: string | null | undefined): stri
   return s;
 }
 
-export function clearbitLogoUrl(domain: string): string {
+/**
+ * Build the best automatic logo URL for a clinic domain.
+ *
+ * Prefers logo.dev (real full-resolution brand logo) when a token is configured;
+ * falls back to Google's favicon endpoint (no key required, lower resolution).
+ * Returns the empty string if `domain` cannot be normalized to a registrable host.
+ */
+export function clinicLogoUrl(domain: string): string {
   const d = normalizeDomainForClearbit(domain);
   if (!d) return "";
-  return `https://logo.clearbit.com/${d}`;
+  if (LOGO_DEV_TOKEN) {
+    return `https://img.logo.dev/${d}?token=${encodeURIComponent(LOGO_DEV_TOKEN)}&format=png&size=128&fallback=monogram`;
+  }
+  return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(d)}&sz=128`;
+}
+
+/**
+ * Back-compat alias. Historically named for Clearbit; now routes through the
+ * resolution chain in `clinicLogoUrl`. Kept so existing imports keep working.
+ */
+export function clearbitLogoUrl(domain: string): string {
+  return clinicLogoUrl(domain);
 }
 
 /**

@@ -158,12 +158,12 @@ function runSimulation(input: SimInput): SimOutput {
   });
   const pathLabel =
     input.medPath === "tirzepatide"
-      ? "Discussion often starts around a dual-action injectable path — your provider decides"
+      ? "Discussion often starts around a dual-action injectable path. Your provider decides."
       : input.medPath === "semaglutide"
-        ? "Discussion often starts around a GLP-1 injectable path — your provider decides"
+        ? "Discussion often starts around a GLP-1 injectable path. Your provider decides."
         : input.medPath === "oral_path"
-          ? "Discussion may start with an oral-first plan — your provider decides"
-          : "Direction you selected — details confirmed in consult";
+          ? "Discussion may start with an oral-first plan. Your provider decides."
+          : "Direction you selected, details confirmed in consult.";
   const confidenceBand: SimOutput["confidenceBand"] =
     input.priorGlp === "active" ? "conservative" : input.urgency === "asap" ? "accelerated" : "typical";
   const phasePlan = [
@@ -702,7 +702,7 @@ export default function GlpSimulationFunnel() {
                 <p className={glpIntakeUi.kicker}>Preparing your plan preview</p>
                 <h2 className={`${glpIntakeUi.titleMd} mt-2 tracking-tight`}>Path, range, and next step</h2>
                 <p className={`${glpIntakeUi.bodyMuted} mt-2 text-xs`}>
-                  Framing typical timelines for {company} — general information only, not medical advice.
+                  Framing typical timelines for {company}: general information only, not medical advice.
                 </p>
               </div>
               <button type="button" className={glpIntakeUi.backBtn} onClick={goBack}>
@@ -718,7 +718,7 @@ export default function GlpSimulationFunnel() {
               very next page.
             </p>
             <p className={`${glpIntakeUi.bodyMuted} text-xs`}>
-              General information only — your provider makes treatment decisions.
+              General information only. Your provider makes treatment decisions.
             </p>
           </header>
 
@@ -882,7 +882,7 @@ export default function GlpSimulationFunnel() {
               <h2 className={`${glpIntakeUi.titleLg} mt-2 md:text-[1.65rem]`}>Your path preview</h2>
               <p className="mt-2 text-sm font-medium text-slate-700">{company}</p>
               <p className="mx-auto mt-4 max-w-2xl text-sm font-normal leading-relaxed text-slate-600 sm:mx-0 md:text-[15px] md:leading-relaxed">
-                What most patients want to see before booking — educational only, not a diagnosis or quote.
+                What most patients want to see before booking: educational only, not a diagnosis or quote.
                 Your provider sets the actual plan; no obligation to book.
               </p>
             </div>
@@ -935,9 +935,9 @@ export default function GlpSimulationFunnel() {
                   <p className={glpIntakeUi.resultsSummaryOverline}>Path</p>
                   <p className={glpIntakeUi.resultsSummaryHeadline}>{pathHeadline}</p>
                   <p className={glpIntakeUi.resultsSummarySupport}>
-                    Selected direction — confirmed in consult.
+                    Selected direction, confirmed in consult.
                   </p>
-                  <p className={glpIntakeUi.resultsSummaryMeta}>Framing only — not a prescription.</p>
+                  <p className={glpIntakeUi.resultsSummaryMeta}>Framing only, not a prescription.</p>
                 </div>
                 <div className={glpIntakeUi.resultsSummaryCard}>
                   <p className={glpIntakeUi.resultsSummaryOverline}>Timeline</p>
@@ -946,9 +946,9 @@ export default function GlpSimulationFunnel() {
                     <span className={glpIntakeUi.resultsSummaryHeadlineUnit}>weeks</span>
                   </p>
                   <p className={glpIntakeUi.resultsSummarySupport}>
-                    Modeled checkpoint — your pace may vary.
+                    Modeled checkpoint. Your pace may vary.
                   </p>
-                  <p className={glpIntakeUi.resultsSummaryMeta}>Illustrative — not a guarantee.</p>
+                  <p className={glpIntakeUi.resultsSummaryMeta}>Illustrative, not a guarantee.</p>
                 </div>
                 <div className={glpIntakeUi.resultsSummaryCard}>
                   <p className={glpIntakeUi.resultsSummaryOverline}>Monthly cost</p>
@@ -959,7 +959,7 @@ export default function GlpSimulationFunnel() {
                   <p className={glpIntakeUi.resultsSummarySupport}>
                     Typical range discussed with this clinic.
                   </p>
-                  <p className={glpIntakeUi.resultsSummaryMeta}>Educational — not a quote.</p>
+                  <p className={glpIntakeUi.resultsSummaryMeta}>Educational, not a quote.</p>
                 </div>
               </div>
             );
@@ -1001,7 +1001,7 @@ export default function GlpSimulationFunnel() {
                     eyebrow: "Middle",
                     title: "Plans get adjusted",
                     description:
-                      "Check-ins continue and plans adapt — this is normal, not a setback.",
+                      "Check-ins continue and plans adapt. This is normal, not a setback.",
                   },
                   {
                     eyebrow: "Ongoing",
@@ -1044,8 +1044,8 @@ export default function GlpSimulationFunnel() {
                   </p>
                   <p className="mt-1 text-xs text-slate-500">
                     {typeof publicCfg?.pricingMonthlyLow === "number" && publicCfg.pricingMonthlyLow > 0
-                      ? "From your program notes — final quote from your provider."
-                      : "Illustrative floor from your inputs — not a quote."}
+                      ? "From your program notes, final quote from your provider."
+                      : "Illustrative floor from your inputs, not a quote."}
                   </p>
                 </div>
                 <div className="border-t border-slate-200 pt-4">
@@ -1147,7 +1147,7 @@ export default function GlpSimulationFunnel() {
             <dl className={`${glpIntakeUi.stackMd} mt-4 text-sm`}>
               <div>
                 <dt className="font-semibold text-slate-900">Is this medical advice?</dt>
-                <dd className={glpIntakeUi.body}>No — general information only. A licensed provider decides treatment.</dd>
+                <dd className={glpIntakeUi.body}>No. General information only. A licensed provider decides treatment.</dd>
               </div>
               <div>
                 <dt className="font-semibold text-slate-900">Are results guaranteed?</dt>
@@ -1201,7 +1201,7 @@ export default function GlpSimulationFunnel() {
             <p className={glpIntakeUi.kicker}>Step 3</p>
             <h2 className={glpIntakeUi.titleLg}>Almost there</h2>
             <p className={glpIntakeUi.body}>
-              Help {company} prioritize your follow-up — not a test, not a medical assessment.
+              Help {company} prioritize your follow-up. Not a test, not a medical assessment.
             </p>
           </header>
 
@@ -1348,7 +1348,7 @@ export default function GlpSimulationFunnel() {
             <legend className={glpIntakeUi.legendLabel}>
               Preferred next step
               <span className="mt-1 block text-[11px] font-normal normal-case tracking-normal text-slate-500">
-                Book consult is the fastest path when you&apos;re ready — other options stay one tap away.
+                Book consult is the fastest path when you&apos;re ready. Other options stay one tap away.
               </span>
             </legend>
             <div className="grid gap-3 sm:grid-cols-3">
@@ -1624,7 +1624,7 @@ export default function GlpSimulationFunnel() {
                 above (mt-6 from body) equals the gap below (mt-6 to
                 fine-print). */}
             <p className="mt-6 text-xs leading-relaxed text-slate-500">
-              General information only — a licensed provider confirms next steps.
+              General information only. A licensed provider confirms next steps.
             </p>
             <a
               href={buildBrandedDemoReturnHref(sp)}
