@@ -4,7 +4,7 @@ import type { ReactElement, ReactNode } from "react";
 import { glpIntakeUi } from "@/lib/glp-intake-ui";
 
 /**
- * Patient-intake trust strip — Sunspire-style **tint** (`color-mix` 15% + white) + `--brand-600` icons.
+ * Patient-intake trust strip — brand **tint** (`color-mix` 15% + white) + `--brand-600` icons.
  * Grid layout: four tiles side-by-side on `md+`, 2×2 on narrow viewports.
  */
 function LockIcon() {

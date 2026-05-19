@@ -20,6 +20,8 @@ import {
 } from "@/lib/glp-intake-nav-href";
 import { getAccessibleBrandFill } from "@/lib/glp-intake-brand-contrast";
 import { hexToRgba } from "@/lib/intake-color-helpers";
+import { usePreviewQuota } from "@/src/demo/usePreviewQuota";
+import GlpDemoLockOverlay from "@/components/intake/GlpDemoLockOverlay";
 
 type TenantIntakePublicJson = {
   ok?: boolean;
@@ -307,6 +309,19 @@ export default function GlpSimulationFunnel() {
   const brandFill = getAccessibleBrandFill(rawBrand);
   const effectiveSecondary = secondaryFromQuery || publicCfg?.brandColorSecondary || null;
   const [step, setStep] = useState<FlowStep>(1);
+  /**
+   * Demo preview cap — a cold-outreach prospect gets 2 funnel runs, then the
+   * GlpDemoLockOverlay replaces the funnel and routes them to Stripe checkout.
+   * Quota persists client-side via usePreviewQuota (localStorage `demo_quota_v5`).
+   */
+  const { read: readDemoQuota, consume: consumeDemoQuota } = usePreviewQuota(2);
+  const [demoLocked, setDemoLocked] = useState(false);
+  useEffect(() => {
+    // On mount, if a returning prospect already exhausted their 2 runs, lock.
+    if (isDemoMode && readDemoQuota() <= 0) setDemoLocked(true);
+    // readDemoQuota is recreated each render; the check only needs to run once.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDemoMode]);
   const [input, setInput] = useState<SimInput>({
     currentWeight: 220,
     goalWeight: 180,
@@ -454,6 +469,14 @@ export default function GlpSimulationFunnel() {
 
   function onContinueFromInput() {
     if (building) return;
+    // Demo preview cap: enforce the 2-run limit before starting a run.
+    if (isDemoMode) {
+      if (readDemoQuota() <= 0) {
+        setDemoLocked(true);
+        return;
+      }
+      consumeDemoQuota();
+    }
     void logEvent("simulation_started", { input, demo: isDemoMode });
     if (step1To2TimerRef.current != null) {
       window.clearTimeout(step1To2TimerRef.current);
@@ -623,13 +646,26 @@ export default function GlpSimulationFunnel() {
     [sp, step5Activating],
   );
 
+  if (isDemoMode && demoLocked) {
+    return (
+      <GlpDemoLockOverlay
+        company={company}
+        brandFill={brandFill}
+        logo={effectiveLogo}
+        activateHref={`/pricing?${sp?.toString() || ""}`}
+        onActivate={onStep5Activate}
+        activating={step5Activating}
+      />
+    );
+  }
+
   return (
     <div
       className={`glp-intake-funnel ${glpIntakeUi.column} pb-6`}
       style={
         {
           "--glp-brand-fill": brandFill,
-          /* Mirror sunspire-clean `TrustRow`: brand tint + icon color */
+          /* brand tint + icon color */
           "--brand-primary": brandFill,
           "--brand-600": brandFill,
         } as CSSProperties

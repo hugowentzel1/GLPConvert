@@ -1,5 +1,5 @@
 export const INTAKE_DEMO_EXAMPLE_HREF =
-  "http://localhost:3000/intake?company=Sunspire+Weight+Clinic&demo=1&logo=https%3A%2F%2Fexample.com%2Flogo.png" as const;
+  "http://localhost:3000/intake?company=Northside+Weight+Clinic&demo=1&logo=https%3A%2F%2Fexample.com%2Flogo.png" as const;
 
 /** Green brand tint + logo via Clearbit (`domain=`) — same-origin path; prefix your origin for sharing. */
 export const INTAKE_DEMO_GREEN_LOGO_PATH =

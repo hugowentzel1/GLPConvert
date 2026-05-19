@@ -31,9 +31,8 @@ function safeCompanyLabel(raw: string | null): string {
 }
 
 /**
- * Intake site chrome: preview strip (when marketing + brand takeover) and main row aligned with
- * `sunspire-clean` / `SharedNavigation` — `h-20`, `space-x-12`, `btn-primary ml-12` (Privacy lives in
- * the disclaimer line, not the top nav, matching that demo’s three links + CTA).
+ * Intake site chrome: preview strip (when marketing + brand takeover) and main nav row.
+ * `h-20`, `space-x-12`, `btn-primary ml-12`. Privacy lives in the disclaimer line, not the top nav.
  */
 export default function IntakeDemoSiteHeader() {
   const sp = useSearchParams();

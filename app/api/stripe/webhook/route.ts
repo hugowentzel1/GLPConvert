@@ -291,8 +291,7 @@ export async function handleCheckoutCompleted(session: Stripe.Checkout.Session):
          * - `embedCode` is now an iframe of the same intake URL with a
          *   correct `title` and a sensible `min-height` (the funnel
          *   expands on mobile; ≤880px clips the Continue button per the
-         *   /docs/embed guidance). Removed the legacy "Solar Calculator"
-         *   product-name string.
+         *   /docs/embed guidance).
          * - `dashboardUrl` and `magicLinkUrl` go to the working dashboard
          *   path; `magicLinkUrl` is JWT-signed (verified server-side by
          *   /api/auth/verify-magic-link in Pass 6).

@@ -212,9 +212,9 @@ function IntakePageHeaderInner() {
 
               <p className="mx-auto mt-4 max-w-md text-pretty text-sm leading-relaxed text-slate-600 sm:mt-5 sm:text-[15px]">
                 Right now, paid clicks for{" "}
-                <span className="font-medium text-slate-800">{companyLabel}</span> leak revenue at every step —
+                <span className="font-medium text-slate-800">{companyLabel}</span> leak revenue at every step:
                 abandoned intakes, no-shows, missed callbacks. This branded path closes the gap: your logo, your book
-                link, more consults from the same ad spend, more revenue kept in-house. <span className="font-medium text-slate-800">You stay the prescriber and own the patient</span> — GLPConvert is the branded front-door funnel, not the clinic.
+                link, more consults from the same ad spend, more revenue kept in-house. <span className="font-medium text-slate-800">You stay the prescriber and own the patient</span>. GLPConvert is the branded front-door funnel, not the clinic.
               </p>
               <div className="mt-4 flex w-full justify-center sm:mt-5">
                 <DemoHeaderActions
@@ -230,7 +230,7 @@ function IntakePageHeaderInner() {
                   Stop leaking paid clicks. Turn the same traffic into more booked consults.
                 </h1>
                 <p className="mx-auto max-w-md text-sm leading-relaxed text-slate-600">
-                  Your colors, your logo, your booking link — wrapped around a short funnel patients actually finish.
+                  Your colors, your logo, your booking link, wrapped around a short funnel patients actually finish.
                   Same paid traffic, fewer dropped intakes, more consults that turn into revenue. You stay the
                   prescriber. Not medical advice.
                 </p>
